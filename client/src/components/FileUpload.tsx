@@ -13,7 +13,7 @@ import * as React from 'react';
 function createData(
   model: string,
   active: boolean,
-  tokensPerSecond: number,
+  tokensPerSecond: string,
   load: any,
 ) {
   return { model, active, tokensPerSecond, load };
@@ -21,17 +21,17 @@ function createData(
 
 function createLoadButton(active: boolean) {
     if (!active)
-        return <Button variant="contained">Load</Button>
+        return <Button variant="contained">Download</Button>
     else
-        return <Button disabled variant="contained">Load</Button>
+        return <Button disabled variant="contained">Download</Button>
 }
 
 const rows = [
-  createData('Codellama-7b-instruct', true, 5.4, createLoadButton(true)),
-  createData('Phi-2', false, 6.7, createLoadButton(false)),
-  createData('Gemma', false, 4.9, createLoadButton(false)),
-  createData('Mistral', false, 7.3, createLoadButton(false)),
-  createData('Llama-2', false, 8.1, createLoadButton(false)),
+  createData('fpsyg-09-01395.pdf', true, '06-19-2024', createLoadButton(true)),
+  createData('state_of_the_union.txt', false, '06-19-2024', createLoadButton(false)),
+  createData('ZEPT_14_2240691.pdf', false, '06-18-2024', createLoadButton(false)),
+  createData('test2.txt', false, '06-17-2024', createLoadButton(false)),
+  createData('test1.txt', false, '06-17-2024', createLoadButton(false)),
 ];
 
 export default function FileUpload() {
@@ -40,10 +40,10 @@ export default function FileUpload() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><strong>Model</strong></TableCell>
-            <TableCell><strong>Active</strong></TableCell>
-            <TableCell><strong>Tokens/sec</strong></TableCell>
-            <TableCell><strong>Load</strong></TableCell>
+            <TableCell><strong>Document</strong></TableCell>
+            <TableCell><strong>RAG Ingested</strong></TableCell>
+            <TableCell><strong>Date Uploaded</strong></TableCell>
+            <TableCell><strong>Download</strong></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
