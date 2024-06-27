@@ -16,10 +16,7 @@ export default function Chat() {
     setDocumentLoading(true)
     const response = await loadDocument(pdfFilePath)
     setDocumentLoading(false)
-    if (!response)
-      alert("Document not found!")
-    else
-      alert(response)
+    alert(response)
   }
 
   const onSendMessage = async (query: string) => {

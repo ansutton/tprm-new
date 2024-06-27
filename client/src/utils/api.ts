@@ -10,9 +10,15 @@ export async function loadDocument(pathToDocument: string): Promise<string> {
 		body: JSON.stringify(data)
 	});
 	const serverResponse = await response.json();
-	let message = (serverResponse as PythonServerLoadDocumentResponse).message
+	let message = (serverResponse as PythonServerLoadDocumentResponse)
 
-	return message;
+    if (message?.message) {
+        return message.message
+    } else if (message?.error) {
+        return message.error
+    } else {
+        return "document not found!"
+    }
 }
 
 export async function generateRAG(query: string): Promise<string> {
@@ -38,7 +44,8 @@ export async function generateRAG(query: string): Promise<string> {
 }
 
 interface PythonServerLoadDocumentResponse {
-    message: string
+    message?: string
+    error?: string
 }
 
 interface PythonServerGenerateRAGResponse {
