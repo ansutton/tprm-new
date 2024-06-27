@@ -1,5 +1,5 @@
 import { Button, Grid, Paper, TextField, TextareaAutosize } from '@mui/material';
-// import { loadPDF, sendLLMChatMessageQuery } from '../utils/api';
+import { loadDocument, generateRAG } from '../utils/api';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 
@@ -9,16 +9,15 @@ export default function Chat() {
   const [messageToQuery, setMessageToQuery] = React.useState('')
 
   const onUpload = async (pdfFilePath: string) => {
-    // await loadPDF(pdfFilePath)
-    alert(pdfFilePath)
     setPdfFilePath("")
+    const response = await loadDocument(pdfFilePath)
+    alert(response)
   }
 
-  const onSendMessage = async(query: string) => {
-    setChatHistory(chatHistory + "\nUser: " + query + "\nLLM: " + '<Response goes here>')
-    // await sendLLMChatMessageQuery(query)
-    // TODO GET RESPONSE
-    // setChatHistory(chatHistory + "\nLLM: " + '<Response goes here>')
+  const onSendMessage = async (query: string) => {
+    setChatHistory(chatHistory + "\nUser: " + query)
+    const ragResponse = await generateRAG(query)
+    setChatHistory(chatHistory + "\nUser: " + query + "\nLLM: " + ragResponse) // + '<Response goes here>')
     setMessageToQuery("")
   }
 

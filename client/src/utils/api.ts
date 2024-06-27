@@ -2,7 +2,7 @@ export async function loadDocument(pathToDocument: string): Promise<string> {
 	const data = {
 		filePath: pathToDocument
 	}
-	const response = await fetch("http://localhost:8001/load_document", {
+	const response = await fetch("http://127.0.0.1:8001/load_document", {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export async function generateRAG(query: string): Promise<string> {
     const data = {
 		text: query
 	}
-	const response = await fetch("http://localhost:8001/generate_rag", {
+	const response = await fetch("http://127.0.0.1:8001/generate_rag", {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json",
