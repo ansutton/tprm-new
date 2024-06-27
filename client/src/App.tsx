@@ -1,4 +1,4 @@
-import FileUpload from './components/FileUpload';
+import Documents from './components/Documents';
 import { Grid } from '@mui/material';
 import Chat from './components/Chat';
 import React from 'react';
@@ -10,7 +10,7 @@ function App() {
       <header className="App-header">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <FileUpload></FileUpload>
+            <Documents></Documents>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Chat></Chat>

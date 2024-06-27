@@ -34,7 +34,7 @@ const rows = [
   createData('test1.txt', false, '06-17-2024', createLoadButton(false)),
 ];
 
-export default function FileUpload() {
+export default function Documents() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
