@@ -122,7 +122,7 @@ def generate_rag():
             | StrOutputParser()
         )
 
-        rag_response = chain.invoke(input(question))
+        rag_response = chain.invoke((question))
 
         return jsonify({'generate_rag': rag_response})
 
