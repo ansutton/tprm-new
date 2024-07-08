@@ -12,3 +12,4 @@ export default [
     pluginReactConfig,
     { settings: { "import/resolver": { typescript: {} } } },
 ];
+
