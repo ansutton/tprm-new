@@ -1,5 +1,3 @@
-import React from "react";
-
 function createData(
     model: string,
     active: boolean,
@@ -42,9 +40,9 @@ export default function Documents() {
             <thead>
                 <tr>
                     <th>Document</th>
-                    <td>RAG Ingested</td>
-                    <td>Date Uploaded</td>
-                    <td>Download</td>
+                    <th>RAG Ingested</th>
+                    <th>Date Uploaded</th>
+                    <th>Download</th>
                 </tr>
             </thead>
             <tbody>

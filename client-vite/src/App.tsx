@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Documents from "./components/Documents";
 
 export default function App() {
     const [count, setCount] = useState(0);
@@ -9,6 +10,7 @@ export default function App() {
             <button onClick={() => setCount((count) => count + 1)}>
                 count is {count}
             </button>
+            <Documents />
         </>
     );
 }
