@@ -5,6 +5,7 @@
     "endOfLine": "crlf",
     "experimentalTernaries": false,
     "jsxSingleQuote": false,
+    "plugins": ["prettier-plugin-tailwindcss"],
     "printWidth": 80,
     "semi": true,
     "singleQuote": false,
