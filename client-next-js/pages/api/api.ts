@@ -2,10 +2,10 @@ export async function loadDocument(pathToDocument: string): Promise<string> {
     const data = {
         filePath: pathToDocument,
     };
-    const response = await fetch("http://127.0.0.1:8001/load_document", {
-        method: "POST",
+    const response = await fetch('http://127.0.0.1:8001/load_document', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     });
@@ -17,7 +17,7 @@ export async function loadDocument(pathToDocument: string): Promise<string> {
     } else if (message?.error) {
         return message.error;
     } else {
-        return "document not found!";
+        return 'document not found!';
     }
 }
 
@@ -25,10 +25,10 @@ export async function generateRAG(query: string): Promise<string> {
     const data = {
         text: query,
     };
-    const response = await fetch("http://127.0.0.1:8001/generate_rag", {
-        method: "POST",
+    const response = await fetch('http://127.0.0.1:8001/generate_rag', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     });
@@ -39,7 +39,7 @@ export async function generateRAG(query: string): Promise<string> {
     } else if (message?.error) {
         return message.error;
     } else {
-        return "unkown error";
+        return 'unkown error';
     }
 }
 

@@ -1,15 +1,15 @@
-import { loadDocument, generateRAG } from "@/pages/api/api";
-import React from "react";
+import { useState } from 'react';
+import { loadDocument, generateRAG } from '@/pages/api/api';
 
-export default function Chat() {
-    const [chatHistory, setChatHistory] = React.useState("");
-    const [pdfFilePath, setPdfFilePath] = React.useState("");
-    const [messageToQuery, setMessageToQuery] = React.useState("");
-    const [documentLoading, setDocumentLoading] = React.useState(false);
-    const [ragResponding, setRagResponding] = React.useState(false);
+export default function Chat(): JSX.Element {
+    const [chatHistory, setChatHistory] = useState('');
+    const [pdfFilePath, setPdfFilePath] = useState('');
+    const [messageToQuery, setMessageToQuery] = useState('');
+    const [documentLoading, setDocumentLoading] = useState(false);
+    const [ragResponding, setRagResponding] = useState(false);
 
     const onUpload = async (pdfFilePath: string) => {
-        setPdfFilePath("");
+        setPdfFilePath('');
         setDocumentLoading(true);
         const response = await loadDocument(pdfFilePath);
         setDocumentLoading(false);
@@ -17,12 +17,12 @@ export default function Chat() {
     };
 
     const onSendMessage = async (query: string) => {
-        setChatHistory(chatHistory + "\nUser: " + query);
+        setChatHistory(chatHistory + '\nUser: ' + query);
         setRagResponding(true);
-        setMessageToQuery("");
+        setMessageToQuery('');
         const ragResponse = await generateRAG(query);
         setChatHistory(
-            chatHistory + "\nUser: " + query + "\nLLM: " + ragResponse,
+            chatHistory + '\nUser: ' + query + '\nLLM: ' + ragResponse,
         ); // + '<Response goes here>')
         setRagResponding(false);
     };
@@ -38,6 +38,7 @@ export default function Chat() {
                     // label="PDF / Big Text file path"
                 />
             </div>
+
             <div>
                 <button
                     // loading={documentLoading}
@@ -46,13 +47,15 @@ export default function Chat() {
                     Upload
                 </button>
             </div>
+
             <div>
                 <textarea
                     value={chatHistory}
                     disabled
-                    id="outlined-multiline-flexible"
+                    id='outlined-multiline-flexible'
                 />
             </div>
+
             <div>
                 <textarea
                     value={messageToQuery}
