@@ -1,30 +1,3 @@
-function createData(
-    model: string,
-    active: boolean,
-    tokensPerSecond: string,
-    load: any,
-) {
-    return { model, active, tokensPerSecond, load };
-}
-
-const rows = [
-    createData(
-        'fpsyg-09-01395.pdf',
-        true,
-        '06-19-2024',
-        <DownloadButton disabled />,
-    ),
-    createData(
-        'state_of_the_union.txt',
-        false,
-        '06-19-2024',
-        <DownloadButton />,
-    ),
-    createData('ZEPT_14_2240691.pdf', false, '06-18-2024', <DownloadButton />),
-    createData('test2.txt', false, '06-17-2024', <DownloadButton />),
-    createData('test1.txt', false, '06-17-2024', <DownloadButton />),
-];
-
 interface DownloadButtonProps {
     disabled?: boolean;
 }
@@ -52,14 +25,50 @@ export default function Documents(): JSX.Element {
             </thead>
 
             <tbody>
-                {rows.map((row) => (
-                    <tr key={row.model}>
-                        <td>{row.model}</td>
-                        <td>{row.active ? 'True' : 'False'}</td>
-                        <td>{row.tokensPerSecond}</td>
-                        <td>{row.load}</td>
-                    </tr>
-                ))}
+                <tr>
+                    <td>fpsyg-09-01395.pdf</td>
+                    <td>True</td>
+                    <td>06-19-2024</td>
+                    <td>
+                        <DownloadButton disabled />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>state_of_the_union.txt</td>
+                    <td>False</td>
+                    <td>06-19-2024</td>
+                    <td>
+                        <DownloadButton />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>ZEPT_14_2240691.pdf</td>
+                    <td>False</td>
+                    <td>06-18-2024</td>
+                    <td>
+                        <DownloadButton />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>test2.txt</td>
+                    <td>False</td>
+                    <td>06-17-2024</td>
+                    <td>
+                        <DownloadButton />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>test1.txt</td>
+                    <td>False</td>
+                    <td>06-17-2024</td>
+                    <td>
+                        <DownloadButton />
+                    </td>
+                </tr>
             </tbody>
         </table>
     );
