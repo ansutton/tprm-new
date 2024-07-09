@@ -48,7 +48,7 @@ export default function Documents() {
             <tbody>
                 {rows.map((row) => (
                     <tr key={row.model}>
-                        <tr>{row.model}</tr>
+                        <td>{row.model}</td>
                         <td>{row.active ? "True" : "False"}</td>
                         <td>{row.tokensPerSecond}</td>
                         <td>{row.load}</td>

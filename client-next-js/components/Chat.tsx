@@ -1,4 +1,4 @@
-import { loadDocument, generateRAG } from "../utils/api";
+import { loadDocument, generateRAG } from "@/pages/api/api";
 import React from "react";
 
 export default function Chat() {
