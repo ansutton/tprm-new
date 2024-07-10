@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { tableContent } from '@/components/Documents/tableContent';
+import { tableContent } from './tableContent';
 
 export function Documents(): JSX.Element {
     return (
