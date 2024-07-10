@@ -4,10 +4,11 @@
     "bracketSpacing": true,
     "endOfLine": "crlf",
     "experimentalTernaries": false,
-    "jsxSingleQuote": false,
+    "jsxSingleQuote": true,
+    "plugins": ["prettier-plugin-tailwindcss"],
     "printWidth": 80,
     "semi": true,
-    "singleQuote": false,
+    "singleQuote": true,
     "tabWidth": 4,
     "trailingComma": "all",
     "useTabs": false
