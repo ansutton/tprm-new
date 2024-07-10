@@ -4,8 +4,8 @@ import { tableContent } from '@/components/Documents/tableContent';
 export default function Documents(): JSX.Element {
     return (
         <div className='w-full'>
-            <table className='mx-auto table-auto bg-gray-50'>
-                <thead>
+            <table className='mx-auto table-auto bg-gray-50 drop-shadow-md'>
+                <thead className='bg-gray-100'>
                     <tr>
                         <TableHead>Document</TableHead>
                         <TableHead>RAG Ingested</TableHead>

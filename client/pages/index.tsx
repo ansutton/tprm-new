@@ -1,5 +1,5 @@
+import Chat from '@/components/Chat/Chat';
 import Documents from '@/components/Documents/Documents';
-import Chat from '@/components/Chat';
 
 export default function Home() {
     return (
