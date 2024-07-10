@@ -8,6 +8,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            // backgroundImage: {
+            //     'clipboard-pen': 'url("/public/images/clipboard-pen.jpg")', // TODO: fix this path according to https://github.com/tailwindlabs/tailwindcss/discussions/5504
+            // },
             colors: {
                 'd-green': 'hsl(81, 67%, 44%)',
                 'tprm-light-blue': 'hsl(218, 52%, 52%)',
