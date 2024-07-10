@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { tableContent } from '@/components/Documents/tableContent';
 
-export default function Documents(): JSX.Element {
+export function Documents(): JSX.Element {
     return (
         <div className='w-full'>
             <table className='mx-auto table-auto bg-gray-50 drop-shadow-md'>

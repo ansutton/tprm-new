@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { loadDocument, generateRAG } from '@/pages/api/api';
 
-export default function Chat(): JSX.Element {
+export function Chat(): JSX.Element {
     const [chatHistory, setChatHistory] = useState('');
     const [pdfFilePath, setPdfFilePath] = useState('');
     const [messageToQuery, setMessageToQuery] = useState('');
