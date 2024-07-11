@@ -52,7 +52,7 @@ export default function Home(): JSX.Element {
                         />
                         {file ? (
                             <button
-                                className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold hover:text-white'
+                                className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold shadow-md hover:text-white'
                                 onClick={onFileSubmit}
                             >
                                 Submit
@@ -88,7 +88,7 @@ export default function Home(): JSX.Element {
                             />
                         </svg>
                         <button
-                            className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold hover:text-white'
+                            className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold shadow-md hover:text-white'
                             onClick={onSeeSummary}
                         >
                             See Summary
@@ -106,7 +106,7 @@ export default function Home(): JSX.Element {
                         </p>
                         <Documents />
                         <button
-                            className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto flex w-fit items-center justify-center gap-1.5 border px-4 py-1.5 font-bold hover:text-white'
+                            className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto flex w-fit items-center justify-center gap-1.5 border px-4 py-1.5 font-bold shadow-md hover:text-white'
                             onClick={onBackToFileUpload}
                         >
                             <svg
