@@ -18,6 +18,9 @@ const config: Config = {
                 'tprm-dark-blue': 'hsl(218, 100%, 19%)',
             },
         },
+        fontFamily: {
+            sans: ['"Open Sans"'],
+        },
     },
     plugins: [],
 };
