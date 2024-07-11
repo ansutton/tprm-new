@@ -5,10 +5,10 @@ export default function Home(): JSX.Element {
     /**
      * useStates
      */
-    const [seeFileUpload, setSeeFileUpload] = useState(true);
+    const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
+        'fileUpload',
+    );
     const [file, setFile] = useState<File | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [seeResults, setSeeResults] = useState(false);
 
     /**
      * Helper Functions
@@ -19,16 +19,13 @@ export default function Home(): JSX.Element {
         }
     }
     function onFileSubmit() {
-        setSeeFileUpload(false);
-        setLoading(true);
+        setScreen('loading');
     }
     function onSeeSummary() {
-        setLoading(false);
-        setSeeResults(true);
+        setScreen('summary');
     }
     function onBackToFileUpload() {
-        setSeeResults(false);
-        setSeeFileUpload(true);
+        setScreen('fileUpload');
     }
 
     return (
@@ -36,7 +33,7 @@ export default function Home(): JSX.Element {
             <Navbar />
 
             <div className='container mx-auto pb-5 pt-10'>
-                {seeFileUpload ? (
+                {screen === 'fileUpload' ? (
                     <div className='shadow-tprm-blue-light/60 mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg'>
                         <h3 className='bg-tprm-blue-dark shadow-tprm-blue-dark/80 w-full py-3 text-center text-2xl font-bold text-white shadow-md'>
                             GenAI Evidence Reviewer
@@ -61,7 +58,7 @@ export default function Home(): JSX.Element {
                     </div>
                 ) : null}
 
-                {loading ? (
+                {screen === 'loading' ? (
                     <div className='shadow-tprm-blue-light/60 mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg'>
                         <h3 className='bg-tprm-blue-dark shadow-tprm-blue-dark/80 w-full py-3 text-center text-2xl font-bold text-white shadow-md'>
                             Processing File
@@ -70,7 +67,7 @@ export default function Home(): JSX.Element {
                             Hang tight. This process can take up to 10 minutes.
                         </p>
                         <p className='text-center font-medium text-zinc-600'>
-                            When finished loading, the results will be displayed
+                            When finished loading, the summary will be displayed
                             on the next screen.
                         </p>
                         <svg
@@ -96,7 +93,7 @@ export default function Home(): JSX.Element {
                     </div>
                 ) : null}
 
-                {seeResults ? (
+                {screen === 'summary' ? (
                     <div className='shadow-tprm-blue-light/60 mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg'>
                         <h3 className='bg-tprm-blue-dark shadow-tprm-blue-dark/80 w-full py-3 text-center text-2xl font-bold text-white shadow-md'>
                             Summary
