@@ -18,15 +18,6 @@ export default function Home(): JSX.Element {
             setFile(e.target.files[0]);
         }
     }
-    function onFileSubmit() {
-        setScreen('loading');
-    }
-    function onSeeSummary() {
-        setScreen('summary');
-    }
-    function onBackToFileUpload() {
-        setScreen('fileUpload');
-    }
 
     return (
         <div className='mx-auto w-full flex-col items-center'>
@@ -50,7 +41,7 @@ export default function Home(): JSX.Element {
                         {file ? (
                             <button
                                 className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold shadow-md hover:text-white'
-                                onClick={onFileSubmit}
+                                onClick={() => setScreen('loading')}
                             >
                                 Submit
                             </button>
@@ -86,7 +77,7 @@ export default function Home(): JSX.Element {
                         </svg>
                         <button
                             className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold shadow-md hover:text-white'
-                            onClick={onSeeSummary}
+                            onClick={() => setScreen('summary')}
                         >
                             See Summary
                         </button>
@@ -104,7 +95,7 @@ export default function Home(): JSX.Element {
                         <Documents />
                         <button
                             className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto flex w-fit items-center justify-center gap-1.5 border px-4 py-1.5 font-bold shadow-md hover:text-white'
-                            onClick={onBackToFileUpload}
+                            onClick={() => setScreen('fileUpload')}
                         >
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
