@@ -4,10 +4,8 @@ export default function Home() {
     return (
         <div className='mx-auto w-full flex-col items-center'>
             <Navbar />
-            <div className='container'>
+            <div className='container mx-auto pb-5 pt-10'>
                 <FileUpload />
-                <Documents />
-                <Chat />
             </div>
         </div>
     );

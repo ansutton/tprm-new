@@ -64,7 +64,7 @@ function DownloadButton({
     return (
         <button
             disabled={isDisabled}
-            className={`${isDisabled ? 'bg-tprm-dark-blue px-4 py-1.5 text-zinc-100 opacity-60 shadow-md shadow-tprm-dark-blue' : 'border border-tprm-dark-blue bg-tprm-dark-blue px-4 py-1.5 text-white shadow-md shadow-tprm-dark-blue duration-200 hover:bg-white hover:text-tprm-dark-blue hover:ease-out'}`}
+            className={`${isDisabled ? 'bg-tprm-blue-dark px-4 py-1.5 text-zinc-100 opacity-60 shadow-md shadow-tprm-blue-dark' : 'border border-tprm-blue-dark bg-tprm-blue-dark px-4 py-1.5 text-white shadow-md shadow-tprm-blue-dark duration-200 hover:bg-white hover:text-tprm-blue-dark hover:ease-out'}`}
         >
             Download
         </button>
