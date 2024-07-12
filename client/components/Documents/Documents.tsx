@@ -4,7 +4,7 @@ import { tableContent } from './tableContent';
 export function Documents(): JSX.Element {
     return (
         <div className='w-full'>
-            <table className='mx-auto table-auto bg-gray-50 drop-shadow-md'>
+            <table className='w-full table-auto bg-gray-50 drop-shadow-md'>
                 <thead className='bg-gray-100'>
                     <tr>
                         <TableHead>Document</TableHead>
