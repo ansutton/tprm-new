@@ -25,22 +25,22 @@ export default function Home(): JSX.Element {
 
             <div className='container mx-auto pb-5 pt-10'>
                 {screen === 'fileUpload' ? (
-                    <div className='shadow-tprm-blue-light/60 mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg'>
-                        <h3 className='bg-tprm-blue-dark shadow-tprm-blue-dark/80 w-full py-3 text-center text-2xl font-bold text-white shadow-md'>
+                    <div className='mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg shadow-tprm-blue-light/60'>
+                        <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
                             GenAI Evidence Reviewer
                         </h3>
-                        <p className='bg-tprm-blue-medium shadow-tprm-blue-medium/80 w-full py-2 text-center text-lg font-bold text-white shadow-md'>
+                        <p className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
                             Blank Question Set
                         </p>
                         <input
                             type='file'
                             id='file'
                             onChange={onFileChange}
-                            className='file:border-tprm-blue-dark file:shadow-tprm-blue-dark/80 file:text-tprm-blue-dark hover:file:bg-tprm-blue-dark text-zinc-600 file:mr-4 file:border file:bg-white file:px-4 file:py-1.5 file:font-bold file:shadow-md file:duration-200 hover:file:cursor-pointer hover:file:text-white hover:file:ease-out'
+                            className='text-zinc-600 file:mr-4 file:border file:border-tprm-blue-dark file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:shadow-md file:shadow-tprm-blue-dark/80 file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
                         />
                         {file ? (
                             <button
-                                className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold shadow-md hover:text-white'
+                                className='mx-auto w-fit border border-tprm-blue-dark px-4 py-1.5 font-bold text-tprm-blue-dark shadow-md hover:bg-tprm-blue-dark hover:text-white'
                                 onClick={() => setScreen('loading')}
                             >
                                 Submit
@@ -50,11 +50,11 @@ export default function Home(): JSX.Element {
                 ) : null}
 
                 {screen === 'loading' ? (
-                    <div className='shadow-tprm-blue-light/60 mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg'>
-                        <h3 className='bg-tprm-blue-dark shadow-tprm-blue-dark/80 w-full py-3 text-center text-2xl font-bold text-white shadow-md'>
+                    <div className='mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg shadow-tprm-blue-light/60'>
+                        <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
                             Processing File
                         </h3>
-                        <p className='bg-tprm-blue-medium shadow-tprm-blue-medium/80 w-full py-2 text-center text-lg font-bold text-white shadow-md'>
+                        <p className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
                             Hang tight. This process can take up to 10 minutes.
                         </p>
                         <p className='text-center font-medium text-zinc-600'>
@@ -67,7 +67,7 @@ export default function Home(): JSX.Element {
                             viewBox='0 0 24 24'
                             strokeWidth={1.5}
                             stroke='currentColor'
-                            className='text-tprm-blue-dark mx-auto size-14 animate-spin'
+                            className='mx-auto size-14 animate-spin text-tprm-blue-dark'
                         >
                             <path
                                 strokeLinecap='round'
@@ -76,7 +76,7 @@ export default function Home(): JSX.Element {
                             />
                         </svg>
                         <button
-                            className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto w-fit border px-4 py-1.5 font-bold shadow-md hover:text-white'
+                            className='mx-auto w-fit border border-tprm-blue-dark px-4 py-1.5 font-bold text-tprm-blue-dark shadow-md hover:bg-tprm-blue-dark hover:text-white'
                             onClick={() => setScreen('summary')}
                         >
                             See Summary
@@ -85,16 +85,16 @@ export default function Home(): JSX.Element {
                 ) : null}
 
                 {screen === 'summary' ? (
-                    <div className='shadow-tprm-blue-light/60 mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg'>
-                        <h3 className='bg-tprm-blue-dark shadow-tprm-blue-dark/80 w-full py-3 text-center text-2xl font-bold text-white shadow-md'>
+                    <div className='mx-auto flex w-full max-w-2xl flex-col gap-6 bg-white p-4 shadow-lg shadow-tprm-blue-light/60'>
+                        <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
                             Summary
                         </h3>
-                        <p className='bg-tprm-blue-medium shadow-tprm-blue-medium/80 w-full py-2 text-center text-lg font-bold text-white shadow-md'>
+                        <p className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
                             Neuron RAG-Injested Documents
                         </p>
                         <Documents />
                         <button
-                            className='text-tprm-blue-dark hover:bg-tprm-blue-dark border-tprm-blue-dark mx-auto flex w-fit items-center justify-center gap-1.5 border px-4 py-1.5 font-bold shadow-md hover:text-white'
+                            className='mx-auto flex w-fit items-center justify-center gap-1.5 border border-tprm-blue-dark px-4 py-1.5 font-bold text-tprm-blue-dark shadow-md hover:bg-tprm-blue-dark hover:text-white'
                             onClick={() => setScreen('fileUpload')}
                         >
                             <svg
