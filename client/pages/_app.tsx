@@ -1,11 +1,22 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { Layout } from '@/components';
 import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <>
+            <Head>
+                <title>Neuron | Accelerate.AI</title>
+                <meta
+                    name='description'
+                    content='A Deloitte Third-Party Risk Management application'
+                />
+                <link rel='icon' href='/images/favicon.png' />
+            </Head>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </>
     );
 }

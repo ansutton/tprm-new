@@ -25,7 +25,10 @@ export function Navbar(): JSX.Element {
                 </a>
                 <p className='text-xl text-d-green'>|</p>
                 <h2 className='text-lg text-white'>
-                    Third-Party Risk Management Accelerator
+                    <span>Accelerate</span>
+                    <span className='bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text font-bold text-transparent'>
+                        .AI
+                    </span>
                 </h2>
             </div>
         </div>
