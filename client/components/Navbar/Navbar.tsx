@@ -1,7 +1,7 @@
 export function Navbar(): JSX.Element {
     return (
         <div className='bg-gradient-to-r from-d-green via-pink-500 to-blue-500 pb-1.5 shadow-md shadow-blue-400'>
-            <div className='flex w-full items-center gap-2 bg-black px-3 py-6'>
+            <div className='flex w-full items-center gap-2 bg-black px-4 py-6'>
                 <a href='/' className='flex'>
                     <span className='text-xl font-extrabold text-white'>
                         Deloitte
