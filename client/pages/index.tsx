@@ -71,14 +71,12 @@ export default function Home(): JSX.Element {
                                 className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
                             />
 
-                            {questionsFile && responsesFile && evidenceFile ? (
-                                <Button
-                                    variant='outlined'
-                                    onClick={() => setScreen('loading')}
-                                >
-                                    Submit
-                                </Button>
-                            ) : null}
+                            <Button
+                                variant='outlined'
+                                onClick={() => setScreen('loading')}
+                            >
+                                Submit
+                            </Button>
                         </>
                     ) : null}
 
