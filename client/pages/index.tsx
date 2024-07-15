@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Chat, Documents, Navbar } from '@/components';
+import { Button, Documents, Navbar } from '@/components';
 
 export default function Home(): JSX.Element {
     /**
@@ -11,7 +11,7 @@ export default function Home(): JSX.Element {
     const [file, setFile] = useState<File | null>(null);
 
     /**
-     * Helper Functions
+     * Helper
      */
     function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.files) {
@@ -39,12 +39,12 @@ export default function Home(): JSX.Element {
                             className='text-zinc-600 file:mr-4 file:border file:border-tprm-blue-dark file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:shadow-md file:shadow-tprm-blue-dark/80 file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
                         />
                         {file ? (
-                            <button
-                                className='mx-auto w-fit border border-tprm-blue-dark px-4 py-1.5 font-bold text-tprm-blue-dark shadow-md hover:bg-tprm-blue-dark hover:text-white'
+                            <Button
+                                variant='outlined'
                                 onClick={() => setScreen('loading')}
                             >
                                 Submit
-                            </button>
+                            </Button>
                         ) : null}
                     </div>
                 ) : null}
@@ -75,12 +75,12 @@ export default function Home(): JSX.Element {
                                 d='M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99'
                             />
                         </svg>
-                        <button
-                            className='mx-auto w-fit border border-tprm-blue-dark px-4 py-1.5 font-bold text-tprm-blue-dark shadow-md hover:bg-tprm-blue-dark hover:text-white'
+                        <Button
+                            variant='outlined'
                             onClick={() => setScreen('summary')}
                         >
                             See Summary
-                        </button>
+                        </Button>
                     </div>
                 ) : null}
 
@@ -93,26 +93,28 @@ export default function Home(): JSX.Element {
                             Neuron RAG-Injested Documents
                         </p>
                         <Documents />
-                        <button
-                            className='mx-auto flex w-fit items-center justify-center gap-1.5 border border-tprm-blue-dark px-4 py-1.5 font-bold text-tprm-blue-dark shadow-md hover:bg-tprm-blue-dark hover:text-white'
+                        <Button
+                            variant='outlined'
                             onClick={() => setScreen('fileUpload')}
+                            startIcon={
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    strokeWidth={2.5}
+                                    stroke='currentColor'
+                                    className='size-4'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        d='M15.75 19.5 8.25 12l7.5-7.5'
+                                    />
+                                </svg>
+                            }
                         >
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                strokeWidth={2.5}
-                                stroke='currentColor'
-                                className='size-4'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    d='M15.75 19.5 8.25 12l7.5-7.5'
-                                />
-                            </svg>
-                            <span>Back to File Upload</span>
-                        </button>
+                            Back to File Upload
+                        </Button>
                     </div>
                 ) : null}
             </div>
