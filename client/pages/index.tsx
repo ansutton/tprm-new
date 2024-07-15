@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Button, Card, Documents, Navbar } from '@/components';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Button, Card, Summary, Navbar } from '@/components';
 
 export default function Home(): JSX.Element {
     /**
@@ -8,14 +8,19 @@ export default function Home(): JSX.Element {
     const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
         'fileUpload',
     );
-    const [file, setFile] = useState<File | null>(null);
+    const [questionsFile, setQuestionsFile] = useState<File | null>(null);
+    const [responsesFile, setResponsesFile] = useState<File | null>(null);
+    const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
 
     /**
-     * Helper
+     * Helpers
      */
-    function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function onFileChange(
+        e: React.ChangeEvent<HTMLInputElement>,
+        setState: Dispatch<SetStateAction<File | null>>,
+    ) {
         if (e.target.files) {
-            setFile(e.target.files[0]);
+            setState(e.target.files[0]);
         }
     }
 
@@ -24,22 +29,49 @@ export default function Home(): JSX.Element {
             <Navbar />
 
             <div className='container mx-auto pb-5 pt-10'>
-                <Card>
+                <Card variant={screen === 'summary' ? 'wide' : 'default'}>
                     {screen === 'fileUpload' ? (
                         <>
                             <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
                                 GenAI Evidence Reviewer
                             </h3>
-                            <p className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
+                            <h4 className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
                                 Blank Question Set
-                            </p>
+                            </h4>
                             <input
                                 type='file'
                                 id='file'
-                                onChange={onFileChange}
+                                onChange={(e) =>
+                                    onFileChange(e, setQuestionsFile)
+                                }
                                 className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
                             />
-                            {file ? (
+
+                            <h4 className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
+                                Third Party Responses
+                            </h4>
+                            <input
+                                type='file'
+                                id='file'
+                                onChange={(e) =>
+                                    onFileChange(e, setResponsesFile)
+                                }
+                                className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
+                            />
+
+                            <h4 className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
+                                Third Party Evidence Provided
+                            </h4>
+                            <input
+                                type='file'
+                                id='file'
+                                onChange={(e) =>
+                                    onFileChange(e, setEvidenceFile)
+                                }
+                                className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
+                            />
+
+                            {questionsFile && responsesFile && evidenceFile ? (
                                 <Button
                                     variant='outlined'
                                     onClick={() => setScreen('loading')}
@@ -55,10 +87,10 @@ export default function Home(): JSX.Element {
                             <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
                                 Processing File
                             </h3>
-                            <p className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
+                            <h4 className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
                                 Hang tight. This process can take up to 10
                                 minutes.
-                            </p>
+                            </h4>
                             <p className='text-center font-medium text-zinc-600'>
                                 When finished loading, the summary will be
                                 displayed on the next screen.
@@ -91,10 +123,10 @@ export default function Home(): JSX.Element {
                             <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
                                 Summary
                             </h3>
-                            <p className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
+                            <h4 className='w-full bg-tprm-blue-medium py-2 text-center text-lg font-bold text-white shadow-md shadow-tprm-blue-medium/80'>
                                 Neuron RAG-Injested Documents
-                            </p>
-                            <Documents />
+                            </h4>
+                            <Summary />
                             <Button
                                 variant='outlined'
                                 onClick={() => setScreen('fileUpload')}
