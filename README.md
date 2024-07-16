@@ -14,12 +14,12 @@ pip install -r requirements.txt
 ```powershell
 python app.py
 ```
-> <b>Note</b>: Installing dependencies using the ``requirements.txt`` file may not have successfully installed all the necessary dependencies. Run ``pip install <package name>`` for whatever Python complains about and then try starting the flask server again.
+> <b>Note</b>: Installing dependencies using the ``requirements.txt`` file may not have successfully installed all the necessary dependencies. Run ``pip install <package name>`` for whatever Python complains about and then try starting the Flask server again.
 
 * Download [Postman](https://www.postman.com/downloads/)
 
 > <b>Note</b>: The following backend setup bulletpoints subject to change (as of 07/16/2024).
-* With the flask server succesfully running setup a new POST request in Postman targeting the following endpoint: 
+* With the Flask server succesfully running setup a new POST request in Postman targeting the following endpoint: 
 ```
 http://localhost:8001/load_document
 ```
