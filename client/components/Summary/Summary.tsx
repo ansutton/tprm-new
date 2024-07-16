@@ -25,20 +25,14 @@ export function Summary(): JSX.Element {
                 <tbody>
                     {summarySample.map(
                         (
-                            {
-                                controlQuestion,
-                                tpResponse,
-                                aiAnswer,
-                                answersMatch,
-                                citation,
-                            },
+                            { controlQuestion, answersMatch, citation },
                             index,
                         ) => (
                             <tr key={index} className='odd:bg-blue-50'>
                                 <TableItem variant='cell'>
                                     {controlQuestion}
                                 </TableItem>
-                                <TableItem variant='cell'>
+                                <TableItem variant='cell' centered>
                                     <Link
                                         href={`#third-party-response-${index + 1}`}
                                         className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
@@ -46,7 +40,7 @@ export function Summary(): JSX.Element {
                                         Response {index + 1}
                                     </Link>
                                 </TableItem>
-                                <TableItem variant='cell'>
+                                <TableItem variant='cell' centered>
                                     <Link
                                         href={`#ai-answer-${index + 1}`}
                                         className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
@@ -126,7 +120,7 @@ function TableItem({
     children,
     variant,
 }: TableItemProps): JSX.Element {
-    const centeredClassName = centered ? 'text-center' : '';
+    const centeredClassName = centered ? 'text-center' : 'text-left';
     const finalClasses = `${centeredClassName} p-3 text-sm`;
 
     if (variant === 'head') {
