@@ -14,11 +14,11 @@ pip install -r requirements.txt
 ```powershell
 python app.py
 ```
-<u>Note</u>: Installing dependencies using the ``requirements.txt`` file may not have successfully installed all the necessary dependencies. Run ``pip install <package name>`` for whatever Python complains about and then try starting the flask server again.
+<b>Note</b>: Installing dependencies using the ``requirements.txt`` file may not have successfully installed all the necessary dependencies. Run ``pip install <package name>`` for whatever Python complains about and then try starting the flask server again.
 
 * Download [Postman](https://www.postman.com/downloads/)
 
-<u>Note</u>: The following backend setup bulletpoints subject to change (as of 07/16/2024)
+<b>Note</b>: The following backend setup bulletpoints subject to change (as of 07/16/2024).
 * With the flask server succesfully running setup a new POST request in Postman targeting the following endpoint: 
 ```
 http://localhost:8001/load_document
@@ -31,9 +31,9 @@ http://localhost:8001/load_document
     "filePath": "C:/Users/jacwallace/Repos/TPRM-Accelerator/training_data/office_s1_e4.txt"
 }
 ```
-<u>Note A</u>: Replace the ``filePath`` value with the file path for wherever this file is located on your machine. Replace back slashes -> ``\`` with forward slashes -> ``/``
+<b>Note A</b>: Replace the ``filePath`` value with the file path for wherever this file is located on your machine. Replace back slashes -> ``\`` with forward slashes -> ``/``.
 
-<u>Note B</u>: Python may complain and tell you to ``pip install chromadb`` if you haven't already
+<b>Note B</b>: Python may complain and tell you to ``pip install chromadb`` if you haven't already.
 
 * Once document is successfully loaded, setup a new POST request in Postman targeting:
 ```
@@ -47,7 +47,7 @@ a
    "text": "What is the Alliance about in this episode?"
 }
 ```
-<u>Note</u>: The ``text`` value can be modified to include any relevant question to the ingested data.
+<b>Note</b>: The ``text`` value can be modified to include any relevant question to the ingested data.
 ___
 
 ### Frontend
