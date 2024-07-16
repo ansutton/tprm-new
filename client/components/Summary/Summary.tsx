@@ -1,4 +1,5 @@
-import { Fragment } from 'react';
+import { ReactNode } from 'react';
+import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import {
     Disclosure,
@@ -9,68 +10,161 @@ import { summarySample } from './summarySample';
 
 export function Summary(): JSX.Element {
     return (
-        <div className='w-full divide-y'>
-            {summarySample.map(
-                (
-                    {
-                        controlQuestion,
-                        tpResponse,
-                        aiAnswer,
-                        answersMatch,
-                        citation,
-                    },
-                    index,
-                ) => (
-                    <div key={index} className='py-2'>
-                        <SummaryItem
-                            title={`Control Question ${index + 1}`}
-                            content={controlQuestion}
-                            defaultOpen={true}
-                        />
-                        <SummaryItem
-                            title={`Third Party Response`}
-                            content={tpResponse}
-                        />
-                        <SummaryItem title={`AI Answer`} content={aiAnswer} />
-                        <SummaryItem
-                            title={`Answers Match?`}
-                            content={answersMatch}
-                            defaultOpen={true}
-                        />
-                        <SummaryItem title={`Citation`} content={citation} />
-                    </div>
-                ),
-            )}
-        </div>
+        <>
+            <table className='w-full table-auto bg-gray-50 drop-shadow-md'>
+                <thead className='bg-gray-100'>
+                    <tr>
+                        <TableItem variant='head'>Control Question</TableItem>
+                        <TableItem variant='head'>TP Response</TableItem>
+                        <TableItem variant='head'>AI&apos;s Answer</TableItem>
+                        <TableItem variant='head'>Answers Match?</TableItem>
+                        <TableItem variant='head'>Citation</TableItem>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {summarySample.map(
+                        (
+                            {
+                                controlQuestion,
+                                tpResponse,
+                                aiAnswer,
+                                answersMatch,
+                                citation,
+                            },
+                            index,
+                        ) => (
+                            <tr key={index} className='odd:bg-blue-50'>
+                                <TableItem variant='cell'>
+                                    {controlQuestion}
+                                </TableItem>
+                                <TableItem variant='cell'>
+                                    <Link
+                                        href={`#third-party-response-${index + 1}`}
+                                        className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
+                                    >
+                                        Response {index + 1}
+                                    </Link>
+                                </TableItem>
+                                <TableItem variant='cell'>
+                                    <Link
+                                        href={`#ai-answer-${index + 1}`}
+                                        className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
+                                    >
+                                        Answer {index + 1}
+                                    </Link>
+                                </TableItem>
+                                <TableItem variant='cell' centered>
+                                    {answersMatch}
+                                </TableItem>
+                                <TableItem variant='cell'>{citation}</TableItem>
+                            </tr>
+                        ),
+                    )}
+                </tbody>
+            </table>
+
+            <div className='w-full divide-y'>
+                {summarySample.map(
+                    (
+                        {
+                            controlQuestion,
+                            tpResponse,
+                            aiAnswer,
+                            answersMatch,
+                            citation,
+                        },
+                        index,
+                    ) => (
+                        <div key={index} className='py-2'>
+                            <SummaryItem
+                                title={`Control Question ${index + 1}`}
+                                content={controlQuestion}
+                                defaultOpen
+                                id={`control-question-${index + 1}`}
+                            />
+                            <SummaryItem
+                                title={`Third Party Response ${index + 1}`}
+                                content={tpResponse}
+                                defaultOpen
+                                id={`third-party-response-${index + 1}`}
+                            />
+                            <SummaryItem
+                                title={`AI Answer ${index + 1}`}
+                                content={aiAnswer}
+                                defaultOpen
+                                id={`ai-answer-${index + 1}`}
+                            />
+                            <SummaryItem
+                                title={`Answers Match?`}
+                                content={answersMatch}
+                                defaultOpen
+                                id={`answers-match-${index + 1}`}
+                            />
+                            <SummaryItem
+                                title={`Citation`}
+                                content={citation}
+                                defaultOpen
+                                id={`citaton-${index + 1}`}
+                            />
+                        </div>
+                    ),
+                )}
+            </div>
+        </>
     );
+}
+
+interface TableItemProps {
+    centered?: boolean;
+    children: ReactNode;
+    variant: 'head' | 'cell';
+}
+
+function TableItem({
+    centered = false,
+    children,
+    variant,
+}: TableItemProps): JSX.Element {
+    const centeredClassName = centered ? 'text-center' : '';
+    const finalClasses = `${centeredClassName} p-3 text-sm`;
+
+    if (variant === 'head') {
+        return <th className={finalClasses}>{children}</th>;
+    }
+    return <td className={finalClasses}>{children}</td>;
 }
 
 interface SummaryItemProps {
     content: string | JSX.Element;
     defaultOpen?: boolean;
+    id: string;
     title: string;
 }
 
 function SummaryItem({
     content,
     defaultOpen = false,
+    id,
     title,
 }: SummaryItemProps): JSX.Element {
     return (
-        <Disclosure defaultOpen={defaultOpen}>
-            {({ open }) => (
-                <>
-                    <DisclosureButton className='flex w-full items-center justify-between font-bold'>
-                        <h5 className='py-2'>{title}</h5>
-                        <ChevronDownIcon
-                            className={`${open ? 'rotate-180' : ''} w-5`}
-                        />
-                    </DisclosureButton>
-                    <DisclosurePanel className='px-2'>
-                        {content}
-                    </DisclosurePanel>
-                </>
-            )}
-        </Disclosure>
+        <div id={id}>
+            <Disclosure defaultOpen={defaultOpen}>
+                {({ open }) => (
+                    <>
+                        <DisclosureButton className='flex w-full items-center justify-between font-bold'>
+                            <h5 className='py-2'>{title}</h5>
+                            <ChevronDownIcon
+                                className={`${open ? 'rotate-180' : ''} w-5`}
+                            />
+                        </DisclosureButton>
+                        <DisclosurePanel className='px-2'>
+                            {content}
+                        </DisclosurePanel>
+                    </>
+                )}
+            </Disclosure>
+        </div>
     );
 }
