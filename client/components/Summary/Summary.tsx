@@ -1,64 +1,76 @@
-import { ReactNode } from 'react';
+import { Fragment } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/16/solid';
+import {
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+} from '@headlessui/react';
 import { summarySample } from './summarySample';
 
 export function Summary(): JSX.Element {
     return (
-        <div className='w-full'>
-            <table className='w-full table-auto bg-gray-50 drop-shadow-md'>
-                <thead className='bg-gray-100'>
-                    <tr>
-                        <TableHead>Control Question</TableHead>
-                        <TableHead>TP Response</TableHead>
-                        <TableHead>AI&apos;s Answer</TableHead>
-                        <TableHead>Answers Match?</TableHead>
-                        <TableHead>Citation</TableHead>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {summarySample.map(
-                        (
-                            {
-                                controlQuestion,
-                                tpResponse,
-                                aiAnswer,
-                                answersMatch,
-                                citation,
-                            },
-                            index,
-                        ) => (
-                            <tr key={index} className='odd:bg-blue-50'>
-                                <TableCell>{controlQuestion}</TableCell>
-                                <TableCell>{tpResponse}</TableCell>
-                                <TableCell>{aiAnswer}</TableCell>
-                                <TableCell centered>{answersMatch}</TableCell>
-                                <TableCell>{citation}</TableCell>
-                            </tr>
-                        ),
-                    )}
-                </tbody>
-            </table>
+        <div className='w-full divide-y'>
+            {summarySample.map(
+                (
+                    {
+                        controlQuestion,
+                        tpResponse,
+                        aiAnswer,
+                        answersMatch,
+                        citation,
+                    },
+                    index,
+                ) => (
+                    <div key={index} className='py-2'>
+                        <SummaryItem
+                            title={`Control Question ${index + 1}`}
+                            content={controlQuestion}
+                            defaultOpen={true}
+                        />
+                        <SummaryItem
+                            title={`Third Party Response`}
+                            content={tpResponse}
+                        />
+                        <SummaryItem title={`AI Answer`} content={aiAnswer} />
+                        <SummaryItem
+                            title={`Answers Match?`}
+                            content={answersMatch}
+                            defaultOpen={true}
+                        />
+                        <SummaryItem title={`Citation`} content={citation} />
+                    </div>
+                ),
+            )}
         </div>
     );
 }
 
-interface TableItemProps {
-    children: ReactNode;
+interface SummaryItemProps {
+    content: string | JSX.Element;
+    defaultOpen?: boolean;
+    title: string;
 }
 
-function TableHead({ children }: TableItemProps): JSX.Element {
-    return <th className='p-3 text-left'>{children}</th>;
-}
-
-interface TableCellProps extends TableItemProps {
-    centered?: boolean;
-}
-
-function TableCell({
-    centered = false,
-    children,
-}: TableCellProps): JSX.Element {
+function SummaryItem({
+    content,
+    defaultOpen = false,
+    title,
+}: SummaryItemProps): JSX.Element {
     return (
-        <td className={`${centered ? 'text-center' : ''} p-3`}>{children}</td>
+        <Disclosure defaultOpen={defaultOpen}>
+            {({ open }) => (
+                <>
+                    <DisclosureButton className='flex w-full items-center justify-between font-bold'>
+                        <h5 className='py-2'>{title}</h5>
+                        <ChevronDownIcon
+                            className={`${open ? 'rotate-180' : ''} w-5`}
+                        />
+                    </DisclosureButton>
+                    <DisclosurePanel className='px-2'>
+                        {content}
+                    </DisclosurePanel>
+                </>
+            )}
+        </Disclosure>
     );
 }
