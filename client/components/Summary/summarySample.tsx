@@ -1,15 +1,17 @@
+import Link from 'next/link';
+
 interface CitationProps {
     url: string;
 }
 
 function Citation({ url }: CitationProps) {
     return (
-        <a
+        <Link
             href={url}
             className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
         >
             {url}
-        </a>
+        </Link>
     );
 }
 

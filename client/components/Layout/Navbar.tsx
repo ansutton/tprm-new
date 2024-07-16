@@ -1,8 +1,10 @@
+import Link from 'next/link';
+
 export function Navbar(): JSX.Element {
     return (
         <div className='bg-gradient-to-r from-d-green via-pink-500 to-blue-500 pb-1.5 shadow-md shadow-blue-400'>
             <div className='flex w-full items-center gap-2 bg-black px-4 py-6'>
-                <a href='/' className='flex'>
+                <Link href='/' className='flex'>
                     <span className='text-xl font-extrabold text-white'>
                         Deloitte
                     </span>
@@ -16,13 +18,13 @@ export function Navbar(): JSX.Element {
                             <circle cx='50' cy='50' r='50' />
                         </svg>
                     </span>
-                </a>
+                </Link>
                 <p className='text-xl text-d-green'>|</p>
-                <a href='/'>
+                <Link href='/'>
                     <h1 className='bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-xl font-bold text-transparent hover:from-pink-500 hover:to-blue-500'>
                         Neuron
                     </h1>
-                </a>
+                </Link>
                 <p className='text-xl text-d-green'>|</p>
                 <h2 className='text-xl text-white'>
                     <span className='font-bold text-d-green'>Accelerate</span>
