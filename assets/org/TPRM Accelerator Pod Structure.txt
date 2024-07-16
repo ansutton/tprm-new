@@ -1,0 +1,27 @@
+1. Application Developer (Full time : A-C level)
+-> Needs TypeScript / JavaScript and Node experience
+-> Deep understanding of JavaScript ecosystem 
+-> Python experience nice to have
+-> AI and LLM application development experience nice to have
+
+2. Data Scientist (Full time : C-SC level)
+-> Needs Python, Jupyter Notebook experience
+-> Experience finetuning LLMs for use in custom applications
+-> Understanding of local vs cloud based AI design practices and deployment
+
+3. DevSecOps / Cloud Engineer (Part-time to start, potentially fulltime : SC-M level)
+-> Needs AWSCloud, Azure DevOps, GCP and / or GitHub Actions experience
+-> Experience designing and architecting pipelines for software delivery
+-> Experience with Cyber Security tools such as Prisma and SonarQube
+
+4. Outbound Product Manager / Project Manager / Scrum Master (Part-time : A-SC level)
+-> Experience with Confluence / JIRA or other task managements boards
+-> Experience leading data scientist and application development teams
+-> Experience communicating technical and functional requirements to stakeholders
+
+5. Inbound Product Manager / Technical Lead (Part-time : SC-SM level)
+-> Experience with wireframing mock up applications like Figma
+-> Experience designing software products, user interfaces (UI) and user experiences (UX)
+-> Experience designing and managing product roadmaps according to business and stakeholder needs
+-> Experience writing user journeys
+-> Experience with technical project management, GitHub issues, feature branching, release + version control
