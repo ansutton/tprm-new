@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Button } from '@/components';
 import { tableContent } from './tableContent';
 
 export function Documents(): JSX.Element {
@@ -22,7 +23,14 @@ export function Documents(): JSX.Element {
                                 <TableCell centered>{ragInjested}</TableCell>
                                 <TableCell>{date}</TableCell>
                                 <TableCell>
-                                    <DownloadButton isDisabled={!isActive} />
+                                    <Button
+                                        variant={
+                                            isActive ? 'outlined' : 'disabled'
+                                        }
+                                        onClick={() => null}
+                                    >
+                                        Download
+                                    </Button>
                                 </TableCell>
                             </tr>
                         ),
@@ -51,22 +59,5 @@ function TableCell({
 }: TableCellProps): JSX.Element {
     return (
         <td className={`${centered ? 'text-center' : ''} p-3`}>{children}</td>
-    );
-}
-
-interface DownloadButtonProps {
-    isDisabled?: boolean;
-}
-
-function DownloadButton({
-    isDisabled = false,
-}: DownloadButtonProps): JSX.Element {
-    return (
-        <button
-            disabled={isDisabled}
-            className={`${isDisabled ? 'bg-tprm-blue-dark px-4 py-1.5 text-zinc-100 opacity-60 shadow-md shadow-tprm-blue-dark' : 'border border-tprm-blue-dark bg-tprm-blue-dark px-4 py-1.5 text-white shadow-md shadow-tprm-blue-dark duration-200 hover:bg-white hover:text-tprm-blue-dark hover:ease-out'}`}
-        >
-            Download
-        </button>
     );
 }
