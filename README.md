@@ -28,12 +28,12 @@ http://localhost:8001/load_document
 
 ```JSON
 {
-    "filePath": "C:/Users/jacwallace/Repos/TPRM-Accelerator/training_data/office_s1_e4.txt" 
-    // replace with wherever this file is on your machine. Use forward slashes -> /
+    "filePath": "C:/Users/jacwallace/Repos/TPRM-Accelerator/training_data/office_s1_e4.txt"
 }
 ```
+<u>Note A</u>: Replace the ``filePath`` value with the file path for wherever this file is located on your machine. Replace back slashes -> ``\`` with forward slashes -> ``/``
 
-<u>Note</u>: Python may complain and tell you to ``pip install chromadb`` if you haven't already
+<u>Note B</u>: Python may complain and tell you to ``pip install chromadb`` if you haven't already
 
 * Once document is successfully loaded, setup a new POST request in Postman targeting:
 ```
@@ -45,9 +45,9 @@ a
 ```JSON
 {
    "text": "What is the Alliance about in this episode?"
-   // Value can be modified to include any relevant question to the ingested data.
 }
 ```
+<u>Note</u>: The ``text`` value can be modified to include any relevant question to the ingested data.
 ___
 
 ### Frontend
