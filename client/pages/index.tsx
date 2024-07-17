@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Button, Card, Summary, Navbar } from '@/components';
+import { Button, Card, Summary, Topbar } from '@/components';
 
 export default function Home(): JSX.Element {
     /**
@@ -26,7 +26,7 @@ export default function Home(): JSX.Element {
 
     return (
         <div className='mx-auto w-full flex-col items-center'>
-            <Navbar />
+            <Topbar />
 
             <div className='container mx-auto pb-5 pt-10'>
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>

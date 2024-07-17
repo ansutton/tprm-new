@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export function Navbar(): JSX.Element {
+export function Topbar(): JSX.Element {
     return (
         <div className='bg-gradient-to-r from-d-green via-pink-500 to-blue-500 pb-1.5 shadow-md shadow-blue-400'>
             <div className='flex w-full items-center gap-2 bg-black px-4 py-6'>
