@@ -13,6 +13,9 @@ from langchain_community.chat_models import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
 
+from langchain_community.document_loaders import UnstructuredPDFLoader
+from langchain_community.document_loaders import OnlinePDFLoader
+
 from pathlib import Path
 from pydantic import BaseModel
 
@@ -52,8 +55,15 @@ def load_document():
         filePath = request_data['filePath']        
 
         # Load document txt
-        with open(filePath) as f:
-            data = f.read()
+        # with open(filePath) as f:
+        #     data = f.read()
+
+        # Local PDF file uploads
+        if filePath:
+            loader = UnstructuredPDFLoader(file_path=filePath)
+            data = loader.load()
+        else:
+            print("Upload a PDF file")
 
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=7500,
