@@ -29,7 +29,7 @@ export default function Home(): JSX.Element {
             <Topbar />
 
             <div className='container mx-auto pb-5 pt-10'>
-                <Card variant={screen === 'summary' ? 'wide' : 'default'}>
+                {/* <Card variant={screen === 'summary' ? 'wide' : 'default'}>
                     {screen === 'fileUpload' ? (
                         <>
                             <h3 className='w-full bg-tprm-blue-dark py-3 text-center text-2xl font-bold text-white shadow-md shadow-tprm-blue-dark/80'>
@@ -133,7 +133,7 @@ export default function Home(): JSX.Element {
                             </Button>
                         </>
                     ) : null}
-                </Card>
+                </Card> */}
             </div>
         </div>
     );
