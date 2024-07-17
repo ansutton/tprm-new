@@ -9,9 +9,6 @@ const config: Config = {
     theme: {
         container: { center: true, padding: '1rem' },
         extend: {
-            // backgroundImage: {
-            //     'clipboard-pen': 'url("/images/clipboard-pen.jpg")', // TODO: fix this path according to https://github.com/tailwindlabs/tailwindcss/discussions/5504
-            // },
             colors: {
                 'd-green': 'hsl(81, 67%, 44%)',
                 'tprm-blue-light': 'hsl(218, 52%, 52%)',

@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-    /* * {
-        @apply bg-[path-to-image];
-    } */
     .app-background {
         background: radial-gradient(#1e1b4b 0.5%, #09090b 40%);
     }
