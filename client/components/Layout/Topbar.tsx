@@ -50,7 +50,7 @@ export function Topbar(): JSX.Element {
                     <Pipe />
 
                     <h2 className='text-lg text-white'>
-                        <span className='font-bold text-d-green/90'>
+                        <span className='font-bold text-d-green dark:text-d-green/90'>
                             Accelerate
                         </span>
                         <span className='bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent'>
