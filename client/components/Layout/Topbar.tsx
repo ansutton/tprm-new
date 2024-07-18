@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
@@ -31,7 +31,7 @@ export function Topbar(): JSX.Element {
                             </svg>
                         </span>
                     </Link>
-                    <Bar />
+                    <Pipe />
                     <Link href='/'>
                         <h1
                             className={clsx(
@@ -44,7 +44,7 @@ export function Topbar(): JSX.Element {
                             Neuron
                         </h1>
                     </Link>
-                    <Bar />
+                    <Pipe />
                     <h2 className='text-lg text-white'>
                         <span className='font-bold text-d-green/90'>
                             Accelerate
@@ -61,7 +61,7 @@ export function Topbar(): JSX.Element {
     );
 }
 
-function Bar(): JSX.Element {
+function Pipe(): JSX.Element {
     return (
         <p className='bg-gradient-to-t from-zinc-800 via-zinc-400 to-zinc-800 bg-clip-text text-2xl font-extrabold text-transparent'>
             |
@@ -71,14 +71,26 @@ function Bar(): JSX.Element {
 
 function ThemeMenu(): JSX.Element {
     /**
+     * Constants
+     */
+    const iconClassesBase = tw`size-5 stroke-2`;
+
+    /**
      * Custom Hooks
      */
     const { theme, resolvedTheme, setTheme } = useTheme();
 
     /**
-     * Constants
+     * State Hooks
      */
-    const iconClassesBase = tw`size-5 stroke-2`;
+    const [mounted, setMounted] = useState(false);
+
+    /**
+     * Effect Hooks
+     */
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     /**
      * Helpers
@@ -115,17 +127,24 @@ function ThemeMenu(): JSX.Element {
             </button>
         );
     }
-    function IconSystem(): JSX.Element {
+    interface IconSystemProps {
+        additionalClasses?: string;
+    }
+    function IconSystem({ additionalClasses }: IconSystemProps): JSX.Element {
         return (
             <>
                 <ComputerDesktopIcon
-                    className={`${iconClassesBase} hidden md:block`}
+                    className={`${iconClassesBase} ${additionalClasses} hidden md:block`}
                 />
                 <DevicePhoneMobileIcon
-                    className={`${iconClassesBase} md:hidden`}
+                    className={`${iconClassesBase} ${additionalClasses} md:hidden`}
                 />
             </>
         );
+    }
+
+    if (!mounted) {
+        return <></>;
     }
 
     return (
@@ -140,15 +159,18 @@ function ThemeMenu(): JSX.Element {
                     {theme === 'light' ? (
                         <SunIcon className={iconClassesBase} />
                     ) : null}
-                    {theme === 'system' ? <IconSystem /> : null}
+                    {theme === 'system' ? (
+                        <IconSystem additionalClasses='dark:stroke-zinc-300' />
+                    ) : null}
                 </MenuButton>
 
                 <MenuItems
                     transition
                     anchor='bottom end'
                     className={clsx(
-                        'stroke-700 mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold text-zinc-700 shadow-lg',
-                        'dark:white/5 dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
+                        'mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
+                        'stroke-700 text-zinc-700',
+                        'dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
                         'ring-1 ring-zinc-900/10',
                         'dark:ring-0',
                     )}
