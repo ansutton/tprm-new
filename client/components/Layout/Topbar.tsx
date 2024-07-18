@@ -14,7 +14,7 @@ import { tw } from '@/utils';
 export function Topbar(): JSX.Element {
     return (
         <div className='flex w-full justify-around bg-gradient-to-r from-d-green/50 via-indigo-950 to-d-green/50 pb-0.5 shadow-sm shadow-indigo-500/50'>
-            <div className='flex w-full items-center justify-between bg-white px-4 py-3 dark:bg-black'>
+            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-3 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
                     <Link href='/' className='flex'>
                         <span className='text-lg font-extrabold dark:text-white'>
@@ -73,12 +73,60 @@ function ThemeMenu(): JSX.Element {
     /**
      * Custom Hooks
      */
-    const { theme, setTheme } = useTheme();
+    const { theme, resolvedTheme, setTheme } = useTheme();
 
     /**
      * Constants
      */
     const iconClassesBase = tw`size-5 stroke-2`;
+
+    /**
+     * Helpers
+     */
+    function systemSelectedClasses(): string {
+        if (theme === 'system') {
+            if (resolvedTheme === 'light') {
+                return tw`stroke-indigo-600 text-indigo-600`;
+            }
+            return tw`stroke-indigo-400 text-indigo-400`;
+        }
+        return '';
+    }
+
+    /**
+     * Components
+     */
+    interface ThemeButtonProps {
+        additionalClasses?: string;
+        children: ReactNode;
+        onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    }
+    function ThemeButton({
+        additionalClasses,
+        children,
+        onClick,
+    }: ThemeButtonProps): JSX.Element {
+        return (
+            <button
+                onClick={onClick}
+                className={`${additionalClasses} flex items-center gap-2 px-2 py-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-800`}
+            >
+                {children}
+            </button>
+        );
+    }
+    function IconSystem(): JSX.Element {
+        return (
+            <>
+                <ComputerDesktopIcon
+                    className={`${iconClassesBase} hidden md:block`}
+                />
+                <DevicePhoneMobileIcon
+                    className={`${iconClassesBase} md:hidden`}
+                />
+            </>
+        );
+    }
 
     return (
         <>
@@ -88,70 +136,59 @@ function ThemeMenu(): JSX.Element {
                         <MoonIcon
                             className={`${iconClassesBase} stroke-zinc-300`}
                         />
-                    ) : (
+                    ) : null}
+                    {theme === 'light' ? (
                         <SunIcon className={iconClassesBase} />
-                    )}
+                    ) : null}
+                    {theme === 'system' ? <IconSystem /> : null}
                 </MenuButton>
 
                 <MenuItems
                     transition
                     anchor='bottom end'
                     className={clsx(
-                        'mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold text-zinc-700 shadow-lg',
-                        'dark:white/5 dark:bg-zinc-900 dark:text-zinc-300',
+                        'stroke-700 mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold text-zinc-700 shadow-lg',
+                        'dark:white/5 dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
                         'ring-1 ring-zinc-900/10',
                         'dark:ring-0',
                     )}
                 >
                     <MenuItem>
-                        <ThemeButton onClick={() => setTheme('dark')}>
-                            <MoonIcon
-                                className={`${iconClassesBase} stroke-zinc-600 dark:stroke-indigo-400`}
-                            />
-                            <span className='text-zinc-600 dark:text-indigo-400'>
-                                Dark
-                            </span>
+                        <ThemeButton
+                            additionalClasses={
+                                theme === 'dark'
+                                    ? 'text-indigo-400 stroke-indigo-400'
+                                    : ''
+                            }
+                            onClick={() => setTheme('dark')}
+                        >
+                            <MoonIcon className={`${iconClassesBase}`} />
+                            Dark
                         </ThemeButton>
                     </MenuItem>
                     <MenuItem>
-                        <ThemeButton onClick={() => setTheme('light')}>
-                            <SunIcon
-                                className={`${iconClassesBase} stroke-indigo-600 dark:stroke-zinc-400`}
-                            />
-                            <span className='text-indigo-600 dark:text-zinc-400'>
-                                Light
-                            </span>
+                        <ThemeButton
+                            additionalClasses={
+                                theme === 'light'
+                                    ? 'text-indigo-600 stroke-indigo-600'
+                                    : ''
+                            }
+                            onClick={() => setTheme('light')}
+                        >
+                            <SunIcon className={`${iconClassesBase}`} />
+                            Light
                         </ThemeButton>
                     </MenuItem>
-                    {/* <MenuItem>
-                        <ThemeButton onClick={() => setTheme('system')}>
-                            <ComputerDesktopIcon
-                                className={tw`${iconClassesBase} hidden md:block`}
-                            />
-                            <DevicePhoneMobileIcon
-                                className={tw`${iconClassesBase} md:hidden`}
-                            />
-                            System
+                    <MenuItem>
+                        <ThemeButton
+                            additionalClasses={systemSelectedClasses()}
+                            onClick={() => setTheme('system')}
+                        >
+                            <IconSystem /> System
                         </ThemeButton>
-                    </MenuItem> */}
+                    </MenuItem>
                 </MenuItems>
             </Menu>
         </>
-    );
-}
-
-interface ThemeButtonProps {
-    children: ReactNode;
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-function ThemeButton({ children, onClick }: ThemeButtonProps): JSX.Element {
-    return (
-        <button
-            onClick={onClick}
-            className='flex items-center gap-2 px-2 py-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-        >
-            {children}
-        </button>
     );
 }
