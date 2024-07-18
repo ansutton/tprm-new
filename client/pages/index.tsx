@@ -3,7 +3,7 @@ import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 
 export default function Home(): JSX.Element {
     /**
-     * useStates
+     * State Hooks
      */
     const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
         'fileUpload',

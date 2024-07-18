@@ -31,7 +31,9 @@ export function Topbar(): JSX.Element {
                             </svg>
                         </span>
                     </Link>
+
                     <Pipe />
+
                     <Link href='/'>
                         <h1
                             className={clsx(
@@ -44,7 +46,9 @@ export function Topbar(): JSX.Element {
                             Neuron
                         </h1>
                     </Link>
+
                     <Pipe />
+
                     <h2 className='text-lg text-white'>
                         <span className='font-bold text-d-green/90'>
                             Accelerate
@@ -93,7 +97,7 @@ function ThemeMenu(): JSX.Element {
     }, []);
 
     /**
-     * Helpers
+     * Helper Functions
      */
     function systemSelectedClasses(): string {
         if (theme === 'system') {
@@ -143,74 +147,75 @@ function ThemeMenu(): JSX.Element {
         );
     }
 
+    /**
+     * Return Statements
+     */
     if (!mounted) {
         return <></>;
     }
 
     return (
-        <>
-            <Menu>
-                <MenuButton className='rounded-lg p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
-                    {theme === 'dark' ? (
-                        <MoonIcon
-                            className={`${iconClassesBase} stroke-zinc-300`}
-                        />
-                    ) : null}
-                    {theme === 'light' ? (
-                        <SunIcon className={iconClassesBase} />
-                    ) : null}
-                    {theme === 'system' ? (
-                        <IconSystem additionalClasses='dark:stroke-zinc-300' />
-                    ) : null}
-                </MenuButton>
+        <Menu>
+            <MenuButton className='rounded-lg p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+                {theme === 'dark' ? (
+                    <MoonIcon
+                        className={`${iconClassesBase} stroke-zinc-300`}
+                    />
+                ) : null}
+                {theme === 'light' ? (
+                    <SunIcon className={iconClassesBase} />
+                ) : null}
+                {theme === 'system' ? (
+                    <IconSystem additionalClasses='dark:stroke-zinc-300' />
+                ) : null}
+            </MenuButton>
 
-                <MenuItems
-                    transition
-                    anchor='bottom end'
-                    className={clsx(
-                        'mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
-                        'stroke-700 text-zinc-700',
-                        'dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
-                        'ring-1 ring-zinc-900/10',
-                        'dark:ring-0',
-                    )}
-                >
-                    <MenuItem>
-                        <ThemeButton
-                            additionalClasses={
-                                theme === 'dark'
-                                    ? 'text-indigo-400 stroke-indigo-400'
-                                    : ''
-                            }
-                            onClick={() => setTheme('dark')}
-                        >
-                            <MoonIcon className={`${iconClassesBase}`} />
-                            Dark
-                        </ThemeButton>
-                    </MenuItem>
-                    <MenuItem>
-                        <ThemeButton
-                            additionalClasses={
-                                theme === 'light'
-                                    ? 'text-indigo-600 stroke-indigo-600'
-                                    : ''
-                            }
-                            onClick={() => setTheme('light')}
-                        >
-                            <SunIcon className={`${iconClassesBase}`} />
-                            Light
-                        </ThemeButton>
-                    </MenuItem>
-                    <MenuItem>
-                        <ThemeButton
-                            additionalClasses={systemSelectedClasses()}
-                            onClick={() => setTheme('system')}
-                        >
-                            <IconSystem /> System
-                        </ThemeButton>
-                    </MenuItem>
-                </MenuItems>
-            </Menu>
-        </>
+            <MenuItems
+                transition
+                anchor='bottom end'
+                className={clsx(
+                    'mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
+                    'stroke-700 text-zinc-700',
+                    'dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
+                    'ring-1 ring-zinc-900/10',
+                    'dark:ring-0',
+                )}
+            >
+                <MenuItem>
+                    <ThemeButton
+                        additionalClasses={
+                            theme === 'dark'
+                                ? 'text-indigo-400 stroke-indigo-400'
+                                : ''
+                        }
+                        onClick={() => setTheme('dark')}
+                    >
+                        <MoonIcon className={`${iconClassesBase}`} />
+                        Dark
+                    </ThemeButton>
+                </MenuItem>
+                <MenuItem>
+                    <ThemeButton
+                        additionalClasses={
+                            theme === 'light'
+                                ? 'text-indigo-600 stroke-indigo-600'
+                                : ''
+                        }
+                        onClick={() => setTheme('light')}
+                    >
+                        <SunIcon className={`${iconClassesBase}`} />
+                        Light
+                    </ThemeButton>
+                </MenuItem>
+                <MenuItem>
+                    <ThemeButton
+                        additionalClasses={systemSelectedClasses()}
+                        onClick={() => setTheme('system')}
+                    >
+                        <IconSystem /> System
+                    </ThemeButton>
+                </MenuItem>
+            </MenuItems>
+        </Menu>
     );
 }
