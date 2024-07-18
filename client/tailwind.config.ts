@@ -6,7 +6,7 @@ const config: Config = {
         './components/**/*.{js,ts,jsx,tsx,mdx}',
         './app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
-    darkMode: 'selector',
+    darkMode: 'class',
     theme: {
         container: { center: true, padding: '1rem' },
         extend: {
