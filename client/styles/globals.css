@@ -4,6 +4,9 @@
 
 @layer base {
     .app-background {
-        background: radial-gradient(#1e1b4b 0.5%, #09090b 40%);
+        background: radial-gradient(
+            #1e1b4b 0.5%,
+            #09090b 40%
+        ); /* indigo-950, zinc-950 */
     }
 }
