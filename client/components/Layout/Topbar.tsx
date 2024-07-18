@@ -5,6 +5,7 @@ import {
     MoonIcon,
     SunIcon,
 } from '@heroicons/react/24/outline';
+import { useTheme } from 'next-themes';
 import { tw } from '@/utils';
 
 export function Topbar(): JSX.Element {
@@ -41,7 +42,6 @@ export function Topbar(): JSX.Element {
                         .AI
                     </span>
                     <IconButtonsTheme />
-                    {/* <IconButtonsTheme classes='size-5 stroke-zinc-300' /> */}
                 </h2>
                 <div className='flex w-full bg-pink-500'></div>
             </div>
@@ -57,19 +57,38 @@ function Bar(): JSX.Element {
     );
 }
 
-interface IconButtonsThemeProps {
-    classes: string;
-}
-
 function IconButtonsTheme(): JSX.Element {
+    /**
+     * Custom Hooks
+     */
+    const { theme, setTheme } = useTheme();
+
+    /**
+     * Helpers
+     */
     const classes = tw`size-5 stroke-zinc-300`;
+    function onSetTheme(theme: 'dark' | 'light' | 'system') {
+        switch (theme) {
+            case 'dark':
+                break;
+            case 'light':
+                break;
+            case 'system':
+                break;
+
+            default:
+                break;
+        }
+    }
 
     return (
         <>
-            <ComputerDesktopIcon className={classes} />
-            <DevicePhoneMobileIcon className={classes} />
-            <MoonIcon className={classes} />
-            <SunIcon className={classes} />
+            <button onClick={() => null}>
+                <ComputerDesktopIcon className={classes} />
+                <DevicePhoneMobileIcon className={classes} />
+                <MoonIcon className={classes} />
+                <SunIcon className={classes} />
+            </button>
         </>
     );
 }

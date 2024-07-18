@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { ThemeProvider } from 'next-themes';
 import { Layout } from '@/components';
 import '@/styles/globals.css';
 
@@ -14,9 +15,12 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <link rel='icon' href='/images/favicon.png' />
             </Head>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+
+            <ThemeProvider>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </ThemeProvider>
         </>
     );
 }
