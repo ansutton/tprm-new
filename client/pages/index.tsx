@@ -13,7 +13,7 @@ export default function Home(): JSX.Element {
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
 
     /**
-     * Helpers
+     * Helper Functions
      */
     function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
