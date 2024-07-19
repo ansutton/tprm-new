@@ -183,7 +183,7 @@ function ThemeMenu(): JSX.Element {
                 transition
                 anchor='bottom end'
                 className={clsx(
-                    'mt-4 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
+                    'mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
                     'stroke-700 text-zinc-700',
                     'dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
                     'ring-1 ring-zinc-900/10',
