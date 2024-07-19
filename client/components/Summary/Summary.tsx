@@ -10,7 +10,7 @@ import { summarySample } from './summarySample';
 
 export function Summary(): JSX.Element {
     return (
-        <>
+        <div className='text-black'>
             <table className='w-full table-auto bg-gray-50 drop-shadow-md'>
                 <thead className='bg-gray-100'>
                     <tr>
@@ -105,7 +105,7 @@ export function Summary(): JSX.Element {
                     ),
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

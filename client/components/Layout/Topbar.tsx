@@ -13,7 +13,15 @@ import { tw } from '@/utils';
 
 export function Topbar(): JSX.Element {
     return (
-        <div className='flex w-full justify-around bg-gradient-to-r from-d-green/50 via-indigo-950 to-d-green/50 pb-0.5 shadow-sm shadow-indigo-500/50'>
+        <div
+            className={clsx(
+                'flex w-full justify-around bg-gradient-to-r pb-0.5 shadow-sm',
+                'from-d-green via-indigo-400 to-d-green',
+                'dark:from-d-green/50 dark:via-indigo-950 dark:to-d-green/50',
+                'shadow-indigo-400/80',
+                'dark:shadow-indigo-500/50',
+            )}
+        >
             <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-3 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
                     <Link href='/' className='flex'>
@@ -41,6 +49,7 @@ export function Topbar(): JSX.Element {
                                 'dark:to-zinc-400',
                                 'bg-clip-text text-lg font-bold text-transparent',
                                 'hover:from-indigo-500 hover:to-indigo-500',
+                                'dark:hover:from-indigo-500 dark:hover:to-indigo-500',
                             )}
                         >
                             Neuron
