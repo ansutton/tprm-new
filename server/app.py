@@ -1,6 +1,3 @@
-# import sys
-# import os
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -20,15 +17,11 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from pathlib import Path
 from pydantic import BaseModel
 
-# sys.path.insert(0, os.path.abspath('../modules/csv_parser'))
-# import csv_parser
-from modules.utils.csv_parser import hello_world
+from modules.utils.csv_parser import parse_csv_file
 
 app = Flask(__name__)
 
 CORS(app)
-
-hello_world()
 
 # CORS Headers 
 @app.after_request
@@ -51,12 +44,21 @@ def remove_prompt(response):
     else:
         return response
 
-# @app.route('/parse', methods=['POST'])
-# def parse():
-#     try:
-#         request_data = request.json
+@app.route('/parse', methods=['POST'])
+def parse():
+    try:
+        request_data = request.json
 
-#         file_path = request_data['filePath'] 
+        csv_file_path = request_data['csvFilePath']
+
+        questions = parse_csv_file(csv_file_path)
+
+        # pdf_file_path ...
+
+        return jsonify({'security_questions': questions})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/load_document', methods=['POST'])
 def load_document():
