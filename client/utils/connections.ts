@@ -1,0 +1,1 @@
+const localPythonServerUrl = "http://localhost:8001"

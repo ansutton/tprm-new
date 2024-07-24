@@ -22,6 +22,8 @@ export default function Home(): JSX.Element {
         if (e.target.files) {
             setState(e.target.files[0]);
         }
+
+        console.log(questionsFile)
     }
 
     return (
