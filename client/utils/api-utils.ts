@@ -1,4 +1,5 @@
 import { localPythonServerConnectionString } from "./connections";
+
 export async function helloWorld(): Promise<string> {
 	const response = await fetch(`${localPythonServerConnectionString}/hello_world`, {
 		method: "POST",
@@ -12,6 +13,22 @@ export async function helloWorld(): Promise<string> {
 
 	const hello = await response.json();
 	return JSON.stringify(hello)
+}
+
+export async function parseCsv(csvFileBuffer: string): Promise<string> {
+    const data = {
+		csvFilePath: csvFileBuffer
+	}
+	const response = await fetch(`${localPythonServerConnectionString}/parse`, {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json",
+		},
+        body: JSON.stringify(data)
+	});
+
+	const responseData = await response.json();
+	return JSON.stringify(responseData)
 }
 
 export async function queryLLM(input: string): Promise<string> {

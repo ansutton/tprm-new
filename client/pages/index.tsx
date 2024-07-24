@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Card, Summary, Navbar } from '@/components';
-import { helloWorld } from '@/utils/api-utils';
+import { helloWorld, parseCsv } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -23,9 +23,37 @@ export default function Home(): JSX.Element {
         if (e.target.files) {
             setState(e.target.files[0]);
         }
+    }
 
-        console.log(questionsFile)
-        console.log(await helloWorld())
+    async function readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
+        let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
+            let fileReader = new FileReader();
+            fileReader.onload = (e) => resolve(fileReader.result);
+            fileReader.readAsArrayBuffer(file);
+        });
+    
+        return result_buffer as ArrayBuffer;
+    }
+
+    async function readFileAsDataUrl(file: File): Promise<string> {
+        let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
+            let fileReader = new FileReader();
+            fileReader.onload = (e) => resolve(fileReader.result);
+            fileReader.readAsDataURL(file);
+        });
+    
+        return result_buffer as string;
+    }
+
+    async function onSubmit() {
+        if (questionsFile) {
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile)
+            console.log(csvFileBuffer)
+            await parseCsv(csvFileBuffer)
+            setScreen('loading')
+        } else {
+            alert("please upload all files...")
+        }
     }
 
     return (
@@ -77,7 +105,7 @@ export default function Home(): JSX.Element {
 
                             <Button
                                 variant='outlined'
-                                onClick={() => setScreen('loading')}
+                                onClick={() => onSubmit()}
                             >
                                 Submit
                             </Button>

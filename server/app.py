@@ -59,12 +59,14 @@ def parse():
         request_data = request.json
 
         csv_file_path = request_data['csvFilePath']
+        print(csv_file_path)
 
-        questions = parse_csv_file(csv_file_path)
+        # questions = parse_csv_file(csv_file_path)
 
         # pdf_file_path ...
 
-        return jsonify({'security_questions': questions})
+        return jsonify({'security_questions': 'success'})
+        # return jsonify({'security_questions': questions})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
