@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Card, Summary, Navbar } from '@/components';
+import { helloWorld } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -15,7 +16,7 @@ export default function Home(): JSX.Element {
     /**
      * Helpers
      */
-    function onFileChange(
+    async function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
     ) {
@@ -24,6 +25,7 @@ export default function Home(): JSX.Element {
         }
 
         console.log(questionsFile)
+        console.log(await helloWorld())
     }
 
     return (

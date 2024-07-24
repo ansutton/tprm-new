@@ -1,3 +1,19 @@
+import { localPythonServerConnectionString } from "./connections";
+export async function helloWorld(): Promise<string> {
+	const response = await fetch(`${localPythonServerConnectionString}/hello_world`, {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json",
+        //   "Access-Control-Allow-Origin": "*",
+        //   "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        //   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+		},
+	});
+
+	const hello = await response.json();
+	return JSON.stringify(hello)
+}
+
 export async function queryLLM(input: string): Promise<string> {
 	const data = {
 		text: input

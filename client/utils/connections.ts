@@ -1,1 +1,1 @@
-const localPythonServerUrl = "http://localhost:8001"
+export const localPythonServerConnectionString = "http://localhost:8001"
