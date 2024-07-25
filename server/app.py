@@ -27,7 +27,7 @@ CORS(app)
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
     return response
 
 # Initiate Vector DB for RAG
@@ -44,18 +44,29 @@ def remove_prompt(response):
     else:
         return response
 
+@app.route('/hello_world', methods=['POST'])
+def hello_world():
+    try:
+        return jsonify({'hello_world': 'Hello World! [from python server]'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/parse', methods=['POST'])
 def parse():
     try:
         request_data = request.json
 
         csv_file_path = request_data['csvFilePath']
+        print(csv_file_path)
 
-        questions = parse_csv_file(csv_file_path)
+        # questions = parse_csv_file(csv_file_path)
 
         # pdf_file_path ...
 
-        return jsonify({'security_questions': questions})
+        return jsonify({'security_questions': 'success'})
+        # return jsonify({'security_questions': questions})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

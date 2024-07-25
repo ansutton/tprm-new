@@ -1,0 +1,1 @@
+export const localPythonServerConnectionString = "http://localhost:8001"
