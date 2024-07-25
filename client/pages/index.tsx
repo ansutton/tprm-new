@@ -25,6 +25,7 @@ export default function Home(): JSX.Element {
         }
     }
 
+    // Can ignore this.
     async function readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
         let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
             let fileReader = new FileReader();
@@ -35,6 +36,7 @@ export default function Home(): JSX.Element {
         return result_buffer as ArrayBuffer;
     }
 
+    // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
     async function readFileAsDataUrl(file: File): Promise<string> {
         let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
             let fileReader = new FileReader();

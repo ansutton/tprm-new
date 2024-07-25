@@ -52,7 +52,8 @@ def hello_world():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
+# TODO: Convert buffer to file.
+# See: https://stackoverflow.com/questions/2323128/convert-string-in-base64-to-image-and-save-on-filesystem
 @app.route('/parse', methods=['POST'])
 def parse():
     try:
