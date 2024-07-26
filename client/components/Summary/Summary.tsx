@@ -38,7 +38,7 @@ export function Summary(): JSX.Element {
                                 <TableItem variant='cell' centered>
                                     <Link
                                         href={`#third-party-response-${index + 1}`}
-                                        className='text-indigo-800 underline hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
                                     >
                                         Response {index + 1}
                                     </Link>
@@ -46,7 +46,7 @@ export function Summary(): JSX.Element {
                                 <TableItem variant='cell' centered>
                                     <Link
                                         href={`#ai-answer-${index + 1}`}
-                                        className='text-indigo-800 underline hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
                                     >
                                         Answer {index + 1}
                                     </Link>
@@ -128,7 +128,9 @@ function TableItem({
 
     if (variant === 'head') {
         return (
-            <th className={`${finalClasses} whitespace-nowrap`}>{children}</th>
+            <th className={`${finalClasses} md:whitespace-nowrap`}>
+                {children}
+            </th>
         );
     }
     return <td className={finalClasses}>{children}</td>;
