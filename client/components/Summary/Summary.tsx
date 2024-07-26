@@ -11,8 +11,16 @@ import { summarySample } from './summarySample';
 export function Summary(): JSX.Element {
     return (
         <>
-            <table className='w-full table-auto bg-gray-50 drop-shadow-md'>
-                <thead className='bg-gray-100'>
+            <p>
+                The third party and the AI model provided the same response for{' '}
+                <span className='font-bold text-indigo-700 dark:text-indigo-400'>
+                    2/3 (33%)
+                </span>{' '}
+                of questions uploaded.
+            </p>
+
+            <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-800'>
+                <thead>
                     <tr>
                         <TableItem variant='head'>Control Question</TableItem>
                         <TableItem variant='head'>TP Response</TableItem>
@@ -28,14 +36,17 @@ export function Summary(): JSX.Element {
                             { controlQuestion, answersMatch, citation },
                             index,
                         ) => (
-                            <tr key={index} className='odd:bg-blue-50'>
+                            <tr
+                                key={index}
+                                className='odd:bg-indigo-50 dark:odd:bg-zinc-900'
+                            >
                                 <TableItem variant='cell'>
                                     {controlQuestion}
                                 </TableItem>
                                 <TableItem variant='cell' centered>
                                     <Link
                                         href={`#third-party-response-${index + 1}`}
-                                        className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
+                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
                                     >
                                         Response {index + 1}
                                     </Link>
@@ -43,7 +54,7 @@ export function Summary(): JSX.Element {
                                 <TableItem variant='cell' centered>
                                     <Link
                                         href={`#ai-answer-${index + 1}`}
-                                        className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
+                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
                                     >
                                         Answer {index + 1}
                                     </Link>
@@ -124,7 +135,11 @@ function TableItem({
     const finalClasses = `${centeredClassName} p-3 text-sm`;
 
     if (variant === 'head') {
-        return <th className={finalClasses}>{children}</th>;
+        return (
+            <th className={`${finalClasses} md:whitespace-nowrap`}>
+                {children}
+            </th>
+        );
     }
     return <td className={finalClasses}>{children}</td>;
 }

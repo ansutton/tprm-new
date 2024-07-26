@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
-    * {
-        @apply bg-[path-to-image];
+@layer base {
+    .app-background-light {
+        background: radial-gradient(
+            #818cf8 0.5%,
+            #fafafa 40%
+        ); /* indigo-400, zinc-50 */
     }
-} */
+
+    .app-background-dark {
+        background: radial-gradient(
+            #1e1b4b 0.5%,
+            #09090b 40%
+        ); /* indigo-950, zinc-950 */
+    }
+}

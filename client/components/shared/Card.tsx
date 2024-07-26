@@ -13,7 +13,7 @@ export function Card({
 
     return (
         <div
-            className={`${variantClasses} mx-auto flex flex-col gap-6 bg-white p-4 shadow-lg shadow-tprm-blue-light/60`}
+            className={`${variantClasses} mx-auto flex flex-col gap-6 rounded-md border border-indigo-200 bg-zinc-50 p-4 shadow-lg shadow-indigo-200 dark:border-indigo-500/60 dark:bg-zinc-950 dark:shadow-indigo-900/40`}
         >
             {children}
         </div>
