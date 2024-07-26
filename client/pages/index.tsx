@@ -25,17 +25,6 @@ export default function Home(): JSX.Element {
         }
     }
 
-    // Can ignore this.
-    async function readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
-        let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
-            let fileReader = new FileReader();
-            fileReader.onload = (e) => resolve(fileReader.result);
-            fileReader.readAsArrayBuffer(file);
-        });
-    
-        return result_buffer as ArrayBuffer;
-    }
-
     // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
     async function readFileAsDataUrl(file: File): Promise<string> {
         let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
@@ -48,10 +37,14 @@ export default function Home(): JSX.Element {
     }
 
     async function onSubmit() {
-        if (questionsFile) {
+        if (questionsFile && evidenceFile) {
             const csvFileBuffer = await readFileAsDataUrl(questionsFile)
             console.log(csvFileBuffer)
-            await loadDocuments(csvFileBuffer)
+
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile)
+            console.log(pdfFileBuffer)
+
+            await loadDocuments({ csvFileBuffer, pdfFileBuffer })
             setScreen('loading')
         } else {
             alert("please upload all files...")

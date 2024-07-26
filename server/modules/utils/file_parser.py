@@ -3,8 +3,8 @@ import csv
 import io
 
 def parse_csv_file_buffer(csv_file_buffer):
-    # Decode csv file content
-    encoded_csv_content = extract_base64(csv_file_buffer)
+    # Decode csv file content.
+    encoded_csv_content = extract_base64(csv_file_buffer, 'data:text/csv;base64,')
     csv_content = decode_base64(encoded_csv_content)
 
     if csv_content:
@@ -13,10 +13,18 @@ def parse_csv_file_buffer(csv_file_buffer):
     else:
         return []
 
-# Removes prefix and extracts the base64 encoded string
-def extract_base64(encoded_data):
-    prefix = 'data:text/csv;base64,'
+def parse_pdf_file_buffer(pdf_file_buffer):
+    # Decode pdf file content.
+    encoded_pdf_content = extract_base64(pdf_file_buffer, 'data:application/pdf;base64')
+    pdf_content = decode_base64(encoded_pdf_content)
+    
+    if pdf_content:
+        return pdf_content
+    else:
+        return 'nothing, sorry'
 
+# Removes prefix and extracts the base64 encoded string
+def extract_base64(encoded_data, prefix):
     if encoded_data.startswith(prefix):
         return encoded_data[len(prefix):]
 

@@ -17,7 +17,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from pathlib import Path
 from pydantic import BaseModel
 
-from modules.utils.csv_parser import parse_csv_file_buffer #extract_base64, decode_base64, parse_csv
+from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 
 app = Flask(__name__)
 
@@ -46,20 +46,22 @@ def remove_prompt(response):
 
 # Load Documents endpoint.
 # {
-#    blankQuestionSetCsvFileBuffer: [base64 string],
-#    securityEvidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
+#    questionsCsvFileBuffer: [base64 string],
+#    evidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
 #    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
 @app.route('/load_documents', methods=['POST'])
 def parse():
     try:
         request_data = request.json
-        csv_file_buffer = request_data['blankQuestionSetCsvFileBuffer']
-        questions = parse_csv_file_buffer(csv_file_buffer)
 
+        csv_file_buffer = request_data['questionsCsvFileBuffer']
+        questions = parse_csv_file_buffer(csv_file_buffer)
         print(questions)
 
-        # pdf_file_path ...
+        pdf_file_buffer = request_data['evidencePdfFileBuffer']
+        # pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
+        # print(pdf_file_content)
 
         return jsonify({'security_questions': 'success'})
         # return jsonify({'security_questions': questions})

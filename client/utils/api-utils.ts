@@ -15,9 +15,17 @@ export async function helloWorld(): Promise<string> {
 	return JSON.stringify(hello)
 }
 
-export async function loadDocuments(csvFileBuffer: string): Promise<string> {
+export interface LoadDocumentsParams {
+	csvFileBuffer: string,
+	pdfFileBuffer: string,
+	// xlsxFileBuffer: string,
+}
+
+export async function loadDocuments(params: LoadDocumentsParams): Promise<string> {
     const data = {
-		blankQuestionSetCsvFileBuffer: csvFileBuffer
+		questionsCsvFileBuffer: params.csvFileBuffer,
+		evidencePdfFileBuffer: params.pdfFileBuffer,
+		// responsesXlsxFileBuffer: params.xlsxFileBuffer,
 	}
 	const response = await fetch(`${localPythonServerConnectionString}/load_documents`, {
 		method: "POST",
