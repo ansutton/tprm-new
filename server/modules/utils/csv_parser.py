@@ -1,5 +1,5 @@
-import csv
 import base64
+import csv
 import io
 
 # This module is used for parsing security questions in the csv format from a local file path input.
@@ -24,15 +24,20 @@ def parse_csv_file(file_path):
 
     return questions
 
-def extract_base64(encoded_data): #Removes prefix and extracts the base64 encoded string
+# Removes prefix and extracts the base64 encoded string
+def extract_base64(encoded_data):
     prefix = 'data:text/csv;base64,'
     if encoded_data.startswith(prefix):
         return encoded_data[len(prefix):]
-def decode_base64(encoded_str): #Decodes base64 encoded CSV file content
+
+# Decodes base64 encoded CSV file content
+def decode_base64(encoded_str):
     decoded_bytes = base64.b64decode(encoded_str)
     decoded_str = decoded_bytes.decode('utf-8-sig')
     return decoded_str
-def parse_csv(csv_content): #parses the decoded CSV as required
+
+# Parses the decoded CSV as required
+def parse_csv(csv_content):
     csv_file = io.StringIO(csv_content)
     csv_reader = csv.reader(csv_file)
     questions = []

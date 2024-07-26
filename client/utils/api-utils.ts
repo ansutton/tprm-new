@@ -15,11 +15,11 @@ export async function helloWorld(): Promise<string> {
 	return JSON.stringify(hello)
 }
 
-export async function parseCsv(csvFileBuffer: string): Promise<string> {
+export async function loadDocuments(csvFileBuffer: string): Promise<string> {
     const data = {
-		csvFilePath: csvFileBuffer
+		blankQuestionSetCsvFileBuffer: csvFileBuffer
 	}
-	const response = await fetch(`${localPythonServerConnectionString}/parse`, {
+	const response = await fetch(`${localPythonServerConnectionString}/load_documents`, {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json",

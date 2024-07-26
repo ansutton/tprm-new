@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Card, Summary, Navbar } from '@/components';
-import { helloWorld, parseCsv } from '@/utils/api-utils';
+import { helloWorld, loadDocuments } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -51,7 +51,7 @@ export default function Home(): JSX.Element {
         if (questionsFile) {
             const csvFileBuffer = await readFileAsDataUrl(questionsFile)
             console.log(csvFileBuffer)
-            await parseCsv(csvFileBuffer)
+            await loadDocuments(csvFileBuffer)
             setScreen('loading')
         } else {
             alert("please upload all files...")

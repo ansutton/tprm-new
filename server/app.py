@@ -17,7 +17,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from pathlib import Path
 from pydantic import BaseModel
 
-from modules.utils.csv_parser import *
+from modules.utils.csv_parser import extract_base64, decode_base64, parse_csv, parse_csv_file
 
 app = Flask(__name__)
 
@@ -52,27 +52,28 @@ def hello_world():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# TODO: Convert buffer to file.
-# See: https://stackoverflow.com/questions/2323128/convert-string-in-base64-to-image-and-save-on-filesystem
-@app.route('/parse', methods=['POST'])
+# Load Documents endpoint.
+# {
+#    blankQuestionSetCsvFileBuffer: [base64 string],
+#    securityEvidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
+#    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
+# }
+@app.route('/load_documents', methods=['POST'])
 def parse():
     try:
         request_data = request.json
 
-        csv_file_path = request_data['csvFilePath']
-        print(csv_file_path) # encoded_csv_data_with_prefix or csv file path
-        if ".csv" in csv_file_path:
-            # this condition will match if the csv file path is passed in the body
-            questions = parse_csv_file(csv_file_path)
-            print(questions)
-        else: 
-            #decode csv file content and print questions
-            encoded_data = csv_file_path
-            encoded_csv_content = extract_base64(encoded_data)
-            csv_content = decode_base64(encoded_csv_content)
-            if csv_content:
-                questions = parse_csv(csv_content)
-            print(questions)
+        csv_file_buffer = request_data['blankQuestionSetCsvFileBuffer']
+        # print(csv_file_buffer) # encoded_csv_data_with_prefix or csv file path
+
+        #decode csv file content and print questions
+        encoded_csv_content = extract_base64(csv_file_buffer)
+        
+        csv_content = decode_base64(encoded_csv_content)
+
+        if csv_content:
+            questions = parse_csv(csv_content)
+        print(questions)
 
 
         # pdf_file_path ...
