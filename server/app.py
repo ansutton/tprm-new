@@ -17,7 +17,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from pathlib import Path
 from pydantic import BaseModel
 
-from modules.utils.csv_parser import parse_csv_file
+from modules.utils.csv_parser import *
 
 app = Flask(__name__)
 
@@ -60,9 +60,20 @@ def parse():
         request_data = request.json
 
         csv_file_path = request_data['csvFilePath']
-        print(csv_file_path)
+        print(csv_file_path) # encoded_csv_data_with_prefix or csv file path
+        if ".csv" in csv_file_path:
+            # this condition will match if the csv file path is passed in the body
+            questions = parse_csv_file(csv_file_path)
+            print(questions)
+        else: 
+            #decode csv file content and print questions
+            encoded_data = csv_file_path
+            encoded_csv_content = extract_base64(encoded_data)
+            csv_content = decode_base64(encoded_csv_content)
+            if csv_content:
+                questions = parse_csv(csv_content)
+            print(questions)
 
-        # questions = parse_csv_file(csv_file_path)
 
         # pdf_file_path ...
 
