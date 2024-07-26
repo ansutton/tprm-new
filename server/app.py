@@ -52,6 +52,9 @@ def remove_prompt(response):
 # }
 @app.route('/load_documents', methods=['POST'])
 def parse():
+    global quetsions
+    global vector_db
+
     try:
         request_data = request.json
 
@@ -60,10 +63,28 @@ def parse():
         print(questions)
 
         pdf_file_buffer = request_data['evidencePdfFileBuffer']
-        # pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
+        pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
         # print(pdf_file_content)
 
-        return jsonify({'security_questions': 'success'})
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=100,
+            length_function=len,
+            is_separator_regex=False,
+        )
+
+        with fitz.open("pdf", pdf_file_content) as doc:
+            page_contents = [page.get_text() for page in doc]
+            data = page_contents
+        chunks = list(itertools.chain.from_iterable([text_splitter.split_text(page) for page in data]))
+
+        vector_db = Chroma.from_texts(
+            texts=[chunk for chunk in chunks],
+            embedding=OllamaEmbeddings(model="nomic-embed-text",show_progress=True),
+            collection_name="local-rag"
+        )
+
+        return jsonify({'message': "successfully loaded the documents"})
         # return jsonify({'security_questions': questions})
 
     except Exception as e:

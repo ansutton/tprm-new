@@ -44,8 +44,8 @@ export default function Home(): JSX.Element {
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile)
             console.log(pdfFileBuffer)
 
-            await loadDocuments({ csvFileBuffer, pdfFileBuffer })
             setScreen('loading')
+            await loadDocuments({ csvFileBuffer, pdfFileBuffer })
         } else {
             alert("please upload all files...")
         }
