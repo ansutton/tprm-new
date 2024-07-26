@@ -10,7 +10,15 @@ import { summarySample } from './summarySample';
 
 export function Summary(): JSX.Element {
     return (
-        <div>
+        <>
+            <p>
+                The third party and the AI model provided the same response for{' '}
+                <span className='font-bold text-indigo-700 dark:text-indigo-400'>
+                    2/3 (33%)
+                </span>{' '}
+                of questions uploaded.
+            </p>
+
             <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-800'>
                 <thead>
                     <tr>
@@ -108,7 +116,7 @@ export function Summary(): JSX.Element {
                     ),
                 )}
             </div>
-        </div>
+        </>
     );
 }
 
