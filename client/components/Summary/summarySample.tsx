@@ -8,7 +8,7 @@ function Citation({ url }: CitationProps) {
     return (
         <Link
             href={url}
-            className='text-tprm-blue-dark underline hover:text-tprm-blue-medium'
+            className='text-indigo-800 underline hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
             target='_blank'
             rel='noreferrer noopener'
         >

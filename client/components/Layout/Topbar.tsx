@@ -45,7 +45,7 @@ export function Topbar(): JSX.Element {
                     <Link href='/'>
                         <h1
                             className={clsx(
-                                'bg-gradient-to-r from-indigo-500 to-zinc-600',
+                                'bg-gradient-to-r from-indigo-500 to-zinc-500',
                                 'dark:to-zinc-400',
                                 'bg-clip-text text-lg font-bold text-transparent',
                                 'hover:from-indigo-500 hover:to-indigo-500',
