@@ -39,10 +39,10 @@ export default function Home(): JSX.Element {
     async function onSubmit() {
         if (questionsFile && evidenceFile) {
             const csvFileBuffer = await readFileAsDataUrl(questionsFile)
-            console.log(csvFileBuffer)
+            // console.log(csvFileBuffer)
 
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile)
-            console.log(pdfFileBuffer)
+            // console.log(pdfFileBuffer)
 
             setScreen('loading')
             await loadDocuments({ csvFileBuffer, pdfFileBuffer })
