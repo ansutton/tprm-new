@@ -134,7 +134,7 @@ function ThemeMenu(): JSX.Element {
         return (
             <button
                 onClick={onClick}
-                className={`${additionalClasses} flex items-center gap-2 px-2 py-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-800`}
+                className={`${additionalClasses} flex items-center gap-2 px-2 py-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700/55`}
             >
                 {children}
             </button>
@@ -185,7 +185,7 @@ function ThemeMenu(): JSX.Element {
                 className={clsx(
                     'mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
                     'stroke-700 text-zinc-700',
-                    'dark:bg-zinc-900 dark:stroke-zinc-300 dark:text-zinc-300',
+                    'dark:bg-zinc-800 dark:stroke-zinc-300 dark:text-zinc-300',
                     'ring-1 ring-zinc-900/10',
                     'dark:ring-0',
                 )}
