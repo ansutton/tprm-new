@@ -17,7 +17,7 @@ const config: Config = {
                 'tprm-blue-dark': 'hsl(218,100%,19%)',
             },
         },
-        fontFamily: { sans: ['"Roboto"'] },
+        fontFamily: { sans: ['"Noto Sans"'] },
     },
     plugins: [],
 };
