@@ -5,7 +5,8 @@ from flask_cors import CORS
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-
+import fitz
+import itertools
 # LLM Inference
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -49,29 +50,41 @@ def load_document():
         request_data = request.json
 
         # Extract data from request
-        filePath = request_data['filePath']        
-
-        # Load document txt
-        with open(filePath) as f:
-            data = f.read()
+        filePath = request_data['filePath'] 
 
         text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=7500,
+            chunk_size=1000,
             chunk_overlap=100,
             length_function=len,
             is_separator_regex=False,
-        )
+        )      
 
-        texts = text_splitter.create_documents([data])
+        # Load document txt or pdf
+        if filePath.endswith('.pdf'):
+            # Extract text from PDF using PyMuPDF
+            with fitz.open(filePath) as doc:
+                page_contents = [page.get_text() for page in doc]
+                data = page_contents
+            chunks = list(itertools.chain.from_iterable([text_splitter.split_text(page) for page in data]))
+            vector_db = Chroma.from_texts(
+                texts=[chunk for chunk in chunks],
+                embedding=OllamaEmbeddings(model="nomic-embed-text",show_progress=True),
+                collection_name="local-rag"
+            )
+        else:
+            # Load document txt
+            with open(filePath) as f:
+                data = f.read()
+            texts = text_splitter.create_documents([data])
 
-        chunks = text_splitter.split_documents(texts)
+            chunks = text_splitter.split_documents(texts)
 
-        # Add to vector database
-        vector_db = Chroma.from_documents(
-            documents=chunks,
-            embedding=OllamaEmbeddings(model="nomic-embed-text",show_progress=True),
-            collection_name="local-rag"
-        )
+            # Add to vector database
+            vector_db = Chroma.from_documents(
+                documents=chunks,
+                embedding=OllamaEmbeddings(model="nomic-embed-text",show_progress=True),
+                collection_name="local-rag"
+            )
 
         return jsonify({'message': "successfully loaded the document"})
     except Exception as e:
