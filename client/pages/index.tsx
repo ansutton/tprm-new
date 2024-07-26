@@ -33,10 +33,11 @@ export default function Home(): JSX.Element {
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
                     {screen === 'fileUpload' ? (
                         <>
-                            <div>
-                                <H3>GenAI Evidence Reviewer</H3>
-                                <H4>Blank Question Set</H4>
-                            </div>
+                            <Headings
+                                h3Text='GenAI Evidence Reviewer'
+                                h4Text='Blank Question Set'
+                            />
+
                             <input
                                 type='file'
                                 id='file'
@@ -77,13 +78,11 @@ export default function Home(): JSX.Element {
 
                     {screen === 'loading' ? (
                         <>
-                            <div>
-                                <H3>Processing File</H3>
-                                <H4>
-                                    Hang tight. This process can take up to 10
-                                    minutes.
-                                </H4>
-                            </div>
+                            <Headings
+                                h3Text='Processing File'
+                                h4Text='Hang tight. This process can take up to 10
+                                    minutes.'
+                            />
                             <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
                                 When finished loading, the summary will be
                                 displayed on the next screen.
@@ -114,10 +113,10 @@ export default function Home(): JSX.Element {
 
                     {screen === 'summary' ? (
                         <>
-                            <div>
-                                <H3>Summary</H3>
-                                <H4>Neuron RAG-Injested Documents</H4>
-                            </div>
+                            <Headings
+                                h3Text='Summary'
+                                h4Text='Neuron RAG-Injested Documents'
+                            />
 
                             <Summary />
 
@@ -148,5 +147,19 @@ function H3({ children }: HeadingProps): JSX.Element {
 }
 
 function H4({ children }: HeadingProps): JSX.Element {
-    return <h3 className='w-full text-center text-lg font-bold'>{children}</h3>;
+    return <h4 className='w-full text-center text-lg font-bold'>{children}</h4>;
+}
+
+interface HeadingsProps {
+    h3Text: string;
+    h4Text: string;
+}
+
+function Headings({ h3Text, h4Text }: HeadingsProps): JSX.Element {
+    return (
+        <div>
+            <H3>{h3Text}</H3>
+            <H4>{h4Text}</H4>
+        </div>
+    );
 }
