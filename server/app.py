@@ -17,7 +17,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from pathlib import Path
 from pydantic import BaseModel
 
-from modules.utils.csv_parser import extract_base64, decode_base64, parse_csv, parse_csv_file
+from modules.utils.csv_parser import parse_csv_file_buffer #extract_base64, decode_base64, parse_csv
 
 app = Flask(__name__)
 
@@ -44,14 +44,6 @@ def remove_prompt(response):
     else:
         return response
 
-@app.route('/hello_world', methods=['POST'])
-def hello_world():
-    try:
-        return jsonify({'hello_world': 'Hello World! [from python server]'})
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 # Load Documents endpoint.
 # {
 #    blankQuestionSetCsvFileBuffer: [base64 string],
@@ -62,19 +54,10 @@ def hello_world():
 def parse():
     try:
         request_data = request.json
-
         csv_file_buffer = request_data['blankQuestionSetCsvFileBuffer']
-        # print(csv_file_buffer) # encoded_csv_data_with_prefix or csv file path
+        questions = parse_csv_file_buffer(csv_file_buffer)
 
-        #decode csv file content and print questions
-        encoded_csv_content = extract_base64(csv_file_buffer)
-        
-        csv_content = decode_base64(encoded_csv_content)
-
-        if csv_content:
-            questions = parse_csv(csv_content)
         print(questions)
-
 
         # pdf_file_path ...
 
@@ -180,6 +163,14 @@ def generate_rag():
         rag_response = chain.invoke((question))
 
         return jsonify({'generate_rag': rag_response})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/hello_world', methods=['POST'])
+def hello_world():
+    try:
+        return jsonify({'hello_world': 'Hello World! [from python server]'})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

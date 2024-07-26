@@ -2,7 +2,46 @@ import base64
 import csv
 import io
 
+def parse_csv_file_buffer(csv_file_buffer):
+    # Decode csv file content
+    encoded_csv_content = extract_base64(csv_file_buffer)
+    csv_content = decode_base64(encoded_csv_content)
+
+    if csv_content:
+        questions = parse_csv(csv_content)
+        return questions
+    else:
+        return []
+
+# Removes prefix and extracts the base64 encoded string
+def extract_base64(encoded_data):
+    prefix = 'data:text/csv;base64,'
+
+    if encoded_data.startswith(prefix):
+        return encoded_data[len(prefix):]
+
+# Decodes base64 encoded CSV file content
+def decode_base64(encoded_str):
+    decoded_bytes = base64.b64decode(encoded_str)
+    decoded_str = decoded_bytes.decode('utf-8-sig')
+    return decoded_str
+
+# Parses the decoded CSV as required
+def parse_csv(csv_content):
+    csv_file = io.StringIO(csv_content)
+    csv_reader = csv.reader(csv_file)
+    questions = []
+
+    for i, row in enumerate(csv_reader):
+        if (i==0 and all (item.strip().isalpha() for item in row)):
+            # Check if first row contains header-like element (all characters are letters, no question marks)
+            continue
+        questions.append(', '.join(row))
+
+    return questions
+
 # This module is used for parsing security questions in the csv format from a local file path input.
+# Deprecated. Not needed since we are passing file buffers instead of file paths.
 def parse_csv_file(file_path):
     questions = []
     with open(file_path, mode='r', newline='', encoding = 'utf-8-sig') as csvfile:
@@ -22,28 +61,4 @@ def parse_csv_file(file_path):
     # for q in questions: 
     #     print(q)
 
-    return questions
-
-# Removes prefix and extracts the base64 encoded string
-def extract_base64(encoded_data):
-    prefix = 'data:text/csv;base64,'
-    if encoded_data.startswith(prefix):
-        return encoded_data[len(prefix):]
-
-# Decodes base64 encoded CSV file content
-def decode_base64(encoded_str):
-    decoded_bytes = base64.b64decode(encoded_str)
-    decoded_str = decoded_bytes.decode('utf-8-sig')
-    return decoded_str
-
-# Parses the decoded CSV as required
-def parse_csv(csv_content):
-    csv_file = io.StringIO(csv_content)
-    csv_reader = csv.reader(csv_file)
-    questions = []
-    for i, row in enumerate(csv_reader):
-        if (i==0 and all (item.strip().isalpha() for item in row)):
-            # Check if first row contains header-like element (all characters are letters, no question marks)
-            continue
-        questions.append(', '.join(row))
     return questions
