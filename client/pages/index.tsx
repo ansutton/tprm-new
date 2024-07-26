@@ -41,7 +41,7 @@ export default function Home(): JSX.Element {
                                 onChange={(e) =>
                                     onFileChange(e, setQuestionsFile)
                                 }
-                                className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
+                                className='file:mr-4 file:cursor-pointer'
                             />
 
                             <H4>Third Party Responses</H4>
@@ -51,7 +51,7 @@ export default function Home(): JSX.Element {
                                 onChange={(e) =>
                                     onFileChange(e, setResponsesFile)
                                 }
-                                className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
+                                className='file:mr-4 file:cursor-pointer'
                             />
 
                             <H4>Third Party Evidence Provided</H4>
@@ -61,7 +61,7 @@ export default function Home(): JSX.Element {
                                 onChange={(e) =>
                                     onFileChange(e, setEvidenceFile)
                                 }
-                                className='text-zinc-600 file:mr-4 file:border-none file:bg-white file:px-4 file:py-1.5 file:font-bold file:text-tprm-blue-dark file:duration-200 hover:file:cursor-pointer hover:file:bg-tprm-blue-dark hover:file:text-white hover:file:ease-out'
+                                className='file:mr-4 file:cursor-pointer'
                             />
 
                             <Button
