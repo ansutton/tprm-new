@@ -140,14 +140,16 @@ interface HeadingProps {
 
 function H3({ children }: HeadingProps): JSX.Element {
     return (
-        <h3 className='mb-3 w-full text-center text-2xl font-bold'>
+        <h3 className='mb-3 w-full text-center text-3xl font-bold text-indigo-600 dark:text-indigo-500'>
             {children}
         </h3>
     );
 }
 
 function H4({ children }: HeadingProps): JSX.Element {
-    return <h4 className='w-full text-center text-lg font-bold'>{children}</h4>;
+    return (
+        <h4 className='w-full text-center text-2xl font-bold'>{children}</h4>
+    );
 }
 
 interface HeadingsProps {

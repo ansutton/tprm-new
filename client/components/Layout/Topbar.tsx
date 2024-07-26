@@ -166,13 +166,13 @@ function ThemeMenu(): JSX.Element {
     return (
         <Menu>
             <MenuButton className='rounded-lg p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+                {theme === 'light' ? (
+                    <SunIcon className={iconClassesBase} />
+                ) : null}
                 {theme === 'dark' ? (
                     <MoonIcon
                         className={`${iconClassesBase} stroke-zinc-300`}
                     />
-                ) : null}
-                {theme === 'light' ? (
-                    <SunIcon className={iconClassesBase} />
                 ) : null}
                 {theme === 'system' ? (
                     <IconSystem additionalClasses='dark:stroke-zinc-300' />
@@ -193,19 +193,6 @@ function ThemeMenu(): JSX.Element {
                 <MenuItem>
                     <ThemeButton
                         additionalClasses={
-                            theme === 'dark'
-                                ? 'text-indigo-400 stroke-indigo-400'
-                                : ''
-                        }
-                        onClick={() => setTheme('dark')}
-                    >
-                        <MoonIcon className={`${iconClassesBase}`} />
-                        Dark
-                    </ThemeButton>
-                </MenuItem>
-                <MenuItem>
-                    <ThemeButton
-                        additionalClasses={
                             theme === 'light'
                                 ? 'text-indigo-600 stroke-indigo-600'
                                 : ''
@@ -214,6 +201,19 @@ function ThemeMenu(): JSX.Element {
                     >
                         <SunIcon className={`${iconClassesBase}`} />
                         Light
+                    </ThemeButton>
+                </MenuItem>
+                <MenuItem>
+                    <ThemeButton
+                        additionalClasses={
+                            theme === 'dark'
+                                ? 'text-indigo-400 stroke-indigo-400'
+                                : ''
+                        }
+                        onClick={() => setTheme('dark')}
+                    >
+                        <MoonIcon className={`${iconClassesBase}`} />
+                        Dark
                     </ThemeButton>
                 </MenuItem>
                 <MenuItem>
