@@ -69,7 +69,7 @@ export function Summary(): JSX.Element {
                 </tbody>
             </table>
 
-            <div className='w-full divide-y'>
+            <div className='w-full divide-y dark:divide-zinc-600'>
                 {summarySample.map(
                     (
                         {
