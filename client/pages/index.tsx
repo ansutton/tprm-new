@@ -27,7 +27,7 @@ export default function Home(): JSX.Element {
     return (
         <div className='mx-auto w-full flex-col items-center'>
             <Topbar />
-            <Sidebar />
+            {/* <Sidebar /> */}
 
             <div className='container mx-auto pb-5 pt-10'>
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
