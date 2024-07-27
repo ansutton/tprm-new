@@ -1,15 +1,12 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-
-from pathlib import Path
-from pydantic import BaseModel
-
 # Custom modules
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.rag import create_database_vectors
-
 from modules.globals import config
+
+# Flask modules
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -22,20 +19,6 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
     return response
 
-# Initiate Vector DB for RAG
-# vector_db = ""
-
-class CodeGenerationRequest(BaseModel):
-    filePath: str
-
-def remove_prompt(response):
-    # Check if the response starts with the prompt
-    parts =  response.split("[/INST]")
-    if len(parts) > 1:
-        return parts[-1]
-    else:
-        return response
-
 # Load Documents endpoint.
 # Request data expected:
 # {
@@ -45,9 +28,6 @@ def remove_prompt(response):
 # }
 @app.route('/load_documents', methods=['POST'])
 def parse():
-    global questions
-    # global vector_db
-
     try:
         request_data = request.json
 
@@ -71,8 +51,6 @@ def parse():
 
 @app.route('/generate_rag', methods=['POST'])
 def generate_rag():
-    # global vector_db
-
     try:
         # Parse JSON payload from request
         request_data = request.json
