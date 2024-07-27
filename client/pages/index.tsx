@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
+import { helloWorld, loadDocuments } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -15,12 +16,38 @@ export default function Home(): JSX.Element {
     /**
      * Helper Functions
      */
-    function onFileChange(
+    async function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
     ) {
         if (e.target.files) {
             setState(e.target.files[0]);
+        }
+    }
+
+    // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
+    async function readFileAsDataUrl(file: File): Promise<string> {
+        let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
+            let fileReader = new FileReader();
+            fileReader.onload = (e) => resolve(fileReader.result);
+            fileReader.readAsDataURL(file);
+        });
+    
+        return result_buffer as string;
+    }
+
+    async function onSubmit() {
+        if (questionsFile && evidenceFile) {
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile)
+            // console.log(csvFileBuffer)
+
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile)
+            // console.log(pdfFileBuffer)
+
+            setScreen('loading')
+            await loadDocuments({ csvFileBuffer, pdfFileBuffer })
+        } else {
+            alert("please upload all files...")
         }
     }
 
@@ -68,7 +95,7 @@ export default function Home(): JSX.Element {
 
                             <Button
                                 variant='outlined'
-                                onClick={() => setScreen('loading')}
+                                onClick={() => onSubmit()}
                             >
                                 Submit
                             </Button>
