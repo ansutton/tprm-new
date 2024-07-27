@@ -22,3 +22,5 @@ def create_database_vectors(pdf_file):
         embedding=OllamaEmbeddings(model="nomic-embed-text",show_progress=True),
         collection_name="local-rag"
     )
+
+    return vector_db
