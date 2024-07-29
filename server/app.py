@@ -9,7 +9,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # Misc modules
-# import json
+import json
 
 app = Flask(__name__)
 
@@ -32,30 +32,31 @@ def after_request(response):
 @app.route('/submit', methods=['POST'])
 def main():
     try:
-        print(app_state.responses)
-
         request_data = request.json
 
+        # Get csv file buffer and parse it.
         csv_file_buffer = request_data['questionsCsvFileBuffer']
         questions = parse_csv_file_buffer(csv_file_buffer)
-        print(questions)
-        print(questions[0])
+
+        # Set app state no. of questions based on csv.
+        app_state.number_of_questions = len(questions)
+
+        # Get pdf file buffer and parse it
         pdf_file_buffer = request_data['evidencePdfFileBuffer']
         pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
-        # print(pdf_file_content)
 
-        # Create Ollama Embeddings and database vectors.
+        # Create Ollama Embeddings and database vectors based on the pdf.
         vector_db = create_database_vectors(pdf_file_content)
 
-        print(vector_db)
+        # Loop through each question and add responses to app state.
+        for i in questions:
+            response = generate_model_response(vector_db, questions[i])
+            app_state.responses.append(response)
 
-        response = generate_model_response(vector_db, questions[0])
-        app_state.responses.append(response)
-        print(app_state.responses)
-        # json.encode(app_state)
+        app_state_json_string = json.dumps(app_state.to_dict())
+        print(app_state_json_string)
 
-        print(response)
-        return jsonify({'message': "successfully loaded the documents"})
+        return jsonify({'message': app_state_json_string})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
