@@ -36,7 +36,7 @@ export function Topbar(): JSX.Element {
                         </span>
                         <span className='flex self-end'>
                             <svg
-                                className='mb-[7px] ml-[1px] h-1.5 w-1.5 fill-d-green/90'
+                                className='mb-[7px] ml-[1px] h-1.5 w-1.5 fill-d-green dark:fill-d-green/90'
                                 viewBox='0 0 100 100'
                                 xmlns='http://www.w3.org/2000/svg'
                                 fill='currentColor'
@@ -51,11 +51,11 @@ export function Topbar(): JSX.Element {
                     <Link href='/'>
                         <h1
                             className={clsx(
-                                'bg-gradient-to-r from-indigo-500 to-zinc-500',
+                                'bg-gradient-to-b from-indigo-800 via-indigo-500 to-zinc-400/50',
                                 'dark:to-zinc-400',
                                 'bg-clip-text text-lg font-bold text-transparent',
-                                'hover:from-indigo-500 hover:to-indigo-500',
-                                'dark:hover:from-indigo-500 dark:hover:to-indigo-500',
+                                'hover:bg-indigo-800',
+                                'dark:hover:via-indigo-500 dark:hover:to-indigo-500',
                             )}
                         >
                             Neuron
