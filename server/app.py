@@ -65,7 +65,7 @@ def load_document():
         pdfFilePath = request_data['filePath']
 
         # Create Ollama Embeddings and database vectors.
-        test_vector_db = create_database_vectors(pdfFilePath)
+        test_vector_db = create_database_vectors(pdfFilePath, True)
 
         return jsonify({'message': "successfully loaded the document"})
     except Exception as e:
