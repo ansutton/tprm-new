@@ -1,1 +1,1 @@
-vector_db = ""
+# Config global variables go here.

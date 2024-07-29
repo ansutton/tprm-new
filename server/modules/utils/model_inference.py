@@ -3,9 +3,8 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.chat_models import ChatOllama
-from modules.globals import config
 
-def generate_model_response(question):
+def generate_model_response(vector_db, question):
     # LLM from Ollama
     local_model = "llama2"
     llm = ChatOllama(model=local_model)
@@ -20,7 +19,7 @@ def generate_model_response(question):
     )
 
     retriever = MultiQueryRetriever.from_llm(
-        config.vector_db.as_retriever(),
+        vector_db.as_retriever(),
         llm,
         prompt = QUERY_PROMPT
     )

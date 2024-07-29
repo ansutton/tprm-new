@@ -2,7 +2,6 @@
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.rag import create_database_vectors
-from modules.globals import config
 
 # Flask modules
 from flask import Flask, request, jsonify
@@ -40,19 +39,42 @@ def parse():
         # print(pdf_file_content)
 
         # Create Ollama Embeddings and database vectors.
-        config.vector_db = create_database_vectors(pdf_file_content)
+        vector_db = create_database_vectors(pdf_file_content)
 
-        print(config.vector_db)
+        print(vector_db)
 
-        response = generate_model_response(questions[0])
+        response = generate_model_response(vector_db, questions[0])
         print(response)
         return jsonify({'message': "successfully loaded the documents"})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+# Below are testing routes for Postman calls.
+test_vector_db = ""
+
+@app.route('/load_document', methods=['POST'])
+def load_document():
+    global test_vector_db
+    try:
+        # Parse JSON payload from request
+        request_data = request.json
+
+        # Extract data from request
+        pdfFilePath = request_data['filePath']
+
+        # Create Ollama Embeddings and database vectors.
+        test_vector_db = create_database_vectors(pdfFilePath)
+
+        return jsonify({'message': "successfully loaded the document"})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/generate_rag', methods=['POST'])
 def generate_rag():
+    global test_vector_db
     try:
         # Parse JSON payload from request
         request_data = request.json
@@ -60,7 +82,7 @@ def generate_rag():
         # Extract data from request
         question = request_data['text']
 
-        rag_response = generate_model_response(question)
+        rag_response = generate_model_response(test_vector_db, question)
 
         return jsonify({'generate_rag': rag_response})
 
