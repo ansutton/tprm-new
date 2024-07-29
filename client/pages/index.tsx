@@ -60,11 +60,14 @@ export default function Home(): JSX.Element {
     }
 
     return (
-        <div className='mx-auto w-full flex-col items-center dark:text-zinc-50'>
+        <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar />
+
             {/* <Sidebar /> */}
 
-            <H3>AI Evidence Reviewer</H3>
+            {screen === 'fileUpload' ? <H3>AI Evidence Reviewer</H3> : null}
+            {screen === 'loading' ? <H3>Processing File</H3> : null}
+            {screen === 'summary' ? <H3>Summary</H3> : null}
 
             <div className='container mx-auto pb-5 pt-5'>
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
@@ -135,11 +138,10 @@ export default function Home(): JSX.Element {
 
                     {screen === 'loading' ? (
                         <>
-                            <Headings
-                                h3Text='Processing File'
-                                h4Text='Hang tight. This process can take up to 10
-                                    minutes.'
-                            />
+                            <H4>
+                                Hang tight. This process can take up to 10
+                                minutes.
+                            </H4>
                             <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
                                 When finished loading, the summary will be
                                 displayed on the next screen.
@@ -170,10 +172,7 @@ export default function Home(): JSX.Element {
 
                     {screen === 'summary' ? (
                         <>
-                            <Headings
-                                h3Text='Summary'
-                                h4Text='Neuron RAG-Injested Documents'
-                            />
+                            <H4>Neuron RAG-Injested Documents</H4>
 
                             <Summary />
 
