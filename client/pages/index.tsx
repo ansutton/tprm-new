@@ -55,7 +55,7 @@ export default function Home(): JSX.Element {
             setScreen('loading');
             await loadDocuments({ csvFileBuffer, pdfFileBuffer });
         } else {
-            alert('please upload all files...');
+            alert('Please upload all files');
         }
     }
 
@@ -64,7 +64,7 @@ export default function Home(): JSX.Element {
             <Topbar />
             {/* <Sidebar /> */}
 
-            <H3>GenAI Evidence Reviewer</H3>
+            <H3>AI Evidence Reviewer</H3>
 
             <div className='container mx-auto pb-5 pt-5'>
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
@@ -101,9 +101,9 @@ export default function Home(): JSX.Element {
                             <input
                                 type='file'
                                 id='file'
-                                accept='.xlsx'
+                                accept='.pdf'
                                 onChange={(e) =>
-                                    onFileChange(e, setResponsesFile)
+                                    onFileChange(e, setEvidenceFile)
                                 }
                                 className='file:mr-4 file:cursor-pointer'
                             />
@@ -120,9 +120,9 @@ export default function Home(): JSX.Element {
                             <input
                                 type='file'
                                 id='file'
-                                accept='.pdf'
+                                accept='.xlsx'
                                 onChange={(e) =>
-                                    onFileChange(e, setEvidenceFile)
+                                    onFileChange(e, setResponsesFile)
                                 }
                                 className='file:mr-4 file:cursor-pointer'
                             />
