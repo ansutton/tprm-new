@@ -27,27 +27,29 @@ export default function Home(): JSX.Element {
 
     // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
     async function readFileAsDataUrl(file: File): Promise<string> {
-        let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
-            let fileReader = new FileReader();
-            fileReader.onload = (e) => resolve(fileReader.result);
-            fileReader.readAsDataURL(file);
-        });
-    
+        let result_buffer: string | ArrayBuffer | null = await new Promise(
+            (resolve) => {
+                let fileReader = new FileReader();
+                fileReader.onload = (e) => resolve(fileReader.result);
+                fileReader.readAsDataURL(file);
+            },
+        );
+
         return result_buffer as string;
     }
 
     async function onSubmit() {
         if (questionsFile && evidenceFile) {
-            const csvFileBuffer = await readFileAsDataUrl(questionsFile)
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
             // console.log(csvFileBuffer)
 
-            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile)
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             // console.log(pdfFileBuffer)
 
-            setScreen('loading')
-            await loadDocuments({ csvFileBuffer, pdfFileBuffer })
+            setScreen('loading');
+            await loadDocuments({ csvFileBuffer, pdfFileBuffer });
         } else {
-            alert("please upload all files...")
+            alert('please upload all files...');
         }
     }
 
@@ -56,14 +58,13 @@ export default function Home(): JSX.Element {
             <Topbar />
             {/* <Sidebar /> */}
 
-            <div className='container mx-auto pb-5 pt-10'>
+            <H3>GenAI Evidence Reviewer</H3>
+
+            <div className='container mx-auto pb-5 pt-5'>
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
                     {screen === 'fileUpload' ? (
                         <>
-                            <Headings
-                                h3Text='GenAI Evidence Reviewer'
-                                h4Text='Blank Question Set'
-                            />
+                            <H4>Blank Question Set</H4>
                             <input
                                 type='file'
                                 id='file'
@@ -176,9 +177,7 @@ function H3({ children }: HeadingProps): JSX.Element {
 }
 
 function H4({ children }: HeadingProps): JSX.Element {
-    return (
-        <h4 className='w-full text-center text-2xl font-bold'>{children}</h4>
-    );
+    return <h4 className='w-full text-2xl font-bold'>{children}</h4>;
 }
 
 interface HeadingsProps {
