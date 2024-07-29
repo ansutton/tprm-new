@@ -28,8 +28,10 @@ export function Topbar(): JSX.Element {
                         <span
                             className={clsx(
                                 'bg-clip-text text-lg font-extrabold text-transparent',
-                                'bg-gradient-to-b from-zinc-800 via-zinc-600 to-zinc-400',
+                                'bg-gradient-to-b from-black via-zinc-700 to-zinc-400',
+                                'hover:from-zinc-400 hover:via-zinc-700 hover:to-black',
                                 'dark:from-white dark:via-zinc-400 dark:to-zinc-900 dark:text-transparent',
+                                'dark:hover:from-zinc-900 dark:hover:via-zinc-400 dark:hover:to-white',
                             )}
                         >
                             Deloitte
@@ -51,11 +53,11 @@ export function Topbar(): JSX.Element {
                     <Link href='/'>
                         <h1
                             className={clsx(
-                                'bg-gradient-to-b from-indigo-800 via-indigo-500 to-zinc-400/50',
-                                'dark:to-zinc-400',
-                                'bg-clip-text text-lg font-bold text-transparent',
-                                'hover:bg-indigo-800',
-                                'dark:hover:via-indigo-500 dark:hover:to-indigo-500',
+                                'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
+                                'from-indigo-800 via-indigo-500 to-zinc-400/50',
+                                'hover:from-zinc-400/50 hover:via-indigo-500 hover:to-indigo-800',
+                                'dark:from-zinc-700 dark:via-indigo-500 dark:to-zinc-400',
+                                'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
                             )}
                         >
                             Neuron
