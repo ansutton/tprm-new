@@ -22,7 +22,7 @@ export function Topbar(): JSX.Element {
                 'dark:shadow-indigo-500/50',
             )}
         >
-            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-3 dark:bg-black'>
+            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
                     <Link href='/' className='flex font-["Open_Sans"]'>
                         <span
@@ -171,7 +171,7 @@ function ThemeMenu(): JSX.Element {
 
     return (
         <Menu>
-            <MenuButton className='rounded-lg p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+            <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
                 {theme === 'light' ? (
                     <SunIcon className={iconClassesBase} />
                 ) : null}
