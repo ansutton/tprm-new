@@ -18,15 +18,15 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
     return response
 
-# Load Documents endpoint.
+# Submit endpoint.
 # Request data expected:
 # {
 #    questionsCsvFileBuffer: [base64 string],
 #    evidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
 #    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
-@app.route('/load_documents', methods=['POST'])
-def parse():
+@app.route('/submit', methods=['POST'])
+def main():
     try:
         request_data = request.json
 

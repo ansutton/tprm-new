@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
-import { helloWorld, loadDocuments } from '@/utils/api-utils';
+import { helloWorld, submit } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -45,7 +45,7 @@ export default function Home(): JSX.Element {
             // console.log(pdfFileBuffer)
 
             setScreen('loading')
-            await loadDocuments({ csvFileBuffer, pdfFileBuffer })
+            await submit({ csvFileBuffer, pdfFileBuffer })
         } else {
             alert("please upload all files...")
         }
