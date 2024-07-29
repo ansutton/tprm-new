@@ -37,10 +37,10 @@ export default function Home(): JSX.Element {
                                 h3Text='GenAI Evidence Reviewer'
                                 h4Text='Blank Question Set'
                             />
-
                             <input
                                 type='file'
                                 id='file'
+                                accept='.csv'
                                 onChange={(e) =>
                                     onFileChange(e, setQuestionsFile)
                                 }
@@ -51,6 +51,7 @@ export default function Home(): JSX.Element {
                             <input
                                 type='file'
                                 id='file'
+                                accept='.xlsx'
                                 onChange={(e) =>
                                     onFileChange(e, setResponsesFile)
                                 }
@@ -61,6 +62,7 @@ export default function Home(): JSX.Element {
                             <input
                                 type='file'
                                 id='file'
+                                accept='.pdf'
                                 onChange={(e) =>
                                     onFileChange(e, setEvidenceFile)
                                 }

@@ -25,7 +25,7 @@ export function Topbar(): JSX.Element {
             <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-3 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
                     <Link href='/' className='flex font-["Open_Sans"]'>
-                        <span className='text-lg font-extrabold dark:text-white'>
+                        <span className='bg-gradient-to-t from-zinc-800 via-zinc-600 to-zinc-300 bg-clip-text text-lg font-extrabold text-transparent dark:from-zinc-700 dark:via-zinc-400 dark:to-zinc-50 dark:text-transparent'>
                             Deloitte
                         </span>
                         <span className='flex self-end'>
