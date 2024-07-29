@@ -97,10 +97,7 @@ export default function Home(): JSX.Element {
                                 className='file:mr-4 file:cursor-pointer'
                             />
 
-                            <Button
-                                variant='outlined'
-                                onClick={() => onSubmit()}
-                            >
+                            <Button variant='solid' onClick={() => onSubmit()}>
                                 Submit
                             </Button>
                         </>
