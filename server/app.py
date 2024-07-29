@@ -34,7 +34,7 @@ def parse():
         csv_file_buffer = request_data['questionsCsvFileBuffer']
         questions = parse_csv_file_buffer(csv_file_buffer)
         print(questions)
-
+        print(questions[0])
         pdf_file_buffer = request_data['evidencePdfFileBuffer']
         pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
         # print(pdf_file_content)
@@ -44,6 +44,8 @@ def parse():
 
         print(config.vector_db)
 
+        response = generate_model_response(questions[0])
+        print(response)
         return jsonify({'message': "successfully loaded the documents"})
 
     except Exception as e:
