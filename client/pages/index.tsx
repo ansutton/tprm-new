@@ -1,4 +1,10 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import {
+    ChartBarSquareIcon,
+    ChatBubbleBottomCenterTextIcon,
+    QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 import { loadDocuments } from '@/utils/api-utils';
 
@@ -64,7 +70,15 @@ export default function Home(): JSX.Element {
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
                     {screen === 'fileUpload' ? (
                         <>
-                            <H4>Blank Question Set</H4>
+                            <div className='flex items-center gap-3'>
+                                <QuestionMarkCircleIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
+                                <H4>Blank Question Set</H4>
+                            </div>
                             <input
                                 type='file'
                                 id='file'
@@ -75,7 +89,15 @@ export default function Home(): JSX.Element {
                                 className='file:mr-4 file:cursor-pointer'
                             />
 
-                            <H4>Third Party Responses</H4>
+                            <div className='flex items-center gap-3'>
+                                <ChartBarSquareIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
+                                <H4>Third Party Evidence Provided</H4>
+                            </div>
                             <input
                                 type='file'
                                 id='file'
@@ -86,7 +108,15 @@ export default function Home(): JSX.Element {
                                 className='file:mr-4 file:cursor-pointer'
                             />
 
-                            <H4>Third Party Evidence Provided</H4>
+                            <div className='flex items-center gap-3'>
+                                <ChatBubbleBottomCenterTextIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
+                                <H4>Third Party Responses</H4>
+                            </div>
                             <input
                                 type='file'
                                 id='file'
@@ -130,7 +160,7 @@ export default function Home(): JSX.Element {
                             </svg>
 
                             <Button
-                                variant='outlined'
+                                variant='solid'
                                 onClick={() => setScreen('summary')}
                             >
                                 See Summary
@@ -148,7 +178,7 @@ export default function Home(): JSX.Element {
                             <Summary />
 
                             <Button
-                                variant='outlined'
+                                variant='solid'
                                 onClick={() => setScreen('fileUpload')}
                             >
                                 Back to File Upload
