@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
-import { helloWorld, loadDocuments } from '@/utils/api-utils';
+import { loadDocuments } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
