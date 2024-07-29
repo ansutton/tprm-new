@@ -2,10 +2,14 @@
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.rag import create_database_vectors
+from modules.globals.app_state import app_state
 
 # Flask modules
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+
+# Misc modules
+# import json
 
 app = Flask(__name__)
 
@@ -28,6 +32,8 @@ def after_request(response):
 @app.route('/submit', methods=['POST'])
 def main():
     try:
+        print(app_state.responses)
+
         request_data = request.json
 
         csv_file_buffer = request_data['questionsCsvFileBuffer']
@@ -44,6 +50,10 @@ def main():
         print(vector_db)
 
         response = generate_model_response(vector_db, questions[0])
+        app_state.responses.append(response)
+        print(app_state.responses)
+        # json.encode(app_state)
+
         print(response)
         return jsonify({'message': "successfully loaded the documents"})
 
