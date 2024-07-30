@@ -219,17 +219,3 @@ function H3({ children }: HeadingProps): JSX.Element {
 function H4({ children }: HeadingProps): JSX.Element {
     return <h4 className='w-full text-2xl font-bold'>{children}</h4>;
 }
-
-interface HeadingsProps {
-    h3Text: string;
-    h4Text: string;
-}
-
-function Headings({ h3Text, h4Text }: HeadingsProps): JSX.Element {
-    return (
-        <div>
-            <H3>{h3Text}</H3>
-            <H4>{h4Text}</H4>
-        </div>
-    );
-}
