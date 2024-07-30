@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import clsx from 'clsx';
 
 interface CardProps {
     variant?: 'wide' | 'default';
@@ -13,7 +14,13 @@ export function Card({
 
     return (
         <div
-            className={`${variantClasses} mx-auto flex flex-col gap-6 rounded-md border border-indigo-200 bg-zinc-50 p-4 shadow-lg shadow-indigo-200 dark:border-indigo-500/60 dark:bg-zinc-950 dark:shadow-indigo-900/40`}
+            className={clsx(
+                `${variantClasses}`,
+                'mx-auto flex flex-col gap-6 p-6',
+                'bg-zinc-50',
+                'rounded-2xl border border-indigo-200 shadow-lg shadow-indigo-200',
+                'dark:border-indigo-500/60 dark:bg-zinc-800 dark:shadow-indigo-900/40',
+            )}
         >
             {children}
         </div>

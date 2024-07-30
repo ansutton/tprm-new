@@ -15,22 +15,30 @@ export function Topbar(): JSX.Element {
     return (
         <div
             className={clsx(
-                'flex w-full justify-around bg-gradient-to-r pb-0.5 shadow-sm',
+                'mb-10 flex w-full justify-around bg-gradient-to-r pb-0.5 shadow-sm',
                 'from-d-green via-indigo-400 to-d-green',
                 'dark:from-d-green/50 dark:via-indigo-950 dark:to-d-green/50',
                 'shadow-indigo-400/80',
                 'dark:shadow-indigo-500/50',
             )}
         >
-            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-3 dark:bg-black'>
+            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
                     <Link href='/' className='flex font-["Open_Sans"]'>
-                        <span className='text-lg font-extrabold dark:text-white'>
+                        <span
+                            className={clsx(
+                                'bg-clip-text text-lg font-extrabold text-transparent',
+                                'bg-gradient-to-b from-black via-zinc-700 to-zinc-400',
+                                'hover:from-zinc-400 hover:via-zinc-700 hover:to-black',
+                                'dark:from-white dark:via-zinc-400 dark:to-zinc-900 dark:text-transparent',
+                                'dark:hover:from-zinc-900 dark:hover:via-zinc-400 dark:hover:to-white',
+                            )}
+                        >
                             Deloitte
                         </span>
                         <span className='flex self-end'>
                             <svg
-                                className='mb-[7px] ml-[1px] h-1.5 w-1.5 fill-d-green/90'
+                                className='mb-[7px] ml-[1px] h-1.5 w-1.5 fill-d-green dark:fill-d-green/90'
                                 viewBox='0 0 100 100'
                                 xmlns='http://www.w3.org/2000/svg'
                                 fill='currentColor'
@@ -45,11 +53,11 @@ export function Topbar(): JSX.Element {
                     <Link href='/'>
                         <h1
                             className={clsx(
-                                'bg-gradient-to-r from-indigo-500 to-zinc-500',
-                                'dark:to-zinc-400',
-                                'bg-clip-text text-lg font-bold text-transparent',
-                                'hover:from-indigo-500 hover:to-indigo-500',
-                                'dark:hover:from-indigo-500 dark:hover:to-indigo-500',
+                                'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
+                                'from-indigo-800 via-indigo-500 to-zinc-400/50',
+                                'hover:from-zinc-400/50 hover:via-indigo-500 hover:to-indigo-800',
+                                'dark:from-zinc-700 dark:via-indigo-500 dark:to-zinc-400',
+                                'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
                             )}
                         >
                             Neuron
@@ -165,14 +173,14 @@ function ThemeMenu(): JSX.Element {
 
     return (
         <Menu>
-            <MenuButton className='rounded-lg p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+            <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+                {theme === 'light' ? (
+                    <SunIcon className={iconClassesBase} />
+                ) : null}
                 {theme === 'dark' ? (
                     <MoonIcon
                         className={`${iconClassesBase} stroke-zinc-300`}
                     />
-                ) : null}
-                {theme === 'light' ? (
-                    <SunIcon className={iconClassesBase} />
                 ) : null}
                 {theme === 'system' ? (
                     <IconSystem additionalClasses='dark:stroke-zinc-300' />
@@ -193,19 +201,6 @@ function ThemeMenu(): JSX.Element {
                 <MenuItem>
                     <ThemeButton
                         additionalClasses={
-                            theme === 'dark'
-                                ? 'text-indigo-400 stroke-indigo-400'
-                                : ''
-                        }
-                        onClick={() => setTheme('dark')}
-                    >
-                        <MoonIcon className={`${iconClassesBase}`} />
-                        Dark
-                    </ThemeButton>
-                </MenuItem>
-                <MenuItem>
-                    <ThemeButton
-                        additionalClasses={
                             theme === 'light'
                                 ? 'text-indigo-600 stroke-indigo-600'
                                 : ''
@@ -214,6 +209,19 @@ function ThemeMenu(): JSX.Element {
                     >
                         <SunIcon className={`${iconClassesBase}`} />
                         Light
+                    </ThemeButton>
+                </MenuItem>
+                <MenuItem>
+                    <ThemeButton
+                        additionalClasses={
+                            theme === 'dark'
+                                ? 'text-indigo-400 stroke-indigo-400'
+                                : ''
+                        }
+                        onClick={() => setTheme('dark')}
+                    >
+                        <MoonIcon className={`${iconClassesBase}`} />
+                        Dark
                     </ThemeButton>
                 </MenuItem>
                 <MenuItem>

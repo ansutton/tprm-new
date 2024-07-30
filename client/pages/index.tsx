@@ -1,4 +1,10 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import {
+    ChartBarSquareIcon,
+    ChatBubbleBottomCenterTextIcon,
+    QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 import { helloWorld, poll, submit } from '@/utils/api-utils';
 
@@ -27,27 +33,29 @@ export default function Home(): JSX.Element {
 
     // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
     async function readFileAsDataUrl(file: File): Promise<string> {
-        let result_buffer: string | ArrayBuffer | null = await new Promise((resolve) => {
-            let fileReader = new FileReader();
-            fileReader.onload = (e) => resolve(fileReader.result);
-            fileReader.readAsDataURL(file);
-        });
-    
+        let result_buffer: string | ArrayBuffer | null = await new Promise(
+            (resolve) => {
+                let fileReader = new FileReader();
+                fileReader.onload = (e) => resolve(fileReader.result);
+                fileReader.readAsDataURL(file);
+            },
+        );
+
         return result_buffer as string;
     }
 
     async function onSubmit() {
         if (questionsFile && evidenceFile) {
-            const csvFileBuffer = await readFileAsDataUrl(questionsFile)
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
             // console.log(csvFileBuffer)
 
-            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile)
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             // console.log(pdfFileBuffer)
 
             setScreen('loading')
             submit({ csvFileBuffer, pdfFileBuffer })
         } else {
-            alert("please upload all files...")
+            alert('Please upload all files');
         }
 
         setInterval(async () => {
@@ -56,51 +64,77 @@ export default function Home(): JSX.Element {
     }
 
     return (
-        <div className='mx-auto w-full flex-col items-center dark:text-zinc-50'>
+        <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar />
+
             {/* <Sidebar /> */}
 
-            <div className='container mx-auto pb-5 pt-10'>
+            {screen === 'fileUpload' ? <H3>AI Evidence Reviewer</H3> : null}
+            {screen === 'loading' ? <H3>Processing File</H3> : null}
+            {screen === 'summary' ? <H3>Summary</H3> : null}
+
+            <div className='container mx-auto pb-5 pt-5'>
                 <Card variant={screen === 'summary' ? 'wide' : 'default'}>
                     {screen === 'fileUpload' ? (
                         <>
-                            <div>
-                                <H3>GenAI Evidence Reviewer</H3>
+                            <div className='flex items-center gap-3'>
+                                <QuestionMarkCircleIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
                                 <H4>Blank Question Set</H4>
                             </div>
                             <input
                                 type='file'
                                 id='file'
+                                accept='.csv'
                                 onChange={(e) =>
                                     onFileChange(e, setQuestionsFile)
                                 }
                                 className='file:mr-4 file:cursor-pointer'
                             />
 
-                            <H4>Third Party Responses</H4>
+                            <div className='flex items-center gap-3'>
+                                <ChartBarSquareIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
+                                <H4>Third Party Evidence Provided</H4>
+                            </div>
                             <input
                                 type='file'
                                 id='file'
-                                onChange={(e) =>
-                                    onFileChange(e, setResponsesFile)
-                                }
-                                className='file:mr-4 file:cursor-pointer'
-                            />
-
-                            <H4>Third Party Evidence Provided</H4>
-                            <input
-                                type='file'
-                                id='file'
+                                accept='.pdf'
                                 onChange={(e) =>
                                     onFileChange(e, setEvidenceFile)
                                 }
                                 className='file:mr-4 file:cursor-pointer'
                             />
 
-                            <Button
-                                variant='outlined'
-                                onClick={() => onSubmit()}
-                            >
+                            <div className='flex items-center gap-3'>
+                                <ChatBubbleBottomCenterTextIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
+                                <H4>Third Party Responses</H4>
+                            </div>
+                            <input
+                                type='file'
+                                id='file'
+                                accept='.xlsx'
+                                onChange={(e) =>
+                                    onFileChange(e, setResponsesFile)
+                                }
+                                className='file:mr-4 file:cursor-pointer'
+                            />
+
+                            <Button variant='solid' onClick={() => onSubmit()}>
                                 Submit
                             </Button>
                         </>
@@ -108,13 +142,10 @@ export default function Home(): JSX.Element {
 
                     {screen === 'loading' ? (
                         <>
-                            <div>
-                                <H3>Processing File</H3>
-                                <H4>
-                                    Hang tight. This process can take up to 10
-                                    minutes.
-                                </H4>
-                            </div>
+                            <H4>
+                                Hang tight. This process can take up to 10
+                                minutes.
+                            </H4>
                             <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
                                 When finished loading, the summary will be
                                 displayed on the next screen.
@@ -135,7 +166,7 @@ export default function Home(): JSX.Element {
                             </svg>
 
                             <Button
-                                variant='outlined'
+                                variant='solid'
                                 onClick={() => setScreen('summary')}
                             >
                                 See Summary
@@ -145,15 +176,12 @@ export default function Home(): JSX.Element {
 
                     {screen === 'summary' ? (
                         <>
-                            <div>
-                                <H3>Summary</H3>
-                                <H4>Neuron RAG-Injested Documents</H4>
-                            </div>
+                            <H4>Neuron RAG-Injested Documents</H4>
 
                             <Summary />
 
                             <Button
-                                variant='outlined'
+                                variant='solid'
                                 onClick={() => setScreen('fileUpload')}
                             >
                                 Back to File Upload
@@ -172,12 +200,26 @@ interface HeadingProps {
 
 function H3({ children }: HeadingProps): JSX.Element {
     return (
-        <h3 className='mb-3 w-full text-center text-2xl font-bold'>
+        <h3 className='mb-3 w-full text-center text-3xl font-bold text-indigo-600 dark:text-indigo-500'>
             {children}
         </h3>
     );
 }
 
 function H4({ children }: HeadingProps): JSX.Element {
-    return <h3 className='w-full text-center text-lg font-bold'>{children}</h3>;
+    return <h4 className='w-full text-2xl font-bold'>{children}</h4>;
+}
+
+interface HeadingsProps {
+    h3Text: string;
+    h4Text: string;
+}
+
+function Headings({ h3Text, h4Text }: HeadingsProps): JSX.Element {
+    return (
+        <div>
+            <H3>{h3Text}</H3>
+            <H4>{h4Text}</H4>
+        </div>
+    );
 }

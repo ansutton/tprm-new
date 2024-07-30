@@ -19,7 +19,7 @@ export function Summary(): JSX.Element {
                 of questions uploaded.
             </p>
 
-            <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-800'>
+            <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-900'>
                 <thead>
                     <tr>
                         <TableItem variant='head'>Control Question</TableItem>
@@ -38,7 +38,7 @@ export function Summary(): JSX.Element {
                         ) => (
                             <tr
                                 key={index}
-                                className='odd:bg-indigo-50 dark:odd:bg-zinc-900'
+                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
                             >
                                 <TableItem variant='cell'>
                                     {controlQuestion}
@@ -69,7 +69,7 @@ export function Summary(): JSX.Element {
                 </tbody>
             </table>
 
-            <div className='w-full divide-y'>
+            <div className='w-full divide-y dark:divide-zinc-600'>
                 {summarySample.map(
                     (
                         {
