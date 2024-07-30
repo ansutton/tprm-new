@@ -1,10 +1,9 @@
-import { localPythonServerConnectionString } from './connections';
-
-interface SubmitRequestParams {
-    csvFileBuffer: string;
-    pdfFileBuffer: string;
-    // xlsxFileBuffer: string,
-}
+import { localPythonServerConnectionString } from '@/pages/api/connections';
+import {
+    PollResponse,
+    PythonAppState,
+    SubmitRequestParams,
+} from '@/utils/interfaces';
 
 export async function submit(params: SubmitRequestParams): Promise<string> {
     const data = {
@@ -25,15 +24,6 @@ export async function submit(params: SubmitRequestParams): Promise<string> {
 
     const responseData = await response.json();
     return JSON.stringify(responseData);
-}
-
-interface PollResponse {
-    message: PythonAppState;
-}
-
-interface PythonAppState {
-    number_of_questions: Number;
-    responses: Array<String>;
 }
 
 export async function poll(): Promise<PythonAppState> {

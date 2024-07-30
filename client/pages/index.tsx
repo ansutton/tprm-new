@@ -7,6 +7,11 @@ import {
 import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 import { helloWorld, poll, submit } from '@/pages/api/api';
+import {
+    PollResponse,
+    PythonAppState,
+    SubmitRequestParams,
+} from '@/utils/interfaces';
 
 export default function Home(): JSX.Element {
     /**
@@ -16,8 +21,10 @@ export default function Home(): JSX.Element {
         'fileUpload',
     );
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
-    const [responsesFile, setResponsesFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
+    const [responsesFile, setResponsesFile] = useState<File | null>(null);
+    const [llmResponses, setLlmResponses] =
+        useState<Promise<PythonAppState> | null>(null);
 
     /**
      * Helper Functions
@@ -52,14 +59,15 @@ export default function Home(): JSX.Element {
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             // console.log(pdfFileBuffer)
 
-            setScreen('loading')
-            submit({ csvFileBuffer, pdfFileBuffer })
+            setScreen('loading');
+            submit({ csvFileBuffer, pdfFileBuffer });
         } else {
             alert('Please upload all files');
         }
 
         setInterval(async () => {
-            console.log(await poll())
+            console.log(await poll());
+            await setLlmResponses(poll());
         }, 10000);
     }
 
@@ -177,6 +185,8 @@ export default function Home(): JSX.Element {
                     {screen === 'summary' ? (
                         <>
                             <H4>Neuron RAG-Injested Documents</H4>
+
+                            <pre>{JSON.stringify(llmResponses)}</pre>
 
                             <Summary />
 
