@@ -50,17 +50,17 @@ export function emulatePopulateResponses() {
 /**
  * Actual Back End API Call
  */
-// export async function poll(): Promise<PythonAppState> {
-//     const response = await fetch(`${localPythonServerConnectionString}/poll`, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     });
+/* export async function poll(): Promise<PythonAppState> {
+    const response = await fetch(`${localPythonServerConnectionString}/poll`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 
-//     const responseData: PollResponse = await response.json();
-//     return responseData.message;
-// }
+    const responseData: PollResponse = await response.json();
+    return responseData.message;
+} */
 
 export async function helloWorld(): Promise<string> {
     const response = await fetch(
