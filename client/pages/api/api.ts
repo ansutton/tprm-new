@@ -26,17 +26,41 @@ export async function submit(params: SubmitRequestParams): Promise<string> {
     return JSON.stringify(responseData);
 }
 
-export async function poll(): Promise<PythonAppState> {
-    const response = await fetch(`${localPythonServerConnectionString}/poll`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
+/**
+ * Dev Functions
+ */
+const responseData: PythonAppState = {
+    number_of_questions: 2,
+    responses: ['response 1'],
+};
 
-    const responseData: PollResponse = await response.json();
-    return responseData.message;
+export async function poll(): Promise<PythonAppState> {
+    return {
+        number_of_questions: responseData.number_of_questions,
+        responses: responseData.responses,
+    };
 }
+
+export function emulatePopulateResponses() {
+    setTimeout(() => {
+        responseData.responses.push('response 2');
+    }, 15000);
+}
+
+/**
+ * Actual Back End API Call
+ */
+// export async function poll(): Promise<PythonAppState> {
+//     const response = await fetch(`${localPythonServerConnectionString}/poll`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     });
+
+//     const responseData: PollResponse = await response.json();
+//     return responseData.message;
+// }
 
 export async function helloWorld(): Promise<string> {
     const response = await fetch(

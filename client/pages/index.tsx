@@ -12,6 +12,10 @@ import {
     PythonAppState,
     SubmitRequestParams,
 } from '@/utils/interfaces';
+/**
+ * Dev Import Statement
+ */
+import { emulatePopulateResponses } from '@/pages/api/api';
 
 export default function Home(): JSX.Element {
     /**
@@ -46,7 +50,29 @@ export default function Home(): JSX.Element {
         });
     }
 
+    /**
+     * Dev onSubmit Function
+     */
     async function onSubmit() {
+        setScreen('loading');
+
+        setInterval(() => {
+            setScreen('summary');
+        }, 5000);
+
+        setInterval(async () => {
+            const pollResponse = await poll();
+            console.log(pollResponse);
+            setLlmResponse(pollResponse);
+        }, 2000);
+
+        emulatePopulateResponses();
+    }
+
+    /**
+     * Non-Dev (Demo) onSubmit Function
+     */
+    /* async function onSubmit() {
         if (questionsFile && evidenceFile) {
             const csvFileBuffer = await readFileAsDataUrl(questionsFile);
             // console.log(csvFileBuffer)
@@ -65,7 +91,7 @@ export default function Home(): JSX.Element {
         } else {
             alert('Please upload all files');
         }
-    }
+    } */
 
     return (
         <div className='mx-auto w-full dark:text-zinc-50'>
@@ -168,13 +194,6 @@ export default function Home(): JSX.Element {
                                     d='M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99'
                                 />
                             </svg>
-
-                            <Button
-                                variant='solid'
-                                onClick={() => setScreen('summary')}
-                            >
-                                See Summary
-                            </Button>
                         </>
                     ) : null}
 
