@@ -40,7 +40,7 @@ export default function Home(): JSX.Element {
 
     // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
     async function readFileAsDataUrl(file: File): Promise<string> {
-        let result_buffer: string | ArrayBuffer | null = await new Promise(
+        const result_buffer: string | ArrayBuffer | null = await new Promise(
             (resolve) => {
                 let fileReader = new FileReader();
                 fileReader.onload = (e) => resolve(fileReader.result);
@@ -61,14 +61,14 @@ export default function Home(): JSX.Element {
 
             setScreen('loading');
             submit({ csvFileBuffer, pdfFileBuffer });
+
+            setInterval(async () => {
+                console.log(await poll());
+                await setLlmResponses(poll());
+            }, 10000);
         } else {
             alert('Please upload all files');
         }
-
-        setInterval(async () => {
-            console.log(await poll());
-            await setLlmResponses(poll());
-        }, 10000);
     }
 
     return (
