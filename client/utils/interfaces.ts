@@ -3,8 +3,9 @@ export interface PollResponse {
 }
 
 export interface PythonAppState {
-    number_of_questions: Number;
-    responses: Array<String>;
+    number_of_questions: number;
+    questions: Array<string>;
+    responses: Array<string>;
 }
 
 export interface SubmitRequestParams {

@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import {
+    ArrowPathIcon,
     ChartBarSquareIcon,
     ChatBubbleBottomCenterTextIcon,
     QuestionMarkCircleIcon,
@@ -12,6 +13,7 @@ import {
     PythonAppState,
     SubmitRequestParams,
 } from '@/utils/interfaces';
+import { LlmResponse } from '@/utils/types';
 /**
  * Dev Import Statement
  */
@@ -27,7 +29,7 @@ export default function Home(): JSX.Element {
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
-    const [llmResponse, setLlmResponse] = useState<PythonAppState | null>(null);
+    const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
 
     /**
      * Helper Functions
@@ -41,18 +43,16 @@ export default function Home(): JSX.Element {
         }
     }
 
-    // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
-    async function readFileAsDataUrl(file: File): Promise<string> {
+    /**
+     * Dev Functions
+     */
+    async function readFileAsText(file: File): Promise<string> {
         return new Promise((resolve) => {
             const fileReader = new FileReader();
             fileReader.onload = () => resolve(fileReader.result as string);
-            fileReader.readAsDataURL(file);
+            fileReader.readAsText(file);
         });
     }
-
-    /**
-     * Dev onSubmit Function
-     */
     async function onSubmit() {
         setScreen('loading');
 
@@ -70,7 +70,7 @@ export default function Home(): JSX.Element {
     }
 
     /**
-     * Non-Dev (Demo) onSubmit Function
+     * Non-Dev (Demo) Functions
      */
     /* async function onSubmit() {
         if (questionsFile && evidenceFile) {
@@ -91,6 +91,15 @@ export default function Home(): JSX.Element {
         } else {
             alert('Please upload all files');
         }
+    } */
+
+    // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
+    /* async function readFileAsDataUrl(file: File): Promise<string> {
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsDataURL(file);
+        });
     } */
 
     return (
@@ -180,20 +189,7 @@ export default function Home(): JSX.Element {
                                 When finished loading, the summary will be
                                 displayed on the next screen.
                             </p>
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                strokeWidth={1.5}
-                                stroke='currentColor'
-                                className='mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    d='M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99'
-                                />
-                            </svg>
+                            <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
                         </>
                     ) : null}
 
@@ -201,9 +197,12 @@ export default function Home(): JSX.Element {
                         <>
                             <H4>Neuron RAG-Injested Documents</H4>
 
-                            <pre>{JSON.stringify(llmResponse)}</pre>
+                            <pre>{llmResponse?.number_of_questions}</pre>
+                            {llmResponse?.responses.map((response, index) => (
+                                <pre key={index}>{response}</pre>
+                            ))}
 
-                            <Summary />
+                            <Summary llmResponse={llmResponse} />
 
                             <Button
                                 variant='solid'

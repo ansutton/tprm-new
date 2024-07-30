@@ -31,12 +31,17 @@ export async function submit(params: SubmitRequestParams): Promise<string> {
  */
 const responseData: PythonAppState = {
     number_of_questions: 2,
+    questions: [
+        'What access control procedures are in place?',
+        'When was the access control policy last reviewed?',
+    ],
     responses: ['response 1'],
 };
 
 export async function poll(): Promise<PythonAppState> {
     return {
         number_of_questions: responseData.number_of_questions,
+        questions: responseData.questions,
         responses: responseData.responses,
     };
 }

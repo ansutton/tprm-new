@@ -1,14 +1,21 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
+
 import {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
-import { summarySample } from './summarySample';
+import { LlmResponse } from '@/utils/types';
+import { summarySample } from '@/components/Summary/summarySample';
 
-export function Summary(): JSX.Element {
+interface SummaryProps {
+    llmResponse: LlmResponse;
+}
+
+export function Summary({ llmResponse }: SummaryProps): JSX.Element {
     return (
         <>
             <p>
@@ -31,41 +38,43 @@ export function Summary(): JSX.Element {
                 </thead>
 
                 <tbody>
-                    {summarySample.map(
-                        (
-                            { controlQuestion, answersMatch, citation },
-                            index,
-                        ) => (
-                            <tr
-                                key={index}
-                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
-                            >
-                                <TableItem variant='cell'>
-                                    {controlQuestion}
-                                </TableItem>
-                                <TableItem variant='cell' centered>
-                                    <Link
-                                        href={`#third-party-response-${index + 1}`}
-                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                    >
-                                        Response {index + 1}
-                                    </Link>
-                                </TableItem>
-                                <TableItem variant='cell' centered>
-                                    <Link
-                                        href={`#ai-answer-${index + 1}`}
-                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                    >
-                                        Answer {index + 1}
-                                    </Link>
-                                </TableItem>
-                                <TableItem variant='cell' centered>
-                                    {answersMatch}
-                                </TableItem>
-                                <TableItem variant='cell'>{citation}</TableItem>
-                            </tr>
-                        ),
-                    )}
+                    {llmResponse?.questions.map((question, index) => (
+                        <tr
+                            key={index}
+                            className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
+                        >
+                            <TableItem variant='cell'>{question}</TableItem>
+                            <TableItem variant='cell' centered>
+                                <Link
+                                    href={`#third-party-response-${index + 1}`}
+                                    className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                >
+                                    Response {index + 1}
+                                </Link>
+                            </TableItem>
+                            <TableItem variant='cell' centered>
+                                <Link
+                                    href={`#ai-answer-${index + 1}`}
+                                    className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                >
+                                    {index ===
+                                    llmResponse?.responses.indexOf(
+                                        llmResponse?.responses[index],
+                                    ) ? (
+                                        `Answer ${index + 1}`
+                                    ) : (
+                                        <ArrowPathIcon className='stroke-1.5 mx-auto size-4 animate-spin text-indigo-800 dark:text-indigo-500' />
+                                    )}
+                                </Link>
+                            </TableItem>
+                            <TableItem variant='cell' centered>
+                                (Yes/No goes here)
+                            </TableItem>
+                            <TableItem variant='cell'>
+                                (Citation goes here)
+                            </TableItem>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
 
