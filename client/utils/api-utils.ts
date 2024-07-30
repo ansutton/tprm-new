@@ -1,4 +1,4 @@
-import { localPythonServerConnectionString } from '@/pages/api/connections';
+import { localPythonServerConnectionString } from '@/utils/connections';
 import {
     PollResponse,
     PythonAppState,
