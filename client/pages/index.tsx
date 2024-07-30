@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
-import { loadDocuments } from '@/utils/api-utils';
+import { helloWorld, poll, submit } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -52,11 +52,15 @@ export default function Home(): JSX.Element {
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             // console.log(pdfFileBuffer)
 
-            setScreen('loading');
-            await loadDocuments({ csvFileBuffer, pdfFileBuffer });
+            setScreen('loading')
+            submit({ csvFileBuffer, pdfFileBuffer })
         } else {
             alert('Please upload all files');
         }
+
+        setInterval(async () => {
+            console.log(await poll())
+        }, 10000);
     }
 
     return (
