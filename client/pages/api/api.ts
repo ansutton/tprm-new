@@ -1,54 +1,67 @@
-export async function loadDocument(pathToDocument: string): Promise<string> {
+import { localPythonServerConnectionString } from './connections';
+
+interface SubmitRequestParams {
+    csvFileBuffer: string;
+    pdfFileBuffer: string;
+    // xlsxFileBuffer: string,
+}
+
+export async function submit(params: SubmitRequestParams): Promise<string> {
     const data = {
-        filePath: pathToDocument,
+        questionsCsvFileBuffer: params.csvFileBuffer,
+        evidencePdfFileBuffer: params.pdfFileBuffer,
+        // responsesXlsxFileBuffer: params.xlsxFileBuffer,
     };
-    const response = await fetch('http://127.0.0.1:8001/load_document', {
-        method: 'POST',
+    const response = await fetch(
+        `${localPythonServerConnectionString}/submit`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        },
+    );
+
+    const responseData = await response.json();
+    return JSON.stringify(responseData);
+}
+
+interface PollResponse {
+    message: PythonAppState;
+}
+
+interface PythonAppState {
+    number_of_questions: Number;
+    responses: Array<String>;
+}
+
+export async function poll(): Promise<PythonAppState> {
+    const response = await fetch(`${localPythonServerConnectionString}/poll`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
     });
-    const serverResponse = await response.json();
-    let message = serverResponse as PythonServerLoadDocumentResponse;
 
-    if (message?.message) {
-        return message.message;
-    } else if (message?.error) {
-        return message.error;
-    } else {
-        return 'document not found!';
-    }
+    const responseData: PollResponse = await response.json();
+    return responseData.message;
 }
 
-export async function generateRAG(query: string): Promise<string> {
-    const data = {
-        text: query,
-    };
-    const response = await fetch('http://127.0.0.1:8001/generate_rag', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+export async function helloWorld(): Promise<string> {
+    const response = await fetch(
+        `${localPythonServerConnectionString}/hello_world`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                //   "Access-Control-Allow-Origin": "*",
+                //   "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                //   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+            },
         },
-        body: JSON.stringify(data),
-    });
-    const serverResponse = await response.json();
-    let message = serverResponse as PythonServerGenerateRAGResponse;
-    if (message?.generate_rag) {
-        return message.generate_rag;
-    } else if (message?.error) {
-        return message.error;
-    } else {
-        return 'unkown error';
-    }
-}
+    );
 
-interface PythonServerLoadDocumentResponse {
-    message?: string;
-    error?: string;
-}
-
-interface PythonServerGenerateRAGResponse {
-    generate_rag?: string;
-    error?: string;
+    const hello = await response.json();
+    return JSON.stringify(hello);
 }
