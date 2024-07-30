@@ -23,8 +23,7 @@ export default function Home(): JSX.Element {
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
-    const [llmResponses, setLlmResponses] =
-        useState<Promise<PythonAppState> | null>(null);
+    const [llmResponse, setLlmResponse] = useState<PythonAppState | null>(null);
 
     /**
      * Helper Functions
@@ -40,15 +39,11 @@ export default function Home(): JSX.Element {
 
     // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
     async function readFileAsDataUrl(file: File): Promise<string> {
-        const result_buffer: string | ArrayBuffer | null = await new Promise(
-            (resolve) => {
-                let fileReader = new FileReader();
-                fileReader.onload = (e) => resolve(fileReader.result);
-                fileReader.readAsDataURL(file);
-            },
-        );
-
-        return result_buffer as string;
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsDataURL(file);
+        });
     }
 
     async function onSubmit() {
@@ -63,8 +58,9 @@ export default function Home(): JSX.Element {
             submit({ csvFileBuffer, pdfFileBuffer });
 
             setInterval(async () => {
-                console.log(await poll());
-                await setLlmResponses(poll());
+                const pollResponse = await poll();
+                console.log(pollResponse);
+                setLlmResponse(pollResponse);
             }, 10000);
         } else {
             alert('Please upload all files');
@@ -186,7 +182,7 @@ export default function Home(): JSX.Element {
                         <>
                             <H4>Neuron RAG-Injested Documents</H4>
 
-                            <pre>{JSON.stringify(llmResponses)}</pre>
+                            <pre>{JSON.stringify(llmResponse)}</pre>
 
                             <Summary />
 
