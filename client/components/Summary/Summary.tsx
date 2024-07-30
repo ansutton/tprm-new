@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
-
 import {
     Disclosure,
     DisclosureButton,
@@ -21,7 +20,7 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
             <p>
                 The third party and the AI model provided the same response for{' '}
                 <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                    2/3 (33%)
+                    1/2 (50%)
                 </span>{' '}
                 of questions uploaded.
             </p>
@@ -63,15 +62,15 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
                                     ) ? (
                                         `Answer ${index + 1}`
                                     ) : (
-                                        <ArrowPathIcon className='stroke-1.5 mx-auto size-4 animate-spin text-indigo-800 dark:text-indigo-500' />
+                                        <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
                                     )}
                                 </Link>
                             </TableItem>
                             <TableItem variant='cell' centered>
-                                (Yes/No goes here)
+                                {summarySample[index].answersMatch}
                             </TableItem>
                             <TableItem variant='cell'>
-                                (Citation goes here)
+                                {summarySample[index].citation}
                             </TableItem>
                         </tr>
                     ))}
@@ -79,51 +78,49 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
             </table>
 
             <div className='w-full divide-y dark:divide-zinc-600'>
-                {summarySample.map(
-                    (
-                        {
-                            controlQuestion,
-                            tpResponse,
-                            aiAnswer,
-                            answersMatch,
-                            citation,
-                        },
-                        index,
-                    ) => (
-                        <div key={index} className='py-2'>
-                            <SummaryItem
-                                title={`Control Question ${index + 1}`}
-                                content={controlQuestion}
-                                defaultOpen
-                                id={`control-question-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`Third Party Response ${index + 1}`}
-                                content={tpResponse}
-                                defaultOpen
-                                id={`third-party-response-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`AI Answer ${index + 1}`}
-                                content={aiAnswer}
-                                defaultOpen
-                                id={`ai-answer-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`Answers Match?`}
-                                content={answersMatch}
-                                defaultOpen
-                                id={`answers-match-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`Citation`}
-                                content={citation}
-                                defaultOpen
-                                id={`citaton-${index + 1}`}
-                            />
-                        </div>
-                    ),
-                )}
+                {llmResponse?.questions.map((question, index) => (
+                    <div key={index} className='py-2'>
+                        <SummaryItem
+                            title={`Control Question ${index + 1}`}
+                            content={question}
+                            defaultOpen
+                            id={`control-question-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`Third Party Response ${index + 1}`}
+                            content={summarySample[index].tpResponse}
+                            defaultOpen
+                            id={`third-party-response-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`AI Answer ${index + 1}`}
+                            content={
+                                index ===
+                                llmResponse?.responses.indexOf(
+                                    llmResponse?.responses[index],
+                                ) ? (
+                                    `${llmResponse?.responses[index]}`
+                                ) : (
+                                    <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                )
+                            }
+                            defaultOpen
+                            id={`ai-answer-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`Answers Match?`}
+                            content={summarySample[index].answersMatch}
+                            defaultOpen
+                            id={`answers-match-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`Citation`}
+                            content={summarySample[index].citation}
+                            defaultOpen
+                            id={`citaton-${index + 1}`}
+                        />
+                    </div>
+                ))}
             </div>
         </>
     );

@@ -1,3 +1,4 @@
+import { summarySample } from '@/components/Summary/summarySample';
 import { localPythonServerConnectionString } from '@/utils/connections';
 import {
     PollResponse,
@@ -32,10 +33,10 @@ export async function submit(params: SubmitRequestParams): Promise<string> {
 const responseData: PythonAppState = {
     number_of_questions: 2,
     questions: [
-        'What access control procedures are in place?',
-        'When was the access control policy last reviewed?',
+        summarySample[0].controlQuestion,
+        summarySample[1].controlQuestion,
     ],
-    responses: ['response 1'],
+    responses: [summarySample[0].aiAnswer],
 };
 
 export async function poll(): Promise<PythonAppState> {
@@ -48,7 +49,7 @@ export async function poll(): Promise<PythonAppState> {
 
 export function emulatePopulateResponses() {
     setTimeout(() => {
-        responseData.responses.push('response 2');
+        responseData.responses.push(summarySample[1].aiAnswer);
     }, 15000);
 }
 

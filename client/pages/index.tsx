@@ -3,6 +3,7 @@ import {
     ArrowPathIcon,
     ChartBarSquareIcon,
     ChatBubbleBottomCenterTextIcon,
+    DocumentTextIcon,
     QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
@@ -195,12 +196,15 @@ export default function Home(): JSX.Element {
 
                     {screen === 'summary' ? (
                         <>
-                            <H4>Neuron RAG-Injested Documents</H4>
-
-                            <pre>{llmResponse?.number_of_questions}</pre>
-                            {llmResponse?.responses.map((response, index) => (
-                                <pre key={index}>{response}</pre>
-                            ))}
+                            <div className='flex items-center gap-3'>
+                                <DocumentTextIcon
+                                    className={clsx(
+                                        'w-10 stroke-indigo-600 stroke-2',
+                                        'dark:stroke-indigo-500',
+                                    )}
+                                />
+                                <H4>Neuron RAG-Injested Documents</H4>
+                            </div>
 
                             <Summary llmResponse={llmResponse} />
 
