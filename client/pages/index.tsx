@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
-import { helloWorld, submit } from '@/utils/api-utils';
+import { helloWorld, poll, submit } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -45,10 +45,14 @@ export default function Home(): JSX.Element {
             // console.log(pdfFileBuffer)
 
             setScreen('loading')
-            await submit({ csvFileBuffer, pdfFileBuffer })
+            submit({ csvFileBuffer, pdfFileBuffer })
         } else {
             alert("please upload all files...")
         }
+
+        setInterval(async () => {
+            console.log(await poll())
+        }, 10000);
     }
 
     return (

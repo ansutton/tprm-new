@@ -49,22 +49,32 @@ def main():
         vector_db = create_database_vectors(pdf_file_content)
 
         # Loop through each question and add responses to app state.
-        for i in questions:
-            response = generate_model_response(vector_db, questions[i])
+        for question in questions:
+            response = generate_model_response(vector_db, question)
             app_state.responses.append(response)
 
-        app_state_json_string = json.dumps(app_state.to_dict())
-        print(app_state_json_string)
-
-        return jsonify({'message': app_state_json_string})
+        return jsonify({'message': 'Finished TPRM Accelerator process.'})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Poll endpoint used by the client to longpoll for app state updates.
+@app.route('/poll', methods=['GET'])
+def poll():
+    try:
+        # Get current app state.
+        app_state_json_string = json.dumps(app_state.to_dict())
 
-# Below are testing routes for Postman calls.
+        # Send to client.
+        return jsonify({ 'message': app_state_json_string })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Test vector db for test endpoints.
 test_vector_db = ""
 
+# Load document test endpoint.
 @app.route('/load_document', methods=['POST'])
 def load_document():
     global test_vector_db
@@ -82,7 +92,7 @@ def load_document():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
+# Generate RAG test endpoint.
 @app.route('/generate_rag', methods=['POST'])
 def generate_rag():
     global test_vector_db
