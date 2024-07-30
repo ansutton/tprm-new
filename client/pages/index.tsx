@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
-import { helloWorld, poll, submit } from '@/pages/api/api';
+import { helloWorld, poll, submit } from '@/utils/api-utils';
 import {
     PollResponse,
     PythonAppState,
@@ -15,7 +15,7 @@ import {
 /**
  * Dev Import Statement
  */
-import { emulatePopulateResponses } from '@/pages/api/api';
+import { emulatePopulateResponses } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
