@@ -36,9 +36,8 @@ const responseData: PythonAppState = {
         summarySample[0].controlQuestion,
         summarySample[1].controlQuestion,
     ],
-    responses: [summarySample[0].aiAnswer],
+    responses: [],
 };
-
 export async function poll(): Promise<PythonAppState> {
     return {
         number_of_questions: responseData.number_of_questions,
@@ -46,27 +45,28 @@ export async function poll(): Promise<PythonAppState> {
         responses: responseData.responses,
     };
 }
-
 export function emulatePopulateResponses() {
     setTimeout(() => {
+        responseData.responses.push(summarySample[0].aiAnswer);
+    }, 10000);
+    setTimeout(() => {
         responseData.responses.push(summarySample[1].aiAnswer);
-    }, 15000);
+    }, 20000);
 }
 
 /**
  * Actual Back End API Call
  */
-/* export async function poll(): Promise<PythonAppState> {
-    const response = await fetch(`${localPythonServerConnectionString}/poll`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    const responseData: PollResponse = await response.json();
-    return responseData.message;
-} */
+// export async function poll(): Promise<PythonAppState> {
+//     const response = await fetch(`${localPythonServerConnectionString}/poll`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     });
+//     const responseData: PollResponse = await response.json();
+//     return responseData.message;
+// }
 
 export async function helloWorld(): Promise<string> {
     const response = await fetch(
