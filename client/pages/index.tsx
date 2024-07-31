@@ -96,10 +96,10 @@ export default function Home(): JSX.Element {
             setInterval(async () => {
                 const pollResponse = await poll();
                 console.log(pollResponse?.responses);
-                pollResponse?.responses?.length === 0
-                    ? setScreen('loading')
-                    : setScreen('summary');
-                setLlmResponse(pollResponse);
+                // pollResponse?.responses?.length === 0
+                //     ? setScreen('loading')
+                //     : setScreen('summary');
+                // setLlmResponse(pollResponse);
             }, 5000);
         } else {
             alert('Please upload all files');

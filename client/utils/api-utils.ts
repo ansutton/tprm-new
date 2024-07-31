@@ -27,7 +27,6 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
                 body: JSON.stringify(data),
             },
         );
-
         console.log(await response.json());
     } catch (err) {
         console.log(err);
@@ -88,7 +87,6 @@ export async function helloWorld(): Promise<string> {
             },
         },
     );
-
     const hello = await response.json();
     return JSON.stringify(hello);
 }
