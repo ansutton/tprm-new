@@ -1,22 +1,5 @@
 import Link from 'next/link';
 
-interface CitationProps {
-    url: string;
-}
-
-function Citation({ url }: CitationProps) {
-    return (
-        <Link
-            href={url}
-            className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-            target='_blank'
-            rel='noreferrer noopener'
-        >
-            {url}
-        </Link>
-    );
-}
-
 export const summarySample = [
     {
         controlQuestion: 'What access control procedures are in place?',
@@ -37,3 +20,20 @@ export const summarySample = [
         citation: <Citation url='https://citation2.org' />,
     },
 ];
+
+interface CitationProps {
+    url: string;
+}
+
+function Citation({ url }: CitationProps) {
+    return (
+        <Link
+            href={url}
+            className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+            target='_blank'
+            rel='noreferrer noopener'
+        >
+            {url}
+        </Link>
+    );
+}
