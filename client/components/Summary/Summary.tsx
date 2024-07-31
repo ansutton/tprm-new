@@ -7,7 +7,7 @@ import {
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
-import { LlmResponse } from '@/utils/types';
+import { LlmResponse } from '@/types/globals';
 import { summarySample } from '@/components/Summary/summarySample';
 
 interface SummaryProps {
