@@ -41,6 +41,9 @@ def main():
         # Set app state no. of questions based on csv.
         app_state.number_of_questions = len(questions)
 
+        # Set app state questions based on csv.
+        app_state.questions = questions
+
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data['evidencePdfFileBuffer']
         pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
@@ -117,7 +120,7 @@ def hello_world():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
 @app.route('/')
 def index():
     return "This is a basic flask application"

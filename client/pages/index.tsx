@@ -1,4 +1,10 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import {
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    useEffect,
+    useState,
+} from 'react';
 import {
     ArrowPathIcon,
     ChartBarSquareIcon,
@@ -10,15 +16,16 @@ import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 import { helloWorld, poll, submit } from '@/utils/api-utils';
 import {
+    LlmResponse,
     PollResponse,
     PythonAppState,
     SubmitRequestParams,
-} from '@/utils/interfaces';
-import { LlmResponse } from '@/utils/types';
+} from '@/types/globals';
+
 /**
  * Dev Import Statement
  */
-import { emulatePopulateResponses } from '@/utils/api-utils';
+// import { emulatePopulateResponses } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -47,54 +54,57 @@ export default function Home(): JSX.Element {
     /**
      * Dev Functions
      */
-    async function readFileAsText(file: File): Promise<string> {
-        return new Promise((resolve) => {
-            const fileReader = new FileReader();
-            fileReader.onload = () => resolve(fileReader.result as string);
-            fileReader.readAsText(file);
-        });
-    }
-    async function onSubmit() {
-        setScreen('loading');
-        setInterval(() => {
-            setScreen('summary');
-        }, 5000);
-        setInterval(async () => {
-            const pollResponse = await poll();
-            console.log(pollResponse);
-            setLlmResponse(pollResponse);
-        }, 2000);
-        emulatePopulateResponses();
-    }
-
-    /**
-     * Non-Dev (Demo) Functions and Effect Hooks
-     */
-    // Need to use base64 encoding instead of this? Or this is sufficient... since it is base64
-    // async function readFileAsDataUrl(file: File): Promise<string> {
+    // async function readFileAsText(file: File): Promise<string> {
     //     return new Promise((resolve) => {
     //         const fileReader = new FileReader();
     //         fileReader.onload = () => resolve(fileReader.result as string);
-    //         fileReader.readAsDataURL(file);
+    //         fileReader.readAsText(file);
     //     });
     // }
     // async function onSubmit() {
-    //     if (questionsFile && evidenceFile) {
-    //         const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-    //         // console.log(csvFileBuffer)
-    //         const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-    //         // console.log(pdfFileBuffer)
-    //         setScreen('loading');
-    //         submit({ csvFileBuffer, pdfFileBuffer });
-    //         setInterval(async () => {
-    //             const pollResponse = await poll();
-    //             console.log(pollResponse);
-    //             setLlmResponse(pollResponse);
-    //         }, 10000);
-    //     } else {
-    //         alert('Please upload all files');
-    //     }
+    //     setScreen('loading');
+    //     setInterval(() => {
+    //         setScreen('summary');
+    //     }, 5000);
+    //     setInterval(async () => {
+    //         const pollResponse = await poll();
+    //         console.log(pollResponse);
+    //         setLlmResponse(pollResponse);
+    //     }, 2000);
+    //     emulatePopulateResponses();
     // }
+
+    /**
+     * Demo Functions
+     */
+    // TODO: revisit base64 encoding
+    async function readFileAsDataUrl(file: File): Promise<string> {
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsDataURL(file);
+        });
+    }
+    async function onSubmit() {
+        if (questionsFile && evidenceFile) {
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
+            // console.log(csvFileBuffer)
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+            // console.log(pdfFileBuffer)
+            setScreen('loading');
+            submit({ csvFileBuffer, pdfFileBuffer });
+            setInterval(async () => {
+                const pollResponse = await poll();
+                console.log(pollResponse?.responses);
+                pollResponse?.responses?.length === 0
+                    ? setScreen('loading')
+                    : setScreen('summary');
+                setLlmResponse(pollResponse);
+            }, 5000);
+        } else {
+            alert('Please upload all files');
+        }
+    }
 
     return (
         <div className='mx-auto w-full dark:text-zinc-50'>
@@ -175,9 +185,8 @@ export default function Home(): JSX.Element {
 
                     {screen === 'loading' ? (
                         <>
-                            <H4>
-                                Hang tight. This process can take up to 10
-                                minutes.
+                            <H4 additionalClasses='text-center'>
+                                Hang tight. This process can take a while.
                             </H4>
                             <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
                                 When finished loading, the summary will be
@@ -216,6 +225,7 @@ export default function Home(): JSX.Element {
 }
 
 interface HeadingProps {
+    additionalClasses?: string;
     children: ReactNode;
 }
 
@@ -227,6 +237,10 @@ function H3({ children }: HeadingProps): JSX.Element {
     );
 }
 
-function H4({ children }: HeadingProps): JSX.Element {
-    return <h4 className='w-full text-2xl font-bold'>{children}</h4>;
+function H4({ additionalClasses = '', children }: HeadingProps): JSX.Element {
+    return (
+        <h4 className={`${additionalClasses} w-full text-2xl font-bold`}>
+            {children}
+        </h4>
+    );
 }
