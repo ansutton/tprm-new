@@ -1,4 +1,3 @@
-export * from './Chat';
 export * from './Layout/Layout';
 export * from './Layout/Sidebar';
 export * from './Layout/Topbar';

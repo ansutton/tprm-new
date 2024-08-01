@@ -1,20 +1,26 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
-import { summarySample } from './summarySample';
+import { LlmResponse } from '@/types/globals';
+import { summarySample } from '@/components/Summary';
 
-export function Summary(): JSX.Element {
+interface SummaryProps {
+    llmResponse: LlmResponse;
+}
+
+export function Summary({ llmResponse }: SummaryProps): JSX.Element {
     return (
         <>
             <p>
                 The third party and the AI model provided the same response for{' '}
                 <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                    2/3 (33%)
+                    1/2 (50%)
                 </span>{' '}
                 of questions uploaded.
             </p>
@@ -31,90 +37,90 @@ export function Summary(): JSX.Element {
                 </thead>
 
                 <tbody>
-                    {summarySample.map(
-                        (
-                            { controlQuestion, answersMatch, citation },
-                            index,
-                        ) => (
-                            <tr
-                                key={index}
-                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
-                            >
-                                <TableItem variant='cell'>
-                                    {controlQuestion}
-                                </TableItem>
-                                <TableItem variant='cell' centered>
-                                    <Link
-                                        href={`#third-party-response-${index + 1}`}
-                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                    >
-                                        Response {index + 1}
-                                    </Link>
-                                </TableItem>
-                                <TableItem variant='cell' centered>
-                                    <Link
-                                        href={`#ai-answer-${index + 1}`}
-                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                    >
-                                        Answer {index + 1}
-                                    </Link>
-                                </TableItem>
-                                <TableItem variant='cell' centered>
-                                    {answersMatch}
-                                </TableItem>
-                                <TableItem variant='cell'>{citation}</TableItem>
-                            </tr>
-                        ),
-                    )}
+                    {llmResponse?.questions.map((question, index) => (
+                        <tr
+                            key={index}
+                            className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
+                        >
+                            <TableItem variant='cell'>{question}</TableItem>
+                            <TableItem variant='cell' centered>
+                                <Link
+                                    href={`#third-party-response-${index + 1}`}
+                                    className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                >
+                                    Response {index + 1}
+                                </Link>
+                            </TableItem>
+                            <TableItem variant='cell' centered>
+                                <Link
+                                    href={`#ai-answer-${index + 1}`}
+                                    className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                >
+                                    {index ===
+                                    llmResponse?.responses.indexOf(
+                                        llmResponse?.responses[index],
+                                    ) ? (
+                                        `Answer ${index + 1}`
+                                    ) : (
+                                        <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                    )}
+                                </Link>
+                            </TableItem>
+                            <TableItem variant='cell' centered>
+                                {summarySample[index].answersMatch}
+                            </TableItem>
+                            <TableItem variant='cell'>
+                                {summarySample[index].citation}
+                            </TableItem>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
 
             <div className='w-full divide-y dark:divide-zinc-600'>
-                {summarySample.map(
-                    (
-                        {
-                            controlQuestion,
-                            tpResponse,
-                            aiAnswer,
-                            answersMatch,
-                            citation,
-                        },
-                        index,
-                    ) => (
-                        <div key={index} className='py-2'>
-                            <SummaryItem
-                                title={`Control Question ${index + 1}`}
-                                content={controlQuestion}
-                                defaultOpen
-                                id={`control-question-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`Third Party Response ${index + 1}`}
-                                content={tpResponse}
-                                defaultOpen
-                                id={`third-party-response-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`AI Answer ${index + 1}`}
-                                content={aiAnswer}
-                                defaultOpen
-                                id={`ai-answer-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`Answers Match?`}
-                                content={answersMatch}
-                                defaultOpen
-                                id={`answers-match-${index + 1}`}
-                            />
-                            <SummaryItem
-                                title={`Citation`}
-                                content={citation}
-                                defaultOpen
-                                id={`citaton-${index + 1}`}
-                            />
-                        </div>
-                    ),
-                )}
+                {llmResponse?.questions.map((question, index) => (
+                    <div key={index} className='py-2'>
+                        <SummaryItem
+                            title={`Control Question ${index + 1}`}
+                            content={question}
+                            defaultOpen
+                            id={`control-question-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`Third Party Response ${index + 1}`}
+                            content={summarySample[index].tpResponse}
+                            defaultOpen
+                            id={`third-party-response-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`AI Answer ${index + 1}`}
+                            content={
+                                index ===
+                                llmResponse?.responses.indexOf(
+                                    llmResponse?.responses[index],
+                                ) ? (
+                                    `${llmResponse?.responses[index]}`
+                                ) : (
+                                    <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                )
+                            }
+                            defaultOpen
+                            id={`ai-answer-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`Answers Match?`}
+                            content={summarySample[index].answersMatch}
+                            defaultOpen
+                            id={`answers-match-${index + 1}`}
+                        />
+                        <SummaryItem
+                            title={`Citation`}
+                            content={summarySample[index].citation}
+                            defaultOpen
+                            id={`citaton-${index + 1}`}
+                        />
+                    </div>
+                ))}
             </div>
         </>
     );
