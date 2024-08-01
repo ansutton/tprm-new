@@ -25,7 +25,7 @@ import {
 /**
  * Dev Import Statement
  */
-// import { emulatePopulateResponses } from '@/utils/api-utils';
+import { emulatePopulateResponses } from '@/utils/api-utils';
 
 export default function Home(): JSX.Element {
     /**
@@ -54,57 +54,57 @@ export default function Home(): JSX.Element {
     /**
      * Dev Functions
      */
-    // async function readFileAsText(file: File): Promise<string> {
-    //     return new Promise((resolve) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.onload = () => resolve(fileReader.result as string);
-    //         fileReader.readAsText(file);
-    //     });
-    // }
-    // async function onSubmit() {
-    //     setScreen('loading');
-    //     setInterval(() => {
-    //         setScreen('summary');
-    //     }, 5000);
-    //     setInterval(async () => {
-    //         const pollResponse = await poll();
-    //         console.log(pollResponse);
-    //         setLlmResponse(pollResponse);
-    //     }, 2000);
-    //     emulatePopulateResponses();
-    // }
+    async function readFileAsText(file: File): Promise<string> {
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsText(file);
+        });
+    }
+    async function onSubmit() {
+        setScreen('loading');
+        setInterval(() => {
+            setScreen('summary');
+        }, 5000);
+        setInterval(async () => {
+            const pollResponse = await poll();
+            console.log(pollResponse);
+            setLlmResponse(pollResponse);
+        }, 2000);
+        emulatePopulateResponses();
+    }
 
     /**
      * Demo Functions
      */
     // TODO: revisit base64 encoding
-    async function readFileAsDataUrl(file: File): Promise<string> {
-        return new Promise((resolve) => {
-            const fileReader = new FileReader();
-            fileReader.onload = () => resolve(fileReader.result as string);
-            fileReader.readAsDataURL(file);
-        });
-    }
-    async function onSubmit() {
-        if (questionsFile && evidenceFile) {
-            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-            // console.log(csvFileBuffer)
-            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-            // console.log(pdfFileBuffer)
-            setScreen('summary');
-            submit({ csvFileBuffer, pdfFileBuffer });
-            setInterval(async () => {
-                const pollResponse = await poll();
-                console.log(pollResponse);
-                setLlmResponse(pollResponse);
-                // pollResponse?.responses?.length === 0
-                //     ? setScreen('loading')
-                //     : setScreen('summary');
-            }, 5000);
-        } else {
-            alert('Please upload all files');
-        }
-    }
+    // async function readFileAsDataUrl(file: File): Promise<string> {
+    //     return new Promise((resolve) => {
+    //         const fileReader = new FileReader();
+    //         fileReader.onload = () => resolve(fileReader.result as string);
+    //         fileReader.readAsDataURL(file);
+    //     });
+    // }
+    // async function onSubmit() {
+    //     if (questionsFile && evidenceFile) {
+    //         const csvFileBuffer = await readFileAsDataUrl(questionsFile);
+    //         // console.log(csvFileBuffer)
+    //         const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+    //         // console.log(pdfFileBuffer)
+    //         setScreen('summary');
+    //         submit({ csvFileBuffer, pdfFileBuffer });
+    //         setInterval(async () => {
+    //             const pollResponse = await poll();
+    //             console.log(pollResponse);
+    //             setLlmResponse(pollResponse);
+    //             // pollResponse?.responses?.length === 0
+    //             //     ? setScreen('loading')
+    //             //     : setScreen('summary');
+    //         }, 5000);
+    //     } else {
+    //         alert('Please upload all files');
+    //     }
+    // }
 
     return (
         <div className='mx-auto w-full dark:text-zinc-50'>
