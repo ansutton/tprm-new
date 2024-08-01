@@ -91,15 +91,15 @@ export default function Home(): JSX.Element {
             // console.log(csvFileBuffer)
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             // console.log(pdfFileBuffer)
-            setScreen('loading');
+            setScreen('summary');
             submit({ csvFileBuffer, pdfFileBuffer });
             setInterval(async () => {
                 const pollResponse = await poll();
-                console.log(pollResponse?.responses);
+                console.log(pollResponse);
+                setLlmResponse(pollResponse);
                 // pollResponse?.responses?.length === 0
                 //     ? setScreen('loading')
                 //     : setScreen('summary');
-                // setLlmResponse(pollResponse);
             }, 5000);
         } else {
             alert('Please upload all files');
