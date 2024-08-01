@@ -63,12 +63,16 @@ export default function Home(): JSX.Element {
     }
     async function onSubmit() {
         setScreen('loading');
-        setInterval(() => {
-            setScreen('summary');
-        }, 5000);
+        // setInterval(() => {
+        //     setScreen('loading');
+        // }, 5000);
         setInterval(async () => {
+            setScreen('summary');
             const pollResponse = await poll();
             console.log(pollResponse);
+            pollResponse?.questions
+                ? setScreen('summary')
+                : setScreen('loading');
             setLlmResponse(pollResponse);
         }, 2000);
         emulatePopulateResponses();

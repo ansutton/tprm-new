@@ -54,10 +54,10 @@ export async function poll(): Promise<PythonAppState> {
 export function emulatePopulateResponses() {
     setTimeout(() => {
         responseData.responses.push(summarySample[0].aiAnswer);
-    }, 10000);
+    }, 5000);
     setTimeout(() => {
         responseData.responses.push(summarySample[1].aiAnswer);
-    }, 20000);
+    }, 10000);
 }
 
 /**
