@@ -1,11 +1,8 @@
 # Ignore temporary MacOS files.
 .DS_Store
 
-# Ignore locally installed node dependencies.
-client/node_modules
-
-# Ignore cached python files.
-__pycache__
-
 # Ignore temprorary files created by open docx and xlsx files.
 ~$*
+
+# Ignore editor-specific files
+.vscode/
