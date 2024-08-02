@@ -19,8 +19,9 @@ import {
 /**
  * Dev Import Statement
  */
-import { emulatePopulateResponses } from '@/utils/api-utils';
+// import { emulatePopulateResponses } from '@/utils/api-utils';
 
+// TODO: When ready to include Third Party Responses, validate accordingly.
 export default function Home(): JSX.Element {
     /**
      * State Hooks
@@ -34,21 +35,18 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
 
     /**
-     * Constants Derived from State
-     *
-     */
-    const isQuestionsFileValid: boolean = questionsFile?.type === 'text/csv';
-    const isEvidenceFileValid: boolean =
-        evidenceFile?.type === 'application/pdf';
-    const isResponsesFileValid: boolean =
-        responsesFile?.type ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid;
-
-    /**
      * Helper Functions
      */
+    const isFileValid = (file: File | null, type: string): file is File =>
+        file !== null && file.type === type;
+    const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
+    const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
+    const isResponsesFileValid = isFileValid(
+        responsesFile,
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    const areAllFilesValid: boolean =
+        isQuestionsFileValid && isEvidenceFileValid;
     async function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
@@ -60,63 +58,62 @@ export default function Home(): JSX.Element {
     /**
      * Dev-Only Helper Functions
      */
-    async function readFileAsText(file: File): Promise<string> {
-        return new Promise((resolve) => {
-            const fileReader = new FileReader();
-            fileReader.onload = () => resolve(fileReader.result as string);
-            fileReader.readAsText(file);
-        });
-    }
-    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        if (areAllFilesValid) {
-            setScreen('loading');
-            // setInterval(() => {
-            //     setScreen('loading');
-            // }, 5000);
-            setInterval(async () => {
-                setScreen('summary');
-                const pollResponse = await poll();
-                console.log(pollResponse);
-                pollResponse?.questions
-                    ? setScreen('summary')
-                    : setScreen('loading');
-                setLlmResponse(pollResponse);
-            }, 2000);
-            emulatePopulateResponses();
-        }
-    }
+    // async function readFileAsText(file: File): Promise<string> {
+    //     return new Promise((resolve) => {
+    //         const fileReader = new FileReader();
+    //         fileReader.onload = () => resolve(fileReader.result as string);
+    //         fileReader.readAsText(file);
+    //     });
+    // }
+    // async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+    //     if (areAllFilesValid && questionsFile && evidenceFile) {
+    //         setScreen('loading');
+    //         // setInterval(() => {
+    //         //     setScreen('loading');
+    //         // }, 5000);
+    //         setInterval(async () => {
+    //             setScreen('summary');
+    //             const pollResponse = await poll();
+    //             console.log(pollResponse);
+    //             pollResponse?.questions
+    //                 ? setScreen('summary')
+    //                 : setScreen('loading');
+    //             setLlmResponse(pollResponse);
+    //         }, 2000);
+    //         emulatePopulateResponses();
+    //     }
+    // }
     /**
      * Demo-Only Helper Functions
      */
     // TODO: revisit base64 encoding
-    // async function readFileAsDataUrl(file: File): Promise<string> {
-    //     return new Promise((resolve) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.onload = () => resolve(fileReader.result as string);
-    //         fileReader.readAsDataURL(file);
-    //     });
-    // }
-    // async function onSubmit() {
-    //     if (questionsFile && evidenceFile) {
-    //         const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-    //         // console.log(csvFileBuffer)
-    //         const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-    //         // console.log(pdfFileBuffer)
-    //         setScreen('summary');
-    //         submit({ csvFileBuffer, pdfFileBuffer });
-    //         setInterval(async () => {
-    //             const pollResponse = await poll();
-    //             console.log(pollResponse);
-    //             setLlmResponse(pollResponse);
-    //             // pollResponse?.responses?.length === 0
-    //             //     ? setScreen('loading')
-    //             //     : setScreen('summary');
-    //         }, 5000);
-    //     } else {
-    //         alert('Please upload all files');
-    //     }
-    // }
+    async function readFileAsDataUrl(file: File): Promise<string> {
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsDataURL(file);
+        });
+    }
+    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        if (areAllFilesValid && questionsFile && evidenceFile) {
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
+            // console.log(csvFileBuffer)
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+            // console.log(pdfFileBuffer)
+            setScreen('summary');
+            submit({ csvFileBuffer, pdfFileBuffer });
+            setInterval(async () => {
+                const pollResponse = await poll();
+                console.log(pollResponse);
+                setLlmResponse(pollResponse);
+                // pollResponse?.responses?.length === 0
+                //     ? setScreen('loading')
+                //     : setScreen('summary');
+            }, 5000);
+        }
+    }
 
     /**
      * Components
