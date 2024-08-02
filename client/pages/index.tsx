@@ -46,6 +46,9 @@ export default function Home(): JSX.Element {
     const isQuestionsFileValid: boolean = questionsFile?.type === 'text/csv';
     const isEvidenceFileValid: boolean =
         evidenceFile?.type === 'application/pdf';
+    const isResponsesFileValid: boolean =
+        responsesFile?.type ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     const areAllFilesValid: boolean =
         isQuestionsFileValid && isEvidenceFileValid;
 
@@ -121,6 +124,10 @@ export default function Home(): JSX.Element {
     //     }
     // }
 
+    useEffect(() => {
+        console.log('responsesFile?.type: ', responsesFile?.type);
+    });
+
     /**
      * Components
      */
@@ -140,6 +147,17 @@ export default function Home(): JSX.Element {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
                     Please choose a <b>pdf</b> file type before proceeding
+                </p>
+            );
+        } else {
+            return <></>;
+        }
+    }
+    function IncorrectResponsesFileMessage(): JSX.Element {
+        if (responsesFile && !isResponsesFileValid) {
+            return (
+                <p className='text-orange-600 dark:text-orange-500'>
+                    Please choose a <b>xlsx</b> file type before proceeding
                 </p>
             );
         } else {
@@ -234,6 +252,8 @@ export default function Home(): JSX.Element {
                                     }
                                     type='file'
                                 />
+                                <IncorrectResponsesFileMessage />
+
                                 <Button
                                     variant={
                                         areAllFilesValid ? 'solid' : 'disabled'
