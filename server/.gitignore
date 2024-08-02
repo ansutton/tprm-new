@@ -1,0 +1,11 @@
+# Ignore virtual environment files.
+.venv/
+
+# Ignore cached python files.
+__pycache__
+
+# Ignore compiled Python files.
+*.pyc
+
+# Ignore mypy cached files.
+.mypy_cache/
