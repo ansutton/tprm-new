@@ -4,19 +4,23 @@ import { tw } from '@/utils';
 
 interface ButtonProps {
     children: ReactNode;
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     startIcon?: JSX.Element | null;
     variant: 'disabled' | 'outlined' | 'solid';
 }
 
 export function Button({
     children,
-    onClick,
+    onClick = () => null,
     variant,
     startIcon = null,
 }: ButtonProps): JSX.Element {
     const variantClasses: Record<string, string> = {
-        disabled: tw`cursor-not-allowed bg-zinc-300 text-zinc-700`,
+        disabled: clsx(
+            tw`text-white shadow-md shadow-indigo-900/30 dark:text-zinc-400`,
+            tw`bg-indigo-700/50`,
+            tw`dark:bg-indigo-500/50`,
+        ),
         solid: clsx(
             tw`text-white shadow-md shadow-indigo-900/30`,
             tw`bg-indigo-700`,

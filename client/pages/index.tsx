@@ -40,6 +40,16 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
 
     /**
+     * Constants Derived from State
+     *
+     */
+    const isQuestionsFileValid: boolean = questionsFile?.type === 'text/csv';
+    const isEvidenceFileValid: boolean =
+        evidenceFile?.type === 'application/pdf';
+    const areAllFilesValid: boolean =
+        isQuestionsFileValid && isEvidenceFileValid;
+
+    /**
      * Helper Functions
      */
     async function onFileChange(
@@ -50,9 +60,8 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-
     /**
-     * Dev Functions
+     * Dev-Only Helper Functions
      */
     async function readFileAsText(file: File): Promise<string> {
         return new Promise((resolve) => {
@@ -62,24 +71,26 @@ export default function Home(): JSX.Element {
         });
     }
     async function onSubmit() {
-        setScreen('loading');
-        // setInterval(() => {
-        //     setScreen('loading');
-        // }, 5000);
-        setInterval(async () => {
-            setScreen('summary');
-            const pollResponse = await poll();
-            console.log(pollResponse);
-            pollResponse?.questions
-                ? setScreen('summary')
-                : setScreen('loading');
-            setLlmResponse(pollResponse);
-        }, 2000);
-        emulatePopulateResponses();
+        if (areAllFilesValid) {
+            setScreen('loading');
+            // setInterval(() => {
+            //     setScreen('loading');
+            // }, 5000);
+            setInterval(async () => {
+                setScreen('summary');
+                const pollResponse = await poll();
+                console.log(pollResponse);
+                pollResponse?.questions
+                    ? setScreen('summary')
+                    : setScreen('loading');
+                setLlmResponse(pollResponse);
+            }, 2000);
+            emulatePopulateResponses();
+        }
+        return;
     }
-
     /**
-     * Demo Functions
+     * Demo-Only Helper Functions
      */
     // TODO: revisit base64 encoding
     // async function readFileAsDataUrl(file: File): Promise<string> {
@@ -110,6 +121,32 @@ export default function Home(): JSX.Element {
     //     }
     // }
 
+    /**
+     * Components
+     */
+    function IncorrectQuestionsFileMessage(): JSX.Element {
+        if (questionsFile && !isQuestionsFileValid) {
+            return (
+                <p className='text-orange-600 dark:text-orange-500'>
+                    Please choose a <b>csv</b> file type before proceeding
+                </p>
+            );
+        } else {
+            return <></>;
+        }
+    }
+    function IncorrectEvidenceFileMessage(): JSX.Element {
+        if (evidenceFile && !isEvidenceFileValid) {
+            return (
+                <p className='text-orange-600 dark:text-orange-500'>
+                    Please choose a <b>pdf</b> file type before proceeding
+                </p>
+            );
+        } else {
+            return <></>;
+        }
+    }
+
     return (
         <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar />
@@ -133,57 +170,87 @@ export default function Home(): JSX.Element {
                                 />
                                 <H4>Blank Question Set</H4>
                             </div>
-                            <input
-                                type='file'
-                                id='file'
-                                accept='.csv'
-                                onChange={(e) =>
-                                    onFileChange(e, setQuestionsFile)
-                                }
-                                className='file:mr-4 file:cursor-pointer'
-                            />
-
-                            <div className='flex items-center gap-3'>
-                                <ChartBarSquareIcon
-                                    className={clsx(
-                                        'w-10 stroke-indigo-600 stroke-2',
-                                        'dark:stroke-indigo-500',
-                                    )}
+                            <form
+                                className='flex flex-col gap-6'
+                                onSubmit={onSubmit}
+                            >
+                                <p>
+                                    File type: <b>csv</b>
+                                </p>
+                                <input
+                                    accept='.csv'
+                                    className='w-[450px] file:mr-4 file:cursor-pointer'
+                                    id='file'
+                                    onChange={(e) =>
+                                        onFileChange(e, setQuestionsFile)
+                                    }
+                                    required
+                                    type='file'
                                 />
-                                <H4>Third Party Evidence Provided</H4>
-                            </div>
-                            <input
-                                type='file'
-                                id='file'
-                                accept='.pdf'
-                                onChange={(e) =>
-                                    onFileChange(e, setEvidenceFile)
-                                }
-                                className='file:mr-4 file:cursor-pointer'
-                            />
+                                <IncorrectQuestionsFileMessage />
 
-                            <div className='flex items-center gap-3'>
-                                <ChatBubbleBottomCenterTextIcon
-                                    className={clsx(
-                                        'w-10 stroke-indigo-600 stroke-2',
-                                        'dark:stroke-indigo-500',
-                                    )}
+                                <div className='flex items-center gap-3'>
+                                    <ChartBarSquareIcon
+                                        className={clsx(
+                                            'w-10 stroke-indigo-600 stroke-2',
+                                            'dark:stroke-indigo-500',
+                                        )}
+                                    />
+                                    <H4>Third Party Evidence Provided</H4>
+                                </div>
+                                <p>
+                                    File type: <b>pdf</b>
+                                </p>
+                                <input
+                                    accept='.pdf'
+                                    className='w-[450px] file:mr-4 file:cursor-pointer'
+                                    id='file'
+                                    onChange={(e) =>
+                                        onFileChange(e, setEvidenceFile)
+                                    }
+                                    required
+                                    type='file'
                                 />
-                                <H4>Third Party Responses</H4>
-                            </div>
-                            <input
-                                type='file'
-                                id='file'
-                                accept='.xlsx'
-                                onChange={(e) =>
-                                    onFileChange(e, setResponsesFile)
-                                }
-                                className='file:mr-4 file:cursor-pointer'
-                            />
+                                <IncorrectEvidenceFileMessage />
 
-                            <Button variant='solid' onClick={() => onSubmit()}>
-                                Submit
-                            </Button>
+                                <div className='flex items-center gap-3'>
+                                    <ChatBubbleBottomCenterTextIcon
+                                        className={clsx(
+                                            'w-10 stroke-indigo-600 stroke-2',
+                                            'dark:stroke-indigo-500',
+                                        )}
+                                    />
+                                    <H4>Third Party Responses</H4>
+                                </div>
+                                <p>
+                                    File type: <b>xlsx</b>
+                                </p>
+                                <input
+                                    accept='.xlsx'
+                                    className='file:mr-4 file:cursor-pointer'
+                                    id='file'
+                                    onChange={(e) =>
+                                        onFileChange(e, setResponsesFile)
+                                    }
+                                    type='file'
+                                />
+                                <Button
+                                    variant={
+                                        areAllFilesValid ? 'solid' : 'disabled'
+                                    }
+                                >
+                                    <input
+                                        className={
+                                            areAllFilesValid
+                                                ? 'hover:cursor-pointer'
+                                                : ''
+                                        }
+                                        readOnly={areAllFilesValid}
+                                        type='submit'
+                                        value='Submit'
+                                    />
+                                </Button>
+                            </form>
                         </>
                     ) : null}
 
