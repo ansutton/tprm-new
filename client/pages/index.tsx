@@ -9,12 +9,7 @@ import {
 import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 import { helloWorld, poll, submit } from '@/utils/api-utils';
-import {
-    LlmResponse,
-    PollResponse,
-    PythonAppState,
-    SubmitRequestParams,
-} from '@/types/globals';
+import { LlmResponse } from '@/types/globals';
 
 /**
  * Dev Import Statement
