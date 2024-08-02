@@ -1,10 +1,4 @@
-import {
-    Dispatch,
-    ReactNode,
-    SetStateAction,
-    useEffect,
-    useState,
-} from 'react';
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import {
     ArrowPathIcon,
     ChartBarSquareIcon,
@@ -123,10 +117,6 @@ export default function Home(): JSX.Element {
     //         alert('Please upload all files');
     //     }
     // }
-
-    useEffect(() => {
-        console.log('responsesFile?.type: ', responsesFile?.type);
-    });
 
     /**
      * Components
