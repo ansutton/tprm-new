@@ -19,8 +19,9 @@ import {
 /**
  * Dev Import Statement
  */
-import { emulatePopulateResponses } from '@/utils/api-utils';
+// import { emulatePopulateResponses } from '@/utils/api-utils';
 
+// TODO: When ready to include Third Party Responses, validate accordingly.
 export default function Home(): JSX.Element {
     /**
      * State Hooks
@@ -34,21 +35,18 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
 
     /**
-     * Constants Derived from State
-     *
-     */
-    const isQuestionsFileValid: boolean = questionsFile?.type === 'text/csv';
-    const isEvidenceFileValid: boolean =
-        evidenceFile?.type === 'application/pdf';
-    const isResponsesFileValid: boolean =
-        responsesFile?.type ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid;
-
-    /**
      * Helper Functions
      */
+    const isFileValid = (file: File | null, type: string): file is File =>
+        file !== null && file.type === type;
+    const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
+    const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
+    const isResponsesFileValid = isFileValid(
+        responsesFile,
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    const areAllFilesValid: boolean =
+        isQuestionsFileValid && isEvidenceFileValid;
     async function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
@@ -60,94 +58,93 @@ export default function Home(): JSX.Element {
     /**
      * Dev-Only Helper Functions
      */
-    async function readFileAsText(file: File): Promise<string> {
-        return new Promise((resolve) => {
-            const fileReader = new FileReader();
-            fileReader.onload = () => resolve(fileReader.result as string);
-            fileReader.readAsText(file);
-        });
-    }
-    async function onSubmit() {
-        if (areAllFilesValid) {
-            setScreen('loading');
-            // setInterval(() => {
-            //     setScreen('loading');
-            // }, 5000);
-            setInterval(async () => {
-                setScreen('summary');
-                const pollResponse = await poll();
-                console.log(pollResponse);
-                pollResponse?.questions
-                    ? setScreen('summary')
-                    : setScreen('loading');
-                setLlmResponse(pollResponse);
-            }, 2000);
-            emulatePopulateResponses();
-        }
-        return;
-    }
+    // async function readFileAsText(file: File): Promise<string> {
+    //     return new Promise((resolve) => {
+    //         const fileReader = new FileReader();
+    //         fileReader.onload = () => resolve(fileReader.result as string);
+    //         fileReader.readAsText(file);
+    //     });
+    // }
+    // async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+    //     if (areAllFilesValid && questionsFile && evidenceFile) {
+    //         setScreen('loading');
+    //         // setInterval(() => {
+    //         //     setScreen('loading');
+    //         // }, 5000);
+    //         setInterval(async () => {
+    //             setScreen('summary');
+    //             const pollResponse = await poll();
+    //             console.log(pollResponse);
+    //             pollResponse?.questions
+    //                 ? setScreen('summary')
+    //                 : setScreen('loading');
+    //             setLlmResponse(pollResponse);
+    //         }, 2000);
+    //         emulatePopulateResponses();
+    //     }
+    // }
     /**
      * Demo-Only Helper Functions
      */
     // TODO: revisit base64 encoding
-    // async function readFileAsDataUrl(file: File): Promise<string> {
-    //     return new Promise((resolve) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.onload = () => resolve(fileReader.result as string);
-    //         fileReader.readAsDataURL(file);
-    //     });
-    // }
-    // async function onSubmit() {
-    //     if (questionsFile && evidenceFile) {
-    //         const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-    //         // console.log(csvFileBuffer)
-    //         const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-    //         // console.log(pdfFileBuffer)
-    //         setScreen('summary');
-    //         submit({ csvFileBuffer, pdfFileBuffer });
-    //         setInterval(async () => {
-    //             const pollResponse = await poll();
-    //             console.log(pollResponse);
-    //             setLlmResponse(pollResponse);
-    //             // pollResponse?.responses?.length === 0
-    //             //     ? setScreen('loading')
-    //             //     : setScreen('summary');
-    //         }, 5000);
-    //     } else {
-    //         alert('Please upload all files');
-    //     }
-    // }
+    async function readFileAsDataUrl(file: File): Promise<string> {
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsDataURL(file);
+        });
+    }
+    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        if (areAllFilesValid && questionsFile && evidenceFile) {
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
+            // console.log(csvFileBuffer)
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+            // console.log(pdfFileBuffer)
+            setScreen('summary');
+            submit({ csvFileBuffer, pdfFileBuffer });
+            setInterval(async () => {
+                const pollResponse = await poll();
+                console.log(pollResponse);
+                setLlmResponse(pollResponse);
+                // pollResponse?.responses?.length === 0
+                //     ? setScreen('loading')
+                //     : setScreen('summary');
+            }, 5000);
+        }
+    }
 
     /**
      * Components
      */
-    function IncorrectQuestionsFileMessage(): JSX.Element {
+    function AlertQuestionsFile(): JSX.Element {
         if (questionsFile && !isQuestionsFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>csv</b> file type before proceeding
+                    Please choose a <b>csv</b> file before proceeding
                 </p>
             );
         } else {
             return <></>;
         }
     }
-    function IncorrectEvidenceFileMessage(): JSX.Element {
+    function AlertEvidenceFile(): JSX.Element {
         if (evidenceFile && !isEvidenceFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>pdf</b> file type before proceeding
+                    Please choose a <b>pdf</b> file before proceeding
                 </p>
             );
         } else {
             return <></>;
         }
     }
-    function IncorrectResponsesFileMessage(): JSX.Element {
+    function AlertResponsesFile(): JSX.Element {
         if (responsesFile && !isResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>xlsx</b> file type before proceeding
+                    Please choose a <b>xlsx</b> file before proceeding
                 </p>
             );
         } else {
@@ -183,7 +180,7 @@ export default function Home(): JSX.Element {
                                 onSubmit={onSubmit}
                             >
                                 <p>
-                                    File type: <b>csv</b>
+                                    Accepts file type: <b>csv</b>
                                 </p>
                                 <input
                                     accept='.csv'
@@ -195,7 +192,7 @@ export default function Home(): JSX.Element {
                                     required
                                     type='file'
                                 />
-                                <IncorrectQuestionsFileMessage />
+                                <AlertQuestionsFile />
 
                                 <div className='flex items-center gap-3'>
                                     <ChartBarSquareIcon
@@ -207,7 +204,7 @@ export default function Home(): JSX.Element {
                                     <H4>Third Party Evidence Provided</H4>
                                 </div>
                                 <p>
-                                    File type: <b>pdf</b>
+                                    Accepts file type: <b>pdf</b>
                                 </p>
                                 <input
                                     accept='.pdf'
@@ -219,7 +216,7 @@ export default function Home(): JSX.Element {
                                     required
                                     type='file'
                                 />
-                                <IncorrectEvidenceFileMessage />
+                                <AlertEvidenceFile />
 
                                 <div className='flex items-center gap-3'>
                                     <ChatBubbleBottomCenterTextIcon
@@ -231,7 +228,7 @@ export default function Home(): JSX.Element {
                                     <H4>Third Party Responses</H4>
                                 </div>
                                 <p>
-                                    File type: <b>xlsx</b>
+                                    Accepts file type: <b>xlsx</b>
                                 </p>
                                 <input
                                     accept='.xlsx'
@@ -242,7 +239,7 @@ export default function Home(): JSX.Element {
                                     }
                                     type='file'
                                 />
-                                <IncorrectResponsesFileMessage />
+                                <AlertResponsesFile />
 
                                 <Button
                                     variant={
