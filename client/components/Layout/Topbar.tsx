@@ -84,7 +84,7 @@ export function Topbar(): JSX.Element {
 
 function Pipe(): JSX.Element {
     return (
-        <p className='bg-gradient-to-t from-zinc-800 via-zinc-400 to-zinc-800 bg-clip-text text-2xl font-extrabold text-transparent'>
+        <p className='cursor-default bg-gradient-to-t from-zinc-800 via-zinc-400 to-zinc-800 bg-clip-text text-2xl font-extrabold text-transparent'>
             |
         </p>
     );
