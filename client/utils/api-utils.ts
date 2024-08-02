@@ -34,7 +34,7 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
 }
 
 /**
- * Dev Functions
+ * Dev-Only Functions
  */
 const responseData: PythonAppState = {
     number_of_questions: 2,
@@ -59,9 +59,8 @@ export function emulatePopulateResponses() {
         responseData.responses.push(summarySample[1].aiAnswer);
     }, 10000);
 }
-
 /**
- * Demo Functions (Actual Back End API Call)
+ * Demo-Only Functions (Actual Back End API Call)
  */
 // export async function poll(): Promise<PythonAppState> {
 //     const response = await fetch(`${localPythonServerConnectionString}/poll`, {
