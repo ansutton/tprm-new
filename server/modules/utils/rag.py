@@ -2,7 +2,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 import itertools
-import fitz
+import pymupdf
 
 def create_database_vectors(pdf_file, from_file_path = False):
     text_splitter = RecursiveCharacterTextSplitter(
@@ -28,11 +28,11 @@ def create_database_vectors(pdf_file, from_file_path = False):
     return vector_db
 
 def _get_page_contents_from_pdf_in_memory(pdf_file):
-    with fitz.open("pdf", pdf_file) as doc:
+    with pymupdf.open("pdf", pdf_file) as doc:
         page_contents = [page.get_text() for page in doc]
         return page_contents
 
 def _get_page_contents_from_pdf_file_path(pdf_file_path):
-    with fitz.open(pdf_file_path) as doc:
+    with pymupdf.open(pdf_file_path) as doc:
         page_contents = [page.get_text() for page in doc]
         return page_contents
