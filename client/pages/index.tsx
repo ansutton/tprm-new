@@ -67,7 +67,8 @@ export default function Home(): JSX.Element {
             fileReader.readAsText(file);
         });
     }
-    async function onSubmit() {
+    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
         if (areAllFilesValid) {
             setScreen('loading');
             // setInterval(() => {
@@ -84,7 +85,6 @@ export default function Home(): JSX.Element {
             }, 2000);
             emulatePopulateResponses();
         }
-        return;
     }
     /**
      * Demo-Only Helper Functions
@@ -121,33 +121,33 @@ export default function Home(): JSX.Element {
     /**
      * Components
      */
-    function IncorrectQuestionsFileMessage(): JSX.Element {
+    function AlertQuestionsFile(): JSX.Element {
         if (questionsFile && !isQuestionsFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>csv</b> file type before proceeding
+                    Please choose a <b>csv</b> file before proceeding
                 </p>
             );
         } else {
             return <></>;
         }
     }
-    function IncorrectEvidenceFileMessage(): JSX.Element {
+    function AlertEvidenceFile(): JSX.Element {
         if (evidenceFile && !isEvidenceFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>pdf</b> file type before proceeding
+                    Please choose a <b>pdf</b> file before proceeding
                 </p>
             );
         } else {
             return <></>;
         }
     }
-    function IncorrectResponsesFileMessage(): JSX.Element {
+    function AlertResponsesFile(): JSX.Element {
         if (responsesFile && !isResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>xlsx</b> file type before proceeding
+                    Please choose a <b>xlsx</b> file before proceeding
                 </p>
             );
         } else {
@@ -183,7 +183,7 @@ export default function Home(): JSX.Element {
                                 onSubmit={onSubmit}
                             >
                                 <p>
-                                    File type: <b>csv</b>
+                                    Accepts file type: <b>csv</b>
                                 </p>
                                 <input
                                     accept='.csv'
@@ -195,7 +195,7 @@ export default function Home(): JSX.Element {
                                     required
                                     type='file'
                                 />
-                                <IncorrectQuestionsFileMessage />
+                                <AlertQuestionsFile />
 
                                 <div className='flex items-center gap-3'>
                                     <ChartBarSquareIcon
@@ -207,7 +207,7 @@ export default function Home(): JSX.Element {
                                     <H4>Third Party Evidence Provided</H4>
                                 </div>
                                 <p>
-                                    File type: <b>pdf</b>
+                                    Accepts file type: <b>pdf</b>
                                 </p>
                                 <input
                                     accept='.pdf'
@@ -219,7 +219,7 @@ export default function Home(): JSX.Element {
                                     required
                                     type='file'
                                 />
-                                <IncorrectEvidenceFileMessage />
+                                <AlertEvidenceFile />
 
                                 <div className='flex items-center gap-3'>
                                     <ChatBubbleBottomCenterTextIcon
@@ -231,7 +231,7 @@ export default function Home(): JSX.Element {
                                     <H4>Third Party Responses</H4>
                                 </div>
                                 <p>
-                                    File type: <b>xlsx</b>
+                                    Accepts file type: <b>xlsx</b>
                                 </p>
                                 <input
                                     accept='.xlsx'
@@ -242,7 +242,7 @@ export default function Home(): JSX.Element {
                                     }
                                     type='file'
                                 />
-                                <IncorrectResponsesFileMessage />
+                                <AlertResponsesFile />
 
                                 <Button
                                     variant={
