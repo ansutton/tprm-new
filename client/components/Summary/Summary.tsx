@@ -1,16 +1,20 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import {
+    ArrowPathIcon,
+    DocumentTextIcon,
+    TableCellsIcon,
+} from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
-import { LlmResponse } from '@/types/globals';
+import clsx from 'clsx';
+import { H4 } from '@/components';
 import { summarySample } from '@/components/Summary';
-import { table } from 'console';
-
+import { LlmResponse } from '@/types/globals';
 interface SummaryProps {
     excelData: any[][];
     llmResponse: LlmResponse;
@@ -26,6 +30,16 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                 </span>{' '}
                 of questions uploaded.
             </p>
+
+            <div className='flex items-center gap-3'>
+                <DocumentTextIcon
+                    className={clsx(
+                        'w-10 stroke-indigo-600 stroke-2',
+                        'dark:stroke-indigo-500',
+                    )}
+                />
+                <H4>Neuron RAG-Injested Documents</H4>
+            </div>
 
             <Table>
                 <thead>
@@ -79,6 +93,16 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                 </tbody>
             </Table>
 
+            <div className='flex items-center gap-3'>
+                <TableCellsIcon
+                    className={clsx(
+                        'w-10 stroke-indigo-600 stroke-2',
+                        'dark:stroke-indigo-500',
+                    )}
+                />
+                <H4>TP Responses Spreadsheet</H4>
+            </div>
+
             {excelData?.length > 0 ? (
                 <Table>
                     <thead>
@@ -119,7 +143,8 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                         />
                         <SummaryItem
                             title={`Third Party Response ${index + 1}`}
-                            content={summarySample[index].tpResponse}
+                            content={excelData[index + 1][2]}
+                            // content={'test'}
                             defaultOpen
                             id={`third-party-response-${index + 1}`}
                         />
