@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit } from '@/utils/api-utils';
 import { LlmResponse } from '@/types/globals';
+import * as XLSX from 'xlsx';
 
 /**
  * Dev Import Statement
@@ -28,6 +29,7 @@ export default function Home(): JSX.Element {
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
+    const [excelData, setExcelData] = useState<any[][]>([]);
 
     /**
      * Helper Functions
@@ -50,6 +52,27 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
+    async function parseExcelFile(file: File): Promise<any[][]> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const arrayBuffer = e.target?.result;
+                if (arrayBuffer) {
+                    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                        header: 1,
+                    });
+                    resolve(jsonData as any[][]);
+                } else {
+                    reject('Error reading file');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
     /**
      * Dev-Only Helper Functions
      */
@@ -107,6 +130,10 @@ export default function Home(): JSX.Element {
                 //     ? setScreen('loading')
                 //     : setScreen('summary');
             }, 5000);
+            if (isResponsesFileValid) {
+                const parsedData = await parseExcelFile(responsesFile);
+                setExcelData(parsedData);
+            }
         }
     }
 
@@ -280,6 +307,37 @@ export default function Home(): JSX.Element {
                                 />
                                 <H4>Neuron RAG-Injested Documents</H4>
                             </div>
+
+                            {excelData.length > 0 && (
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            {excelData[0].map(
+                                                (header, index) => (
+                                                    <th key={index}>
+                                                        {header}
+                                                    </th>
+                                                ),
+                                            )}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {excelData
+                                            .slice(1)
+                                            .map((row, rowIndex) => (
+                                                <tr key={rowIndex}>
+                                                    {row.map(
+                                                        (cell, cellIndex) => (
+                                                            <td key={cellIndex}>
+                                                                {cell}
+                                                            </td>
+                                                        ),
+                                                    )}
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                </table>
+                            )}
 
                             <Summary llmResponse={llmResponse} />
 
