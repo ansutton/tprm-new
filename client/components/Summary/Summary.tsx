@@ -9,12 +9,14 @@ import {
 } from '@headlessui/react';
 import { LlmResponse } from '@/types/globals';
 import { summarySample } from '@/components/Summary';
+import { table } from 'console';
 
 interface SummaryProps {
+    excelData: any[][];
     llmResponse: LlmResponse;
 }
 
-export function Summary({ llmResponse }: SummaryProps): JSX.Element {
+export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
     return (
         <>
             <p>
@@ -25,7 +27,7 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
                 of questions uploaded.
             </p>
 
-            <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-900'>
+            <Table>
                 <thead>
                     <tr>
                         <TableItem variant='head'>Control Question</TableItem>
@@ -75,7 +77,36 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
+
+            {excelData?.length > 0 ? (
+                <Table>
+                    <thead>
+                        <tr>
+                            {excelData[0].map((header, index) => (
+                                <TableItem key={index} variant='head'>
+                                    {header}
+                                </TableItem>
+                            ))}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {excelData.slice(1).map((row, rowIndex) => (
+                            <tr
+                                key={rowIndex}
+                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
+                            >
+                                {row.map((cell, cellIndex) => (
+                                    <TableItem key={cellIndex} variant='cell'>
+                                        {cell}
+                                    </TableItem>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            ) : null}
 
             <div className='w-full divide-y dark:divide-zinc-600'>
                 {llmResponse?.questions.map((question, index) => (
@@ -126,6 +157,17 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
     );
 }
 
+interface TableProps {
+    children: ReactNode;
+}
+
+function Table({ children }: TableProps): JSX.Element {
+    return (
+        <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-900'>
+            {children}
+        </table>
+    );
+}
 interface TableItemProps {
     centered?: boolean;
     children: ReactNode;
