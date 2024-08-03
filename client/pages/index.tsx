@@ -15,7 +15,7 @@ import * as XLSX from 'xlsx';
 /**
  * Dev Import Statement
  */
-// import { emulatePopulateResponses } from '@/utils/api-utils';
+import { emulatePopulateResponses } from '@/utils/api-utils';
 
 // TODO: When ready to include Third Party Responses, validate accordingly.
 export default function Home(): JSX.Element {
@@ -34,8 +34,8 @@ export default function Home(): JSX.Element {
     /**
      * Helper Functions
      */
-    const isFileValid = (file: File | null, type: string): file is File =>
-        file !== null && file.type === type;
+    const isFileValid = (file: File | null, fileType: string): file is File =>
+        file !== null && file?.type === fileType;
     const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
     const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
     const isResponsesFileValid = isFileValid(
@@ -43,7 +43,7 @@ export default function Home(): JSX.Element {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
     const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid;
+        isQuestionsFileValid && isEvidenceFileValid && isResponsesFileValid;
     async function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
@@ -76,66 +76,75 @@ export default function Home(): JSX.Element {
     /**
      * Dev-Only Helper Functions
      */
-    // async function readFileAsText(file: File): Promise<string> {
-    //     return new Promise((resolve) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.onload = () => resolve(fileReader.result as string);
-    //         fileReader.readAsText(file);
-    //     });
-    // }
-    // async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    //     e.preventDefault();
-    //     if (areAllFilesValid && questionsFile && evidenceFile) {
-    //         setScreen('loading');
-    //         // setInterval(() => {
-    //         //     setScreen('loading');
-    //         // }, 5000);
-    //         setInterval(async () => {
-    //             setScreen('summary');
-    //             const pollResponse = await poll();
-    //             console.log(pollResponse);
-    //             pollResponse?.questions
-    //                 ? setScreen('summary')
-    //                 : setScreen('loading');
-    //             setLlmResponse(pollResponse);
-    //         }, 2000);
-    //         emulatePopulateResponses();
-    //     }
-    // }
-    /**
-     * Demo-Only Helper Functions
-     */
-    // TODO: revisit base64 encoding
-    async function readFileAsDataUrl(file: File): Promise<string> {
+    async function readFileAsText(file: File): Promise<string> {
         return new Promise((resolve) => {
             const fileReader = new FileReader();
             fileReader.onload = () => resolve(fileReader.result as string);
-            fileReader.readAsDataURL(file);
+            fileReader.readAsText(file);
         });
     }
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (areAllFilesValid && questionsFile && evidenceFile) {
-            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-            // console.log(csvFileBuffer)
-            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-            // console.log(pdfFileBuffer)
-            setScreen('summary');
-            submit({ csvFileBuffer, pdfFileBuffer });
+            setScreen('loading');
+            // setInterval(() => {
+            //     setScreen('loading');
+            // }, 5000);
             setInterval(async () => {
+                setScreen('summary');
                 const pollResponse = await poll();
                 console.log(pollResponse);
+                pollResponse?.questions
+                    ? setScreen('summary')
+                    : setScreen('loading');
                 setLlmResponse(pollResponse);
-                // pollResponse?.responses?.length === 0
-                //     ? setScreen('loading')
-                //     : setScreen('summary');
-            }, 5000);
+            }, 2000);
             if (isResponsesFileValid) {
                 const parsedData = await parseExcelFile(responsesFile);
                 setExcelData(parsedData);
             }
+            emulatePopulateResponses();
         }
     }
+    /**
+     * Demo-Only Helper Functions
+     */
+    // TODO: revisit base64 encoding
+    // async function readFileAsDataUrl(file: File): Promise<string> {
+    //     return new Promise((resolve) => {
+    //         const fileReader = new FileReader();
+    //         fileReader.onload = () => resolve(fileReader.result as string);
+    //         fileReader.readAsDataURL(file);
+    //     });
+    // }
+    // async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+    //     if (
+    //         areAllFilesValid &&
+    //         questionsFile &&
+    //         evidenceFile &&
+    //         responsesFile
+    //     ) {
+    //         const csvFileBuffer = await readFileAsDataUrl(questionsFile);
+    //         // console.log(csvFileBuffer)
+    //         const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+    //         // console.log(pdfFileBuffer)
+    //         setScreen('summary');
+    //         submit({ csvFileBuffer, pdfFileBuffer });
+    //         setInterval(async () => {
+    //             const pollResponse = await poll();
+    //             console.log(pollResponse);
+    //             setLlmResponse(pollResponse);
+    //             // pollResponse?.responses?.length === 0
+    //             //     ? setScreen('loading')
+    //             //     : setScreen('summary');
+    //         }, 5000);
+    //         if (isResponsesFileValid) {
+    //             const parsedData = await parseExcelFile(responsesFile);
+    //             setExcelData(parsedData);
+    //         }
+    //     }
+    // }
 
     /**
      * Components
@@ -144,7 +153,7 @@ export default function Home(): JSX.Element {
         if (questionsFile && !isQuestionsFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>csv</b> file before proceeding
+                    Please choose file type of <b>csv</b> proceeding
                 </p>
             );
         } else {
@@ -155,7 +164,7 @@ export default function Home(): JSX.Element {
         if (evidenceFile && !isEvidenceFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>pdf</b> file before proceeding
+                    Please choose file type of <b>pdf</b> proceeding
                 </p>
             );
         } else {
@@ -166,7 +175,7 @@ export default function Home(): JSX.Element {
         if (responsesFile && !isResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>xlsx</b> file before proceeding
+                    Please choose file type of <b>xlsx</b> proceeding
                 </p>
             );
         } else {
@@ -308,7 +317,7 @@ export default function Home(): JSX.Element {
                                 <H4>Neuron RAG-Injested Documents</H4>
                             </div>
 
-                            {excelData.length > 0 && (
+                            {excelData?.length > 0 ? (
                                 <table>
                                     <thead>
                                         <tr>
@@ -337,7 +346,7 @@ export default function Home(): JSX.Element {
                                             ))}
                                     </tbody>
                                 </table>
-                            )}
+                            ) : null}
 
                             <Summary llmResponse={llmResponse} />
 
