@@ -317,38 +317,10 @@ export default function Home(): JSX.Element {
                                 <H4>Neuron RAG-Injested Documents</H4>
                             </div>
 
-                            {excelData?.length > 0 ? (
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            {excelData[0].map(
-                                                (header, index) => (
-                                                    <th key={index}>
-                                                        {header}
-                                                    </th>
-                                                ),
-                                            )}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {excelData
-                                            .slice(1)
-                                            .map((row, rowIndex) => (
-                                                <tr key={rowIndex}>
-                                                    {row.map(
-                                                        (cell, cellIndex) => (
-                                                            <td key={cellIndex}>
-                                                                {cell}
-                                                            </td>
-                                                        ),
-                                                    )}
-                                                </tr>
-                                            ))}
-                                    </tbody>
-                                </table>
-                            ) : null}
-
-                            <Summary llmResponse={llmResponse} />
+                            <Summary
+                                excelData={excelData}
+                                llmResponse={llmResponse}
+                            />
 
                             <Button
                                 variant='solid'
