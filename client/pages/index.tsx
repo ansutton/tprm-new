@@ -7,7 +7,7 @@ import {
     QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
+import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit } from '@/utils/api-utils';
 import { LlmResponse } from '@/types/globals';
 import * as XLSX from 'xlsx';
@@ -307,16 +307,6 @@ export default function Home(): JSX.Element {
 
                     {screen === 'summary' ? (
                         <>
-                            <div className='flex items-center gap-3'>
-                                <DocumentTextIcon
-                                    className={clsx(
-                                        'w-10 stroke-indigo-600 stroke-2',
-                                        'dark:stroke-indigo-500',
-                                    )}
-                                />
-                                <H4>Neuron RAG-Injested Documents</H4>
-                            </div>
-
                             <Summary
                                 excelData={excelData}
                                 llmResponse={llmResponse}
@@ -333,26 +323,5 @@ export default function Home(): JSX.Element {
                 </Card>
             </div>
         </div>
-    );
-}
-
-interface HeadingProps {
-    additionalClasses?: string;
-    children: ReactNode;
-}
-
-function H3({ children }: HeadingProps): JSX.Element {
-    return (
-        <h3 className='mb-3 w-full text-center text-3xl font-bold text-indigo-600 dark:text-indigo-500'>
-            {children}
-        </h3>
-    );
-}
-
-function H4({ additionalClasses = '', children }: HeadingProps): JSX.Element {
-    return (
-        <h4 className={`${additionalClasses} w-full text-2xl font-bold`}>
-            {children}
-        </h4>
     );
 }
