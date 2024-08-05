@@ -7,14 +7,10 @@ import {
     QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import { Button, Card, Sidebar, Summary, Topbar } from '@/components';
-import { helloWorld, poll, submit } from '@/utils/api-utils';
-import {
-    LlmResponse,
-    PollResponse,
-    PythonAppState,
-    SubmitRequestParams,
-} from '@/types/globals';
+import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
+import { poll, submit } from '@/utils/api-utils';
+import { LlmResponse } from '@/types/globals';
+import * as XLSX from 'xlsx';
 
 /**
  * Dev Import Statement
@@ -33,12 +29,13 @@ export default function Home(): JSX.Element {
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
+    const [excelData, setExcelData] = useState<any[][]>([]);
 
     /**
      * Helper Functions
      */
-    const isFileValid = (file: File | null, type: string): file is File =>
-        file !== null && file.type === type;
+    const isFileValid = (file: File | null, fileType: string): file is File =>
+        file !== null && file?.type === fileType;
     const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
     const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
     const isResponsesFileValid = isFileValid(
@@ -46,7 +43,7 @@ export default function Home(): JSX.Element {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
     const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid;
+        isQuestionsFileValid && isEvidenceFileValid && isResponsesFileValid;
     async function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
@@ -55,6 +52,27 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
+    async function parseExcelFile(file: File): Promise<any[][]> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const arrayBuffer = e.target?.result;
+                if (arrayBuffer) {
+                    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                        header: 1,
+                    });
+                    resolve(jsonData as any[][]);
+                } else {
+                    reject('Error reading file');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
     /**
      * Dev-Only Helper Functions
      */
@@ -81,6 +99,10 @@ export default function Home(): JSX.Element {
     //                 : setScreen('loading');
     //             setLlmResponse(pollResponse);
     //         }, 2000);
+    //         if (isResponsesFileValid) {
+    //             const parsedData = await parseExcelFile(responsesFile);
+    //             setExcelData(parsedData);
+    //         }
     //         emulatePopulateResponses();
     //     }
     // }
@@ -97,7 +119,12 @@ export default function Home(): JSX.Element {
     }
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (areAllFilesValid && questionsFile && evidenceFile) {
+        if (
+            areAllFilesValid &&
+            questionsFile &&
+            evidenceFile &&
+            responsesFile
+        ) {
             const csvFileBuffer = await readFileAsDataUrl(questionsFile);
             // console.log(csvFileBuffer)
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
@@ -112,6 +139,10 @@ export default function Home(): JSX.Element {
                 //     ? setScreen('loading')
                 //     : setScreen('summary');
             }, 5000);
+            if (isResponsesFileValid) {
+                const parsedData = await parseExcelFile(responsesFile);
+                setExcelData(parsedData);
+            }
         }
     }
 
@@ -122,7 +153,7 @@ export default function Home(): JSX.Element {
         if (questionsFile && !isQuestionsFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>csv</b> file before proceeding
+                    Please choose file type of <b>csv</b> proceeding
                 </p>
             );
         } else {
@@ -133,7 +164,7 @@ export default function Home(): JSX.Element {
         if (evidenceFile && !isEvidenceFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>pdf</b> file before proceeding
+                    Please choose file type of <b>pdf</b> proceeding
                 </p>
             );
         } else {
@@ -144,7 +175,7 @@ export default function Home(): JSX.Element {
         if (responsesFile && !isResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose a <b>xlsx</b> file before proceeding
+                    Please choose file type of <b>xlsx</b> proceeding
                 </p>
             );
         } else {
@@ -276,17 +307,10 @@ export default function Home(): JSX.Element {
 
                     {screen === 'summary' ? (
                         <>
-                            <div className='flex items-center gap-3'>
-                                <DocumentTextIcon
-                                    className={clsx(
-                                        'w-10 stroke-indigo-600 stroke-2',
-                                        'dark:stroke-indigo-500',
-                                    )}
-                                />
-                                <H4>Neuron RAG-Injested Documents</H4>
-                            </div>
-
-                            <Summary llmResponse={llmResponse} />
+                            <Summary
+                                excelData={excelData}
+                                llmResponse={llmResponse}
+                            />
 
                             <Button
                                 variant='solid'
@@ -299,26 +323,5 @@ export default function Home(): JSX.Element {
                 </Card>
             </div>
         </div>
-    );
-}
-
-interface HeadingProps {
-    additionalClasses?: string;
-    children: ReactNode;
-}
-
-function H3({ children }: HeadingProps): JSX.Element {
-    return (
-        <h3 className='mb-3 w-full text-center text-3xl font-bold text-indigo-600 dark:text-indigo-500'>
-            {children}
-        </h3>
-    );
-}
-
-function H4({ additionalClasses = '', children }: HeadingProps): JSX.Element {
-    return (
-        <h4 className={`${additionalClasses} w-full text-2xl font-bold`}>
-            {children}
-        </h4>
     );
 }

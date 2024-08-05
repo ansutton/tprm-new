@@ -1,20 +1,26 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import {
+    ArrowPathIcon,
+    DocumentTextIcon,
+    TableCellsIcon,
+} from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
-import { LlmResponse } from '@/types/globals';
+import clsx from 'clsx';
+import { H4 } from '@/components';
 import { summarySample } from '@/components/Summary';
-
+import { LlmResponse } from '@/types/globals';
 interface SummaryProps {
+    excelData: any[][];
     llmResponse: LlmResponse;
 }
 
-export function Summary({ llmResponse }: SummaryProps): JSX.Element {
+export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
     return (
         <>
             <p>
@@ -25,7 +31,17 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
                 of questions uploaded.
             </p>
 
-            <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-900'>
+            <div className='flex items-center gap-3'>
+                <DocumentTextIcon
+                    className={clsx(
+                        'w-10 stroke-indigo-600 stroke-2',
+                        'dark:stroke-indigo-500',
+                    )}
+                />
+                <H4>Neuron RAG-Injested Documents</H4>
+            </div>
+
+            <Table>
                 <thead>
                     <tr>
                         <TableItem variant='head'>Control Question</TableItem>
@@ -75,7 +91,46 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
+
+            {/* <div className='flex items-center gap-3'>
+                <TableCellsIcon
+                    className={clsx(
+                        'w-10 stroke-indigo-600 stroke-2',
+                        'dark:stroke-indigo-500',
+                    )}
+                />
+                <H4>TP Responses Spreadsheet</H4>
+            </div>
+
+            {excelData?.length > 0 ? (
+                <Table>
+                    <thead>
+                        <tr>
+                            {excelData[0].map((header, index) => (
+                                <TableItem key={index} variant='head'>
+                                    {header}
+                                </TableItem>
+                            ))}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {excelData.slice(1).map((row, rowIndex) => (
+                            <tr
+                                key={rowIndex}
+                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
+                            >
+                                {row.map((cell, cellIndex) => (
+                                    <TableItem key={cellIndex} variant='cell'>
+                                        {cell}
+                                    </TableItem>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            ) : null} */}
 
             <div className='w-full divide-y dark:divide-zinc-600'>
                 {llmResponse?.questions.map((question, index) => (
@@ -88,7 +143,8 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
                         />
                         <SummaryItem
                             title={`Third Party Response ${index + 1}`}
-                            content={summarySample[index].tpResponse}
+                            content={excelData[index + 1][2]}
+                            // content={'test'}
                             defaultOpen
                             id={`third-party-response-${index + 1}`}
                         />
@@ -126,6 +182,17 @@ export function Summary({ llmResponse }: SummaryProps): JSX.Element {
     );
 }
 
+interface TableProps {
+    children: ReactNode;
+}
+
+function Table({ children }: TableProps): JSX.Element {
+    return (
+        <table className='w-full table-auto border border-zinc-200 bg-zinc-50 drop-shadow-md dark:border-zinc-700 dark:bg-zinc-900'>
+            {children}
+        </table>
+    );
+}
 interface TableItemProps {
     centered?: boolean;
     children: ReactNode;
