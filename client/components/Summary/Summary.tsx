@@ -93,7 +93,7 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                 </tbody>
             </Table>
 
-            <div className='flex items-center gap-3'>
+            {/* <div className='flex items-center gap-3'>
                 <TableCellsIcon
                     className={clsx(
                         'w-10 stroke-indigo-600 stroke-2',
@@ -130,7 +130,7 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                         ))}
                     </tbody>
                 </Table>
-            ) : null}
+            ) : null} */}
 
             <div className='w-full divide-y dark:divide-zinc-600'>
                 {llmResponse?.questions.map((question, index) => (
