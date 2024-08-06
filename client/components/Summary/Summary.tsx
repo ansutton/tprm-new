@@ -31,7 +31,7 @@ export function Summary({
             <p>
                 The third party and the AI model provided the same response for{' '}
                 <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                    1/2 (50%)
+                    N/A of {questionsData?.length} (percentage N/A)
                 </span>{' '}
                 of questions uploaded.
             </p>
