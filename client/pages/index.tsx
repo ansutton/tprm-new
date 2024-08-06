@@ -10,7 +10,6 @@ import clsx from 'clsx';
 import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit } from '@/utils/api-utils';
 import { LlmResponse } from '@/types/globals';
-import Papa, { ParseResult } from 'papaparse';
 import * as XLSX from 'xlsx';
 
 /**
@@ -54,34 +53,6 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-    async function parseCsvFile(file: File) {
-        Papa.parse(file, {
-            complete: function (result: ParseResult<string[]>) {
-                console.log('🚀 ~ parseCsvFile ~ result:', result);
-            },
-        });
-    }
-    async function parseExcelFile(file: File): Promise<any[][]> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const arrayBuffer = e.target?.result;
-                if (arrayBuffer) {
-                    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[sheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(worksheet, {
-                        header: 1,
-                    });
-                    resolve(jsonData as any[][]);
-                } else {
-                    reject('Error reading file');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        });
-    }
-
     /**
      * Dev-Only Helper Functions
      */
@@ -119,6 +90,33 @@ export default function Home(): JSX.Element {
      * Demo-Only Helper Functions
      */
     // TODO: revisit base64 encoding
+    async function parseExcelFile(file: File): Promise<any[][]> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const arrayBuffer = e.target?.result;
+                if (arrayBuffer) {
+                    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                        header: 1,
+                    });
+                    resolve(jsonData as any[][]);
+                } else {
+                    reject('Error reading file');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+    async function readFileAsText(file: File): Promise<string> {
+        return new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => resolve(fileReader.result as string);
+            fileReader.readAsText(file);
+        });
+    }
     async function readFileAsDataUrl(file: File): Promise<string> {
         return new Promise((resolve) => {
             const fileReader = new FileReader();
@@ -129,11 +127,16 @@ export default function Home(): JSX.Element {
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (questionsFile && evidenceFile && responsesFile) {
-            // setQuestionsData(await rseCsvFile(questionsFile));
             const parsedExcelFile = await parseExcelFile(responsesFile);
             setExcelData(parsedExcelFile);
-            const parsedCsvFile = await parseCsvFile(questionsFile);
-            setQuestionsData(parsedCsvFile);
+            const csvTextFile = await readFileAsText(questionsFile);
+            const questionsArray = csvTextFile
+                .split('\r\n')
+                .filter(
+                    (question) => question !== '' && question !== 'Questions',
+                );
+            console.log('🚀 ~ onSubmit ~ questionsArray:', questionsArray);
+            setQuestionsData(questionsArray);
             setScreen('summary');
             const csvFileBuffer = await readFileAsDataUrl(questionsFile);
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
