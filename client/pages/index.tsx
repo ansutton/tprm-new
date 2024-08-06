@@ -31,7 +31,7 @@ export default function Home(): JSX.Element {
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
-    const [questionsData, setQuestionsData] = useState<String[]>([]);
+    const [questionsData, setQuestionsData] = useState<string[]>([]);
 
     /**
      * Helper Functions
@@ -54,18 +54,11 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-    async function parseCsvFile(file: File): Promise<string[][]> {
-        return new Promise((resolve, reject) => {
-            Papa.parse(file, {
-                complete: (result: ParseResult<string[]>) => {
-                    if (result.errors.length) {
-                        reject(result.errors);
-                    } else {
-                        resolve(result.data);
-                    }
-                },
-                header: false,
-            });
+    async function parseCsvFile(file: File) {
+        Papa.parse(file, {
+            complete: function (result: ParseResult<string[]>) {
+                console.log('🚀 ~ parseCsvFile ~ result:', result);
+            },
         });
     }
     async function parseExcelFile(file: File): Promise<any[][]> {
@@ -135,17 +128,15 @@ export default function Home(): JSX.Element {
     }
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (
-            areAllFilesValid &&
-            questionsFile &&
-            evidenceFile &&
-            responsesFile
-        ) {
-            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-            console.log(csvFileBuffer);
-            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-            // console.log(pdfFileBuffer)
+        if (questionsFile && evidenceFile && responsesFile) {
+            // setQuestionsData(await rseCsvFile(questionsFile));
+            const parsedExcelFile = await parseExcelFile(responsesFile);
+            setExcelData(parsedExcelFile);
+            const parsedCsvFile = await parseCsvFile(questionsFile);
+            setQuestionsData(parsedCsvFile);
             setScreen('summary');
+            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
+            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             submit({ csvFileBuffer, pdfFileBuffer });
             setInterval(async () => {
                 const pollResponse = await poll();
@@ -155,10 +146,6 @@ export default function Home(): JSX.Element {
                 //     ? setScreen('loading')
                 //     : setScreen('summary');
             }, 5000);
-            if (isResponsesFileValid) {
-                const parsedData = await parseExcelFile(responsesFile);
-                setExcelData(parsedData);
-            }
         }
     }
 
@@ -169,7 +156,7 @@ export default function Home(): JSX.Element {
         if (questionsFile && !isQuestionsFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type of <b>csv</b> proceeding
+                    Please choose file type <b>csv</b> proceeding
                 </p>
             );
         } else {
@@ -180,7 +167,7 @@ export default function Home(): JSX.Element {
         if (evidenceFile && !isEvidenceFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type of <b>pdf</b> proceeding
+                    Please choose file type <b>pdf</b> proceeding
                 </p>
             );
         } else {
@@ -191,7 +178,7 @@ export default function Home(): JSX.Element {
         if (responsesFile && !isResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type of <b>xlsx</b> proceeding
+                    Please choose file type <b>xlsx</b> proceeding
                 </p>
             );
         } else {
