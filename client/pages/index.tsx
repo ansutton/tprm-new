@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit } from '@/utils/api-utils';
 import { LlmResponse } from '@/types/globals';
+import Papa, { ParseResult } from 'papaparse';
 import * as XLSX from 'xlsx';
 
 /**
@@ -45,7 +46,7 @@ export default function Home(): JSX.Element {
     );
     const areAllFilesValid: boolean =
         isQuestionsFileValid && isEvidenceFileValid && isResponsesFileValid;
-    async function onFileChange(
+    function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
     ) {
@@ -53,7 +54,16 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-    async function parseExcelFile(file: File): Promise<any[][]> {
+    // function parseCsvFile(file: File) {
+    //     return new Promise((resolve, reject) => {
+    //         const reader = new FileReader();
+    //         reader.onload = (e) => {
+    //             const
+    //         }
+    //     });
+    //     Papa.parse(file, {});
+    // }
+    function parseExcelFile(file: File): Promise<any[][]> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (e) => {

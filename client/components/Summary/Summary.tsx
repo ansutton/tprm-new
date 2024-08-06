@@ -15,6 +15,7 @@ import clsx from 'clsx';
 import { H4 } from '@/components';
 import { summarySample } from '@/components/Summary';
 import { LlmResponse } from '@/types/globals';
+
 interface SummaryProps {
     excelData: any[][];
     llmResponse: LlmResponse;
