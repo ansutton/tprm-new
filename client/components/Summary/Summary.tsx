@@ -13,20 +13,25 @@ import {
 } from '@headlessui/react';
 import clsx from 'clsx';
 import { H4 } from '@/components';
-import { summarySample } from '@/components/Summary';
 import { LlmResponse } from '@/types/globals';
+
 interface SummaryProps {
     excelData: any[][];
     llmResponse: LlmResponse;
+    questionsData: string[];
 }
 
-export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
+export function Summary({
+    excelData,
+    llmResponse,
+    questionsData,
+}: SummaryProps): JSX.Element {
     return (
         <>
             <p>
                 The third party and the AI model provided the same response for{' '}
                 <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                    1/2 (50%)
+                    N/A of {questionsData?.length} (percentage N/A)
                 </span>{' '}
                 of questions uploaded.
             </p>
@@ -53,7 +58,7 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                 </thead>
 
                 <tbody>
-                    {llmResponse?.questions.map((question, index) => (
+                    {questionsData.map((question, index) => (
                         <tr
                             key={index}
                             className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
@@ -83,10 +88,10 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                                 </Link>
                             </TableItem>
                             <TableItem variant='cell' centered>
-                                {summarySample[index].answersMatch}
+                                N/A
                             </TableItem>
-                            <TableItem variant='cell'>
-                                {summarySample[index].citation}
+                            <TableItem variant='cell' centered>
+                                N/A
                             </TableItem>
                         </tr>
                     ))}
@@ -133,7 +138,7 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
             ) : null} */}
 
             <div className='w-full divide-y dark:divide-zinc-600'>
-                {llmResponse?.questions.map((question, index) => (
+                {questionsData.map((question, index) => (
                     <div key={index} className='py-2'>
                         <SummaryItem
                             title={`Control Question ${index + 1}`}
@@ -165,13 +170,13 @@ export function Summary({ llmResponse, excelData }: SummaryProps): JSX.Element {
                         />
                         <SummaryItem
                             title={`Answers Match?`}
-                            content={summarySample[index].answersMatch}
+                            content={'N/A'}
                             defaultOpen
                             id={`answers-match-${index + 1}`}
                         />
                         <SummaryItem
                             title={`Citation`}
-                            content={summarySample[index].citation}
+                            content={'N/A'}
                             defaultOpen
                             id={`citaton-${index + 1}`}
                         />
