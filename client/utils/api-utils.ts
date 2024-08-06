@@ -1,9 +1,5 @@
 import { localPythonServerConnectionString } from '@/utils/connections';
-import {
-    PollResponse,
-    PythonAppState,
-    SubmitRequestParams,
-} from '@/types/globals';
+import { PythonAppState, SubmitRequestParams } from '@/types/globals';
 
 export async function submit(params: SubmitRequestParams): Promise<void> {
     try {
@@ -28,35 +24,6 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
     }
 }
 
-/**
- * Dev-Only Functions
-//  */
-// const responseData: PythonAppState = {
-//     number_of_questions: 2,
-//     questions: [
-//         summarySample[0].controlQuestion,
-//         summarySample[1].controlQuestion,
-//     ],
-//     responses: [],
-// };
-// export async function poll(): Promise<PythonAppState> {
-//     return {
-//         number_of_questions: responseData.number_of_questions,
-//         questions: responseData.questions,
-//         responses: responseData.responses,
-//     };
-// }
-// export function emulatePopulateResponses() {
-//     setTimeout(() => {
-//         responseData.responses.push(summarySample[0].aiAnswer);
-//     }, 5000);
-//     setTimeout(() => {
-//         responseData.responses.push(summarySample[1].aiAnswer);
-//     }, 10000);
-// }
-/**
- * Demo-Only Functions (Actual Back End API Call)
- */
 export async function poll(): Promise<PythonAppState> {
     const response = await fetch(`${localPythonServerConnectionString}/poll`, {
         method: 'GET',

@@ -53,43 +53,7 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-    /**
-     * Dev-Only Helper Functions
-     */
-    // async function readFileAsText(file: File): Promise<string> {
-    //     return new Promise((resolve) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.onload = () => resolve(fileReader.result as string);
-    //         fileReader.readAsText(file);
-    //     });
-    // }
-    // async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    //     e.preventDefault();
-    //     if (areAllFilesValid && questionsFile && evidenceFile) {
-    //         setScreen('loading');
-    //         // setInterval(() => {
-    //         //     setScreen('loading');
-    //         // }, 5000);
-    //         setInterval(async () => {
-    //             setScreen('summary');
-    //             const pollResponse = await poll();
-    //             console.log(pollResponse);
-    //             pollResponse?.questions
-    //                 ? setScreen('summary')
-    //                 : setScreen('loading');
-    //             setLlmResponse(pollResponse);
-    //         }, 2000);
-    //         if (isResponsesFileValid) {
-    //             const parsedData = await parseExcelFile(responsesFile);
-    //             setExcelData(parsedData);
-    //         }
-    //         emulatePopulateResponses();
-    //     }
-    // }
-    /**
-     * Demo-Only Helper Functions
-     */
-    // TODO: revisit base64 encoding
+    // TODO: revisit base64 encoding; revisit file passing from front end to back end
     async function parseExcelFile(file: File): Promise<any[][]> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -145,9 +109,6 @@ export default function Home(): JSX.Element {
                 const pollResponse = await poll();
                 console.log(pollResponse);
                 setLlmResponse(pollResponse);
-                // pollResponse?.responses?.length === 0
-                //     ? setScreen('loading')
-                //     : setScreen('summary');
             }, 5000);
         }
     }
