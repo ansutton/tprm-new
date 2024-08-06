@@ -54,16 +54,21 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-    // function parseCsvFile(file: File) {
-    //     return new Promise((resolve, reject) => {
-    //         const reader = new FileReader();
-    //         reader.onload = (e) => {
-    //             const
-    //         }
-    //     });
-    //     Papa.parse(file, {});
-    // }
-    function parseExcelFile(file: File): Promise<any[][]> {
+    async function parseCsvFile(file: File): Promise<string[][]> {
+        return new Promise((resolve, reject) => {
+            Papa.parse(file, {
+                complete: (result: ParseResult<string[]>) => {
+                    if (result.errors.length) {
+                        reject(result.errors);
+                    } else {
+                        resolve(result.data);
+                    }
+                },
+                header: false,
+            });
+        });
+    }
+    async function parseExcelFile(file: File): Promise<any[][]> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (e) => {
