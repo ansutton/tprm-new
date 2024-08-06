@@ -5,11 +5,6 @@ import {
     SubmitRequestParams,
 } from '@/types/globals';
 
-/**
- * Dev Import Statement
- */
-// import { summarySample } from '@/components/Summary';
-
 export async function submit(params: SubmitRequestParams): Promise<void> {
     try {
         const data = {

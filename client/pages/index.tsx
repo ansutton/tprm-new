@@ -316,6 +316,7 @@ export default function Home(): JSX.Element {
                             <Summary
                                 excelData={excelData}
                                 llmResponse={llmResponse}
+                                questionsData={questionsData}
                             />
 
                             <Button
