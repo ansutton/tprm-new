@@ -30,6 +30,7 @@ export default function Home(): JSX.Element {
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
+    const [questionsData, setQuestionsData] = useState<String[]>([]);
 
     /**
      * Helper Functions
@@ -126,7 +127,7 @@ export default function Home(): JSX.Element {
             responsesFile
         ) {
             const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-            // console.log(csvFileBuffer)
+            console.log(csvFileBuffer);
             const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
             // console.log(pdfFileBuffer)
             setScreen('summary');
