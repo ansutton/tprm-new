@@ -35,37 +35,31 @@ def after_request(response):
 #    evidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
 #    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
+# Submit endpoint
 @app.route("/submit", methods=["POST"])
 def main():
     try:
         request_data = request.json
-
-        # Get csv file buffer and parse it.
         csv_file_buffer = request_data["questionsCsvFileBuffer"]
         questions = parse_csv_file_buffer(csv_file_buffer)
-
-        # Set app state no. of questions based on csv.
         app_state.number_of_questions = len(questions)
-
-        # Set app state questions based on csv.
         app_state.questions = questions
-
-        # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
         pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
 
-        # Create Ollama Embeddings and database vectors based on the pdf.
-        vector_db = create_database_vectors(pdf_file_content)
+        # Create Faiss index and chunks (assuming your create_database_vectors function returns both)
+        faiss_index, chunks = create_database_vectors(pdf_file_content)
 
-        # Loop through each question and add responses to app state.
+        # Process questions
         for question in questions:
-            response = generate_model_response(vector_db, question)
+            response = generate_model_response(faiss_index, chunks, question)
             app_state.responses.append(response)
 
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 # Poll endpoint used by the client to longpoll for app state updates.
@@ -83,45 +77,45 @@ def poll():
 
 
 # Test vector db for test endpoints.
-test_vector_db = ""
+test_faiss_index = None
+test_chunks = None
+
 
 
 # Load document test endpoint.
 @app.route("/load_document", methods=["POST"])
 def load_document():
-    global test_vector_db
+    global test_faiss_index, test_chunks
     try:
-        # Parse JSON payload from request
         request_data = request.json
-
-        # Extract data from request
         pdfFilePath = request_data["filePath"]
 
-        # Create Ollama Embeddings and database vectors.
-        test_vector_db = create_database_vectors(pdfFilePath, True)
+        test_faiss_index, test_chunks = create_database_vectors(pdfFilePath, True) 
 
-        return jsonify({"message": "successfully loaded the document"})
+        return jsonify({"message": "Successfully loaded the document"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 # Generate RAG test endpoint.
 @app.route("/generate_rag", methods=["POST"])
 def generate_rag():
-    global test_vector_db
+    global test_faiss_index, test_chunks
     try:
-        # Parse JSON payload from request
         request_data = request.json
-
-        # Extract data from request
         question = request_data["text"]
 
-        rag_response = generate_model_response(test_vector_db, question)
+        if test_faiss_index is None or test_chunks is None:
+            return jsonify({"error": "Document not loaded. Use /load_document first."}), 400
 
+        rag_response = generate_model_response(test_faiss_index, test_chunks, question)
         return jsonify({"generate_rag": rag_response})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
 
 
 @app.route("/hello_world", methods=["POST"])
