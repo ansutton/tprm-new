@@ -1,7 +1,7 @@
 # Custom modules
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
-from modules.utils.model_inference import generate_model_response
-from modules.utils.rag import create_database_vectors
+from modules.utils.model_inference_faiss import generate_model_response
+from modules.utils.faiss import create_database_vectors
 from modules.globals.app_state import app_state
 
 # Flask modules
