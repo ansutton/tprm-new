@@ -53,7 +53,6 @@ export default function Home(): JSX.Element {
             setState(e.target.files[0]);
         }
     }
-    // TODO: revisit base64 encoding; revisit file passing from front end to back end
     async function parseExcelFile(file: File): Promise<any[][]> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -81,6 +80,7 @@ export default function Home(): JSX.Element {
             fileReader.readAsText(file);
         });
     }
+    // TODO: revisit base64 encoding; revisit file passing from front end to back end
     async function readFileAsDataUrl(file: File): Promise<string> {
         return new Promise((resolve) => {
             const fileReader = new FileReader();
