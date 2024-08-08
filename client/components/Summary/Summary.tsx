@@ -149,7 +149,6 @@ export function Summary({
                         <SummaryItem
                             title={`Third Party Response ${index + 1}`}
                             content={excelData[index + 1][2]}
-                            // content={'test'}
                             defaultOpen
                             id={`third-party-response-${index + 1}`}
                         />
