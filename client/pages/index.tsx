@@ -99,7 +99,6 @@ export default function Home(): JSX.Element {
                 .filter(
                     (question) => question !== '' && question !== 'Questions',
                 );
-            console.log('🚀 ~ onSubmit ~ questionsArray:', questionsArray);
             setQuestionsData(questionsArray);
             setScreen('summary');
             const csvFileBuffer = await readFileAsDataUrl(questionsFile);
