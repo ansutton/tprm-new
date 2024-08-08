@@ -1,9 +1,15 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
+from langchain.docstore import InMemoryDocstore
+from langchain.docstore.document import Document
+from langchain.document_loaders import PyPDFLoader
+from langchain.vectorstores import FAISS
 import itertools
 import pymupdf
 import faiss
 import numpy as np
+import base64
+from io import BytesIO
 
 def create_database_vectors(pdf_file, from_file_path=False):
     text_splitter = RecursiveCharacterTextSplitter(
@@ -18,31 +24,49 @@ def create_database_vectors(pdf_file, from_file_path=False):
     else:
         data = _get_page_contents_from_pdf_in_memory(pdf_file)
 
-    chunks = list(
-        itertools.chain.from_iterable([text_splitter.split_text(page) for page in data])
-    )
+
+    documents = text_splitter.split_documents(data)
 
 
     # Generate embeddings using OllamaEmbeddings
     embedding_model = OllamaEmbeddings(model ='nomic-embed-text', show_progress=True)
-    embeddings = embedding_model.embed_documents(chunks)
-    embeddings_np = np.array([embedding for embedding in embeddings])
+    batch_size = 50
+    texts=[doc for doc in documents]
+    documents_embeddings = []
 
-    dimension = embeddings_np.shape[1]
-    index = faiss.IndexFlatL2(dimension)
 
-    index.add(embeddings_np)
+    for i in range(0, len(texts),batch_size):
+        batch_texts = texts[i:i+batch_size]
+        batch_embeddings = embedding_model.embed_documents(batch_texts)
+        documents_embeddings.extend(batch_embeddings)
+    
+    #create FAISS index and add the embeddings
+    document_embeddings_np = np.array(documents_embeddings)
+    dimension = document_embeddings_np.shape[1]
+    faiss_index = faiss.IndexFlatL2(dimension)
+    faiss_index.add(document_embeddings_np)
 
-    return index
+    docstore = InMemoryDocstore(dict(enumerate(documents)))
+    index_to_docstore_id = {i: i for i in range(len(documents))}
+
+    vector_store = FAISS(embedding_model, faiss_index, docstore, index_to_docstore_id)
+
+    return vector_store
 
 def _get_page_contents_from_pdf_in_memory(pdf_file):
-    with pymupdf.open("pdf", pdf_file) as doc:
-        page_contents = [page.get_text() for page in doc]
-        return page_contents
+    # with pymupdf.open("pdf", pdf_file) as doc:
+    #     page_contents = [page.get_text() for page in doc]
+    #     return page_contents
+    # Decode the base64 string
+    pdf_loader = PyPDFLoader(pdf_file)
+    raw_documents= pdf_loader.load()
+    return raw_documents
 
 
 def _get_page_contents_from_pdf_file_path(pdf_file_path):
-    with pymupdf.open(pdf_file_path) as doc:
-        page_contents = [page.get_text() for page in doc]
-        return page_contents
-    
+    # with pymupdf.open(pdf_file_path) as doc:
+    #     page_contents = [page.get_text() for page in doc]
+    #    return page_contents
+    pdf_loader = PyPDFLoader(pdf_file_path)
+    raw_documents= pdf_loader.load()
+    return raw_documents
