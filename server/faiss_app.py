@@ -62,10 +62,11 @@ def main():
         for question in questions:
             response = generate_model_response(vector_db, question)
             app_state.responses.append(response)
-
+    
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
     except Exception as e:
+        print(str(e))
         return jsonify({"error": str(e)}), 500
 
 

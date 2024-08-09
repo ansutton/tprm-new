@@ -1,15 +1,13 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings
-from langchain.docstore import InMemoryDocstore
+from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain.docstore.document import Document
-from langchain.document_loaders import PyPDFLoader
-from langchain.vectorstores import FAISS
-import itertools
-import pymupdf
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.vectorstores import FAISS
 import faiss
 import numpy as np
-import base64
-from io import BytesIO
+import tempfile
+import os
 
 def create_database_vectors(pdf_file, from_file_path=False):
     text_splitter = RecursiveCharacterTextSplitter(
@@ -50,23 +48,23 @@ def create_database_vectors(pdf_file, from_file_path=False):
     index_to_docstore_id = {i: i for i in range(len(documents))}
 
     vector_store = FAISS(embedding_model, faiss_index, docstore, index_to_docstore_id)
-
+    
     return vector_store
 
-def _get_page_contents_from_pdf_in_memory(pdf_file):
-    # with pymupdf.open("pdf", pdf_file) as doc:
-    #     page_contents = [page.get_text() for page in doc]
-    #     return page_contents
-    # Decode the base64 string
-    pdf_loader = PyPDFLoader(pdf_file)
+def _get_page_contents_from_pdf_in_memory(pdf_bytes):
+    # Write bytes to a temporary file
+    with tempfile.NamedTemporaryFile(delete=False,suffix='.pdf') as temp_pdf_file:
+        temp_pdf_file.write(pdf_bytes)
+        temp_pdf_file_path = temp_pdf_file.name
+    # Load temp file
+    pdf_loader = PyPDFLoader(temp_pdf_file_path)
     raw_documents= pdf_loader.load()
+    # Delete temporary file
+    os.remove(temp_pdf_file_path)
     return raw_documents
 
 
 def _get_page_contents_from_pdf_file_path(pdf_file_path):
-    # with pymupdf.open(pdf_file_path) as doc:
-    #     page_contents = [page.get_text() for page in doc]
-    #    return page_contents
     pdf_loader = PyPDFLoader(pdf_file_path)
     raw_documents= pdf_loader.load()
     return raw_documents
