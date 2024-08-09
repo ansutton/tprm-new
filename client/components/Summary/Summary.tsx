@@ -1,11 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import {
-    ArrowPathIcon,
-    DocumentTextIcon,
-    TableCellsIcon,
-} from '@heroicons/react/24/outline';
+import { ArrowPathIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
