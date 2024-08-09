@@ -9,7 +9,7 @@ import {
 import clsx from 'clsx';
 import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit } from '@/utils/api-utils';
-import { LlmResponse } from '@/types/globals';
+import { LlmResponse, Mode, PythonAppState } from '@/types/globals';
 import * as XLSX from 'xlsx';
 
 export default function Home(): JSX.Element {
@@ -25,6 +25,7 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
+    const [mode, setMode] = useState<Mode>('demo'); // TODO: set 'demo' as default
 
     /**
      * Helper Functions
@@ -95,14 +96,33 @@ export default function Home(): JSX.Element {
                 );
             setQuestionsData(questionsArray);
             setScreen('summary');
-            const csvFileBuffer = await readFileAsDataUrl(questionsFile);
-            const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-            submit({ csvFileBuffer, pdfFileBuffer });
-            setInterval(async () => {
-                const pollResponse = await poll();
-                console.log(pollResponse);
-                setLlmResponse(pollResponse);
-            }, 5000);
+            switch (mode) {
+                case 'demo':
+                    setTimeout(() => {
+                        const demoPollResponse: PythonAppState = {
+                            number_of_questions: questionsArray?.length,
+                            questions: questionsArray,
+                            responses: new Array(questionsArray?.length).fill(
+                                'N/A',
+                            ),
+                        };
+                        console.log(demoPollResponse);
+                        setLlmResponse(demoPollResponse);
+                    }, 2000);
+                    break;
+                case 'llm':
+                    const csvFileBuffer =
+                        await readFileAsDataUrl(questionsFile);
+                    const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+                    submit({ csvFileBuffer, pdfFileBuffer });
+                    setTimeout(async () => {
+                        // setInterval(async () => {
+                        const pollResponse = await poll();
+                        console.log(pollResponse);
+                        setLlmResponse(pollResponse);
+                    }, 5000);
+                    break;
+            }
         }
     }
 
@@ -147,7 +167,7 @@ export default function Home(): JSX.Element {
         <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar />
 
-            {/* <Sidebar /> */}
+            <Sidebar mode={mode} setMode={setMode} />
 
             {screen === 'fileUpload' ? <H3>AI Evidence Reviewer</H3> : null}
             {screen === 'loading' ? <H3>Processing File</H3> : null}

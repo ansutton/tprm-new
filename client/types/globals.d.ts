@@ -19,3 +19,4 @@ export interface SubmitRequestParams {
  * Types
  */
 export type LlmResponse = PythonAppState | null;
+export type Mode = 'demo' | 'llm';
