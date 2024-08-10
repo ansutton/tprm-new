@@ -133,7 +133,7 @@ export default function Home(): JSX.Element {
         if (questionsFile && !isQuestionsFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>csv</b> proceeding
+                    Please choose file type <b>csv</b> before proceeding
                 </p>
             );
         } else {
@@ -144,7 +144,7 @@ export default function Home(): JSX.Element {
         if (evidenceFile && !isEvidenceFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>pdf</b> proceeding
+                    Please choose file type <b>pdf</b> before proceeding
                 </p>
             );
         } else {
@@ -155,7 +155,7 @@ export default function Home(): JSX.Element {
         if (responsesFile && !isResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>xlsx</b> proceeding
+                    Please choose file type <b>xlsx</b> before proceeding
                 </p>
             );
         } else {

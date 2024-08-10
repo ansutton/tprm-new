@@ -16,7 +16,8 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
                     className={clsx(
                         'flex gap-1 p-1 text-zinc-600',
                         'hover:bg-zinc-200',
-                        'dark:bg-zinc-800 dark:text-indigo-400 dark:hover:bg-zinc-800',
+                        'dark:text-zinc-300',
+                        'dark:hover:bg-zinc-800',
                     )}
                 >
                     Mode:
