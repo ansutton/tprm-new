@@ -9,6 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
+import { MenuItemButton } from '@/components';
 import { tw } from '@/utils';
 
 export function Topbar(): JSX.Element {
@@ -199,7 +200,7 @@ function ThemeMenu(): JSX.Element {
                 )}
             >
                 <MenuItem>
-                    <ThemeButton
+                    <MenuItemButton
                         additionalClasses={
                             theme === 'light'
                                 ? 'text-indigo-600 stroke-indigo-600'
@@ -209,10 +210,10 @@ function ThemeMenu(): JSX.Element {
                     >
                         <SunIcon className={`${iconClassesBase}`} />
                         Light
-                    </ThemeButton>
+                    </MenuItemButton>
                 </MenuItem>
                 <MenuItem>
-                    <ThemeButton
+                    <MenuItemButton
                         additionalClasses={
                             theme === 'dark'
                                 ? 'text-indigo-400 stroke-indigo-400'
@@ -222,15 +223,15 @@ function ThemeMenu(): JSX.Element {
                     >
                         <MoonIcon className={`${iconClassesBase}`} />
                         Dark
-                    </ThemeButton>
+                    </MenuItemButton>
                 </MenuItem>
                 <MenuItem>
-                    <ThemeButton
+                    <MenuItemButton
                         additionalClasses={systemSelectedClasses()}
                         onClick={() => setTheme('system')}
                     >
                         <IconSystem /> System
-                    </ThemeButton>
+                    </MenuItemButton>
                 </MenuItem>
             </MenuItems>
         </Menu>
