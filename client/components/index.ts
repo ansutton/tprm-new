@@ -1,6 +1,7 @@
 export * from './Layout/Layout';
 export * from './Layout/Sidebar';
 export * from './Layout/Topbar';
+export * from './ModeMenu/ModeMenu';
 export * from './shared/Button';
 export * from './shared/Card';
 export * from './shared/Headings';

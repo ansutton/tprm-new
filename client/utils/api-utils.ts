@@ -1,5 +1,5 @@
 import { localPythonServerConnectionString } from '@/utils/connections';
-import { PythonAppState, SubmitRequestParams } from '@/types/globals';
+import { PythonAppState, SubmitRequestParams } from '@/types';
 
 export async function submit(params: SubmitRequestParams): Promise<void> {
     try {

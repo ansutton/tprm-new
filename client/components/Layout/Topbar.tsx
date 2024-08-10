@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
@@ -9,10 +9,16 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
-import { MenuItemButton } from '@/components';
+import { MenuItemButton, ModeMenu } from '@/components';
+import { Mode } from '@/types';
 import { tw } from '@/utils';
 
-export function Topbar(): JSX.Element {
+interface TopbarProps {
+    mode: Mode;
+    setMode: React.Dispatch<React.SetStateAction<Mode>>;
+}
+
+export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
     return (
         <div
             className={clsx(
@@ -76,6 +82,8 @@ export function Topbar(): JSX.Element {
                         </span>
                     </h2>
                 </div>
+
+                <ModeMenu mode={mode} setMode={setMode} />
 
                 <ThemeMenu />
             </div>

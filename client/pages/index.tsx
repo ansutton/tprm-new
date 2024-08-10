@@ -9,7 +9,7 @@ import {
 import clsx from 'clsx';
 import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit } from '@/utils/api-utils';
-import { LlmResponse, Mode, PythonAppState } from '@/types/globals';
+import { LlmResponse, Mode, PythonAppState } from '@/types';
 import * as XLSX from 'xlsx';
 
 export default function Home(): JSX.Element {
@@ -165,9 +165,9 @@ export default function Home(): JSX.Element {
 
     return (
         <div className='mx-auto w-full dark:text-zinc-50'>
-            <Topbar />
+            <Topbar mode={mode} setMode={setMode} />
 
-            <Sidebar mode={mode} setMode={setMode} />
+            {/* <Sidebar /> */}
 
             {screen === 'fileUpload' ? <H3>AI Evidence Reviewer</H3> : null}
             {screen === 'loading' ? <H3>Processing File</H3> : null}

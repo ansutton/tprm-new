@@ -9,7 +9,7 @@ import {
 } from '@headlessui/react';
 import clsx from 'clsx';
 import { H4 } from '@/components';
-import { LlmResponse } from '@/types/globals';
+import { LlmResponse } from '@/types';
 
 interface SummaryProps {
     excelData: any[][];
