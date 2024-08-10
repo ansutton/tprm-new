@@ -263,7 +263,7 @@ export default function Home(): JSX.Element {
                                                 ? 'hover:cursor-pointer'
                                                 : ''
                                         }
-                                        readOnly={areAllFilesValid}
+                                        disabled={!areAllFilesValid}
                                         type='submit'
                                         value='Submit'
                                     />
