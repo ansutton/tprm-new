@@ -9,15 +9,11 @@ interface SidebarProps {
 
 export function Sidebar({ mode, setMode }: SidebarProps): JSX.Element {
     return (
-        <div
-            className={clsx(
-                'w-fit rounded-lg p-1 text-sm font-bold hover:bg-zinc-200 dark:hover:bg-zinc-800',
-            )}
-        >
+        <div className='w-fit rounded-lg p-1 text-sm font-bold hover:bg-zinc-200 dark:hover:bg-zinc-800'>
             <Menu>
                 <MenuButton
                     className={clsx(
-                        'p-1 text-indigo-600 text-zinc-700',
+                        'p-1 text-indigo-600',
                         'hover:bg-zinc-200',
                         'dark:bg-zinc-800 dark:text-indigo-400 dark:hover:bg-zinc-800',
                     )}
