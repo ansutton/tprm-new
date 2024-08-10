@@ -130,25 +130,6 @@ function ThemeMenu(): JSX.Element {
     /**
      * Components
      */
-    interface ThemeButtonProps {
-        additionalClasses?: string;
-        children: ReactNode;
-        onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    }
-    function ThemeButton({
-        additionalClasses,
-        children,
-        onClick,
-    }: ThemeButtonProps): JSX.Element {
-        return (
-            <button
-                onClick={onClick}
-                className={`${additionalClasses} flex items-center gap-2 px-2 py-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700/55`}
-            >
-                {children}
-            </button>
-        );
-    }
     interface IconSystemProps {
         additionalClasses?: string;
     }
