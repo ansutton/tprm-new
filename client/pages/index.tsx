@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import {
     ArrowPathIcon,
     ChartBarSquareIcon,
@@ -25,7 +25,7 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
-    const [mode, setMode] = useState<Mode>('demo'); // TODO: set 'demo' as default
+    const [mode, setMode] = useState<Mode>('demo');
 
     /**
      * Helper Functions
@@ -163,6 +163,9 @@ export default function Home(): JSX.Element {
         }
     }
 
+    /**
+     * Return Statement
+     */
     return (
         <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar mode={mode} setMode={setMode} />
