@@ -131,3 +131,11 @@ npm run dev
 ```
 
 * Navigate to ``http://localhost:3000``
+
+___
+
+### GitHub SSH Instructions
+
+Eliminate need to authenticate on every git command.
+
+While following [these steps](https://www.freecodecamp.org/news/how-to-fix-git-always-asking-for-user-credentials/), follow [these steps](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) to generate a new SSH public key. You probably want to skip the session and timeout steps so that you don't have to repeat these steps again after a timeout. After generating a new SSH key, store the SSH in the SSH key setting in your GitHub settings online. Authorize the Deloitte organizations in the dropdown there. Test out on your local machine with a git command like `git fetch origin` in your repo to see if it no longer prompts for authentication.
