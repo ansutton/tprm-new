@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
@@ -9,9 +9,16 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
+import { MenuItemButton, ModeMenu } from '@/components';
+import { Mode } from '@/types';
 import { tw } from '@/utils';
 
-export function Topbar(): JSX.Element {
+interface TopbarProps {
+    mode: Mode;
+    setMode: React.Dispatch<React.SetStateAction<Mode>>;
+}
+
+export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
     return (
         <div
             className={clsx(
@@ -76,6 +83,8 @@ export function Topbar(): JSX.Element {
                     </h2>
                 </div>
 
+                <ModeMenu mode={mode} setMode={setMode} />
+
                 <ThemeMenu />
             </div>
         </div>
@@ -129,25 +138,6 @@ function ThemeMenu(): JSX.Element {
     /**
      * Components
      */
-    interface ThemeButtonProps {
-        additionalClasses?: string;
-        children: ReactNode;
-        onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    }
-    function ThemeButton({
-        additionalClasses,
-        children,
-        onClick,
-    }: ThemeButtonProps): JSX.Element {
-        return (
-            <button
-                onClick={onClick}
-                className={`${additionalClasses} flex items-center gap-2 px-2 py-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700/55`}
-            >
-                {children}
-            </button>
-        );
-    }
     interface IconSystemProps {
         additionalClasses?: string;
     }
@@ -199,7 +189,7 @@ function ThemeMenu(): JSX.Element {
                 )}
             >
                 <MenuItem>
-                    <ThemeButton
+                    <MenuItemButton
                         additionalClasses={
                             theme === 'light'
                                 ? 'text-indigo-600 stroke-indigo-600'
@@ -209,10 +199,10 @@ function ThemeMenu(): JSX.Element {
                     >
                         <SunIcon className={`${iconClassesBase}`} />
                         Light
-                    </ThemeButton>
+                    </MenuItemButton>
                 </MenuItem>
                 <MenuItem>
-                    <ThemeButton
+                    <MenuItemButton
                         additionalClasses={
                             theme === 'dark'
                                 ? 'text-indigo-400 stroke-indigo-400'
@@ -222,15 +212,15 @@ function ThemeMenu(): JSX.Element {
                     >
                         <MoonIcon className={`${iconClassesBase}`} />
                         Dark
-                    </ThemeButton>
+                    </MenuItemButton>
                 </MenuItem>
                 <MenuItem>
-                    <ThemeButton
+                    <MenuItemButton
                         additionalClasses={systemSelectedClasses()}
                         onClick={() => setTheme('system')}
                     >
                         <IconSystem /> System
-                    </ThemeButton>
+                    </MenuItemButton>
                 </MenuItem>
             </MenuItems>
         </Menu>

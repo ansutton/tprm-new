@@ -1,11 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import {
-    ArrowPathIcon,
-    DocumentTextIcon,
-    TableCellsIcon,
-} from '@heroicons/react/24/outline';
+import { ArrowPathIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
@@ -13,7 +9,7 @@ import {
 } from '@headlessui/react';
 import clsx from 'clsx';
 import { H4 } from '@/components';
-import { LlmResponse } from '@/types/globals';
+import { LlmResponse } from '@/types';
 
 interface SummaryProps {
     excelData: any[][];
@@ -98,45 +94,6 @@ export function Summary({
                 </tbody>
             </Table>
 
-            {/* <div className='flex items-center gap-3'>
-                <TableCellsIcon
-                    className={clsx(
-                        'w-10 stroke-indigo-600 stroke-2',
-                        'dark:stroke-indigo-500',
-                    )}
-                />
-                <H4>TP Responses Spreadsheet</H4>
-            </div>
-
-            {excelData?.length > 0 ? (
-                <Table>
-                    <thead>
-                        <tr>
-                            {excelData[0].map((header, index) => (
-                                <TableItem key={index} variant='head'>
-                                    {header}
-                                </TableItem>
-                            ))}
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {excelData.slice(1).map((row, rowIndex) => (
-                            <tr
-                                key={rowIndex}
-                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
-                            >
-                                {row.map((cell, cellIndex) => (
-                                    <TableItem key={cellIndex} variant='cell'>
-                                        {cell}
-                                    </TableItem>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            ) : null} */}
-
             <div className='w-full divide-y dark:divide-zinc-600'>
                 {questionsData.map((question, index) => (
                     <div key={index} className='py-2'>
@@ -149,7 +106,6 @@ export function Summary({
                         <SummaryItem
                             title={`Third Party Response ${index + 1}`}
                             content={excelData[index + 1][2]}
-                            // content={'test'}
                             defaultOpen
                             id={`third-party-response-${index + 1}`}
                         />
