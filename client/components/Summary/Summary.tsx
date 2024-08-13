@@ -73,10 +73,7 @@ export function Summary({
                                     href={`#ai-answer-${index + 1}`}
                                     className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
                                 >
-                                    {index ===
-                                    llmResponse?.responses.indexOf(
-                                        llmResponse?.responses[index],
-                                    ) ? (
+                                    {llmResponse?.responses[index] ? (
                                         `Answer ${index + 1}`
                                     ) : (
                                         <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
@@ -112,10 +109,7 @@ export function Summary({
                         <SummaryItem
                             title={`AI Answer ${index + 1}`}
                             content={
-                                index ===
-                                llmResponse?.responses.indexOf(
-                                    llmResponse?.responses[index],
-                                ) ? (
+                                llmResponse?.responses[index] ? (
                                     `${llmResponse?.responses[index]}`
                                 ) : (
                                     <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />

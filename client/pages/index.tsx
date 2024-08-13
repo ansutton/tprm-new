@@ -18,11 +18,11 @@ export default function Home(): JSX.Element {
      */
     const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
         'fileUpload',
-    );
+    ); // TODO: set default to 'fileUpload'
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
-    const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
+    const [llmResponse, setLlmResponse] = useState<any>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>('demo');
@@ -98,16 +98,29 @@ export default function Home(): JSX.Element {
             setScreen('summary');
             switch (mode) {
                 case 'demo':
-                    setTimeout(() => {
-                        const demoPollResponse: PythonAppState = {
-                            number_of_questions: questionsArray?.length,
-                            questions: questionsArray,
-                            responses: new Array(questionsArray?.length).fill(
+                    const demoPollResponse: PythonAppState = {
+                        number_of_questions: questionsArray?.length,
+                        questions: questionsArray,
+                        responses: [],
+                    };
+                    setLlmResponse(demoPollResponse);
+                    const intervalId = setInterval(() => {
+                        setLlmResponse((prevState: any) => {
+                            // Clone the responses array and add 'N/A'
+                            const newResponses = [
+                                ...prevState.responses,
                                 'N/A',
-                            ),
-                        };
-                        console.log(demoPollResponse);
-                        setLlmResponse(demoPollResponse);
+                            ];
+                            // If all questions have been answered, clear the interval
+                            if (newResponses.length >= questionsArray.length) {
+                                clearInterval(intervalId); // Clear the interval
+                            }
+                            // Return the updated state
+                            return {
+                                ...prevState,
+                                responses: newResponses,
+                            };
+                        });
                     }, 2000);
                     break;
                 case 'llm':
