@@ -9,7 +9,7 @@ import numpy as np
 import tempfile
 import os
 
-def create_database_vectors(pdf_file, from_file_path=False):
+def create_vector_store(pdf_file, from_file_path=False):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=100,
