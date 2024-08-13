@@ -115,12 +115,11 @@ export default function Home(): JSX.Element {
                         await readFileAsDataUrl(questionsFile);
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
                     submit({ csvFileBuffer, pdfFileBuffer });
-                    setTimeout(async () => {
-                        // setInterval(async () => {
+                    setInterval(async () => {
                         const pollResponse = await poll();
                         console.log(pollResponse);
                         setLlmResponse(pollResponse);
-                    }, 5000);
+                    }, 10000);
                     break;
             }
         }
