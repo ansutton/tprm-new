@@ -19,9 +19,11 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
 
 * Activate the virtual Python environment by running:
+
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
+
 > <b>Note</b>: Anytime you run the Python flask server, it's best practice to do so inside this virtual environment.
 
 * Install Python dependencies by running:
@@ -31,16 +33,19 @@ pip install -r requirements.txt
 ```
 
 * Start Flask server by running:
+
 ```powershell
 python app.py
 ```
+
 > <b>Note</b>: Installing dependencies using the ``requirements.txt`` file may not have successfully installed all the necessary dependencies. Run ``pip install <package name>`` for whatever Python complains about and then try starting the Flask server again.
 
 ### Endpoint Testing
 
 * Download [Postman](https://www.postman.com/downloads/)
 
-* With the Flask server succesfully running setup a new POST request in Postman targeting the following endpoint: 
+* With the Flask server succesfully running setup a new POST request in Postman targeting the following endpoint:
+
 ```
 http://localhost:8001/load_document
 ```
@@ -52,26 +57,31 @@ http://localhost:8001/load_document
     "filePath": "C:/Users/jacwallace/Repos/TPRM-Accelerator/training_data/office_s1_e4.txt"
 }
 ```
+
 > <b>Note A</b>: Replace the ``filePath`` value with the file path for wherever this file is located on your machine. Replace back slashes -> ``\`` with forward slashes -> ``/``.
 
 > <b>Note B</b>: Python may complain and tell you to ``pip install chromadb`` if you haven't already.
 
 * Once document is successfully loaded, setup a new POST request in Postman targeting:
+
 ```
 http://localhost:8001/generate_rag
 ```
 
 * Include the following payload as ``Body > raw > JSON``:
 a
+
 ```JSON
 {
    "text": "What is the Alliance about in this episode?"
 }
 ```
+
 > <b>Note</b>: The ``text`` value can be modified to include any relevant question to the ingested data.
 ___
 
 ### Dev Environment
+
 * For QoL improvement, install [Mypy](https://www.mypy-lang.org/) (a static type checker), [Pylint](https://pypi.org/project/pylint/) (a linter), and [Black](https://black.readthedocs.io/en/stable/index.html) (a formatter) at a system level, not in the virtual environment.
 * For Mypy run:
 
@@ -89,6 +99,7 @@ pip install pylint
 
 In addition to this, you should install the [Microsoft authored Pylint VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint).
 Running a lint check can be done by running the following command at the root level of the directory:
+
 ```powershell
 pylint server
 ```
@@ -104,9 +115,11 @@ Running an automatic format fix can be done by running the following command at 
 ```powershell
 black server
 ```
+
 ___
 
 ### TypeScript & Next.js Frontend
+
 * Install [NodeJS](https://nodejs.org/en)
 * ``cd /client``
 * Run the following ``npm`` commands:
@@ -118,3 +131,11 @@ npm run dev
 ```
 
 * Navigate to ``http://localhost:3000``
+
+___
+
+### GitHub SSH Instructions
+
+Eliminate need to authenticate on every git command.
+
+While following [these steps](https://www.freecodecamp.org/news/how-to-fix-git-always-asking-for-user-credentials/), follow [these steps](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) to generate a new SSH public key. You probably want to skip the session and timeout steps so that you don't have to repeat these steps again after a timeout. After generating a new SSH key, store the SSH in the SSH key setting in your GitHub settings online. Authorize the Deloitte organizations in the dropdown there. Test out on your local machine with a git command like `git fetch origin` in your repo to see if it no longer prompts for authentication.
