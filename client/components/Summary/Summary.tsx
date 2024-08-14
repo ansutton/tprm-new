@@ -44,7 +44,7 @@ export function Summary({
                         'dark:stroke-indigo-500',
                     )}
                 />
-                <H4>Neuron RAG-Injested Documents</H4>
+                <H4>RAG-Injested Documents</H4>
             </div>
 
             <Table>
