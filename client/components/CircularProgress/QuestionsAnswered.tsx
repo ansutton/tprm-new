@@ -1,16 +1,25 @@
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { LlmResponse } from '@/types';
 
-const value = 2;
-const questionsAnswered = 4;
+interface QuestionsAnsweredProps {
+    llmResponse: LlmResponse;
+    questionsData: string[];
+}
 
-export function QuestionsAnswered(): JSX.Element {
+export function QuestionsAnswered({
+    llmResponse,
+    questionsData,
+}: QuestionsAnsweredProps): JSX.Element {
+    const numberOfQuestions = questionsData?.length;
+    const questionsAnswered = llmResponse?.responses.length || 0;
+
     return (
-        <div className='h-52 w-52'>
+        <div className='h-40 w-40'>
             <CircularProgressbar
-                value={value}
+                value={questionsAnswered}
                 minValue={0}
-                maxValue={questionsAnswered}
-                text={`${questionsAnswered} Qs`}
+                maxValue={numberOfQuestions}
+                text={`${questionsAnswered}/${numberOfQuestions}`}
             />
         </div>
     );
