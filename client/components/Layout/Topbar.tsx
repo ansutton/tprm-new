@@ -63,7 +63,7 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
                                 'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
                                 'from-indigo-800 via-indigo-500 to-zinc-400/50',
                                 'hover:from-zinc-400/50 hover:via-indigo-500 hover:to-indigo-800',
-                                'dark:from-zinc-700 dark:via-indigo-500 dark:to-zinc-400',
+                                'dark:from-zinc-600 dark:via-indigo-500 dark:to-zinc-400',
                                 'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
                             )}
                         >
