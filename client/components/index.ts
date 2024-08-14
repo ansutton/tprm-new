@@ -5,6 +5,7 @@ export * from './Layout/Topbar';
 export * from './ModeMenu/ModeMenu';
 export * from './ui/Button';
 export * from './ui/Card';
+export * from './ui/CircularProgress';
 export * from './ui/Headings';
 export * from './ui/MenuItemButton';
 export * from './Summary/Summary';
