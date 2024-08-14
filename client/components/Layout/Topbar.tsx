@@ -67,7 +67,7 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
                                 'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
                             )}
                         >
-                            Neuron
+                            TPRM Accelerator
                         </h1>
                     </Link>
 
