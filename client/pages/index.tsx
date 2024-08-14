@@ -189,8 +189,8 @@ export default function Home(): JSX.Element {
             {screen === 'summary' ? <H3>Summary</H3> : null}
 
             <div className='container mx-auto pb-5 pt-5'>
-                <Card variant={screen === 'summary' ? 'wide' : 'default'}>
-                    {screen === 'fileUpload' ? (
+                {screen === 'fileUpload' ? (
+                    <Card additionalClasses='max-w-2xl'>
                         <>
                             <div className='flex items-center gap-3'>
                                 <QuestionMarkCircleIcon
@@ -285,38 +285,38 @@ export default function Home(): JSX.Element {
                                 </Button>
                             </form>
                         </>
-                    ) : null}
+                    </Card>
+                ) : null}
 
-                    {screen === 'loading' ? (
-                        <>
-                            <H4 additionalClasses='text-center'>
-                                Hang tight. This process can take a while.
-                            </H4>
-                            <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
-                                When finished loading, the summary will be
-                                displayed on the next screen.
-                            </p>
-                            <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
-                        </>
-                    ) : null}
+                {screen === 'loading' ? (
+                    <>
+                        <H4 additionalClasses='text-center'>
+                            Hang tight. This process can take a while.
+                        </H4>
+                        <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
+                            When finished loading, the summary will be displayed
+                            on the next screen.
+                        </p>
+                        <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
+                    </>
+                ) : null}
 
-                    {screen === 'summary' ? (
-                        <>
-                            <Summary
-                                excelData={excelData}
-                                llmResponse={llmResponse}
-                                questionsData={questionsData}
-                            />
+                {screen === 'summary' ? (
+                    <>
+                        <Summary
+                            excelData={excelData}
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
+                        />
 
-                            <Button
-                                variant='solid'
-                                onClick={() => setScreen('fileUpload')}
-                            >
-                                Back to File Upload
-                            </Button>
-                        </>
-                    ) : null}
-                </Card>
+                        <Button
+                            variant='solid'
+                            onClick={() => setScreen('fileUpload')}
+                        >
+                            Back to File Upload
+                        </Button>
+                    </>
+                ) : null}
             </div>
         </div>
     );
