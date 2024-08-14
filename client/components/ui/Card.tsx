@@ -14,6 +14,7 @@ export function Card({
         <div
             className={clsx(
                 'p-6',
+                'w-full',
                 'bg-zinc-50',
                 'dark:bg-zinc-800',
                 'rounded-2xl border border-indigo-200 shadow-lg shadow-indigo-200',

@@ -8,7 +8,7 @@ import {
     DisclosurePanel,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import { H4, QuestionsAnswered } from '@/components';
+import { H4, MatchingAnswers, QuestionsAnswered } from '@/components';
 import { LlmResponse } from '@/types';
 
 interface SummaryProps {
@@ -32,10 +32,13 @@ export function Summary({
                 of questions uploaded.
             </p>
 
-            <QuestionsAnswered
-                llmResponse={llmResponse}
-                questionsData={questionsData}
-            />
+            <div className='mr-auto flex gap-4'>
+                <QuestionsAnswered
+                    llmResponse={llmResponse}
+                    questionsData={questionsData}
+                />
+                <MatchingAnswers questionsData={questionsData} />
+            </div>
 
             <div className='flex items-center gap-3'>
                 <DocumentTextIcon

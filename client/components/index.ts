@@ -1,3 +1,4 @@
+export * from './CircularProgress/MatchingAnswers';
 export * from './CircularProgress/QuestionsAnswered';
 export * from './Layout/Layout';
 export * from './Layout/Sidebar';
