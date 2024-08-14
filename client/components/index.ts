@@ -1,5 +1,5 @@
-export * from './CircularProgress/MatchingAnswers';
-export * from './CircularProgress/QuestionsAnalyzed';
+export * from './DataVisuals/MatchingAnswers';
+export * from './DataVisuals/QuestionsAnalyzed';
 export * from './Layout/Layout';
 export * from './Layout/Sidebar';
 export * from './Layout/Topbar';
