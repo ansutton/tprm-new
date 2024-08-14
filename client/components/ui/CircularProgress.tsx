@@ -34,7 +34,9 @@ export function CircularProgress({
     return (
         <div className='flex w-60'>
             <Card>
-                <h4 className='mb-4 w-full text-lg font-bold'>{title}</h4>
+                <h4 className='mb-4 w-full text-center text-lg font-bold'>
+                    {title}
+                </h4>
                 <div className='mx-auto h-40 w-40'>
                     <CircularProgressbar
                         className={`${twFontSize}`}

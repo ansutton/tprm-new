@@ -43,10 +43,10 @@ export function Summary({
                 </div>
 
                 <Card>
-                    <div className='flex items-center gap-3'>
+                    <div className='mb-4 flex items-center gap-3'>
                         <DocumentTextIcon
                             className={clsx(
-                                'mb-4 w-10 stroke-indigo-600 stroke-2',
+                                'w-10 stroke-indigo-600 stroke-2',
                                 'dark:stroke-indigo-500',
                             )}
                         />

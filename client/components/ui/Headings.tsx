@@ -19,7 +19,7 @@ export function H4({
     children,
 }: HeadingProps): JSX.Element {
     return (
-        <h4 className={tw`${additionalClasses} mb-4 w-full text-2xl font-bold`}>
+        <h4 className={tw`${additionalClasses} w-full text-2xl font-bold`}>
             {children}
         </h4>
     );
