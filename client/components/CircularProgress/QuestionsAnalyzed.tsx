@@ -7,20 +7,20 @@ interface QuestionsAnsweredProps {
     questionsData: string[];
 }
 
-export function QuestionsAnswered({
+export function QuestionsAnalyzed({
     llmResponse,
     questionsData,
 }: QuestionsAnsweredProps): JSX.Element {
     const numberOfQuestions = questionsData?.length;
-    const questionsAnswered = llmResponse?.responses.length || 0;
+    const questionsAnalyzed = llmResponse?.responses.length || 0;
 
     return (
         <CircularProgress
-            title='Questions Answered'
-            value={questionsAnswered}
+            title='Questions Analyzed'
+            value={questionsAnalyzed}
             minValue={0}
             maxValue={numberOfQuestions}
-            text={`${questionsAnswered}/${numberOfQuestions}`}
+            text={`${questionsAnalyzed}/${numberOfQuestions}`}
         />
     );
 }

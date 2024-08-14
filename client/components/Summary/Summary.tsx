@@ -8,7 +8,7 @@ import {
     DisclosurePanel,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import { Card, H4, MatchingAnswers, QuestionsAnswered } from '@/components';
+import { Card, H4, MatchingAnswers, QuestionsAnalyzed } from '@/components';
 import { LlmResponse } from '@/types';
 
 interface SummaryProps {
@@ -35,11 +35,11 @@ export function Summary({
                 </p>
 
                 <div className='flex w-full justify-end gap-4'>
-                    <QuestionsAnswered
+                    <QuestionsAnalyzed
                         llmResponse={llmResponse}
                         questionsData={questionsData}
                     />
-                    <MatchingAnswers questionsData={questionsData} />
+                    <MatchingAnswers llmResponse={llmResponse} />
                 </div>
 
                 <Card>

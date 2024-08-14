@@ -1,14 +1,15 @@
 import {} from '@heroicons/react/24/outline';
 import { CircularProgress } from '@/components';
+import { LlmResponse } from '@/types';
 
 interface MatchingAnswersProps {
-    questionsData: string[];
+    llmResponse: LlmResponse;
 }
 
 export function MatchingAnswers({
-    questionsData,
+    llmResponse,
 }: MatchingAnswersProps): JSX.Element {
-    const questionsAnswered = questionsData?.length;
+    const questionsAnalyzed = llmResponse?.responses.length;
     const matchingAnswers = 'N/A';
 
     return (
@@ -18,8 +19,8 @@ export function MatchingAnswers({
             // value={matchingAnswers}
             value={0}
             minValue={0}
-            maxValue={questionsAnswered}
-            text={`${matchingAnswers}/${questionsAnswered}`}
+            maxValue={questionsAnalyzed}
+            text={`${matchingAnswers}/${questionsAnalyzed}`}
         />
     );
 }
