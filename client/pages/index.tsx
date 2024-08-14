@@ -186,7 +186,6 @@ export default function Home(): JSX.Element {
 
             {screen === 'fileUpload' ? <H3>AI Evidence Reviewer</H3> : null}
             {screen === 'loading' ? <H3>Processing File</H3> : null}
-            {screen === 'summary' ? <H3>Summary</H3> : null}
 
             <div className='container mx-auto pb-5 pt-5'>
                 {screen === 'fileUpload' ? (

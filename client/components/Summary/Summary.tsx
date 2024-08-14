@@ -31,14 +31,17 @@ export function Summary({
     return (
         <>
             <div className='flex flex-col gap-4'>
-                <p className='w-full text-center text-lg'>
-                    Summary: the third party and the AI model provided the same
-                    response for{' '}
-                    <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                        N/A of {questionsData?.length} (percentage N/A)
-                    </span>{' '}
-                    of questions uploaded.
-                </p>
+                <Card>
+                    <H4 additionalClasses='mb-4'>Summary</H4>
+                    <p className='w-full text-lg'>
+                        The third party and the AI model provided the same
+                        response for{' '}
+                        <span className='font-bold text-indigo-700 dark:text-indigo-400'>
+                            N/A of {questionsData?.length} (percentage N/A)
+                        </span>{' '}
+                        of questions uploaded.
+                    </p>
+                </Card>
 
                 <div className='flex w-full justify-end gap-4'>
                     <QuestionsAnalyzed
