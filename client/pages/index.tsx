@@ -191,7 +191,7 @@ export default function Home(): JSX.Element {
             <div className='container mx-auto pb-5 pt-5'>
                 {screen === 'fileUpload' ? (
                     <Card additionalClasses={tw`mx-auto max-w-2xl`}>
-                        <div className='mx-auto flex flex-col gap-6 p-6'>
+                        <div className='mx-auto flex flex-col gap-6'>
                             <div className='flex items-center gap-3'>
                                 <QuestionMarkCircleIcon
                                     className={clsx(
