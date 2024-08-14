@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
-import { poll, submit } from '@/utils/api-utils';
+import { poll, submit, tw } from '@/utils';
 import { LlmResponse, Mode, PythonAppState } from '@/types';
 import * as XLSX from 'xlsx';
 
@@ -190,8 +190,8 @@ export default function Home(): JSX.Element {
 
             <div className='container mx-auto pb-5 pt-5'>
                 {screen === 'fileUpload' ? (
-                    <Card additionalClasses='max-w-2xl'>
-                        <>
+                    <Card twMaxWidth='max-w-2xl'>
+                        <div className='mx-auto flex flex-col gap-6 p-6'>
                             <div className='flex items-center gap-3'>
                                 <QuestionMarkCircleIcon
                                     className={clsx(
@@ -284,7 +284,7 @@ export default function Home(): JSX.Element {
                                     />
                                 </Button>
                             </form>
-                        </>
+                        </div>
                     </Card>
                 ) : null}
 
