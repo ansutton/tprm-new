@@ -302,20 +302,22 @@ export default function Home(): JSX.Element {
                 ) : null}
 
                 {screen === 'summary' ? (
-                    <>
+                    <div className='flex flex-col gap-6'>
                         <Summary
                             excelData={excelData}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
 
-                        <Button
-                            variant='solid'
-                            onClick={() => setScreen('fileUpload')}
-                        >
-                            Back to File Upload
-                        </Button>
-                    </>
+                        <div className='mx-auto'>
+                            <Button
+                                variant='solid'
+                                onClick={() => setScreen('fileUpload')}
+                            >
+                                Back to File Upload
+                            </Button>
+                        </div>
+                    </div>
                 ) : null}
             </div>
         </div>

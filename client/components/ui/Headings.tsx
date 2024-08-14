@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { tw } from '@/utils';
 
 interface HeadingProps {
     additionalClasses?: string;
@@ -18,7 +19,7 @@ export function H4({
     children,
 }: HeadingProps): JSX.Element {
     return (
-        <h4 className={`${additionalClasses} w-full text-2xl font-bold`}>
+        <h4 className={tw`${additionalClasses} mb-4 w-full text-2xl font-bold`}>
             {children}
         </h4>
     );

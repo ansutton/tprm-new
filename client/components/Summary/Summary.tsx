@@ -8,7 +8,7 @@ import {
     DisclosurePanel,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import { H4, MatchingAnswers, QuestionsAnswered } from '@/components';
+import { Card, H4, MatchingAnswers, QuestionsAnswered } from '@/components';
 import { LlmResponse } from '@/types';
 
 interface SummaryProps {
@@ -24,122 +24,139 @@ export function Summary({
 }: SummaryProps): JSX.Element {
     return (
         <>
-            <p>
-                The third party and the AI model provided the same response for{' '}
-                <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                    N/A of {questionsData?.length} (percentage N/A)
-                </span>{' '}
-                of questions uploaded.
-            </p>
+            <div className='flex flex-col gap-4'>
+                <p className='w-full text-center text-lg'>
+                    Summary: the third party and the AI model provided the same
+                    response for{' '}
+                    <span className='font-bold text-indigo-700 dark:text-indigo-400'>
+                        N/A of {questionsData?.length} (percentage N/A)
+                    </span>{' '}
+                    of questions uploaded.
+                </p>
 
-            <div className='mr-auto flex gap-4'>
-                <QuestionsAnswered
-                    llmResponse={llmResponse}
-                    questionsData={questionsData}
-                />
-                <MatchingAnswers questionsData={questionsData} />
-            </div>
+                <div className='flex w-full justify-end gap-4'>
+                    <QuestionsAnswered
+                        llmResponse={llmResponse}
+                        questionsData={questionsData}
+                    />
+                    <MatchingAnswers questionsData={questionsData} />
+                </div>
 
-            <div className='flex items-center gap-3'>
-                <DocumentTextIcon
-                    className={clsx(
-                        'w-10 stroke-indigo-600 stroke-2',
-                        'dark:stroke-indigo-500',
-                    )}
-                />
-                <H4>RAG-Injested Documents</H4>
-            </div>
-
-            <Table>
-                <thead>
-                    <tr>
-                        <TableItem variant='head'>Control Question</TableItem>
-                        <TableItem variant='head'>TP Response</TableItem>
-                        <TableItem variant='head'>AI&apos;s Answer</TableItem>
-                        <TableItem variant='head'>Answers Match?</TableItem>
-                        <TableItem variant='head'>Citation</TableItem>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {questionsData.map((question, index) => (
-                        <tr
-                            key={index}
-                            className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
-                        >
-                            <TableItem variant='cell'>{question}</TableItem>
-                            <TableItem variant='cell' centered>
-                                <Link
-                                    href={`#third-party-response-${index + 1}`}
-                                    className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                >
-                                    Response {index + 1}
-                                </Link>
-                            </TableItem>
-                            <TableItem variant='cell' centered>
-                                <Link
-                                    href={`#ai-answer-${index + 1}`}
-                                    className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                >
-                                    {llmResponse?.responses[index] ? (
-                                        `Answer ${index + 1}`
-                                    ) : (
-                                        <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
-                                    )}
-                                </Link>
-                            </TableItem>
-                            <TableItem variant='cell' centered>
-                                N/A
-                            </TableItem>
-                            <TableItem variant='cell' centered>
-                                N/A
-                            </TableItem>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-
-            <div className='w-full divide-y dark:divide-zinc-600'>
-                {questionsData.map((question, index) => (
-                    <div key={index} className='py-2'>
-                        <SummaryItem
-                            title={`Control Question ${index + 1}`}
-                            content={question}
-                            defaultOpen
-                            id={`control-question-${index + 1}`}
+                <Card>
+                    <div className='flex items-center gap-3'>
+                        <DocumentTextIcon
+                            className={clsx(
+                                'mb-4 w-10 stroke-indigo-600 stroke-2',
+                                'dark:stroke-indigo-500',
+                            )}
                         />
-                        <SummaryItem
-                            title={`Third Party Response ${index + 1}`}
-                            content={excelData[index + 1][2]}
-                            defaultOpen
-                            id={`third-party-response-${index + 1}`}
-                        />
-                        <SummaryItem
-                            title={`AI Answer ${index + 1}`}
-                            content={
-                                llmResponse?.responses[index] ? (
-                                    `${llmResponse?.responses[index]}`
-                                ) : (
-                                    <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
-                                )
-                            }
-                            defaultOpen
-                            id={`ai-answer-${index + 1}`}
-                        />
-                        <SummaryItem
-                            title={`Answers Match?`}
-                            content={'N/A'}
-                            defaultOpen
-                            id={`answers-match-${index + 1}`}
-                        />
-                        <SummaryItem
-                            title={`Citation`}
-                            content={'N/A'}
-                            defaultOpen
-                            id={`citaton-${index + 1}`}
-                        />
+                        <H4>RAG-Injested Documents</H4>
                     </div>
-                ))}
+
+                    <Table>
+                        <thead>
+                            <tr>
+                                <TableItem variant='head'>
+                                    Control Question
+                                </TableItem>
+                                <TableItem variant='head'>
+                                    TP Response
+                                </TableItem>
+                                <TableItem variant='head'>
+                                    AI&apos;s Answer
+                                </TableItem>
+                                <TableItem variant='head'>
+                                    Answers Match?
+                                </TableItem>
+                                <TableItem variant='head'>Citation</TableItem>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {questionsData.map((question, index) => (
+                                <tr
+                                    key={index}
+                                    className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
+                                >
+                                    <TableItem variant='cell'>
+                                        {question}
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        <Link
+                                            href={`#third-party-response-${index + 1}`}
+                                            className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                        >
+                                            Response {index + 1}
+                                        </Link>
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        <Link
+                                            href={`#ai-answer-${index + 1}`}
+                                            className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                        >
+                                            {llmResponse?.responses[index] ? (
+                                                `Answer ${index + 1}`
+                                            ) : (
+                                                <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                            )}
+                                        </Link>
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        N/A
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        N/A
+                                    </TableItem>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </Card>
+
+                <Card>
+                    <div className='w-full divide-y dark:divide-zinc-600'>
+                        {questionsData.map((question, index) => (
+                            <div key={index} className='py-2'>
+                                <SummaryItem
+                                    title={`Control Question ${index + 1}`}
+                                    content={question}
+                                    defaultOpen
+                                    id={`control-question-${index + 1}`}
+                                />
+                                <SummaryItem
+                                    title={`Third Party Response ${index + 1}`}
+                                    content={excelData[index + 1][2]}
+                                    defaultOpen
+                                    id={`third-party-response-${index + 1}`}
+                                />
+                                <SummaryItem
+                                    title={`AI Answer ${index + 1}`}
+                                    content={
+                                        llmResponse?.responses[index] ? (
+                                            `${llmResponse?.responses[index]}`
+                                        ) : (
+                                            <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                        )
+                                    }
+                                    defaultOpen
+                                    id={`ai-answer-${index + 1}`}
+                                />
+                                <SummaryItem
+                                    title={`Answers Match?`}
+                                    content={'N/A'}
+                                    defaultOpen
+                                    id={`answers-match-${index + 1}`}
+                                />
+                                <SummaryItem
+                                    title={`Citation`}
+                                    content={'N/A'}
+                                    defaultOpen
+                                    id={`citaton-${index + 1}`}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </Card>
             </div>
         </>
     );
