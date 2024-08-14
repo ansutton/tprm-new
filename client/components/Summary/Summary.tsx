@@ -60,7 +60,7 @@ export function Summary({
                                 'dark:stroke-indigo-500',
                             )}
                         />
-                        <H4>RAG-Injested Documents</H4>
+                        <H4>Results Table</H4>
                     </div>
 
                     <Table>
@@ -124,6 +124,7 @@ export function Summary({
                 </Card>
 
                 <Card>
+                    <H4>Results Details</H4>
                     <div className='w-full divide-y dark:divide-zinc-600'>
                         {questionsData.map((question, index) => (
                             <div key={index} className='py-2'>
