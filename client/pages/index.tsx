@@ -7,15 +7,7 @@ import {
     QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import {
-    Button,
-    Card,
-    Heading,
-    H4,
-    Sidebar,
-    Summary,
-    Topbar,
-} from '@/components';
+import { Button, Card, Heading, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit, tw } from '@/utils';
 import { LlmResponse, Mode, PythonAppState } from '@/types';
 import * as XLSX from 'xlsx';
@@ -210,7 +202,7 @@ export default function Home(): JSX.Element {
                                         'dark:stroke-indigo-500',
                                     )}
                                 />
-                                <H4>Blank Question Set</H4>
+                                <Heading level={4}>Blank Question Set</Heading>
                             </div>
                             <form
                                 className='flex flex-col gap-6'
@@ -238,7 +230,9 @@ export default function Home(): JSX.Element {
                                             'dark:stroke-indigo-500',
                                         )}
                                     />
-                                    <H4>Third Party Evidence Provided</H4>
+                                    <Heading level={4}>
+                                        Third Party Evidence Provided
+                                    </Heading>
                                 </div>
                                 <p>
                                     Accepts file type: <b>pdf</b>
@@ -262,7 +256,9 @@ export default function Home(): JSX.Element {
                                             'dark:stroke-indigo-500',
                                         )}
                                     />
-                                    <H4>Third Party Responses</H4>
+                                    <Heading level={4}>
+                                        Third Party Responses
+                                    </Heading>
                                 </div>
                                 <p>
                                     Accepts file type: <b>xlsx</b>
@@ -301,9 +297,9 @@ export default function Home(): JSX.Element {
 
                 {screen === 'loading' ? (
                     <>
-                        <H4 additionalClasses='text-center'>
+                        <Heading level={4} additionalClasses='text-center'>
                             Hang tight. This process can take a while.
-                        </H4>
+                        </Heading>
                         <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
                             When finished loading, the summary will be displayed
                             on the next screen.
