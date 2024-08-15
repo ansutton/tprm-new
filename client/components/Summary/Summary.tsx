@@ -90,6 +90,7 @@ export function Summary({
                                     className={clsx(headingIconClasses, 'mb-3')}
                                 />
                             }
+                            twBgColor='rose'
                         />
                     </div>
                 </div>
