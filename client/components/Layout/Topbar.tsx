@@ -31,7 +31,7 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
         >
             <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
-                    <Link href='/' className='flex font-["Open_Sans"]'>
+                    <Link href='/' className='ml-2 flex font-["Open_Sans"]'>
                         <span
                             className={clsx(
                                 'bg-clip-text text-lg font-extrabold text-transparent',

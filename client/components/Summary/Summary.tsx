@@ -92,7 +92,7 @@ export function Summary({
                             title='Questions Unanswered by Evidence'
                             progressPercentage={40}
                             startIcon={
-                                <DocumentCheckIcon
+                                <NewspaperIcon
                                     className={clsx(headingIconClasses, 'mb-3')}
                                 />
                             }
