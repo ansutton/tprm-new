@@ -15,13 +15,7 @@ import {
     DisclosurePanel,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import {
-    Card,
-    EvidenceDocumentsAnalyzed,
-    Heading,
-    NotAnsweredByEvidence,
-    QuestionsAnalyzed,
-} from '@/components';
+import { Card, Heading, ProgressBar, QuestionsAnalyzed } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
@@ -73,9 +67,9 @@ export function Summary({
                     />
 
                     <div className='flex w-full flex-col gap-4'>
-                        <EvidenceDocumentsAnalyzed
-                            questionsData={questionsData}
-                            llmResponse={llmResponse}
+                        <ProgressBar
+                            title='Questions Not Answered by Evidence'
+                            progressPercentage={40}
                             startIcon={
                                 <DocumentCheckIcon
                                     className={headingIconClasses}
@@ -83,11 +77,13 @@ export function Summary({
                             }
                         />
 
-                        <NotAnsweredByEvidence
-                            questionsData={questionsData}
-                            llmResponse={llmResponse}
+                        <ProgressBar
+                            title='Evidence Documents Analyzed'
+                            progressPercentage={75}
                             startIcon={
-                                <NewspaperIcon className={headingIconClasses} />
+                                <DocumentCheckIcon
+                                    className={headingIconClasses}
+                                />
                             }
                         />
                     </div>

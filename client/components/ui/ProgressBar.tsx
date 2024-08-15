@@ -1,10 +1,14 @@
-interface ProgressBarProps {
+import { ReactNode } from 'react';
+import { Card } from '@/components';
+import { LlmResponse } from '@/types';
+
+interface ProgressBarBaseProps {
     progressPercentage: number;
 }
 
-export function ProgressBar({
+export function ProgressBarBase({
     progressPercentage,
-}: ProgressBarProps): JSX.Element {
+}: ProgressBarBaseProps): JSX.Element {
     return (
         <div className='h-4 w-full rounded-full bg-gray-200'>
             <div
@@ -12,5 +16,26 @@ export function ProgressBar({
                 style={{ width: `${progressPercentage}%` }}
             ></div>
         </div>
+    );
+}
+
+interface ProgressBarProps extends ProgressBarBaseProps {
+    startIcon?: ReactNode;
+    title: string;
+}
+
+export function ProgressBar({
+    progressPercentage,
+    startIcon = null,
+    title,
+}: ProgressBarProps): JSX.Element {
+    return (
+        <Card>
+            <div className='flex items-center gap-3'>
+                {startIcon}
+                <h4 className='mb-4 w-full text-lg font-bold'>{title}</h4>
+            </div>
+            <ProgressBarBase progressPercentage={progressPercentage} />
+        </Card>
     );
 }
