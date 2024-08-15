@@ -17,7 +17,7 @@ export function MatchingAnswers({ llmResponse }: Props): JSX.Element {
             // value={matchingAnswers}
             value={0}
             minValue={0}
-            maxValue={questionsAnalyzed}
+            maxValue={questionsAnalyzed || 100}
             text={`${matchingAnswers}/${questionsAnalyzed}`}
         />
     );
@@ -34,7 +34,7 @@ export function NonMatchingAnswers({ llmResponse }: Props): JSX.Element {
             // value={matchingAnswers}
             value={0}
             minValue={0}
-            maxValue={questionsAnalyzed}
+            maxValue={questionsAnalyzed || 100}
             text={`${nonMatchingAnswers}/${questionsAnalyzed}`}
         />
     );
