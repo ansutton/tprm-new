@@ -68,8 +68,8 @@ export function Summary({
 
                     <div className='flex w-full flex-col gap-4'>
                         <ProgressBar
-                            title='Questions Not Answered by Evidence'
-                            progressPercentage={40}
+                            title='Evidence Documents Analyzed'
+                            progressPercentage={75}
                             startIcon={
                                 <DocumentCheckIcon
                                     className={clsx(headingIconClasses, 'mb-3')}
@@ -78,8 +78,8 @@ export function Summary({
                         />
 
                         <ProgressBar
-                            title='Evidence Documents Analyzed'
-                            progressPercentage={75}
+                            title='Questions Not Answered by Evidence'
+                            progressPercentage={40}
                             startIcon={
                                 <DocumentCheckIcon
                                     className={clsx(headingIconClasses, 'mb-3')}
