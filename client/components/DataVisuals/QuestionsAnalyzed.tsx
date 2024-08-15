@@ -18,7 +18,8 @@ export function QuestionsAnalyzed({
         <CircularProgress
             title='Questions Analyzed'
             twFontSize='text-2xl'
-            value={questionsAnalyzed}
+            // value={questionsAnalyzed}
+            value={2}
             minValue={0}
             maxValue={numberOfQuestions}
             text={`${questionsAnalyzed}/${numberOfQuestions}`}

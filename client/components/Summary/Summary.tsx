@@ -53,8 +53,13 @@ export function Summary({
                     <p className='w-full text-lg'>
                         The third party and the AI model provided the same
                         response for{' '}
-                        <span className='font-bold text-indigo-700 dark:text-indigo-400'>
-                            N/A of {questionsData?.length} (percentage N/A)
+                        <span className='font-bold'>
+                            {llmResponse?.responses.length || 0}/
+                            {questionsData?.length} (
+                            {((llmResponse?.responses.length || 0) /
+                                questionsData?.length) *
+                                100}
+                            %)
                         </span>{' '}
                         of questions uploaded.
                     </p>

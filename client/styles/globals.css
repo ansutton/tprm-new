@@ -37,13 +37,13 @@
 
     .CircularProgressbar .CircularProgressbar-path {
         /* stroke: blueviolet; */
-        @apply stroke-indigo-600;
+        @apply stroke-emerald-400;
         stroke-linecap: round;
         transition: stroke-dashoffset 0.5s ease 0s;
     }
 
     .CircularProgressbar .CircularProgressbar-trail {
-        @apply stroke-zinc-300/70 dark:stroke-zinc-200;
+        @apply stroke-zinc-200 dark:stroke-zinc-400/50;
         /* Used when trail is not full diameter, i.e. when props.circleRatio is set */
         stroke-linecap: round;
     }
