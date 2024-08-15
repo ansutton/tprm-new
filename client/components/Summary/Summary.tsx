@@ -1,7 +1,12 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import { ArrowPathIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import {
+    ArrowPathIcon,
+    DocumentChartBarIcon,
+    DocumentTextIcon,
+    TableCellsIcon,
+} from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
@@ -16,6 +21,7 @@ import {
     QuestionsAnalyzed,
 } from '@/components';
 import { LlmResponse } from '@/types';
+import { tw } from '@/utils';
 
 interface SummaryProps {
     excelData: any[][];
@@ -28,11 +34,24 @@ export function Summary({
     llmResponse,
     questionsData,
 }: SummaryProps): JSX.Element {
+    const headingIconClasses = clsx(
+        tw`mb-4 w-10 stroke-indigo-600 stroke-2`,
+        tw`dark:stroke-indigo-500`,
+    );
+
     return (
         <>
             <div className='flex flex-col gap-4'>
                 <Card>
-                    <Heading level={4} additionalClasses='mb-4'>
+                    <Heading
+                        level={4}
+                        additionalClasses='mb-4'
+                        startIcon={
+                            <DocumentChartBarIcon
+                                className={headingIconClasses}
+                            />
+                        }
+                    >
                         Summary
                     </Heading>
                     <p className='w-full text-lg'>
@@ -55,15 +74,15 @@ export function Summary({
                 </div>
 
                 <Card>
-                    <div className='mb-4 flex items-center gap-3'>
-                        <DocumentTextIcon
-                            className={clsx(
-                                'w-10 stroke-indigo-600 stroke-2',
-                                'dark:stroke-indigo-500',
-                            )}
-                        />
-                        <Heading level={4}>Results Table</Heading>
-                    </div>
+                    <Heading
+                        level={4}
+                        additionalClasses='mb-4'
+                        startIcon={
+                            <TableCellsIcon className={headingIconClasses} />
+                        }
+                    >
+                        Results Table
+                    </Heading>
 
                     <Table>
                         <thead>
@@ -126,7 +145,15 @@ export function Summary({
                 </Card>
 
                 <Card>
-                    <Heading level={4}>Results Details</Heading>
+                    <Heading
+                        level={4}
+                        additionalClasses='mb-4'
+                        startIcon={
+                            <DocumentTextIcon className={headingIconClasses} />
+                        }
+                    >
+                        Results Details
+                    </Heading>
                     <div className='w-full divide-y dark:divide-zinc-600'>
                         {questionsData.map((question, index) => (
                             <div key={index} className='py-2'>
