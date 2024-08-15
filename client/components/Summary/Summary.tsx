@@ -7,6 +7,7 @@ import {
     DocumentCheckIcon,
     DocumentTextIcon,
     NewspaperIcon,
+    QuestionMarkCircleIcon,
     TableCellsIcon,
 } from '@heroicons/react/24/outline';
 import {
@@ -69,6 +70,11 @@ export function Summary({
                     <QuestionsAnalyzed
                         llmResponse={llmResponse}
                         questionsData={questionsData}
+                        startIcon={
+                            <QuestionMarkCircleIcon
+                                className={clsx(headingIconClasses, 'mb-4')}
+                            />
+                        }
                     />
 
                     <div className='flex w-full flex-col gap-4'>

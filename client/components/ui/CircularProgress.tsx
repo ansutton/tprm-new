@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { Card } from '@/components';
 
@@ -6,6 +7,7 @@ interface CircularProgressProps {
     value: number;
     minValue?: number | undefined;
     maxValue?: number | undefined;
+    startIcon?: ReactNode;
     text?: string | undefined;
     twFontSize?:
         | 'text-xs'
@@ -28,16 +30,20 @@ export function CircularProgress({
     value,
     minValue,
     maxValue,
+    startIcon = null,
     text,
     twFontSize = 'text-3xl',
 }: CircularProgressProps): JSX.Element {
     return (
-        <div className='flex w-60 min-w-60'>
+        <div className='flex w-64 min-w-64'>
             <Card>
-                <h4 className='mb-4 w-full text-center text-lg font-bold'>
-                    {title}
-                </h4>
-                <div className='mx-auto h-40 w-40'>
+                <div className='flex items-center gap-2'>
+                    {startIcon}
+                    <h4 className='mb-4 w-full font-bold opacity-80'>
+                        {title}
+                    </h4>
+                </div>
+                <div className='mx-auto h-48 w-48'>
                     <CircularProgressbar
                         className={`${twFontSize}`}
                         value={value}
