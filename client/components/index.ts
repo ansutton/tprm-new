@@ -1,4 +1,3 @@
-export * from './DataVisuals/MatchingAnswers';
 export * from './DataVisuals/NotAnsweredByEvidence';
 export * from './DataVisuals/QuestionsAnalyzed';
 export * from './Layout/Layout';

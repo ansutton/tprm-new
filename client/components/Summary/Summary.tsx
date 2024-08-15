@@ -16,8 +16,6 @@ import clsx from 'clsx';
 import {
     Card,
     Heading,
-    MatchingAnswers,
-    NonMatchingAnswers,
     NotAnsweredByEvidence,
     QuestionsAnalyzed,
 } from '@/components';
@@ -70,8 +68,6 @@ export function Summary({
                         llmResponse={llmResponse}
                         questionsData={questionsData}
                     />
-                    <MatchingAnswers llmResponse={llmResponse} />
-                    <NonMatchingAnswers llmResponse={llmResponse} />
                 </div>
 
                 <Card>
