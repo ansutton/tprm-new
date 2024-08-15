@@ -33,8 +33,9 @@ export function ProgressBar({
         <Card>
             <div className='flex items-center gap-3'>
                 {startIcon}
-                <h4 className='mb-4 w-full text-lg font-bold'>{title}</h4>
+                <h4 className='mb-3 w-full font-bold opacity-80'>{title}</h4>
             </div>
+            <p className='mb-1 text-3xl font-bold'>{progressPercentage}%</p>
             <ProgressBarBase progressPercentage={progressPercentage} />
         </Card>
     );

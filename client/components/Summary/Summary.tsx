@@ -31,7 +31,7 @@ export function Summary({
     questionsData,
 }: SummaryProps): JSX.Element {
     const headingIconClasses = clsx(
-        tw`mb-4 w-10 stroke-indigo-600 stroke-2`,
+        tw`w-10 stroke-indigo-600 stroke-2`,
         tw`dark:stroke-indigo-500`,
     );
 
@@ -44,7 +44,7 @@ export function Summary({
                         additionalClasses='mb-4'
                         startIcon={
                             <DocumentChartBarIcon
-                                className={headingIconClasses}
+                                className={clsx(headingIconClasses, 'mb-4')}
                             />
                         }
                     >
@@ -72,7 +72,7 @@ export function Summary({
                             progressPercentage={40}
                             startIcon={
                                 <DocumentCheckIcon
-                                    className={headingIconClasses}
+                                    className={clsx(headingIconClasses, 'mb-3')}
                                 />
                             }
                         />
@@ -82,7 +82,7 @@ export function Summary({
                             progressPercentage={75}
                             startIcon={
                                 <DocumentCheckIcon
-                                    className={headingIconClasses}
+                                    className={clsx(headingIconClasses, 'mb-3')}
                                 />
                             }
                         />
@@ -94,7 +94,9 @@ export function Summary({
                         level={4}
                         additionalClasses='mb-4'
                         startIcon={
-                            <TableCellsIcon className={headingIconClasses} />
+                            <TableCellsIcon
+                                className={clsx(headingIconClasses, 'mb-4')}
+                            />
                         }
                     >
                         Results Table
@@ -165,7 +167,9 @@ export function Summary({
                         level={4}
                         additionalClasses='mb-4'
                         startIcon={
-                            <DocumentTextIcon className={headingIconClasses} />
+                            <DocumentTextIcon
+                                className={clsx(headingIconClasses, 'mb-4')}
+                            />
                         }
                     >
                         Results Details
