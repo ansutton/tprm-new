@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import {
     ArrowPathIcon,
+    BoltIcon,
     DocumentChartBarIcon,
     DocumentCheckIcon,
     DocumentTextIcon,
     NewspaperIcon,
-    QuestionMarkCircleIcon,
     TableCellsIcon,
 } from '@heroicons/react/24/outline';
 import {
@@ -94,7 +94,7 @@ export function Summary({
                         llmResponse={llmResponse}
                         questionsData={questionsData}
                         startIcon={
-                            <QuestionMarkCircleIcon
+                            <BoltIcon
                                 className={clsx(headingIconClasses, 'mb-4')}
                             />
                         }
