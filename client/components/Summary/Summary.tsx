@@ -83,7 +83,7 @@ export function Summary({
                         />
 
                         <ProgressBar
-                            title='Questions Not Answered by Evidence'
+                            title='Questions Unanswered by Evidence'
                             progressPercentage={40}
                             startIcon={
                                 <DocumentCheckIcon
