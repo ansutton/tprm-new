@@ -68,14 +68,23 @@ export function Summary({
                         llmResponse={llmResponse}
                         questionsData={questionsData}
                     />
-                </div>
 
-                <Card>
-                    <NotAnsweredByEvidence
-                        questionsData={questionsData}
-                        llmResponse={llmResponse}
-                    />
-                </Card>
+                    <div className='flex w-full flex-col gap-4'>
+                        <Card>
+                            <NotAnsweredByEvidence
+                                questionsData={questionsData}
+                                llmResponse={llmResponse}
+                            />
+                        </Card>
+
+                        <Card>
+                            <NotAnsweredByEvidence
+                                questionsData={questionsData}
+                                llmResponse={llmResponse}
+                            />
+                        </Card>
+                    </div>
+                </div>
 
                 <Card>
                     <Heading

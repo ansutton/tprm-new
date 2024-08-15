@@ -32,7 +32,7 @@ export function CircularProgress({
     twFontSize = 'text-3xl',
 }: CircularProgressProps): JSX.Element {
     return (
-        <div className='flex w-60'>
+        <div className='flex w-60 min-w-60'>
             <Card>
                 <h4 className='mb-4 w-full text-center text-lg font-bold'>
                     {title}
