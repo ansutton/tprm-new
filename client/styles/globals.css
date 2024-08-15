@@ -49,7 +49,7 @@
     }
 
     .CircularProgressbar .CircularProgressbar-text {
-        @apply fill-black dark:fill-zinc-50;
+        @apply fill-black font-bold dark:fill-zinc-50;
         dominant-baseline: middle;
         text-anchor: middle;
     }
