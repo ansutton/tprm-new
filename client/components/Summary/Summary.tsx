@@ -110,13 +110,13 @@ export function Summary({
                                 <TableItem variant='head'>
                                     Control Question
                                 </TableItem>
-                                <TableItem variant='head'>
+                                <TableItem variant='head' centered>
                                     TP Response
                                 </TableItem>
-                                <TableItem variant='head'>
+                                <TableItem variant='head' centered>
                                     AI&apos;s Answer
                                 </TableItem>
-                                <TableItem variant='head'>
+                                <TableItem variant='head' centered>
                                     Answers Match?
                                 </TableItem>
                                 <TableItem variant='head'>Citation</TableItem>
