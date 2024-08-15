@@ -18,6 +18,7 @@ import {
     Heading,
     MatchingAnswers,
     NonMatchingAnswers,
+    NotAnsweredByEvidence,
     QuestionsAnalyzed,
 } from '@/components';
 import { LlmResponse } from '@/types';
@@ -72,6 +73,13 @@ export function Summary({
                     <MatchingAnswers llmResponse={llmResponse} />
                     <NonMatchingAnswers llmResponse={llmResponse} />
                 </div>
+
+                <Card>
+                    <NotAnsweredByEvidence
+                        questionsData={questionsData}
+                        llmResponse={llmResponse}
+                    />
+                </Card>
 
                 <Card>
                     <Heading

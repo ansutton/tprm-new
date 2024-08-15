@@ -1,4 +1,5 @@
 export * from './DataVisuals/MatchingAnswers';
+export * from './DataVisuals/NotAnsweredByEvidence';
 export * from './DataVisuals/QuestionsAnalyzed';
 export * from './Layout/Layout';
 export * from './Layout/Sidebar';
@@ -9,4 +10,5 @@ export * from './ui/Card';
 export * from './ui/CircularProgress';
 export * from './ui/Heading';
 export * from './ui/MenuItemButton';
+export * from './ui/ProgressBar';
 export * from './Summary/Summary';
