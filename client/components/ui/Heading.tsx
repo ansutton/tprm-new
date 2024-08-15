@@ -53,14 +53,3 @@ export function Heading({
     }
     return <FinalHeading />;
 }
-
-export function H4({
-    additionalClasses = '',
-    children,
-}: HeadingProps): JSX.Element {
-    return (
-        <h4 className={tw`${additionalClasses} w-full text-2xl font-bold`}>
-            {children}
-        </h4>
-    );
-}

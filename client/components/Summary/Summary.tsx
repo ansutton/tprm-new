@@ -11,7 +11,6 @@ import clsx from 'clsx';
 import {
     Card,
     Heading,
-    H4,
     MatchingAnswers,
     NonMatchingAnswers,
     QuestionsAnalyzed,
