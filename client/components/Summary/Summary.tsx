@@ -10,6 +10,7 @@ import {
 import clsx from 'clsx';
 import {
     Card,
+    Heading,
     H4,
     MatchingAnswers,
     NonMatchingAnswers,
@@ -32,7 +33,9 @@ export function Summary({
         <>
             <div className='flex flex-col gap-4'>
                 <Card>
-                    <H4 additionalClasses='mb-4'>Summary</H4>
+                    <Heading level={4} additionalClasses='mb-4'>
+                        Summary
+                    </Heading>
                     <p className='w-full text-lg'>
                         The third party and the AI model provided the same
                         response for{' '}
@@ -60,7 +63,7 @@ export function Summary({
                                 'dark:stroke-indigo-500',
                             )}
                         />
-                        <H4>Results Table</H4>
+                        <Heading level={4}>Results Table</Heading>
                     </div>
 
                     <Table>
@@ -124,7 +127,7 @@ export function Summary({
                 </Card>
 
                 <Card>
-                    <H4>Results Details</H4>
+                    <Heading level={4}>Results Details</Heading>
                     <div className='w-full divide-y dark:divide-zinc-600'>
                         {questionsData.map((question, index) => (
                             <div key={index} className='py-2'>
