@@ -67,16 +67,6 @@ export function Summary({
                 </Card>
 
                 <div className='flex w-full justify-end gap-4'>
-                    <QuestionsAnalyzed
-                        llmResponse={llmResponse}
-                        questionsData={questionsData}
-                        startIcon={
-                            <QuestionMarkCircleIcon
-                                className={clsx(headingIconClasses, 'mb-4')}
-                            />
-                        }
-                    />
-
                     <div className='flex w-full flex-col gap-4'>
                         <ProgressBar
                             title='Evidence Documents Analyzed'
@@ -99,6 +89,16 @@ export function Summary({
                             twBgColor='rose'
                         />
                     </div>
+
+                    <QuestionsAnalyzed
+                        llmResponse={llmResponse}
+                        questionsData={questionsData}
+                        startIcon={
+                            <QuestionMarkCircleIcon
+                                className={clsx(headingIconClasses, 'mb-4')}
+                            />
+                        }
+                    />
                 </div>
 
                 <Card>
