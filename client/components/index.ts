@@ -1,3 +1,4 @@
+export * from './DataVisuals/EvidenceDocumentsAnalyzed';
 export * from './DataVisuals/NotAnsweredByEvidence';
 export * from './DataVisuals/QuestionsAnalyzed';
 export * from './Layout/Layout';

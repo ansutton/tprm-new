@@ -4,7 +4,9 @@ import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import {
     ArrowPathIcon,
     DocumentChartBarIcon,
+    DocumentCheckIcon,
     DocumentTextIcon,
+    NewspaperIcon,
     TableCellsIcon,
 } from '@heroicons/react/24/outline';
 import {
@@ -15,6 +17,7 @@ import {
 import clsx from 'clsx';
 import {
     Card,
+    EvidenceDocumentsAnalyzed,
     Heading,
     NotAnsweredByEvidence,
     QuestionsAnalyzed,
@@ -70,19 +73,23 @@ export function Summary({
                     />
 
                     <div className='flex w-full flex-col gap-4'>
-                        <Card>
-                            <NotAnsweredByEvidence
-                                questionsData={questionsData}
-                                llmResponse={llmResponse}
-                            />
-                        </Card>
+                        <EvidenceDocumentsAnalyzed
+                            questionsData={questionsData}
+                            llmResponse={llmResponse}
+                            startIcon={
+                                <DocumentCheckIcon
+                                    className={headingIconClasses}
+                                />
+                            }
+                        />
 
-                        <Card>
-                            <NotAnsweredByEvidence
-                                questionsData={questionsData}
-                                llmResponse={llmResponse}
-                            />
-                        </Card>
+                        <NotAnsweredByEvidence
+                            questionsData={questionsData}
+                            llmResponse={llmResponse}
+                            startIcon={
+                                <NewspaperIcon className={headingIconClasses} />
+                            }
+                        />
                     </div>
                 </div>
 
