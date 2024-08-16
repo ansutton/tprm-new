@@ -37,7 +37,7 @@ export function CircularProgress({
     return (
         <div className='flex w-64 min-w-64'>
             <Card>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-1.5'>
                     {startIcon}
                     <h4 className='mb-4 w-full font-bold opacity-80'>
                         {title}

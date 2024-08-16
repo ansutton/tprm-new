@@ -196,13 +196,19 @@ export default function Home(): JSX.Element {
                     <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                         <div className='mx-auto flex flex-col gap-6'>
                             <div className='flex items-center gap-3'>
-                                <QuestionMarkCircleIcon
-                                    className={clsx(
-                                        'w-10 stroke-indigo-600 stroke-2',
-                                        'dark:stroke-indigo-500',
-                                    )}
-                                />
-                                <Heading level={4}>Blank Question Set</Heading>
+                                <Heading
+                                    level={4}
+                                    startIcon={
+                                        <QuestionMarkCircleIcon
+                                            className={clsx(
+                                                'w-10 stroke-indigo-600 stroke-2',
+                                                'dark:stroke-indigo-500',
+                                            )}
+                                        />
+                                    }
+                                >
+                                    Blank Question Set
+                                </Heading>
                             </div>
                             <form
                                 className='flex flex-col gap-6'
@@ -223,17 +229,19 @@ export default function Home(): JSX.Element {
                                 />
                                 <AlertQuestionsFile />
 
-                                <div className='flex items-center gap-3'>
-                                    <ChartBarSquareIcon
-                                        className={clsx(
-                                            'w-10 stroke-indigo-600 stroke-2',
-                                            'dark:stroke-indigo-500',
-                                        )}
-                                    />
-                                    <Heading level={4}>
-                                        Third Party Evidence Provided
-                                    </Heading>
-                                </div>
+                                <Heading
+                                    level={4}
+                                    startIcon={
+                                        <ChartBarSquareIcon
+                                            className={clsx(
+                                                'w-10 stroke-indigo-600 stroke-2',
+                                                'dark:stroke-indigo-500',
+                                            )}
+                                        />
+                                    }
+                                >
+                                    Third Party Evidence Provided
+                                </Heading>
                                 <p>
                                     Accepts file type: <b>pdf</b>
                                 </p>
@@ -250,13 +258,17 @@ export default function Home(): JSX.Element {
                                 <AlertEvidenceFile />
 
                                 <div className='flex items-center gap-3'>
-                                    <ChatBubbleBottomCenterTextIcon
-                                        className={clsx(
-                                            'w-10 stroke-indigo-600 stroke-2',
-                                            'dark:stroke-indigo-500',
-                                        )}
-                                    />
-                                    <Heading level={4}>
+                                    <Heading
+                                        level={4}
+                                        startIcon={
+                                            <ChatBubbleBottomCenterTextIcon
+                                                className={clsx(
+                                                    'w-10 stroke-indigo-600 stroke-2',
+                                                    'dark:stroke-indigo-500',
+                                                )}
+                                            />
+                                        }
+                                    >
                                         Third Party Responses
                                     </Heading>
                                 </div>

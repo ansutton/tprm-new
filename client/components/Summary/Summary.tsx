@@ -32,7 +32,7 @@ export function Summary({
     questionsData,
 }: SummaryProps): JSX.Element {
     const headingIconClasses = clsx(
-        tw`w-10 stroke-indigo-600 stroke-2`,
+        tw`stroke-indigo-600 stroke-2`,
         tw`dark:stroke-indigo-500`,
     );
 
@@ -45,7 +45,10 @@ export function Summary({
                         additionalClasses='mb-4'
                         startIcon={
                             <DocumentChartBarIcon
-                                className={clsx(headingIconClasses, 'mb-4')}
+                                className={clsx(
+                                    headingIconClasses,
+                                    'mb-4 w-10',
+                                )}
                             />
                         }
                     >
@@ -75,7 +78,10 @@ export function Summary({
                             progressPercentage={75}
                             startIcon={
                                 <DocumentCheckIcon
-                                    className={clsx(headingIconClasses, 'mb-3')}
+                                    className={clsx(
+                                        headingIconClasses,
+                                        'mb-3 w-7',
+                                    )}
                                 />
                             }
                         />
@@ -85,7 +91,10 @@ export function Summary({
                             progressPercentage={40}
                             startIcon={
                                 <NewspaperIcon
-                                    className={clsx(headingIconClasses, 'mb-3')}
+                                    className={clsx(
+                                        headingIconClasses,
+                                        'mb-3 w-7',
+                                    )}
                                 />
                             }
                             twBgColor='bg-rose-400'
@@ -97,7 +106,7 @@ export function Summary({
                         questionsData={questionsData}
                         startIcon={
                             <BoltIcon
-                                className={clsx(headingIconClasses, 'mb-4')}
+                                className={clsx(headingIconClasses, 'mb-4 w-7')}
                             />
                         }
                     />
@@ -109,7 +118,7 @@ export function Summary({
                         additionalClasses='mb-4'
                         startIcon={
                             <TableCellsIcon
-                                className={clsx(headingIconClasses, 'mb-4')}
+                                className={clsx(headingIconClasses, 'mb-4 w-9')}
                             />
                         }
                     >
@@ -182,7 +191,7 @@ export function Summary({
                         additionalClasses='mb-4'
                         startIcon={
                             <DocumentTextIcon
-                                className={clsx(headingIconClasses, 'mb-4')}
+                                className={clsx(headingIconClasses, 'mb-4 w-9')}
                             />
                         }
                     >

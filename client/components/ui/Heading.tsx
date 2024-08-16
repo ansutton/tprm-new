@@ -3,15 +3,32 @@ import { tw } from '@/utils';
 
 interface HeadingWrapperProps {
     children: ReactNode;
+    customTwGap?: string;
+    level?: 3 | 4;
 }
 
-function HeadingWrapper({ children }: HeadingWrapperProps): JSX.Element {
-    return <div className='flex items-center gap-3'>{children} </div>;
+function HeadingWrapper({
+    children,
+    customTwGap,
+    level = 4,
+}: HeadingWrapperProps): JSX.Element {
+    function finalTwGap() {
+        if (customTwGap) return customTwGap;
+        switch (level) {
+            case 3:
+                return 'gap-3';
+            case 4:
+                return tw`gap-2`;
+        }
+    }
+
+    return (
+        <div className={`${finalTwGap()} flex items-center`}>{children} </div>
+    );
 }
 
 interface HeadingProps extends HeadingWrapperProps {
     additionalClasses?: string;
-    level?: 3 | 4;
     startIcon?: ReactNode;
 }
 
