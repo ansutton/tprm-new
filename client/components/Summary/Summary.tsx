@@ -43,7 +43,7 @@ export function Summary({
                     <Heading
                         level={4}
                         additionalClasses={tw`mb-4 opacity-80`}
-                        twFontSize='text-xl'
+                        twFontSize='text-lg'
                         startIcon={
                             <DocumentChartBarIcon
                                 className={clsx(headingIconClasses, 'mb-4 w-7')}
