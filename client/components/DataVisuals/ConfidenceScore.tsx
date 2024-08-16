@@ -1,7 +1,6 @@
 import {
     BarChart,
     Bar,
-    Rectangle,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -79,16 +78,8 @@ export function ConfidenceScore(): JSX.Element {
                         <YAxis />
                         <Tooltip cursor={{ fill: 'transparent' }} />
                         <Legend />
-                        <Bar
-                            dataKey='pv'
-                            fill='hsl(158, 64%, 52%)'
-                            // activeBar={<Rectangle fill='pink' stroke='blue' />}
-                        />
-                        <Bar
-                            dataKey='uv'
-                            fill='hsl(351, 95%, 71%)'
-                            // activeBar={<Rectangle fill='gold' stroke='purple' />}
-                        />
+                        <Bar dataKey='pv' fill='hsl(158, 64%, 52%)' />
+                        <Bar dataKey='uv' fill='hsl(351, 95%, 71%)' />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
