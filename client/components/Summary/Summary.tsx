@@ -42,10 +42,11 @@ export function Summary({
                 <Card>
                     <Heading
                         level={4}
-                        additionalClasses='mb-4'
+                        additionalClasses={tw`mb-4 opacity-80`}
+                        twFontSize='text-xl'
                         startIcon={
                             <DocumentChartBarIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-9')}
+                                className={clsx(headingIconClasses, 'mb-4 w-7')}
                             />
                         }
                     >
