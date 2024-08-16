@@ -18,7 +18,7 @@ function HeadingWrapper({
             case 3:
                 return 'gap-3';
             case 4:
-                return tw`gap-2`;
+                return tw`gap-2.5`;
         }
     }
 
