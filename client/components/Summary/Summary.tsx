@@ -76,7 +76,10 @@ export function Summary({
                 </Card>
 
                 <Card>
-                    <ConfidenceScore />
+                    <ConfidenceScore
+                        llmResponse={llmResponse}
+                        questionsData={questionsData}
+                    />
                 </Card>
 
                 <div className='flex w-full justify-end gap-4'>
