@@ -16,7 +16,13 @@ import {
     DisclosurePanel,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import { Card, Heading, ProgressBar, QuestionsAnalyzed } from '@/components';
+import {
+    Card,
+    ConfidenceScore,
+    Heading,
+    ProgressBar,
+    QuestionsAnalyzed,
+} from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
@@ -67,6 +73,10 @@ export function Summary({
                         </span>{' '}
                         of questions uploaded.
                     </p>
+                </Card>
+
+                <Card>
+                    <ConfidenceScore />
                 </Card>
 
                 <div className='flex w-full justify-end gap-4'>
