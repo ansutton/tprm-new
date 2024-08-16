@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { Card } from '@/components';
-import { tw } from '@/utils';
 
 interface ProgressBarBaseProps {
     progressPercentage: number;
@@ -9,12 +8,12 @@ interface ProgressBarBaseProps {
 
 export function ProgressBarBase({
     progressPercentage,
-    twBgColor = 'emerald',
+    twBgColor = 'bg-emerald-400',
 }: ProgressBarBaseProps): JSX.Element {
     return (
         <div className='h-4 w-full rounded-full bg-zinc-200 dark:bg-zinc-400/50'>
             <div
-                className={tw`h-4 rounded-full bg-emerald-400 transition-all duration-300`}
+                className={`h-4 rounded-full ${twBgColor} transition-all duration-300`}
                 style={{ width: `${progressPercentage}%` }}
             ></div>
         </div>

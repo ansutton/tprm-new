@@ -57,9 +57,11 @@ export function Summary({
                         <span className='font-bold'>
                             {llmResponse?.responses.length || 0}/
                             {questionsData?.length} (
-                            {((llmResponse?.responses.length || 0) /
-                                questionsData?.length) *
-                                100}
+                            {Math.round(
+                                ((llmResponse?.responses.length || 0) /
+                                    questionsData?.length) *
+                                    100,
+                            )}
                             %)
                         </span>{' '}
                         of questions uploaded.
@@ -86,7 +88,7 @@ export function Summary({
                                     className={clsx(headingIconClasses, 'mb-3')}
                                 />
                             }
-                            twBgColor='rose'
+                            twBgColor='bg-rose-400'
                         />
                     </div>
 
