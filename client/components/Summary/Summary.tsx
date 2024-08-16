@@ -45,10 +45,7 @@ export function Summary({
                         additionalClasses='mb-4'
                         startIcon={
                             <DocumentChartBarIcon
-                                className={clsx(
-                                    headingIconClasses,
-                                    'mb-4 w-10',
-                                )}
+                                className={clsx(headingIconClasses, 'mb-4 w-9')}
                             />
                         }
                     >
