@@ -9,6 +9,7 @@ import {
     Legend,
     ResponsiveContainer,
 } from 'recharts';
+import { Heading } from '@/components';
 
 const data = [
     {
@@ -57,37 +58,40 @@ const data = [
 
 export function ConfidenceScore(): JSX.Element {
     return (
-        <div className='h-[500px] w-full'>
-            <div>ConfidenceScore</div>
-            <ResponsiveContainer width='100%' height='100%'>
-                <BarChart
-                    width={1500}
-                    height={300}
-                    data={data}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                    }}
-                >
-                    <CartesianGrid strokeDasharray='3 3' />
-                    <XAxis dataKey='name' />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar
-                        dataKey='pv'
-                        fill='#8884d8'
-                        activeBar={<Rectangle fill='pink' stroke='blue' />}
-                    />
-                    <Bar
-                        dataKey='uv'
-                        fill='#82ca9d'
-                        activeBar={<Rectangle fill='gold' stroke='purple' />}
-                    />
-                </BarChart>
-            </ResponsiveContainer>
-        </div>
+        <>
+            <Heading level={4} additionalClasses='mb-4'>
+                Confidence Score
+            </Heading>
+            <div className='h-[500px] w-full'>
+                <ResponsiveContainer width='100%' height='100%'>
+                    <BarChart
+                        width={1500}
+                        data={data}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray='3 3' />
+                        <XAxis dataKey='name' />
+                        <YAxis />
+                        <Tooltip cursor={{ fill: 'transparent' }} />
+                        <Legend />
+                        <Bar
+                            dataKey='pv'
+                            fill='hsl(158, 64%, 52%)'
+                            // activeBar={<Rectangle fill='pink' stroke='blue' />}
+                        />
+                        <Bar
+                            dataKey='uv'
+                            fill='hsl(351, 95%, 71%)'
+                            // activeBar={<Rectangle fill='gold' stroke='purple' />}
+                        />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+        </>
     );
 }
