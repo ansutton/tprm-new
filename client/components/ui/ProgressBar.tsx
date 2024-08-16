@@ -14,7 +14,7 @@ export function ProgressBarBase({
     return (
         <div className='h-4 w-full rounded-full bg-zinc-200 dark:bg-zinc-400/50'>
             <div
-                className={tw`h-4 rounded-full bg-${twBgColor}-400 transition-all duration-300`}
+                className={tw`h-4 rounded-full bg-emerald-400 transition-all duration-300`}
                 style={{ width: `${progressPercentage}%` }}
             ></div>
         </div>
