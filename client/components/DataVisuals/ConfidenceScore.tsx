@@ -8,6 +8,7 @@ import {
     Legend,
     ResponsiveContainer,
 } from 'recharts';
+import { useTheme } from 'next-themes';
 import { Heading } from '@/components';
 import { LlmResponse } from '@/types';
 
@@ -20,11 +21,37 @@ export function ConfidenceScore({
     questionsData,
     llmResponse,
 }: ConfidenceScoreProps): JSX.Element {
+    /**
+     * Constants
+     */
     const data = questionsData?.map((question, index) => ({
         name: `Question ${index + 1}`,
         Confidence: question?.length + 16,
-        Unconfidence: question?.length,
+        Control: question?.length,
     }));
+
+    /**
+     * Custom Hooks
+     */
+    const { resolvedTheme } = useTheme();
+
+    /**
+     * Theme-based Styles
+     */
+    const styles = {
+        light: {
+            axisStroke: 'hsl(0, 0%, 55%)',
+            gridStroke: 'hsla(0, 0%, 80%, 0.5)',
+            tooltipBackground: 'hsl(0, 0%, 95%)',
+            tooltipColor: 'hsl(0, 0%, 0%)',
+        },
+        dark: {
+            axisStroke: 'hsla(0, 0%, 98%, 0.8)',
+            gridStroke: 'hsla(0, 0%, 50%, 0.5)',
+            tooltipBackground: 'hsl(240, 5%, 26%)',
+            tooltipColor: 'hsl(0, 0%, 98%)',
+        },
+    }[resolvedTheme || 'dark'];
 
     return (
         <>
@@ -43,13 +70,26 @@ export function ConfidenceScore({
                             bottom: 5,
                         }}
                     >
-                        <CartesianGrid strokeDasharray='3 3' />
-                        <XAxis dataKey='name' />
-                        <YAxis />
-                        <Tooltip cursor={{ fill: 'transparent' }} />
+                        <CartesianGrid stroke={styles?.gridStroke} />
+                        <XAxis
+                            stroke={styles?.axisStroke}
+                            dataKey='name'
+                            tickLine={false}
+                        />
+                        <YAxis stroke={styles?.axisStroke} tickLine={false} />
+                        <Tooltip
+                            contentStyle={{
+                                background: `${styles?.tooltipBackground}`,
+                                border: 'none',
+                                borderRadius: '8px',
+                                color: `${styles?.tooltipColor}`,
+                                fontSize: '0.875rem', // 14px
+                            }}
+                            cursor={{ fill: 'transparent' }}
+                        />
                         <Legend />
                         <Bar dataKey='Confidence' fill='hsl(158, 64%, 52%)' />
-                        <Bar dataKey='Unconfidence' fill='hsl(351, 95%, 71%)' />
+                        <Bar dataKey='Control' fill='hsl(188, 86%, 53%)' />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
