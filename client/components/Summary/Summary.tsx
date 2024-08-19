@@ -6,7 +6,6 @@ import {
     BoltIcon,
     DocumentChartBarIcon,
     DocumentCheckIcon,
-    InformationCircleIcon,
     NewspaperIcon,
 } from '@heroicons/react/24/outline';
 import {
@@ -21,6 +20,7 @@ import {
     Heading,
     ProgressBar,
     QuestionsAnalyzed,
+    Tooltip,
 } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
@@ -128,33 +128,32 @@ export function Summary({
                     <Table>
                         <thead>
                             <tr>
-                                <TableItem variant='head'>
-                                    <div className='flex items-center gap-1.5'>
-                                        <span>Control Question</span>
-                                        {/* <InformationCircleIcon
-                                            className={clsx(
-                                                iconStrokeClasses,
-                                                'w-4',
-                                            )}
-                                        /> */}
-                                    </div>
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    TP Response
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    AI Analysis
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    Answers Align
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    Confidence Score
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    Similarity Score
-                                </TableItem>
-                                <TableItem variant='head'>Citation</TableItem>
+                                {[
+                                    'Control Question',
+                                    'TP Response',
+                                    'AI Analysis',
+                                    'Answers Align',
+                                    'Confidence Score',
+                                    'Similarity Score',
+                                    'Citation',
+                                ].map((heading, index) => (
+                                    <TableItem
+                                        key={index}
+                                        variant='head'
+                                        centered
+                                    >
+                                        <div className='flex items-center gap-1.5'>
+                                            <span>{heading}</span>
+                                            <Tooltip>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Adipisci eos eius veniam
+                                                quibusdam corporis eum quae
+                                                explicabo dicta non! Obcaecati.
+                                            </Tooltip>
+                                        </div>
+                                    </TableItem>
+                                ))}
                             </tr>
                         </thead>
 
@@ -292,16 +291,12 @@ function TableItem({
     variant,
 }: TableItemProps): JSX.Element {
     const centeredClassName = centered ? 'text-center' : 'text-left';
-    const finalClasses = tw`${centeredClassName} p-3 text-sm`;
+    const finalClasses = tw`${centeredClassName} p-3 text-xs`;
 
     if (variant === 'head') {
-        return (
-            <th className={`${finalClasses} lg:whitespace-nowrap`}>
-                {children}
-            </th>
-        );
+        return <th className={clsx(finalClasses)}>{children}</th>;
     }
-    return <td className={finalClasses}>{children}</td>;
+    return <td className={clsx(finalClasses)}>{children}</td>;
 }
 
 interface SummaryItemProps {
