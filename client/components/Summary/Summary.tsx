@@ -6,9 +6,8 @@ import {
     BoltIcon,
     DocumentChartBarIcon,
     DocumentCheckIcon,
-    DocumentTextIcon,
+    InformationCircleIcon,
     NewspaperIcon,
-    TableCellsIcon,
 } from '@heroicons/react/24/outline';
 import {
     Disclosure,
@@ -37,7 +36,7 @@ export function Summary({
     llmResponse,
     questionsData,
 }: SummaryProps): JSX.Element {
-    const headingIconClasses = clsx(
+    const iconStrokeClasses = clsx(
         tw`stroke-indigo-600 stroke-2`,
         tw`dark:stroke-indigo-500`,
     );
@@ -52,7 +51,7 @@ export function Summary({
                         twFontSize='text-lg'
                         startIcon={
                             <DocumentChartBarIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-7')}
+                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
                             />
                         }
                     >
@@ -83,7 +82,7 @@ export function Summary({
                             startIcon={
                                 <DocumentCheckIcon
                                     className={clsx(
-                                        headingIconClasses,
+                                        iconStrokeClasses,
                                         'mb-3 w-7',
                                     )}
                                 />
@@ -96,7 +95,7 @@ export function Summary({
                             startIcon={
                                 <NewspaperIcon
                                     className={clsx(
-                                        headingIconClasses,
+                                        iconStrokeClasses,
                                         'mb-3 w-7',
                                     )}
                                 />
@@ -110,7 +109,7 @@ export function Summary({
                         questionsData={questionsData}
                         startIcon={
                             <BoltIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-7')}
+                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
                             />
                         }
                     />
@@ -130,16 +129,30 @@ export function Summary({
                         <thead>
                             <tr>
                                 <TableItem variant='head'>
-                                    Control Question
+                                    <div className='flex items-center gap-1.5'>
+                                        <span>Control Question</span>
+                                        {/* <InformationCircleIcon
+                                            className={clsx(
+                                                iconStrokeClasses,
+                                                'w-4',
+                                            )}
+                                        /> */}
+                                    </div>
                                 </TableItem>
                                 <TableItem variant='head' centered>
                                     TP Response
                                 </TableItem>
                                 <TableItem variant='head' centered>
-                                    AI&apos;s Answer
+                                    AI Analysis
                                 </TableItem>
                                 <TableItem variant='head' centered>
-                                    Answers Match?
+                                    Answers Align
+                                </TableItem>
+                                <TableItem variant='head' centered>
+                                    Confidence Score
+                                </TableItem>
+                                <TableItem variant='head' centered>
+                                    Similarity Score
                                 </TableItem>
                                 <TableItem variant='head'>Citation</TableItem>
                             </tr>
@@ -173,6 +186,12 @@ export function Summary({
                                                 <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
                                             )}
                                         </Link>
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        N/A
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        N/A
                                     </TableItem>
                                     <TableItem variant='cell' centered>
                                         N/A
@@ -224,6 +243,18 @@ export function Summary({
                                     id={`answers-match-${index + 1}`}
                                 />
                                 <SummaryItem
+                                    title={`Confidence Score`}
+                                    content={'N/A'}
+                                    defaultOpen
+                                    id={`citaton-${index + 1}`}
+                                />
+                                <SummaryItem
+                                    title={`Similarity Score`}
+                                    content={'N/A'}
+                                    defaultOpen
+                                    id={`citaton-${index + 1}`}
+                                />
+                                <SummaryItem
                                     title={`Citation`}
                                     content={'N/A'}
                                     defaultOpen
@@ -261,11 +292,11 @@ function TableItem({
     variant,
 }: TableItemProps): JSX.Element {
     const centeredClassName = centered ? 'text-center' : 'text-left';
-    const finalClasses = `${centeredClassName} p-3 text-sm`;
+    const finalClasses = tw`${centeredClassName} p-3 text-sm`;
 
     if (variant === 'head') {
         return (
-            <th className={`${finalClasses} md:whitespace-nowrap`}>
+            <th className={`${finalClasses} lg:whitespace-nowrap`}>
                 {children}
             </th>
         );
