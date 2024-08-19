@@ -6,9 +6,7 @@ import {
     BoltIcon,
     DocumentChartBarIcon,
     DocumentCheckIcon,
-    DocumentTextIcon,
     NewspaperIcon,
-    TableCellsIcon,
 } from '@heroicons/react/24/outline';
 import {
     Disclosure,
@@ -22,6 +20,7 @@ import {
     Heading,
     ProgressBar,
     QuestionsAnalyzed,
+    Tooltip,
 } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
@@ -37,7 +36,7 @@ export function Summary({
     llmResponse,
     questionsData,
 }: SummaryProps): JSX.Element {
-    const headingIconClasses = clsx(
+    const iconStrokeClasses = clsx(
         tw`stroke-indigo-600 stroke-2`,
         tw`dark:stroke-indigo-500`,
     );
@@ -52,7 +51,7 @@ export function Summary({
                         twFontSize='text-lg'
                         startIcon={
                             <DocumentChartBarIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-7')}
+                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
                             />
                         }
                     >
@@ -83,7 +82,7 @@ export function Summary({
                             startIcon={
                                 <DocumentCheckIcon
                                     className={clsx(
-                                        headingIconClasses,
+                                        iconStrokeClasses,
                                         'mb-3 w-7',
                                     )}
                                 />
@@ -96,7 +95,7 @@ export function Summary({
                             startIcon={
                                 <NewspaperIcon
                                     className={clsx(
-                                        headingIconClasses,
+                                        iconStrokeClasses,
                                         'mb-3 w-7',
                                     )}
                                 />
@@ -110,7 +109,7 @@ export function Summary({
                         questionsData={questionsData}
                         startIcon={
                             <BoltIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-7')}
+                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
                             />
                         }
                     />
@@ -129,19 +128,32 @@ export function Summary({
                     <Table>
                         <thead>
                             <tr>
-                                <TableItem variant='head'>
-                                    Control Question
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    TP Response
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    AI&apos;s Answer
-                                </TableItem>
-                                <TableItem variant='head' centered>
-                                    Answers Match?
-                                </TableItem>
-                                <TableItem variant='head'>Citation</TableItem>
+                                {[
+                                    'Control Question',
+                                    'TP Response',
+                                    'AI Analysis',
+                                    'Answers Align',
+                                    'Confidence Score',
+                                    'Similarity Score',
+                                    'Citation',
+                                ].map((heading, index) => (
+                                    <TableItem
+                                        key={index}
+                                        variant='head'
+                                        centered
+                                    >
+                                        <div className='flex items-center gap-1.5'>
+                                            <span>{heading}</span>
+                                            <Tooltip>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Adipisci eos eius veniam
+                                                quibusdam corporis eum quae
+                                                explicabo dicta non! Obcaecati.
+                                            </Tooltip>
+                                        </div>
+                                    </TableItem>
+                                ))}
                             </tr>
                         </thead>
 
@@ -173,6 +185,12 @@ export function Summary({
                                                 <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
                                             )}
                                         </Link>
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        N/A
+                                    </TableItem>
+                                    <TableItem variant='cell' centered>
+                                        N/A
                                     </TableItem>
                                     <TableItem variant='cell' centered>
                                         N/A
@@ -224,6 +242,18 @@ export function Summary({
                                     id={`answers-match-${index + 1}`}
                                 />
                                 <SummaryItem
+                                    title={`Confidence Score`}
+                                    content={'N/A'}
+                                    defaultOpen
+                                    id={`citaton-${index + 1}`}
+                                />
+                                <SummaryItem
+                                    title={`Similarity Score`}
+                                    content={'N/A'}
+                                    defaultOpen
+                                    id={`citaton-${index + 1}`}
+                                />
+                                <SummaryItem
                                     title={`Citation`}
                                     content={'N/A'}
                                     defaultOpen
@@ -261,16 +291,12 @@ function TableItem({
     variant,
 }: TableItemProps): JSX.Element {
     const centeredClassName = centered ? 'text-center' : 'text-left';
-    const finalClasses = `${centeredClassName} p-3 text-sm`;
+    const finalClasses = tw`${centeredClassName} p-3 text-xs`;
 
     if (variant === 'head') {
-        return (
-            <th className={`${finalClasses} md:whitespace-nowrap`}>
-                {children}
-            </th>
-        );
+        return <th className={clsx(finalClasses)}>{children}</th>;
     }
-    return <td className={finalClasses}>{children}</td>;
+    return <td className={clsx(finalClasses)}>{children}</td>;
 }
 
 interface SummaryItemProps {

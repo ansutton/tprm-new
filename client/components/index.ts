@@ -11,3 +11,4 @@ export * from './ui/Heading';
 export * from './ui/MenuItemButton';
 export * from './ui/ProgressBar';
 export * from './Summary/Summary';
+export * from './Tooltip/Tooltip';
