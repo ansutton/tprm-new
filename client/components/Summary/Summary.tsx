@@ -75,13 +75,6 @@ export function Summary({
                     </p>
                 </Card>
 
-                <Card>
-                    <ConfidenceScore
-                        llmResponse={llmResponse}
-                        questionsData={questionsData}
-                    />
-                </Card>
-
                 <div className='flex w-full justify-end gap-4'>
                     <div className='flex w-full flex-col gap-4'>
                         <ProgressBar
@@ -123,16 +116,13 @@ export function Summary({
                     />
                 </div>
 
+                <ConfidenceScore
+                    llmResponse={llmResponse}
+                    questionsData={questionsData}
+                />
+
                 <Card>
-                    <Heading
-                        level={4}
-                        additionalClasses='mb-4'
-                        startIcon={
-                            <TableCellsIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-9')}
-                            />
-                        }
-                    >
+                    <Heading level={4} additionalClasses='mb-4'>
                         Results Table
                     </Heading>
 
@@ -197,15 +187,7 @@ export function Summary({
                 </Card>
 
                 <Card>
-                    <Heading
-                        level={4}
-                        additionalClasses='mb-4'
-                        startIcon={
-                            <DocumentTextIcon
-                                className={clsx(headingIconClasses, 'mb-4 w-9')}
-                            />
-                        }
-                    >
+                    <Heading level={4} additionalClasses='mb-4'>
                         Results Details
                     </Heading>
                     <div className='w-full divide-y dark:divide-zinc-600'>

@@ -33,7 +33,7 @@ export function ProgressBar({
 }: ProgressBarProps): JSX.Element {
     return (
         <Card>
-            <div className='flex items-center gap-1.5'>
+            <div className='flex items-center gap-2'>
                 {startIcon}
                 <h4 className='mb-3 w-full text-lg font-bold opacity-80'>
                     {title}

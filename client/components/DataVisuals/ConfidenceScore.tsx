@@ -9,7 +9,7 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import { useTheme } from 'next-themes';
-import { Heading } from '@/components';
+import { Card, Heading } from '@/components';
 import { LlmResponse } from '@/types';
 
 interface ConfidenceScoreProps {
@@ -54,7 +54,7 @@ export function ConfidenceScore({
     }[resolvedTheme || 'dark'];
 
     return (
-        <>
+        <Card>
             <Heading level={4} additionalClasses='mb-4'>
                 Confidence Score
             </Heading>
@@ -93,6 +93,6 @@ export function ConfidenceScore({
                     </BarChart>
                 </ResponsiveContainer>
             </div>
-        </>
+        </Card>
     );
 }
