@@ -2,24 +2,24 @@ import { ReactNode } from 'react';
 import clsx from 'clsx';
 
 interface CardProps {
-    variant?: 'wide' | 'default';
+    additionalClasses?: string;
     children: ReactNode;
 }
 
 export function Card({
+    additionalClasses = '',
     children,
-    variant = 'default',
 }: CardProps): JSX.Element {
-    const variantClasses = variant === 'wide' ? 'max-w-4xl' : 'max-w-2xl';
-
     return (
         <div
             className={clsx(
-                `${variantClasses}`,
-                'mx-auto flex flex-col gap-6 p-6',
+                'p-6',
+                'w-full',
                 'bg-zinc-50',
+                'dark:bg-zinc-800',
                 'rounded-2xl border border-indigo-200 shadow-lg shadow-indigo-200',
-                'dark:border-indigo-500/60 dark:bg-zinc-800 dark:shadow-indigo-900/40',
+                'dark:border-indigo-500/60 dark:shadow-indigo-900/40',
+                `${additionalClasses}`,
             )}
         >
             {children}

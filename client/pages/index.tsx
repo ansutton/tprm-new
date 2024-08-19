@@ -7,8 +7,8 @@ import {
     QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import { Button, Card, H3, H4, Sidebar, Summary, Topbar } from '@/components';
-import { poll, submit } from '@/utils/api-utils';
+import { Button, Card, Heading, Sidebar, Summary, Topbar } from '@/components';
+import { poll, submit, tw } from '@/utils';
 import { LlmResponse, Mode, PythonAppState } from '@/types';
 import * as XLSX from 'xlsx';
 
@@ -18,11 +18,11 @@ export default function Home(): JSX.Element {
      */
     const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
         'fileUpload',
-    );
+    ); // TODO: set default to 'fileUpload'
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
-    const [llmResponse, setLlmResponse] = useState<LlmResponse>(null);
+    const [llmResponse, setLlmResponse] = useState<any>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>('demo');
@@ -98,16 +98,29 @@ export default function Home(): JSX.Element {
             setScreen('summary');
             switch (mode) {
                 case 'demo':
-                    setTimeout(() => {
-                        const demoPollResponse: PythonAppState = {
-                            number_of_questions: questionsArray?.length,
-                            questions: questionsArray,
-                            responses: new Array(questionsArray?.length).fill(
+                    const demoPollResponse: PythonAppState = {
+                        number_of_questions: questionsArray?.length,
+                        questions: questionsArray,
+                        responses: [],
+                    };
+                    setLlmResponse(demoPollResponse);
+                    const intervalId = setInterval(() => {
+                        setLlmResponse((prevState: any) => {
+                            // Clone the responses array and add 'N/A'
+                            const newResponses = [
+                                ...prevState.responses,
                                 'N/A',
-                            ),
-                        };
-                        console.log(demoPollResponse);
-                        setLlmResponse(demoPollResponse);
+                            ];
+                            // If all questions have been answered, clear the interval
+                            if (newResponses.length >= questionsArray.length) {
+                                clearInterval(intervalId); // Clear the interval
+                            }
+                            // Return the updated state
+                            return {
+                                ...prevState,
+                                responses: newResponses,
+                            };
+                        });
                     }, 2000);
                     break;
                 case 'llm':
@@ -171,22 +184,31 @@ export default function Home(): JSX.Element {
 
             {/* <Sidebar /> */}
 
-            {screen === 'fileUpload' ? <H3>AI Evidence Reviewer</H3> : null}
-            {screen === 'loading' ? <H3>Processing File</H3> : null}
-            {screen === 'summary' ? <H3>Summary</H3> : null}
+            {screen === 'fileUpload' ? (
+                <Heading level={3}>AI Evidence Reviewer</Heading>
+            ) : null}
+            {screen === 'loading' ? (
+                <Heading level={3}>Processing File</Heading>
+            ) : null}
 
             <div className='container mx-auto pb-5 pt-5'>
-                <Card variant={screen === 'summary' ? 'wide' : 'default'}>
-                    {screen === 'fileUpload' ? (
-                        <>
+                {screen === 'fileUpload' ? (
+                    <Card additionalClasses={tw`mx-auto max-w-2xl`}>
+                        <div className='mx-auto flex flex-col gap-6'>
                             <div className='flex items-center gap-3'>
-                                <QuestionMarkCircleIcon
-                                    className={clsx(
-                                        'w-10 stroke-indigo-600 stroke-2',
-                                        'dark:stroke-indigo-500',
-                                    )}
-                                />
-                                <H4>Blank Question Set</H4>
+                                <Heading
+                                    level={4}
+                                    startIcon={
+                                        <QuestionMarkCircleIcon
+                                            className={clsx(
+                                                'w-10 stroke-indigo-600 stroke-2',
+                                                'dark:stroke-indigo-500',
+                                            )}
+                                        />
+                                    }
+                                >
+                                    Blank Question Set
+                                </Heading>
                             </div>
                             <form
                                 className='flex flex-col gap-6'
@@ -207,15 +229,19 @@ export default function Home(): JSX.Element {
                                 />
                                 <AlertQuestionsFile />
 
-                                <div className='flex items-center gap-3'>
-                                    <ChartBarSquareIcon
-                                        className={clsx(
-                                            'w-10 stroke-indigo-600 stroke-2',
-                                            'dark:stroke-indigo-500',
-                                        )}
-                                    />
-                                    <H4>Third Party Evidence Provided</H4>
-                                </div>
+                                <Heading
+                                    level={4}
+                                    startIcon={
+                                        <ChartBarSquareIcon
+                                            className={clsx(
+                                                'w-10 stroke-indigo-600 stroke-2',
+                                                'dark:stroke-indigo-500',
+                                            )}
+                                        />
+                                    }
+                                >
+                                    Third Party Evidence Provided
+                                </Heading>
                                 <p>
                                     Accepts file type: <b>pdf</b>
                                 </p>
@@ -232,13 +258,19 @@ export default function Home(): JSX.Element {
                                 <AlertEvidenceFile />
 
                                 <div className='flex items-center gap-3'>
-                                    <ChatBubbleBottomCenterTextIcon
-                                        className={clsx(
-                                            'w-10 stroke-indigo-600 stroke-2',
-                                            'dark:stroke-indigo-500',
-                                        )}
-                                    />
-                                    <H4>Third Party Responses</H4>
+                                    <Heading
+                                        level={4}
+                                        startIcon={
+                                            <ChatBubbleBottomCenterTextIcon
+                                                className={clsx(
+                                                    'w-10 stroke-indigo-600 stroke-2',
+                                                    'dark:stroke-indigo-500',
+                                                )}
+                                            />
+                                        }
+                                    >
+                                        Third Party Responses
+                                    </Heading>
                                 </div>
                                 <p>
                                     Accepts file type: <b>xlsx</b>
@@ -271,39 +303,41 @@ export default function Home(): JSX.Element {
                                     />
                                 </Button>
                             </form>
-                        </>
-                    ) : null}
+                        </div>
+                    </Card>
+                ) : null}
 
-                    {screen === 'loading' ? (
-                        <>
-                            <H4 additionalClasses='text-center'>
-                                Hang tight. This process can take a while.
-                            </H4>
-                            <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
-                                When finished loading, the summary will be
-                                displayed on the next screen.
-                            </p>
-                            <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
-                        </>
-                    ) : null}
+                {screen === 'loading' ? (
+                    <>
+                        <Heading level={4} additionalClasses='text-center'>
+                            Hang tight. This process can take a while.
+                        </Heading>
+                        <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
+                            When finished loading, the summary will be displayed
+                            on the next screen.
+                        </p>
+                        <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
+                    </>
+                ) : null}
 
-                    {screen === 'summary' ? (
-                        <>
-                            <Summary
-                                excelData={excelData}
-                                llmResponse={llmResponse}
-                                questionsData={questionsData}
-                            />
+                {screen === 'summary' ? (
+                    <div className='flex flex-col gap-6'>
+                        <Summary
+                            excelData={excelData}
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
+                        />
 
+                        <div className='mx-auto'>
                             <Button
                                 variant='solid'
                                 onClick={() => setScreen('fileUpload')}
                             >
                                 Back to File Upload
                             </Button>
-                        </>
-                    ) : null}
-                </Card>
+                        </div>
+                    </div>
+                ) : null}
             </div>
         </div>
     );

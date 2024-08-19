@@ -31,7 +31,7 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
         >
             <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
-                    <Link href='/' className='flex font-["Open_Sans"]'>
+                    <Link href='/' className='ml-2 flex font-["Open_Sans"]'>
                         <span
                             className={clsx(
                                 'bg-clip-text text-lg font-extrabold text-transparent',
@@ -63,18 +63,18 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
                                 'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
                                 'from-indigo-800 via-indigo-500 to-zinc-400/50',
                                 'hover:from-zinc-400/50 hover:via-indigo-500 hover:to-indigo-800',
-                                'dark:from-zinc-700 dark:via-indigo-500 dark:to-zinc-400',
+                                'dark:from-zinc-600 dark:via-indigo-500 dark:to-zinc-400',
                                 'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
                             )}
                         >
-                            Neuron
+                            TPRM Accelerator
                         </h1>
                     </Link>
 
                     <Pipe />
 
-                    <h2 className='text-lg text-white'>
-                        <span className='font-bold text-d-green dark:text-d-green/90'>
+                    <h2 className='select-none text-lg hover:cursor-pointer'>
+                        <span className='font-bold text-zinc-700 dark:text-zinc-300'>
                             Accelerate
                         </span>
                         <span className='bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent'>

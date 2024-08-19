@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>Neuron | Accelerate.AI</title>
+                <title>TPRM Accelerator | Accelerate.AI</title>
                 <meta
                     name='description'
                     content='A Deloitte Third-Party Risk Management application'
