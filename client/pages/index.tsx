@@ -291,8 +291,11 @@ export default function Home(): JSX.Element {
 
                                 <Button
                                     variant={
-                                        areAllFilesValid ? 'solid' : 'disabled'
+                                        areAllFilesValid
+                                            ? 'solid'
+                                            : 'disabledSolid'
                                     }
+                                    additionalClasses='mx-auto'
                                 >
                                     <input
                                         className={
@@ -335,6 +338,7 @@ export default function Home(): JSX.Element {
                             <Button
                                 variant='solid'
                                 onClick={() => setScreen('fileUpload')}
+                                additionalClasses='mx-auto'
                             >
                                 Back to File Upload
                             </Button>
