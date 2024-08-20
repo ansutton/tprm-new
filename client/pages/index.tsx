@@ -135,6 +135,9 @@ export default function Home(): JSX.Element {
                     }, 10000);
                     break;
             }
+            setQuestionsFile(null);
+            setEvidenceFile(null);
+            setResponsesFile(null);
         }
     }
 
