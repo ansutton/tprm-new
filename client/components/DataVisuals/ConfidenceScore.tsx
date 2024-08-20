@@ -15,30 +15,6 @@ export function ConfidenceScore({
 }: ConfidenceScoreProps): JSX.Element {
     return (
         <div className='relative mx-auto flex w-[500px] min-w-64'>
-            <div
-                className={clsx(
-                    tw`absolute inset-x-0 bottom-0`,
-                    tw`w-full px-10 pb-6 text-center text-2xl font-bold`,
-                )}
-            >
-                <div
-                    className={clsx(
-                        tw`bg-zinc-200 p-3 opacity-95 dark:bg-zinc-700`,
-                        tw`flex flex-col items-center justify-center rounded-lg`,
-                    )}
-                >
-                    <div
-                        className={clsx(
-                            tw`flex w-full justify-between text-base`,
-                        )}
-                    >
-                        <span className={clsx(tw``)}>0%</span>
-                        <span className={clsx(tw``)}>100%</span>
-                    </div>
-                    <span className={clsx(tw`text-5xl`)}>90%</span>
-                </div>
-            </div>
-
             <Card>
                 <Heading level={4}>Confidence Score</Heading>
                 <p className={clsx(tw`mb-8 mt-0.5 opacity-70`)}>
@@ -53,6 +29,35 @@ export function ConfidenceScore({
                     />
                 </div>
             </Card>
+
+            <div
+                className={clsx(
+                    tw`absolute inset-x-0 bottom-0`,
+                    tw`w-full px-10 pb-6 text-center text-2xl`,
+                )}
+            >
+                <div
+                    className={clsx(
+                        tw`bg-zinc-200 p-3 opacity-95 dark:bg-zinc-700`,
+                        tw`flex flex-col items-center justify-center rounded-lg`,
+                    )}
+                >
+                    <div
+                        className={clsx(
+                            tw`flex w-full justify-between text-base`,
+                        )}
+                    >
+                        <span>0%</span>
+                        <span>100%</span>
+                    </div>
+                    <span className={clsx(tw`mb-0.5 text-5xl font-bold`)}>
+                        90%
+                    </span>
+                    <p className={clsx(tw`text-base opacity-80`)}>
+                        Based on model
+                    </p>
+                </div>
+            </div>
         </div>
     );
 }
