@@ -10,5 +10,5 @@ export * from './ui/CircularProgress';
 export * from './ui/Heading';
 export * from './ui/MenuItemButton';
 export * from './ui/ProgressBar';
-export * from './Summary/Summary';
+export * from './Assessment/Detail';
 export * from './Tooltip/Tooltip';
