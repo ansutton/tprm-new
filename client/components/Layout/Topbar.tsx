@@ -22,7 +22,7 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
     return (
         <div
             className={clsx(
-                'mb-10 flex w-full justify-around bg-gradient-to-r pb-0.5 shadow-sm',
+                'fixed z-20 mb-10 flex w-full justify-around bg-gradient-to-r pb-0.5 shadow-sm',
                 'from-d-green via-indigo-400 to-d-green',
                 'dark:from-d-green/50 dark:via-indigo-950 dark:to-d-green/50',
                 'shadow-indigo-400/80',

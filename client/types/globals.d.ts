@@ -9,6 +9,7 @@ export interface PythonAppState {
     questions: Array<string>;
     responses: Array<string>;
 }
+
 export interface SubmitRequestParams {
     csvFileBuffer: string;
     pdfFileBuffer: string;
@@ -21,3 +22,9 @@ export interface SubmitRequestParams {
 export type LlmResponse = PythonAppState | null;
 export type Mode = 'demo' | 'llm';
 export type ModeAction = { type: 'set_demo' } | { type: 'set_llm' };
+export type Screen =
+    | 'fileUpload'
+    | 'loading'
+    | 'summary'
+    | 'assessmentDetail'
+    | 'assessmentOverview';
