@@ -202,7 +202,10 @@ export default function Home(): JSX.Element {
                 className={clsx(
                     tw`pt-[87px]`,
                     tw`flex-1 transition-all duration-300 ease-in-out`,
-                    isSidebarExpanded ? tw`pl-64` : tw`pl-16`,
+                    screen === 'fileUpload' ? tw`px-16` : null,
+                    screen !== 'fileUpload' && isSidebarExpanded
+                        ? tw`pl-64`
+                        : tw`pl-16`,
                 )}
             >
                 {screen === 'fileUpload' ? (
