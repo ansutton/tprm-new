@@ -88,9 +88,13 @@ export function Sidebar({
             className={clsx(
                 tw`z-10`,
                 tw`fixed inset-y-0 left-0 rounded-lg px-3 pb-4 pt-20 transition-all duration-300 ease-in-out`,
+                isSidebarExpanded ? 'w-64' : 'w-16',
                 tw`bg-zinc-200 text-black`,
                 tw`dark:bg-zinc-900 dark:text-white`,
-                isSidebarExpanded ? 'w-64' : 'w-16',
+
+                tw`shadow-[0_35px_35px_5px]`,
+                tw`border-r border-indigo-200 shadow-lg shadow-indigo-200`,
+                tw`dark:border-indigo-500/60 dark:shadow-indigo-900/40`,
             )}
         >
             <button
