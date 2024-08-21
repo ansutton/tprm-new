@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     ArrowUpCircleIcon,
     ChartBarSquareIcon,
@@ -12,6 +11,8 @@ import { tw } from '@/utils';
 interface SidebarProps {
     isSidebarExpanded: boolean;
     setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+    isSidebarFullyExpanded: boolean;
+    setIsSidebarFullyExpanded: React.Dispatch<React.SetStateAction<boolean>>;
     screen: Screen;
     setScreen: React.Dispatch<React.SetStateAction<Screen>>;
 }
@@ -19,24 +20,21 @@ interface SidebarProps {
 export function Sidebar({
     isSidebarExpanded,
     setIsSidebarExpanded,
+    isSidebarFullyExpanded,
+    setIsSidebarFullyExpanded,
     screen,
     setScreen,
 }: SidebarProps): JSX.Element {
-    /**
-     * State Hooks
-     */
-    const [isFullyExpanded, setIsFullyExpanded] = useState(true); // Handle when sidebar is fully expanded
-
     /**
      * Helper Functions
      */
     function toggleSidebar() {
         if (isSidebarExpanded) {
-            setIsFullyExpanded(false); // Hide text before collapsing
+            setIsSidebarFullyExpanded(false); // Hide text before collapsing
             setTimeout(() => setIsSidebarExpanded(false), 0); // Collapse immediately
         } else {
             setIsSidebarExpanded(true); // Expand immediately
-            setTimeout(() => setIsFullyExpanded(true), 200); // Delay showing text until after expansion
+            setTimeout(() => setIsSidebarFullyExpanded(true), 200); // Delay showing text until after expansion
         }
     }
 
@@ -148,18 +146,18 @@ export function Sidebar({
                             }}
                         >
                             {icon}
-                            {isFullyExpanded && (
+                            {isSidebarFullyExpanded ? (
                                 <span
                                     className={clsx(
                                         tw`ml-2.5 transition-opacity duration-300`,
-                                        isFullyExpanded
+                                        isSidebarFullyExpanded
                                             ? tw`opacity-100`
                                             : tw`opacity-0`,
                                     )}
                                 >
                                     {title}
                                 </span>
-                            )}
+                            ) : null}
                         </button>
                     ),
                 )}

@@ -17,6 +17,8 @@ export default function Home(): JSX.Element {
      */
     const [screen, setScreen] = useState<Screen>('fileUpload');
     const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
+    const [isSidebarFullyExpanded, setIsSidebarFullyExpanded] =
+        useState<boolean>(true);
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
@@ -133,6 +135,8 @@ export default function Home(): JSX.Element {
                     }, 10000);
                     break;
             }
+            setIsSidebarExpanded(true);
+            setIsSidebarFullyExpanded(true);
             setQuestionsFile(null);
             setEvidenceFile(null);
             setResponsesFile(null);
@@ -187,6 +191,8 @@ export default function Home(): JSX.Element {
                 <Sidebar
                     isSidebarExpanded={isSidebarExpanded}
                     setIsSidebarExpanded={setIsSidebarExpanded}
+                    isSidebarFullyExpanded={isSidebarFullyExpanded}
+                    setIsSidebarFullyExpanded={setIsSidebarFullyExpanded}
                     screen={screen}
                     setScreen={setScreen}
                 />
@@ -194,6 +200,7 @@ export default function Home(): JSX.Element {
 
             <div
                 className={clsx(
+                    tw`pt-[87px]`,
                     tw`flex-1 transition-all duration-300 ease-in-out`,
                     isSidebarExpanded ? tw`pl-64` : tw`pl-16`,
                 )}
