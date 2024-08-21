@@ -16,6 +16,7 @@ export default function Home(): JSX.Element {
      * State Hooks
      */
     const [screen, setScreen] = useState<Screen>('fileUpload');
+    const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
@@ -179,91 +180,40 @@ export default function Home(): JSX.Element {
      * Return Statement
      */
     return (
-        <div className='mx-auto w-full dark:text-zinc-50'>
+        <div className='w-full dark:text-zinc-50'>
             <Topbar mode={mode} setMode={setMode} />
 
             {screen !== 'fileUpload' ? (
-                <Sidebar screen={screen} setScreen={setScreen} />
+                <Sidebar
+                    isSidebarExpanded={isSidebarExpanded}
+                    setIsSidebarExpanded={setIsSidebarExpanded}
+                    screen={screen}
+                    setScreen={setScreen}
+                />
             ) : null}
 
-            {screen === 'fileUpload' ? (
-                <Heading level={3}>AI Evidence Reviewer</Heading>
-            ) : null}
-            {screen === 'loading' ? (
-                <Heading level={3}>Processing File</Heading>
-            ) : null}
-
-            <div className='container mx-auto pb-5 pt-5'>
+            <div
+                className={clsx(
+                    tw`flex-1 transition-all duration-300 ease-in-out`,
+                    isSidebarExpanded ? tw`pl-64` : tw`pl-16`,
+                )}
+            >
                 {screen === 'fileUpload' ? (
-                    <Card additionalClasses={tw`mx-auto max-w-2xl`}>
-                        <div className='mx-auto flex flex-col gap-6'>
-                            <div className='flex items-center gap-3'>
-                                <Heading
-                                    level={4}
-                                    startIcon={
-                                        <QuestionMarkCircleIcon
-                                            className={clsx(
-                                                'w-10 stroke-indigo-600 stroke-2',
-                                                'dark:stroke-indigo-500',
-                                            )}
-                                        />
-                                    }
-                                >
-                                    Blank Question Set
-                                </Heading>
-                            </div>
-                            <form
-                                className='flex flex-col gap-6'
-                                onSubmit={onSubmit}
-                            >
-                                <p>
-                                    Accepts file type: <b>csv</b>
-                                </p>
-                                <input
-                                    accept='.csv'
-                                    className='w-[450px] file:mr-4 file:cursor-pointer'
-                                    id='file'
-                                    onChange={(e) =>
-                                        onFileChange(e, setQuestionsFile)
-                                    }
-                                    required
-                                    type='file'
-                                />
-                                <AlertQuestionsFile />
+                    <Heading level={3}>AI Evidence Reviewer</Heading>
+                ) : null}
+                {screen === 'loading' ? (
+                    <Heading level={3}>Processing File</Heading>
+                ) : null}
 
-                                <Heading
-                                    level={4}
-                                    startIcon={
-                                        <ChartBarSquareIcon
-                                            className={clsx(
-                                                'w-10 stroke-indigo-600 stroke-2',
-                                                'dark:stroke-indigo-500',
-                                            )}
-                                        />
-                                    }
-                                >
-                                    Third Party Evidence Provided
-                                </Heading>
-                                <p>
-                                    Accepts file type: <b>pdf</b>
-                                </p>
-                                <input
-                                    accept='.pdf'
-                                    className='w-[450px] file:mr-4 file:cursor-pointer'
-                                    id='file'
-                                    onChange={(e) =>
-                                        onFileChange(e, setEvidenceFile)
-                                    }
-                                    required
-                                    type='file'
-                                />
-                                <AlertEvidenceFile />
-
+                <div className='container mx-auto pb-5 pt-5'>
+                    {screen === 'fileUpload' ? (
+                        <Card additionalClasses={tw`mx-auto max-w-2xl`}>
+                            <div className='mx-auto flex flex-col gap-6'>
                                 <div className='flex items-center gap-3'>
                                     <Heading
                                         level={4}
                                         startIcon={
-                                            <ChatBubbleBottomCenterTextIcon
+                                            <QuestionMarkCircleIcon
                                                 className={clsx(
                                                     'w-10 stroke-indigo-600 stroke-2',
                                                     'dark:stroke-indigo-500',
@@ -271,79 +221,142 @@ export default function Home(): JSX.Element {
                                             />
                                         }
                                     >
-                                        Third Party Responses
+                                        Blank Question Set
                                     </Heading>
                                 </div>
-                                <p>
-                                    Accepts file type: <b>xlsx</b>
-                                </p>
-                                <input
-                                    accept='.xlsx'
-                                    className='file:mr-4 file:cursor-pointer'
-                                    id='file'
-                                    onChange={(e) =>
-                                        onFileChange(e, setResponsesFile)
-                                    }
-                                    type='file'
-                                />
-                                <AlertResponsesFile />
+                                <form
+                                    className='flex flex-col gap-6'
+                                    onSubmit={onSubmit}
+                                >
+                                    <p>
+                                        Accepts file type: <b>csv</b>
+                                    </p>
+                                    <input
+                                        accept='.csv'
+                                        className='w-[450px] file:mr-4 file:cursor-pointer'
+                                        id='file'
+                                        onChange={(e) =>
+                                            onFileChange(e, setQuestionsFile)
+                                        }
+                                        required
+                                        type='file'
+                                    />
+                                    <AlertQuestionsFile />
 
+                                    <Heading
+                                        level={4}
+                                        startIcon={
+                                            <ChartBarSquareIcon
+                                                className={clsx(
+                                                    'w-10 stroke-indigo-600 stroke-2',
+                                                    'dark:stroke-indigo-500',
+                                                )}
+                                            />
+                                        }
+                                    >
+                                        Third Party Evidence Provided
+                                    </Heading>
+                                    <p>
+                                        Accepts file type: <b>pdf</b>
+                                    </p>
+                                    <input
+                                        accept='.pdf'
+                                        className='w-[450px] file:mr-4 file:cursor-pointer'
+                                        id='file'
+                                        onChange={(e) =>
+                                            onFileChange(e, setEvidenceFile)
+                                        }
+                                        required
+                                        type='file'
+                                    />
+                                    <AlertEvidenceFile />
+
+                                    <div className='flex items-center gap-3'>
+                                        <Heading
+                                            level={4}
+                                            startIcon={
+                                                <ChatBubbleBottomCenterTextIcon
+                                                    className={clsx(
+                                                        'w-10 stroke-indigo-600 stroke-2',
+                                                        'dark:stroke-indigo-500',
+                                                    )}
+                                                />
+                                            }
+                                        >
+                                            Third Party Responses
+                                        </Heading>
+                                    </div>
+                                    <p>
+                                        Accepts file type: <b>xlsx</b>
+                                    </p>
+                                    <input
+                                        accept='.xlsx'
+                                        className='file:mr-4 file:cursor-pointer'
+                                        id='file'
+                                        onChange={(e) =>
+                                            onFileChange(e, setResponsesFile)
+                                        }
+                                        type='file'
+                                    />
+                                    <AlertResponsesFile />
+
+                                    <Button
+                                        variant={
+                                            areAllFilesValid
+                                                ? 'solid'
+                                                : 'disabledSolid'
+                                        }
+                                        additionalClasses='mx-auto'
+                                    >
+                                        <input
+                                            className={
+                                                areAllFilesValid
+                                                    ? 'hover:cursor-pointer'
+                                                    : ''
+                                            }
+                                            disabled={!areAllFilesValid}
+                                            type='submit'
+                                            value='Submit'
+                                        />
+                                    </Button>
+                                </form>
+                            </div>
+                        </Card>
+                    ) : null}
+
+                    {screen === 'loading' ? (
+                        <>
+                            <Heading level={4} additionalClasses='text-center'>
+                                Hang tight. This process can take a while.
+                            </Heading>
+                            <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
+                                When finished loading, the summary will be
+                                displayed on the next screen.
+                            </p>
+                            <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
+                        </>
+                    ) : null}
+
+                    {screen === 'summary' ? (
+                        <div className='flex flex-col gap-6'>
+                            <Summary
+                                excelData={excelData}
+                                llmResponse={llmResponse}
+                                questionsData={questionsData}
+                            />
+
+                            <div className='mx-auto'>
                                 <Button
-                                    variant={
-                                        areAllFilesValid
-                                            ? 'solid'
-                                            : 'disabledSolid'
-                                    }
+                                    variant='solid'
+                                    onClick={() => setScreen('fileUpload')}
                                     additionalClasses='mx-auto'
                                 >
-                                    <input
-                                        className={
-                                            areAllFilesValid
-                                                ? 'hover:cursor-pointer'
-                                                : ''
-                                        }
-                                        disabled={!areAllFilesValid}
-                                        type='submit'
-                                        value='Submit'
-                                    />
+                                    Back to File Upload
                                 </Button>
-                            </form>
+                            </div>
                         </div>
-                    </Card>
-                ) : null}
-
-                {screen === 'loading' ? (
-                    <>
-                        <Heading level={4} additionalClasses='text-center'>
-                            Hang tight. This process can take a while.
-                        </Heading>
-                        <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
-                            When finished loading, the summary will be displayed
-                            on the next screen.
-                        </p>
-                        <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
-                    </>
-                ) : null}
-
-                {screen === 'summary' ? (
-                    <div className='flex flex-col gap-6'>
-                        <Summary
-                            excelData={excelData}
-                            llmResponse={llmResponse}
-                            questionsData={questionsData}
-                        />
-
-                        <div className='mx-auto'>
-                            <Button
-                                variant='solid'
-                                onClick={() => setScreen('fileUpload')}
-                                additionalClasses='mx-auto'
-                            >
-                                Back to File Upload
-                            </Button>
-                        </div>
-                    </div>
-                ) : null}
+                    ) : null}
+                </div>
             </div>
         </div>
     );

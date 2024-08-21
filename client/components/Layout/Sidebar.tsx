@@ -10,26 +10,32 @@ import { Screen } from '@/types';
 import { tw } from '@/utils';
 
 interface SidebarProps {
+    isSidebarExpanded: boolean;
+    setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
     screen: Screen;
     setScreen: React.Dispatch<React.SetStateAction<Screen>>;
 }
 
-export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
+export function Sidebar({
+    isSidebarExpanded,
+    setIsSidebarExpanded,
+    screen,
+    setScreen,
+}: SidebarProps): JSX.Element {
     /**
      * State Hooks
      */
-    const [isExpanded, setIsExpanded] = useState(true);
     const [isFullyExpanded, setIsFullyExpanded] = useState(true); // Handle when sidebar is fully expanded
 
     /**
      * Helper Functions
      */
     function toggleSidebar() {
-        if (isExpanded) {
+        if (isSidebarExpanded) {
             setIsFullyExpanded(false); // Hide text before collapsing
-            setTimeout(() => setIsExpanded(false), 0); // Collapse immediately
+            setTimeout(() => setIsSidebarExpanded(false), 0); // Collapse immediately
         } else {
-            setIsExpanded(true); // Expand immediately
+            setIsSidebarExpanded(true); // Expand immediately
             setTimeout(() => setIsFullyExpanded(true), 200); // Delay showing text until after expansion
         }
     }
@@ -86,13 +92,13 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
                 tw`absolute inset-y-0 left-0 rounded-lg px-3 pb-4 pt-20 transition-all duration-300 ease-in-out`,
                 tw`bg-zinc-200 text-black`,
                 tw`dark:bg-zinc-900 dark:text-white`,
-                isExpanded ? 'w-64' : 'w-16',
+                isSidebarExpanded ? 'w-64' : 'w-16',
             )}
         >
             <button
                 className={clsx(
                     tw`rounded-lg p-2 transition-all duration-300`,
-                    isExpanded ? tw`w-full` : tw`w-10`,
+                    isSidebarExpanded ? tw`w-full` : tw`w-10`,
                     tw`hover:bg-zinc-300`,
                     tw`dark:hover:bg-zinc-700`,
                     'flex items-center justify-between',
@@ -102,7 +108,7 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
                 <ChevronLeftIcon
                     className={clsx(
                         tw`w-6 transform stroke-2 transition-transform duration-300`,
-                        isExpanded
+                        isSidebarExpanded
                             ? tw`ml-auto translate-x-0 rotate-0`
                             : tw`translate-x-0 rotate-180`,
                         tw`stroke-zinc-700`,
@@ -137,7 +143,7 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
                                 tw`dark:hover:bg-zinc-700`,
                             )}
                             style={{
-                                width: isExpanded ? '100%' : 'fit',
+                                width: isSidebarExpanded ? '100%' : 'fit',
                                 transition: 'width 0.3s ease',
                             }}
                         >
