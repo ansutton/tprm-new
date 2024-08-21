@@ -163,7 +163,7 @@ export function Summary({
                                 {[
                                     'Control Question',
                                     'TP Response',
-                                    'AI Analysis',
+                                    'Evidence Analysis',
                                     'Answers Align',
                                     'Confidence Score',
                                     'Similarity Score',
@@ -208,7 +208,7 @@ export function Summary({
                                     </TableItem>
                                     <TableItem variant='cell' centered>
                                         <Link
-                                            href={`#ai-answer-${index + 1}`}
+                                            href={`#evidence-analysis-${index + 1}`}
                                             className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
                                         >
                                             {llmResponse?.responses[index] ? (
@@ -265,25 +265,25 @@ export function Summary({
                                         )
                                     }
                                     defaultOpen
-                                    id={`ai-answer-${index + 1}`}
+                                    id={`evidence-analysis-${index + 1}`}
                                 />
                                 <SummaryItem
-                                    title={`Answers Match?`}
+                                    title={`Answers Align`}
                                     content={'N/A'}
                                     defaultOpen
-                                    id={`answers-match-${index + 1}`}
+                                    id={`answers-align-${index + 1}`}
                                 />
                                 <SummaryItem
                                     title={`Confidence Score`}
                                     content={'N/A'}
                                     defaultOpen
-                                    id={`citaton-${index + 1}`}
+                                    id={`confidence-score-${index + 1}`}
                                 />
                                 <SummaryItem
                                     title={`Similarity Score`}
                                     content={'N/A'}
                                     defaultOpen
-                                    id={`citaton-${index + 1}`}
+                                    id={`similarity-score-${index + 1}`}
                                 />
                                 <SummaryItem
                                     title={`Citation`}
