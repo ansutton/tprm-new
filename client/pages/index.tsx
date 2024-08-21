@@ -17,7 +17,7 @@ export default function Home(): JSX.Element {
      */
     const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
         'fileUpload',
-    ); // TODO: set default to 'fileUpload'
+    );
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
@@ -184,7 +184,7 @@ export default function Home(): JSX.Element {
         <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar mode={mode} setMode={setMode} />
 
-            {/* <Sidebar /> */}
+            <Sidebar />
 
             {screen === 'fileUpload' ? (
                 <Heading level={3}>AI Evidence Reviewer</Heading>
