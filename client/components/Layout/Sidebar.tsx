@@ -22,11 +22,11 @@ export function Sidebar(): JSX.Element {
             >
                 <button
                     className={clsx(
-                        tw`transform rounded-lg p-2 transition-all duration-300`,
+                        tw`rounded-lg p-2 transition-all duration-300`,
                         isExpanded ? tw`w-full` : tw`w-fit`,
                         tw`hover:bg-zinc-300`,
                         tw`dark:hover:bg-zinc-700`,
-                        'flex justify-between',
+                        'flex items-center justify-between',
                     )}
                     onClick={toggleSidebar}
                 >
@@ -34,8 +34,8 @@ export function Sidebar(): JSX.Element {
                         className={clsx(
                             tw`w-6 transform transition-transform duration-300`,
                             isExpanded
-                                ? tw`translate-x-full rotate-0`
-                                : tw`rotate-180`,
+                                ? tw`ml-auto translate-x-0 rotate-0`
+                                : tw`translate-x-0 rotate-180`,
                             tw`stroke-zinc-700`,
                             tw`dark:stroke-zinc-200`,
                         )}
