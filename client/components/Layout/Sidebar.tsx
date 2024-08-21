@@ -19,6 +19,20 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
      * State Hooks
      */
     const [isExpanded, setIsExpanded] = useState(true);
+    const [isFullyExpanded, setIsFullyExpanded] = useState(true); // New state to handle when sidebar is fully expanded
+
+    /**
+     * Helper Functions
+     */
+    function toggleSidebar() {
+        if (isExpanded) {
+            setIsFullyExpanded(false); // Hide text before collapsing
+            setTimeout(() => setIsExpanded(false), 0); // Collapse immediately
+        } else {
+            setIsExpanded(true); // Expand immediately
+            setTimeout(() => setIsFullyExpanded(true), 200); // Delay showing text until after expansion
+        }
+    }
 
     /**
      * Constants
@@ -28,6 +42,7 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
         tw`stroke-zinc-700`,
         tw`dark:stroke-zinc-200`,
     );
+
     const navItemContent = [
         {
             additionalButtonClasses: tw`mb-8`,
@@ -35,7 +50,7 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
             onClick: function () {
                 if (
                     confirm(
-                        'Are you sure? This action will end your the current process and start over.',
+                        'Are you sure? This action will end the current process and start over.',
                     )
                 ) {
                     setScreen('fileUpload');
@@ -61,13 +76,6 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
             title: 'Assessment Detail',
         },
     ];
-
-    /**
-     * Helper Functions
-     */
-    function toggleSidebar() {
-        setIsExpanded((prevState) => !prevState);
-    }
 
     /**
      * Return Statement
@@ -116,39 +124,41 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
                         },
                         index,
                     ) => (
-                        <>
-                            <button
-                                key={index}
-                                onClick={onClick}
-                                className={clsx(
-                                    additionalButtonClasses,
-                                    screen === screenTypeAssignment
-                                        ? clsx(
-                                              tw`bg-zinc-300`,
-                                              tw`dark:bg-zinc-700`,
-                                          )
-                                        : '',
-                                    tw`flex items-center rounded-lg p-2`,
-                                    tw`transition-all duration-300`,
-                                    isExpanded ? tw`w-[232px]` : tw`w-fit`,
-                                    tw`hover:bg-zinc-300`,
-                                    tw`dark:hover:bg-zinc-700`,
-                                )}
-                            >
-                                {icon}
-                                <div
+                        <button
+                            key={index}
+                            onClick={onClick}
+                            className={clsx(
+                                additionalButtonClasses,
+                                screen === screenTypeAssignment
+                                    ? clsx(
+                                          tw`bg-zinc-300`,
+                                          tw`dark:bg-zinc-700`,
+                                      )
+                                    : '',
+                                tw`flex items-center rounded-lg p-2`,
+                                tw`transition-all duration-300`,
+                                tw`hover:bg-zinc-300`,
+                                tw`dark:hover:bg-zinc-700`,
+                            )}
+                            style={{
+                                width: isExpanded ? '100%' : 'fit',
+                                transition: 'width 0.3s ease',
+                            }}
+                        >
+                            {icon}
+                            {isFullyExpanded && (
+                                <span
                                     className={clsx(
-                                        tw`transition-opacity duration-300`,
-                                        tw`text-sm`,
-                                        isExpanded
-                                            ? tw`ml-2.5 opacity-100`
+                                        tw`ml-2.5 transition-opacity duration-300`,
+                                        isFullyExpanded
+                                            ? tw`opacity-100`
                                             : tw`opacity-0`,
                                     )}
                                 >
-                                    {isExpanded ? title : null}
-                                </div>
-                            </button>
-                        </>
+                                    {title}
+                                </span>
+                            )}
+                        </button>
                     ),
                 )}
             </nav>
