@@ -182,7 +182,9 @@ export default function Home(): JSX.Element {
         <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar mode={mode} setMode={setMode} />
 
-            <Sidebar screen={screen} setScreen={setScreen} />
+            {screen !== 'fileUpload' ? (
+                <Sidebar screen={screen} setScreen={setScreen} />
+            ) : null}
 
             {screen === 'fileUpload' ? (
                 <Heading level={3}>AI Evidence Reviewer</Heading>
