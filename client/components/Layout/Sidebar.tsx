@@ -22,7 +22,7 @@ export function Sidebar(): JSX.Element {
             >
                 <button
                     className={clsx(
-                        tw`rounded-lg p-2 transition-all duration-500`,
+                        tw`rounded-lg p-2 transition-all duration-300`,
                         isExpanded ? tw`w-full` : tw`w-fit`,
                         tw`hover:bg-zinc-300`,
                         tw`dark:hover:bg-zinc-700`,
@@ -43,6 +43,7 @@ export function Sidebar(): JSX.Element {
                         onClick={() => null}
                         className={clsx(
                             tw`flex items-center rounded-lg px-4 py-2.5`,
+                            tw`transition-all duration-300`,
                             tw`hover:bg-zinc-300`,
                             tw`dark:hover:bg-zinc-700`,
                         )}
