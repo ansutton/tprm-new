@@ -19,7 +19,7 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
      * State Hooks
      */
     const [isExpanded, setIsExpanded] = useState(true);
-    const [isFullyExpanded, setIsFullyExpanded] = useState(true); // New state to handle when sidebar is fully expanded
+    const [isFullyExpanded, setIsFullyExpanded] = useState(true); // Handle when sidebar is fully expanded
 
     /**
      * Helper Functions
@@ -42,7 +42,6 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
         tw`stroke-zinc-700`,
         tw`dark:stroke-zinc-200`,
     );
-
     const navItemContent = [
         {
             additionalButtonClasses: tw`mb-8`,
@@ -130,10 +129,7 @@ export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
                             className={clsx(
                                 additionalButtonClasses,
                                 screen === screenTypeAssignment
-                                    ? clsx(
-                                          tw`bg-zinc-300`,
-                                          tw`dark:bg-zinc-700`,
-                                      )
+                                    ? tw`bg-zinc-300 dark:bg-zinc-700`
                                     : '',
                                 tw`flex items-center rounded-lg p-2`,
                                 tw`transition-all duration-300`,
