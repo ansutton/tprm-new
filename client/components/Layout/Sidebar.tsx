@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import {
+    ArrowUpCircleIcon,
     ChartBarSquareIcon,
     ChevronLeftIcon,
     DocumentMagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
+import { Screen } from '@/types';
 import { tw } from '@/utils';
 
-export function Sidebar(): JSX.Element {
+interface SidebarProps {
+    screen: Screen;
+    setScreen: React.Dispatch<React.SetStateAction<Screen>>;
+}
+
+export function Sidebar({ screen, setScreen }: SidebarProps): JSX.Element {
     /**
      * State Hooks
      */
@@ -23,13 +30,34 @@ export function Sidebar(): JSX.Element {
     );
     const navItemContent = [
         {
+            additionalButtonClasses: tw`mb-8`,
+            icon: <ArrowUpCircleIcon className={iconClasses} />,
+            onClick: function () {
+                if (
+                    confirm(
+                        'Are you sure? This action will end your the current process and start over.',
+                    )
+                ) {
+                    setScreen('fileUpload');
+                } else {
+                    return null;
+                }
+            },
+            screenTypeAssignment: 'fileUpload',
+            title: 'File Upload',
+        },
+        {
+            additionalButtonClasses: tw``,
             icon: <ChartBarSquareIcon className={iconClasses} />,
             onClick: () => null,
+            screenTypeAssignment: 'summary', // TODO: refactor to assessmentOverview
             title: 'Assessment Overview',
         },
         {
+            additionalButtonClasses: tw``,
             icon: <DocumentMagnifyingGlassIcon className={iconClasses} />,
             onClick: () => null,
+            screenTypeAssignment: 'summary', // TODO: refactor to assessmentDetail
             title: 'Assessment Detail',
         },
     ];
@@ -47,6 +75,7 @@ export function Sidebar(): JSX.Element {
     return (
         <div
             className={clsx(
+                tw`z-10`,
                 tw`absolute inset-y-0 left-0 rounded-lg px-3 pb-4 pt-20 transition-all duration-300 ease-in-out`,
                 tw`bg-zinc-200 text-black`,
                 tw`dark:bg-zinc-900 dark:text-white`,
@@ -76,33 +105,52 @@ export function Sidebar(): JSX.Element {
             </button>
 
             <nav className='mt-6 space-y-2'>
-                {navItemContent.map(({ icon, onClick, title }, index) => (
-                    <>
-                        <button
-                            onClick={onClick}
-                            className={clsx(
-                                tw`flex items-center rounded-lg p-2`,
-                                tw`transition-all duration-300`,
-                                isExpanded ? tw`w-[232px]` : tw`w-fit`,
-                                tw`hover:bg-zinc-300`,
-                                tw`dark:hover:bg-zinc-700`,
-                            )}
-                        >
-                            {icon}
-                            <div
+                {navItemContent.map(
+                    (
+                        {
+                            additionalButtonClasses,
+                            icon,
+                            onClick,
+                            screenTypeAssignment,
+                            title,
+                        },
+                        index,
+                    ) => (
+                        <>
+                            <button
+                                key={index}
+                                onClick={onClick}
                                 className={clsx(
-                                    tw`transition-opacity duration-300`,
-                                    tw`text-sm`,
-                                    isExpanded
-                                        ? tw`ml-2.5 opacity-100`
-                                        : tw`opacity-0`,
+                                    additionalButtonClasses,
+                                    screen === screenTypeAssignment
+                                        ? clsx(
+                                              tw`bg-zinc-300`,
+                                              tw`dark:bg-zinc-700`,
+                                          )
+                                        : '',
+                                    tw`flex items-center rounded-lg p-2`,
+                                    tw`transition-all duration-300`,
+                                    isExpanded ? tw`w-[232px]` : tw`w-fit`,
+                                    tw`hover:bg-zinc-300`,
+                                    tw`dark:hover:bg-zinc-700`,
                                 )}
                             >
-                                {isExpanded ? title : null}
-                            </div>
-                        </button>
-                    </>
-                ))}
+                                {icon}
+                                <div
+                                    className={clsx(
+                                        tw`transition-opacity duration-300`,
+                                        tw`text-sm`,
+                                        isExpanded
+                                            ? tw`ml-2.5 opacity-100`
+                                            : tw`opacity-0`,
+                                    )}
+                                >
+                                    {isExpanded ? title : null}
+                                </div>
+                            </button>
+                        </>
+                    ),
+                )}
             </nav>
         </div>
     );

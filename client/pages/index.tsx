@@ -9,15 +9,13 @@ import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import { Button, Card, Heading, Sidebar, Summary, Topbar } from '@/components';
 import { poll, submit, tw } from '@/utils';
-import { LlmResponse, Mode, PythonAppState } from '@/types';
+import { LlmResponse, Mode, PythonAppState, Screen } from '@/types';
 
 export default function Home(): JSX.Element {
     /**
      * State Hooks
      */
-    const [screen, setScreen] = useState<'fileUpload' | 'loading' | 'summary'>(
-        'fileUpload',
-    );
+    const [screen, setScreen] = useState<Screen>('fileUpload');
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
@@ -184,7 +182,7 @@ export default function Home(): JSX.Element {
         <div className='mx-auto w-full dark:text-zinc-50'>
             <Topbar mode={mode} setMode={setMode} />
 
-            <Sidebar />
+            <Sidebar screen={screen} setScreen={setScreen} />
 
             {screen === 'fileUpload' ? (
                 <Heading level={3}>AI Evidence Reviewer</Heading>
