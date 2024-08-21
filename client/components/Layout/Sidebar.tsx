@@ -22,17 +22,20 @@ export function Sidebar(): JSX.Element {
             >
                 <button
                     className={clsx(
-                        tw`rounded-lg p-2 transition-all duration-300`,
+                        tw`transform rounded-lg p-2 transition-all duration-300`,
                         isExpanded ? tw`w-full` : tw`w-fit`,
                         tw`hover:bg-zinc-300`,
                         tw`dark:hover:bg-zinc-700`,
+                        'flex justify-between',
                     )}
                     onClick={toggleSidebar}
                 >
                     <ChevronLeftIcon
                         className={clsx(
                             tw`w-6 transform transition-transform duration-300`,
-                            isExpanded ? tw`ml-auto` : tw`rotate-180`,
+                            isExpanded
+                                ? tw`translate-x-full rotate-0`
+                                : tw`rotate-180`,
                             tw`stroke-zinc-700`,
                             tw`dark:stroke-zinc-200`,
                         )}
@@ -51,13 +54,11 @@ export function Sidebar(): JSX.Element {
                         <BoltIcon className='h-6 w-6' />
                         <div
                             className={clsx(
-                                tw`delay-2000 transition-opacity duration-500`,
-                                isExpanded ? 'opacity-100' : 'opacity-0',
+                                tw`transition-opacity duration-300`,
+                                isExpanded ? 'ml-4 opacity-100' : 'opacity-0',
                             )}
                         >
-                            {isExpanded ? (
-                                <span className={clsx(tw`ml-4`)}>Home</span>
-                            ) : null}
+                            {isExpanded && <span>Home</span>}
                         </div>
                     </button>
                 </nav>
