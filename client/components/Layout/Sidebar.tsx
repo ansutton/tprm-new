@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import {
     ChartBarSquareIcon,
     ChevronLeftIcon,
@@ -25,12 +25,12 @@ export function Sidebar(): JSX.Element {
         {
             icon: <ChartBarSquareIcon className={iconClasses} />,
             onClick: () => null,
-            title: 'Assessment Detail',
+            title: 'Assessment Overview',
         },
         {
             icon: <DocumentMagnifyingGlassIcon className={iconClasses} />,
             onClick: () => null,
-            title: 'Assessment Overview',
+            title: 'Assessment Detail',
         },
     ];
 
@@ -75,7 +75,7 @@ export function Sidebar(): JSX.Element {
                 />
             </button>
 
-            <nav className='mt-6 space-y-3'>
+            <nav className='mt-6 space-y-2'>
                 {navItemContent.map(({ icon, onClick, title }, index) => (
                     <>
                         <button
@@ -98,7 +98,7 @@ export function Sidebar(): JSX.Element {
                                         : tw`opacity-0`,
                                 )}
                             >
-                                {isExpanded ? 'Assessment Overview' : null}
+                                {isExpanded ? title : null}
                             </div>
                         </button>
                     </>
