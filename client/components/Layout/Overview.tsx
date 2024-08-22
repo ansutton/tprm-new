@@ -36,19 +36,36 @@ export function Overview({
         <>
             <div className='flex gap-4'>
                 <Card>
-                    <Heading
-                        level={4}
-                        additionalClasses={tw`mb-4 opacity-80`}
-                        fontSize='text-lg'
-                    >
-                        <b>Third Party Name</b>: N/A
-                    </Heading>
-                    <p className={clsx(tw`opacity-70`)}>
-                        <b>Service Description</b>: N/A
-                    </p>
-                    <p className={clsx(tw`mt-1 opacity-70`)}>
-                        <b>Summary</b>: N/A
-                    </p>
+                    <div className='space-y-2 opacity-80'>
+                        <Heading
+                            level={4}
+                            additionalClasses='mb-4'
+                            fontSize='text-lg'
+                        >
+                            Third Party Information
+                        </Heading>
+                        <p>
+                            <b>Name</b>: N/A
+                        </p>
+                        <p>
+                            <b>Service Description</b>: N/A
+                        </p>
+                        <p>
+                            <b>Summary</b>: The third party and the AI model
+                            provided the same response for{' '}
+                            <b>
+                                {llmResponse?.responses.length || 0}/
+                                {questionsData?.length} (
+                                {Math.round(
+                                    ((llmResponse?.responses.length || 0) /
+                                        questionsData?.length) *
+                                        100,
+                                )}
+                                %)
+                            </b>{' '}
+                            of questions uploaded.
+                        </p>
+                    </div>
                 </Card>
 
                 <ConfidenceScore
@@ -64,21 +81,6 @@ export function Overview({
                     >
                         Summary
                     </Heading>
-                    <p className='w-full text-lg'>
-                        The third party and the AI model provided the same
-                        response for{' '}
-                        <span className='font-bold'>
-                            {llmResponse?.responses.length || 0}/
-                            {questionsData?.length} (
-                            {Math.round(
-                                ((llmResponse?.responses.length || 0) /
-                                    questionsData?.length) *
-                                    100,
-                            )}
-                            %)
-                        </span>{' '}
-                        of questions uploaded.
-                    </p>
                 </Card>
             </div>
 
