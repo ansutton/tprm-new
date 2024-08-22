@@ -25,6 +25,5 @@ export type ModeAction = { type: 'set_demo' } | { type: 'set_llm' };
 export type Screen =
     | 'fileUpload'
     | 'loading'
-    | 'summary'
     | 'assessmentDetail'
     | 'assessmentOverview';
