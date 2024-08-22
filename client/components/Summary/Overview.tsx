@@ -40,11 +40,6 @@ export function Overview({
                         level={4}
                         additionalClasses={tw`mb-4 opacity-80`}
                         fontSize='text-lg'
-                        startIcon={
-                            <DocumentIcon
-                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
-                            />
-                        }
                     >
                         <b>Third Party Name</b>: N/A
                     </Heading>
@@ -66,11 +61,6 @@ export function Overview({
                         level={4}
                         additionalClasses={tw`mb-4 opacity-80`}
                         fontSize='text-lg'
-                        startIcon={
-                            <DocumentTextIcon
-                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
-                            />
-                        }
                     >
                         Summary
                     </Heading>
@@ -97,21 +87,11 @@ export function Overview({
                     <ProgressBar
                         title='Evidence Documents Analyzed'
                         progressPercentage={75}
-                        startIcon={
-                            <DocumentCheckIcon
-                                className={clsx(iconStrokeClasses, 'mb-3 w-7')}
-                            />
-                        }
                     />
 
                     <ProgressBar
                         title='Questions Unanswered by Evidence'
                         progressPercentage={40}
-                        startIcon={
-                            <NewspaperIcon
-                                className={clsx(iconStrokeClasses, 'mb-3 w-7')}
-                            />
-                        }
                         twBgColor='bg-rose-400'
                     />
                 </div>
@@ -119,11 +99,6 @@ export function Overview({
                 <QuestionsAnalyzed
                     llmResponse={llmResponse}
                     questionsData={questionsData}
-                    startIcon={
-                        <BoltIcon
-                            className={clsx(iconStrokeClasses, 'mb-4 w-7')}
-                        />
-                    }
                 />
             </div>
 
