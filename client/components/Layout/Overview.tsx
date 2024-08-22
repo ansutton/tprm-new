@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import {
     ConfidenceScore,
-    ProgressBar,
+    EvidenceUnanswered,
     QuestionsAnalyzed,
     Summary,
     ThirdPartyInfo,
@@ -42,17 +42,11 @@ export function Overview({
             </div>
 
             <div className='flex w-full justify-end gap-4'>
-                <div className='flex w-full flex-col gap-4'>
-                    <ProgressBar
-                        title='Evidence Documents Analyzed'
-                        progressPercentage={75}
-                    />
-                    <ProgressBar
-                        title='Questions Unanswered by Evidence'
-                        progressPercentage={40}
-                        twBgColor='bg-rose-400'
-                    />
-                </div>
+                <EvidenceUnanswered
+                    title='Questions Unanswered by Evidence'
+                    progressPercentage={40}
+                    twBgColor='bg-rose-400'
+                />
                 <QuestionsAnalyzed
                     llmResponse={llmResponse}
                     questionsData={questionsData}
