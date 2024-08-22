@@ -4,11 +4,11 @@ import { Card, Heading } from '@/components';
 import { tw } from '@/utils';
 
 interface EvidenceProvidedProps {
-    isXlScreen: boolean;
+    doesOverviewUnwrap: boolean;
 }
 
 export function EvidenceProvided({
-    isXlScreen,
+    doesOverviewUnwrap,
 }: EvidenceProvidedProps): JSX.Element {
     const data = [
         {
@@ -40,7 +40,7 @@ export function EvidenceProvided({
             <div
                 className={clsx(
                     tw`flex justify-around gap-4`,
-                    // isXlScreen ? tw`` : tw`flex-col`,
+                    // doesOverviewUnwrap ? tw`` : tw`flex-col`,
                 )}
             >
                 {data.map(({ title, pathColor, percentage }, index) => (

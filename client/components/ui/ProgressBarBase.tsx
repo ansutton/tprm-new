@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-import { Card } from '@/components';
 import { ProgressBarBaseProps } from '@/types';
 
 export function ProgressBarBase({

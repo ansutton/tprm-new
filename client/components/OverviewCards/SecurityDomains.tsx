@@ -91,7 +91,7 @@ export function SecurityDomains({
                         />
                         <Legend />
                         <Bar dataKey='Aligned' fill='hsl(158, 64%, 52%)' />
-                        <Bar dataKey='Unaligned' fill='hsl(188, 86%, 53%)' />
+                        <Bar dataKey='Unaligned' fill='hsl(351, 95%, 71%)' />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

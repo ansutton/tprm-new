@@ -399,6 +399,7 @@ export default function Home(): JSX.Element {
                                 {screen === 'overview' ? (
                                     <Overview
                                         excelData={excelData}
+                                        isSidebarExpanded={isSidebarExpanded}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
                                     />

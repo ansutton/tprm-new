@@ -14,6 +14,7 @@ import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 interface OverviewProps {
     excelData: any[][];
+    isSidebarExpanded: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
 }
@@ -21,6 +22,7 @@ interface OverviewProps {
 export function Overview({
     excelData,
     llmResponse,
+    isSidebarExpanded,
     questionsData,
 }: OverviewProps): JSX.Element {
     const iconStrokeClasses = clsx(
@@ -28,7 +30,16 @@ export function Overview({
         tw`dark:stroke-indigo-500`,
     );
 
-    const isXlScreen = useMediaQuery({ query: '(min-width: 1280px)' });
+    const sidebarExpandedMediaQuery = useMediaQuery({
+        query: '(min-width: 1440px)',
+    });
+    const sidebarContractedMediaQuery = useMediaQuery({
+        query: '(min-width: 1280px)',
+    });
+
+    const doesOverviewUnwrap = isSidebarExpanded
+        ? sidebarExpandedMediaQuery
+        : sidebarContractedMediaQuery;
 
     return (
         <div className='space-y-4'>
@@ -52,15 +63,17 @@ export function Overview({
                 questionsData={questionsData}
             />
 
-            {isXlScreen ? (
+            {doesOverviewUnwrap ? (
                 <div className='space-y-4'>
                     <div className='flex gap-4'>
                         <EvidenceAnalysis
-                            isXlScreen={isXlScreen}
+                            doesOverviewUnwrap={doesOverviewUnwrap}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
-                        <EvidenceProvided isXlScreen={isXlScreen} />
+                        <EvidenceProvided
+                            doesOverviewUnwrap={doesOverviewUnwrap}
+                        />
                         <QuestionsAnalyzed
                             llmResponse={llmResponse}
                             questionsData={questionsData}
@@ -77,7 +90,7 @@ export function Overview({
                 <div className='space-y-4'>
                     <div className='flex gap-4'>
                         <EvidenceAnalysis
-                            isXlScreen={isXlScreen}
+                            doesOverviewUnwrap={doesOverviewUnwrap}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
@@ -88,12 +101,14 @@ export function Overview({
                     </div>
 
                     <div className='space-y-4'>
+                        <EvidenceProvided
+                            doesOverviewUnwrap={doesOverviewUnwrap}
+                        />
                         <EvidenceUnanswered
                             title='Questions Unanswered by Evidence'
                             progressPercentage={40}
-                            twBgColor='bg-rose-400'
+                            twBgColor='bg-cyan-400'
                         />
-                        <EvidenceProvided isXlScreen={isXlScreen} />
                     </div>
                 </div>
             )}

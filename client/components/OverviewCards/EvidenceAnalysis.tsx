@@ -5,21 +5,21 @@ import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
 interface EvidenceAnalysisProps {
-    isXlScreen?: boolean;
+    doesOverviewUnwrap?: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
 }
 
 export function EvidenceAnalysis({
-    isXlScreen,
+    doesOverviewUnwrap,
     llmResponse,
     questionsData,
     startIcon = null,
 }: EvidenceAnalysisProps): JSX.Element {
     return (
         <Card
-            width={clsx(isXlScreen ? tw`w-64` : tw`w-full`)}
+            width={clsx(doesOverviewUnwrap ? tw`w-64` : tw`w-full`)}
             additionalClasses={tw`min-w-64`}
         >
             <Heading
