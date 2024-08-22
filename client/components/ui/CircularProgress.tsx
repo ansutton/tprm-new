@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { Card } from '@/components';
 import { tw } from '@/utils';
 
@@ -10,6 +10,7 @@ interface CircularProgressProps {
     value: number;
     minValue: number | undefined;
     maxValue: number | undefined;
+    pathColor?: string;
     startIcon?: ReactNode;
     text: string | undefined;
     textFontSize?: string;
@@ -21,6 +22,7 @@ export function CircularProgress({
     value,
     minValue,
     maxValue,
+    pathColor = '',
     startIcon = null,
     text,
     textFontSize = 'text-3xl',
@@ -45,6 +47,7 @@ export function CircularProgress({
                         value={value}
                         minValue={minValue}
                         maxValue={maxValue}
+                        styles={buildStyles({ pathColor: pathColor })}
                         text={text}
                     />
                 </div>

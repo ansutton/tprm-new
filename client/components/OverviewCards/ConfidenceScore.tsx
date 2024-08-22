@@ -13,6 +13,8 @@ export function ConfidenceScore({
     questionsData,
     startIcon = null,
 }: ConfidenceScoreProps): JSX.Element {
+    const pathColor = 'hsl(292, 91%, 73%)'; // fuchsia-400
+
     return (
         <CircularProgress
             title='Confidence Score'
@@ -20,6 +22,7 @@ export function ConfidenceScore({
             value={90}
             minValue={0}
             maxValue={100}
+            pathColor={pathColor}
             text='90%'
             textFontSize='text-2xl'
         />

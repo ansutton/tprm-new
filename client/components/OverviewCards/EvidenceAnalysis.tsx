@@ -36,7 +36,7 @@ export function EvidenceAnalysis({
                     llmResponse={llmResponse}
                     progressPercentage={67}
                     questionsData={questionsData}
-                    twBgColor='bg-fuchsia-400'
+                    twBgColor='bg-emerald-400'
                 />
             </div>
         </Card>
