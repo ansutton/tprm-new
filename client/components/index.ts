@@ -1,5 +1,5 @@
 export * from './Assessment/AssessmentDetail';
-// export * from './Assessment/AssessmentOverview';
+export * from './Assessment/AssessmentOverview';
 export * from './DataVisuals/ConfidenceScore';
 export * from './DataVisuals/QuestionsAnalyzed';
 export * from './Layout/Layout';

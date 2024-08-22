@@ -1,29 +1,14 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import {
-    ArrowPathIcon,
-    BoltIcon,
-    DocumentChartBarIcon,
-    DocumentCheckIcon,
-    NewspaperIcon,
-    PrinterIcon,
-} from '@heroicons/react/24/outline';
+import { ArrowPathIcon, PrinterIcon } from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import {
-    Button,
-    Card,
-    ConfidenceScore,
-    Heading,
-    ProgressBar,
-    QuestionsAnalyzed,
-    Tooltip,
-} from '@/components';
+import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
@@ -38,264 +23,145 @@ export function AssessmentDetail({
     llmResponse,
     questionsData,
 }: AssessmentDetailProps): JSX.Element {
-    const iconStrokeClasses = clsx(
-        tw`stroke-indigo-600 stroke-2`,
-        tw`dark:stroke-indigo-500`,
-    );
-
     return (
         <>
-            <div className='flex flex-col gap-4'>
-                <div className='w-full'>
-                    <div
-                        className={clsx(
-                            tw`w-fit rounded-lg p-2`,
-                            tw`float-right`,
-                            tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
-                            tw`flex items-center gap-1.5`,
-                        )}
-                    >
-                        <PrinterIcon
-                            className={clsx(
-                                tw`w-4`,
-                                tw`stroke-indigo-600 stroke-2`,
-                                tw`dark:stroke-indigo-400`,
-                            )}
-                        />
-                        <button
-                            className={clsx(
-                                tw`float-right text-sm`,
-                                tw`font-bold`,
-                                tw`text-indigo-600`,
-                                tw`dark:text-indigo-400`,
-                            )}
-                            onClick={() => window.print()}
-                        >
-                            Print Results
-                        </button>
-                    </div>
-                </div>
+            <Card>
+                <Heading level={4} additionalClasses='mb-4'>
+                    Results Table
+                </Heading>
 
-                <Card>
-                    <Heading
-                        level={4}
-                        additionalClasses={tw`mb-4 opacity-80`}
-                        twFontSize='text-lg'
-                        startIcon={
-                            <DocumentChartBarIcon
-                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
-                            />
-                        }
-                    >
-                        Summary
-                    </Heading>
-                    <p className='w-full text-lg'>
-                        The third party and the AI model provided the same
-                        response for{' '}
-                        <span className='font-bold'>
-                            {llmResponse?.responses.length || 0}/
-                            {questionsData?.length} (
-                            {Math.round(
-                                ((llmResponse?.responses.length || 0) /
-                                    questionsData?.length) *
-                                    100,
-                            )}
-                            %)
-                        </span>{' '}
-                        of questions uploaded.
-                    </p>
-                </Card>
-
-                <div className='flex w-full justify-end gap-4'>
-                    <div className='flex w-full flex-col gap-4'>
-                        <ProgressBar
-                            title='Evidence Documents Analyzed'
-                            progressPercentage={75}
-                            startIcon={
-                                <DocumentCheckIcon
-                                    className={clsx(
-                                        iconStrokeClasses,
-                                        'mb-3 w-7',
-                                    )}
-                                />
-                            }
-                        />
-
-                        <ProgressBar
-                            title='Questions Unanswered by Evidence'
-                            progressPercentage={40}
-                            startIcon={
-                                <NewspaperIcon
-                                    className={clsx(
-                                        iconStrokeClasses,
-                                        'mb-3 w-7',
-                                    )}
-                                />
-                            }
-                            twBgColor='bg-rose-400'
-                        />
-                    </div>
-
-                    <QuestionsAnalyzed
-                        llmResponse={llmResponse}
-                        questionsData={questionsData}
-                        startIcon={
-                            <BoltIcon
-                                className={clsx(iconStrokeClasses, 'mb-4 w-7')}
-                            />
-                        }
-                    />
-                </div>
-
-                <ConfidenceScore
-                    llmResponse={llmResponse}
-                    questionsData={questionsData}
-                />
-
-                <Card>
-                    <Heading level={4} additionalClasses='mb-4'>
-                        Results Table
-                    </Heading>
-
-                    <Table>
-                        <thead>
-                            <tr>
-                                {[
-                                    'Control Question',
-                                    'TP Response',
-                                    'Evidence Analysis',
-                                    'Answers Align',
-                                    'Confidence Score',
-                                    'Similarity Score',
-                                    'Citation',
-                                ].map((heading, index) => (
-                                    <TableItem
-                                        key={index}
-                                        variant='head'
-                                        centered
-                                    >
-                                        <div className='flex items-center gap-1.5'>
-                                            <span>{heading}</span>
-                                            <Tooltip>
-                                                Lorem ipsum dolor sit amet
-                                                consectetur adipisicing elit.
-                                                Adipisci eos eius veniam
-                                                quibusdam corporis eum quae
-                                                explicabo dicta non! Obcaecati.
-                                            </Tooltip>
-                                        </div>
-                                    </TableItem>
-                                ))}
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {questionsData.map((question, index) => (
-                                <tr
-                                    key={index}
-                                    className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
-                                >
-                                    <TableItem variant='cell'>
-                                        {question}
-                                    </TableItem>
-                                    <TableItem variant='cell' centered>
-                                        <Link
-                                            href={`#third-party-response-${index + 1}`}
-                                            className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                        >
-                                            Response {index + 1}
-                                        </Link>
-                                    </TableItem>
-                                    <TableItem variant='cell' centered>
-                                        <Link
-                                            href={`#evidence-analysis-${index + 1}`}
-                                            className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
-                                        >
-                                            {llmResponse?.responses[index] ? (
-                                                `Answer ${index + 1}`
-                                            ) : (
-                                                <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
-                                            )}
-                                        </Link>
-                                    </TableItem>
-                                    <TableItem variant='cell' centered>
-                                        N/A
-                                    </TableItem>
-                                    <TableItem variant='cell' centered>
-                                        N/A
-                                    </TableItem>
-                                    <TableItem variant='cell' centered>
-                                        N/A
-                                    </TableItem>
-                                    <TableItem variant='cell' centered>
-                                        N/A
-                                    </TableItem>
-                                </tr>
+                <Table>
+                    <thead>
+                        <tr>
+                            {[
+                                'Control Question',
+                                'TP Response',
+                                'Evidence Analysis',
+                                'Answers Align',
+                                'Confidence Score',
+                                'Similarity Score',
+                                'Citation',
+                            ].map((heading, index) => (
+                                <TableItem key={index} variant='head' centered>
+                                    <div className='flex items-center gap-1.5'>
+                                        <span>{heading}</span>
+                                        <Tooltip>
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Adipisci eos eius veniam quibusdam
+                                            corporis eum quae explicabo dicta
+                                            non! Obcaecati.
+                                        </Tooltip>
+                                    </div>
+                                </TableItem>
                             ))}
-                        </tbody>
-                    </Table>
-                </Card>
+                        </tr>
+                    </thead>
 
-                <Card>
-                    <Heading level={4} additionalClasses='mb-4'>
-                        Results Details
-                    </Heading>
-                    <div className='w-full divide-y dark:divide-zinc-600'>
+                    <tbody>
                         {questionsData.map((question, index) => (
-                            <div key={index} className='py-2'>
-                                <AssessmentDetailItem
-                                    title={`Control Question ${index + 1}`}
-                                    content={question}
-                                    defaultOpen
-                                    id={`control-question-${index + 1}`}
-                                />
-                                <AssessmentDetailItem
-                                    title={`Third Party Response ${index + 1}`}
-                                    content={excelData[index + 1][2]}
-                                    defaultOpen
-                                    id={`third-party-response-${index + 1}`}
-                                />
-                                <AssessmentDetailItem
-                                    title={`AI Answer ${index + 1}`}
-                                    content={
-                                        llmResponse?.responses[index] ? (
-                                            `${llmResponse?.responses[index]}`
+                            <tr
+                                key={index}
+                                className='odd:bg-indigo-50 dark:odd:bg-zinc-950 dark:even:bg-zinc-900'
+                            >
+                                <TableItem variant='cell'>{question}</TableItem>
+                                <TableItem variant='cell' centered>
+                                    <Link
+                                        href={`#third-party-response-${index + 1}`}
+                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                    >
+                                        Response {index + 1}
+                                    </Link>
+                                </TableItem>
+                                <TableItem variant='cell' centered>
+                                    <Link
+                                        href={`#evidence-analysis-${index + 1}`}
+                                        className='text-indigo-800 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-200'
+                                    >
+                                        {llmResponse?.responses[index] ? (
+                                            `Answer ${index + 1}`
                                         ) : (
-                                            <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
-                                        )
-                                    }
-                                    defaultOpen
-                                    id={`evidence-analysis-${index + 1}`}
-                                />
-                                <AssessmentDetailItem
-                                    title={`Answers Align`}
-                                    content={'N/A'}
-                                    defaultOpen
-                                    id={`answers-align-${index + 1}`}
-                                />
-                                <AssessmentDetailItem
-                                    title={`Confidence Score`}
-                                    content={'N/A'}
-                                    defaultOpen
-                                    id={`confidence-score-${index + 1}`}
-                                />
-                                <AssessmentDetailItem
-                                    title={`Similarity Score`}
-                                    content={'N/A'}
-                                    defaultOpen
-                                    id={`similarity-score-${index + 1}`}
-                                />
-                                <AssessmentDetailItem
-                                    title={`Citation`}
-                                    content={'N/A'}
-                                    defaultOpen
-                                    id={`citaton-${index + 1}`}
-                                />
-                            </div>
+                                            <ArrowPathIcon className='mx-auto size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                        )}
+                                    </Link>
+                                </TableItem>
+                                <TableItem variant='cell' centered>
+                                    N/A
+                                </TableItem>
+                                <TableItem variant='cell' centered>
+                                    N/A
+                                </TableItem>
+                                <TableItem variant='cell' centered>
+                                    N/A
+                                </TableItem>
+                                <TableItem variant='cell' centered>
+                                    N/A
+                                </TableItem>
+                            </tr>
                         ))}
-                    </div>
-                </Card>
-            </div>
+                    </tbody>
+                </Table>
+            </Card>
+
+            <Card>
+                <Heading level={4} additionalClasses='mb-4'>
+                    Results Details
+                </Heading>
+                <div className='w-full divide-y dark:divide-zinc-600'>
+                    {questionsData.map((question, index) => (
+                        <div key={index} className='py-2'>
+                            <AssessmentDetailItem
+                                title={`Control Question ${index + 1}`}
+                                content={question}
+                                defaultOpen
+                                id={`control-question-${index + 1}`}
+                            />
+                            <AssessmentDetailItem
+                                title={`Third Party Response ${index + 1}`}
+                                content={excelData[index + 1][2]}
+                                defaultOpen
+                                id={`third-party-response-${index + 1}`}
+                            />
+                            <AssessmentDetailItem
+                                title={`AI Answer ${index + 1}`}
+                                content={
+                                    llmResponse?.responses[index] ? (
+                                        `${llmResponse?.responses[index]}`
+                                    ) : (
+                                        <ArrowPathIcon className='size-6 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                                    )
+                                }
+                                defaultOpen
+                                id={`evidence-analysis-${index + 1}`}
+                            />
+                            <AssessmentDetailItem
+                                title={`Answers Align`}
+                                content={'N/A'}
+                                defaultOpen
+                                id={`answers-align-${index + 1}`}
+                            />
+                            <AssessmentDetailItem
+                                title={`Confidence Score`}
+                                content={'N/A'}
+                                defaultOpen
+                                id={`confidence-score-${index + 1}`}
+                            />
+                            <AssessmentDetailItem
+                                title={`Similarity Score`}
+                                content={'N/A'}
+                                defaultOpen
+                                id={`similarity-score-${index + 1}`}
+                            />
+                            <AssessmentDetailItem
+                                title={`Citation`}
+                                content={'N/A'}
+                                defaultOpen
+                                id={`citaton-${index + 1}`}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </Card>
         </>
     );
 }

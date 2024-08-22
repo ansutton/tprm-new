@@ -67,14 +67,14 @@ export function Sidebar({
         {
             additionalButtonClasses: tw``,
             icon: <ChartBarSquareIcon className={iconClasses} />,
-            onClick: () => null,
+            onClick: () => setScreen('assessmentOverview'),
             screenTypeAssignment: 'assessmentOverview',
             title: 'Assessment Overview',
         },
         {
             additionalButtonClasses: tw``,
             icon: <DocumentMagnifyingGlassIcon className={iconClasses} />,
-            onClick: () => null,
+            onClick: () => setScreen('assessmentDetail'),
             screenTypeAssignment: 'assessmentDetail',
             title: 'Assessment Detail',
         },
