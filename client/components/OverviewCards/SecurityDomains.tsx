@@ -41,12 +41,14 @@ export function SecurityDomains({
     const styles = {
         light: {
             axisStroke: 'hsl(0, 0%, 55%)',
+            border: '1px solid hsl(0, 0%, 80%)',
             gridStroke: 'hsla(0, 0%, 80%, 0.5)',
-            tooltipBackground: 'hsl(0, 0%, 95%)',
+            tooltipBackground: 'hsl(0, 0%, 100%)',
             tooltipColor: 'hsl(0, 0%, 0%)',
         },
         dark: {
             axisStroke: 'hsla(0, 0%, 98%, 0.8)',
+            border: 'none',
             gridStroke: 'hsla(0, 0%, 50%, 0.5)',
             tooltipBackground: 'hsl(240, 5%, 26%)',
             tooltipColor: 'hsl(0, 0%, 98%)',
@@ -80,7 +82,7 @@ export function SecurityDomains({
                         <Tooltip
                             contentStyle={{
                                 background: `${styles?.tooltipBackground}`,
-                                border: 'none',
+                                border: `${styles?.border}`,
                                 borderRadius: '8px',
                                 color: `${styles?.tooltipColor}`,
                                 fontSize: '0.875rem', // 14px

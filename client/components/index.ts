@@ -5,6 +5,7 @@ export * from './Layout/Sidebar';
 export * from './Layout/Topbar';
 export * from './ModeMenu/ModeMenu';
 export * from './OverviewCards/ConfidenceScore';
+export * from './OverviewCards/EvidenceAnalysis';
 export * from './OverviewCards/EvidenceUnanswered';
 export * from './OverviewCards/QuestionsAnalyzed';
 export * from './OverviewCards/SecurityDomains';
