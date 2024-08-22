@@ -13,6 +13,7 @@ import {
     Heading,
     ProgressBar,
     QuestionsAnalyzed,
+    Summary,
     ThirdPartyInfo,
 } from '@/components';
 import { LlmResponse } from '@/types';
@@ -40,21 +41,14 @@ export function Overview({
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
-
                 <ConfidenceScore
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
-
-                <Card>
-                    <Heading
-                        level={4}
-                        additionalClasses={tw`mb-4 opacity-80`}
-                        fontSize='text-lg'
-                    >
-                        Summary
-                    </Heading>
-                </Card>
+                <Summary
+                    llmResponse={llmResponse}
+                    questionsData={questionsData}
+                />
             </div>
 
             <div className='flex w-full justify-end gap-4'>
