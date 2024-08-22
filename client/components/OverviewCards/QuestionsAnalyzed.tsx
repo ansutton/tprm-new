@@ -19,12 +19,12 @@ export function QuestionsAnalyzed({
     return (
         <CircularProgress
             title='Questions Analyzed'
-            twFontSize='text-2xl'
             startIcon={startIcon}
             value={questionsAnalyzed}
             minValue={0}
             maxValue={numberOfQuestions}
             text={`${questionsAnalyzed}/${numberOfQuestions}`}
+            textFontSize='text-2xl'
         />
     );
 }

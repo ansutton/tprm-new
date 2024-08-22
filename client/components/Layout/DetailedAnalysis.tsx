@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import { ArrowPathIcon, PrinterIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import {
     Disclosure,
     DisclosureButton,
@@ -12,17 +12,17 @@ import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
-interface AssessmentDetailProps {
+interface DetailedAnalysisProps {
     excelData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
 }
 
-export function AssessmentDetail({
+export function DetailedAnalysis({
     excelData,
     llmResponse,
     questionsData,
-}: AssessmentDetailProps): JSX.Element {
+}: DetailedAnalysisProps): JSX.Element {
     return (
         <>
             <Card>
