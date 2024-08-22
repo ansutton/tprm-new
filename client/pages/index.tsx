@@ -9,8 +9,8 @@ import {
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
-    AssessmentDetail,
-    AssessmentOverview,
+    DetailedAnalysis,
+    Overview,
     Button,
     Card,
     Heading,
@@ -104,7 +104,7 @@ export default function Home(): JSX.Element {
                     (question) => question !== '' && question !== 'Questions',
                 );
             setQuestionsData(questionsArray);
-            setScreen('assessmentDetail');
+            setScreen('detailedAnalysis');
             switch (mode) {
                 case 'demo':
                     const demoPollResponse: PythonAppState = {
@@ -349,15 +349,14 @@ export default function Home(): JSX.Element {
                                 Hang tight. This process can take a while.
                             </Heading>
                             <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
-                                When finished loading, the assessment detail
+                                When finished loading, the Detailed Analysis
                                 will be displayed on the next screen.
                             </p>
                             <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
                         </>
                     ) : null}
 
-                    {screen === 'assessmentDetail' ||
-                    screen === 'assessmentOverview' ? (
+                    {screen === 'detailedAnalysis' || screen === 'overview' ? (
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 <div className='w-full'>
@@ -390,30 +389,20 @@ export default function Home(): JSX.Element {
                                     </div>
                                 </div>
 
-                                {screen === 'assessmentDetail' ? (
-                                    <AssessmentDetail
+                                {screen === 'detailedAnalysis' ? (
+                                    <DetailedAnalysis
                                         excelData={excelData}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
                                     />
                                 ) : null}
-                                {screen === 'assessmentOverview' ? (
-                                    <AssessmentOverview
+                                {screen === 'overview' ? (
+                                    <Overview
                                         excelData={excelData}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
                                     />
                                 ) : null}
-                            </div>
-
-                            <div className='mx-auto'>
-                                <Button
-                                    variant='solid'
-                                    onClick={() => setScreen('fileUpload')}
-                                    additionalClasses='mx-auto'
-                                >
-                                    Back to File Upload
-                                </Button>
                             </div>
                         </div>
                     ) : null}

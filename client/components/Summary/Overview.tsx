@@ -14,17 +14,17 @@ import {
 } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
-interface AssessmentOverviewProps {
+interface OverviewProps {
     excelData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
 }
 
-export function AssessmentOverview({
+export function Overview({
     excelData,
     llmResponse,
     questionsData,
-}: AssessmentOverviewProps): JSX.Element {
+}: OverviewProps): JSX.Element {
     const iconStrokeClasses = clsx(
         tw`stroke-indigo-600 stroke-2`,
         tw`dark:stroke-indigo-500`,

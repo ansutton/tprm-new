@@ -1,5 +1,3 @@
-export * from './Assessment/AssessmentDetail';
-export * from './Assessment/AssessmentOverview';
 export * from './DataVisuals/ConfidenceScore';
 export * from './DataVisuals/QuestionsAnalyzed';
 export * from './Layout/Layout';
@@ -12,4 +10,6 @@ export * from './ui/CircularProgress';
 export * from './ui/Heading';
 export * from './ui/MenuItemButton';
 export * from './ui/ProgressBar';
+export * from './Summary/DetailedAnalysis';
+export * from './Summary/Overview';
 export * from './Tooltip/Tooltip';
