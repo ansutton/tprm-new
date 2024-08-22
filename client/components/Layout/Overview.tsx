@@ -57,24 +57,17 @@ export function Overview({
                         title='Evidence Documents Analyzed'
                         progressPercentage={75}
                     />
-
                     <ProgressBar
                         title='Questions Unanswered by Evidence'
                         progressPercentage={40}
                         twBgColor='bg-rose-400'
                     />
                 </div>
-
                 <QuestionsAnalyzed
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
             </div>
-
-            <ConfidenceScore
-                llmResponse={llmResponse}
-                questionsData={questionsData}
-            />
         </>
     );
 }
