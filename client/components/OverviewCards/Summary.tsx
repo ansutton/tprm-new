@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import { Card, Heading } from '@/components';
+import { Card, Heading, ProgressBarBase } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
@@ -22,18 +21,22 @@ export function Summary({
                 additionalClasses={tw`mb-4 opacity-80`}
                 fontSize='text-lg'
             >
-                Control Questions Summary
+                Summary
             </Heading>
             <div className='space-y-4 text-sm font-bold opacity-80'>
                 <SummaryItem
-                    title='Passed'
+                    title='Questions Passed'
                     llmResponse={llmResponse}
+                    progressPercentage={90}
                     questionsData={questionsData}
+                    twBgColor='bg-emerald-400'
                 />
                 <SummaryItem
-                    title='Failed'
+                    title='Questions Failed'
                     llmResponse={llmResponse}
+                    progressPercentage={20}
                     questionsData={questionsData}
+                    twBgColor='bg-rose-400'
                 />
             </div>
         </Card>
@@ -41,24 +44,27 @@ export function Summary({
 }
 
 interface SummaryItemsProps extends SummaryProps {
+    progressPercentage: number;
     title: string;
+    twBgColor: string;
 }
 
-function SummaryItem({ questionsData, title }: SummaryItemsProps): JSX.Element {
+function SummaryItem({
+    questionsData,
+    progressPercentage,
+    title,
+    twBgColor,
+}: SummaryItemsProps): JSX.Element {
     return (
-        <div className='flex items-center justify-evenly gap-4'>
-            <p className='w-1/3 text-xl'>{title}</p>
-            <div className='w-1/3'>
-                <div className='mx-auto h-16 w-16'>
-                    <CircularProgressbar
-                        value={0}
-                        minValue={0}
-                        maxValue={questionsData?.length}
-                        text='N/A'
-                        className='text-3xl'
-                    />
-                </div>
-            </div>
+        <div>
+            <p className='mb-2 text-base'>{title}</p>
+            <p className='mb-1 text-2xl font-bold'>
+                {`${Math.round(progressPercentage * 0.01 * questionsData?.length)}/${questionsData?.length}`}
+            </p>
+            <ProgressBarBase
+                progressPercentage={progressPercentage}
+                twBgColor={twBgColor}
+            />
         </div>
     );
 }
