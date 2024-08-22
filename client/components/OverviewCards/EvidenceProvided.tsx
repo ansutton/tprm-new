@@ -32,13 +32,13 @@ export function EvidenceProvided(): JSX.Element {
             >
                 Evidence Provided
             </Heading>
-            <div className='flex gap-4'>
+            <div className='flex justify-around gap-4'>
                 {data.map(({ title, pathColor, percentage }, index) => (
                     <div key={index}>
                         <p className='mb-3 text-center font-bold opacity-80'>
                             {title}
                         </p>
-                        <div className='mx-auto h-36 w-36'>
+                        <div className='mx-auto h-44 w-44'>
                             <CircularProgressbar
                                 className='text-3xl'
                                 value={percentage}

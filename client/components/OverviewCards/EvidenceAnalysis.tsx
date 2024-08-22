@@ -15,7 +15,7 @@ export function EvidenceAnalysis({
     startIcon = null,
 }: EvidenceAnalysisProps): JSX.Element {
     return (
-        <Card>
+        <Card width='w-64' additionalClasses='  min-w-64'>
             <Heading
                 level={4}
                 additionalClasses={tw`mb-4 opacity-80`}

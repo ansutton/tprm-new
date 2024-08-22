@@ -49,26 +49,23 @@ export function Overview({
                 questionsData={questionsData}
             />
 
-            <div className='flex gap-4'></div>
+            <div className='space-y-4'>
+                <div className='flex gap-4'>
+                    <EvidenceAnalysis
+                        llmResponse={llmResponse}
+                        questionsData={questionsData}
+                    />
 
-            <div className='flex gap-4'>
-                <EvidenceAnalysis
-                    llmResponse={llmResponse}
-                    questionsData={questionsData}
-                />
-
-                <div className='flex flex-col gap-4'>
                     <EvidenceProvided />
-                    <EvidenceUnanswered
-                        title='Questions Unanswered by Evidence'
-                        progressPercentage={40}
-                        twBgColor='bg-rose-400'
+                    <QuestionsAnalyzed
+                        llmResponse={llmResponse}
+                        questionsData={questionsData}
                     />
                 </div>
-
-                <QuestionsAnalyzed
-                    llmResponse={llmResponse}
-                    questionsData={questionsData}
+                <EvidenceUnanswered
+                    title='Questions Unanswered by Evidence'
+                    progressPercentage={40}
+                    twBgColor='bg-rose-400'
                 />
             </div>
         </div>
