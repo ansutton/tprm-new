@@ -7,7 +7,15 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { Button, Card, Heading, Sidebar, Summary, Topbar } from '@/components';
+import {
+    AssessmentDetail,
+    AssessmentOverview,
+    Button,
+    Card,
+    Heading,
+    Sidebar,
+    Topbar,
+} from '@/components';
 import { poll, submit, tw } from '@/utils';
 import { LlmResponse, Mode, PythonAppState, Screen } from '@/types';
 
@@ -95,7 +103,7 @@ export default function Home(): JSX.Element {
                     (question) => question !== '' && question !== 'Questions',
                 );
             setQuestionsData(questionsArray);
-            setScreen('summary');
+            setScreen('assessmentDetail');
             switch (mode) {
                 case 'demo':
                     const demoPollResponse: PythonAppState = {
@@ -340,16 +348,16 @@ export default function Home(): JSX.Element {
                                 Hang tight. This process can take a while.
                             </Heading>
                             <p className='text-center font-medium text-zinc-600 dark:text-zinc-400'>
-                                When finished loading, the summary will be
-                                displayed on the next screen.
+                                When finished loading, the assessment detail
+                                will be displayed on the next screen.
                             </p>
                             <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
                         </>
                     ) : null}
 
-                    {screen === 'summary' ? (
+                    {screen === 'assessmentDetail' ? (
                         <div className='flex flex-col gap-6'>
-                            <Summary
+                            <AssessmentDetail
                                 excelData={excelData}
                                 llmResponse={llmResponse}
                                 questionsData={questionsData}

@@ -27,17 +27,17 @@ import {
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
-interface SummaryProps {
+interface AssessmentDetailProps {
     excelData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
 }
 
-export function Summary({
+export function AssessmentDetail({
     excelData,
     llmResponse,
     questionsData,
-}: SummaryProps): JSX.Element {
+}: AssessmentDetailProps): JSX.Element {
     const iconStrokeClasses = clsx(
         tw`stroke-indigo-600 stroke-2`,
         tw`dark:stroke-indigo-500`,
@@ -243,19 +243,19 @@ export function Summary({
                     <div className='w-full divide-y dark:divide-zinc-600'>
                         {questionsData.map((question, index) => (
                             <div key={index} className='py-2'>
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`Control Question ${index + 1}`}
                                     content={question}
                                     defaultOpen
                                     id={`control-question-${index + 1}`}
                                 />
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`Third Party Response ${index + 1}`}
                                     content={excelData[index + 1][2]}
                                     defaultOpen
                                     id={`third-party-response-${index + 1}`}
                                 />
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`AI Answer ${index + 1}`}
                                     content={
                                         llmResponse?.responses[index] ? (
@@ -267,25 +267,25 @@ export function Summary({
                                     defaultOpen
                                     id={`evidence-analysis-${index + 1}`}
                                 />
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`Answers Align`}
                                     content={'N/A'}
                                     defaultOpen
                                     id={`answers-align-${index + 1}`}
                                 />
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`Confidence Score`}
                                     content={'N/A'}
                                     defaultOpen
                                     id={`confidence-score-${index + 1}`}
                                 />
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`Similarity Score`}
                                     content={'N/A'}
                                     defaultOpen
                                     id={`similarity-score-${index + 1}`}
                                 />
-                                <SummaryItem
+                                <AssessmentDetailItem
                                     title={`Citation`}
                                     content={'N/A'}
                                     defaultOpen
@@ -331,19 +331,19 @@ function TableItem({
     return <td className={clsx(finalClasses)}>{children}</td>;
 }
 
-interface SummaryItemProps {
+interface AssessmentDetailItemProps {
     content: string | JSX.Element;
     defaultOpen?: boolean;
     id: string;
     title: string;
 }
 
-function SummaryItem({
+function AssessmentDetailItem({
     content,
     defaultOpen = false,
     id,
     title,
-}: SummaryItemProps): JSX.Element {
+}: AssessmentDetailItemProps): JSX.Element {
     return (
         <div id={id}>
             <Disclosure defaultOpen={defaultOpen}>
