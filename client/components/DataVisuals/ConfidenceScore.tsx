@@ -13,16 +13,13 @@ export function ConfidenceScore({
     questionsData,
     startIcon = null,
 }: ConfidenceScoreProps): JSX.Element {
-    const numberOfQuestions = questionsData?.length;
-    const questionsAnalyzed = llmResponse?.responses.length || 0;
-
     return (
         <CircularProgress
             title='Confidence Score'
             startIcon={startIcon}
-            value={questionsAnalyzed}
+            value={0}
             minValue={0}
-            maxValue={numberOfQuestions}
+            maxValue={100}
             text='N/A'
             textFontSize='text-2xl'
         />
