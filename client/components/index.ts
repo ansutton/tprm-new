@@ -7,6 +7,7 @@ export * from './ModeMenu/ModeMenu';
 export * from './OverviewCards/ConfidenceScore';
 export * from './OverviewCards/EvidenceUnanswered';
 export * from './OverviewCards/QuestionsAnalyzed';
+export * from './OverviewCards/SecurityDomains';
 export * from './OverviewCards/Summary';
 export * from './OverviewCards/ThirdPartyInfo';
 export * from './Tooltip/Tooltip';

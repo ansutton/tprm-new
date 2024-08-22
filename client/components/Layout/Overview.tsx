@@ -3,6 +3,7 @@ import {
     ConfidenceScore,
     EvidenceUnanswered,
     QuestionsAnalyzed,
+    SecurityDomains,
     Summary,
     ThirdPartyInfo,
 } from '@/components';
@@ -25,7 +26,7 @@ export function Overview({
     );
 
     return (
-        <>
+        <div className='space-y-4'>
             <div className='flex gap-4'>
                 <ThirdPartyInfo
                     llmResponse={llmResponse}
@@ -41,6 +42,11 @@ export function Overview({
                 />
             </div>
 
+            <SecurityDomains
+                llmResponse={llmResponse}
+                questionsData={questionsData}
+            />
+
             <div className='flex w-full justify-end gap-4'>
                 <EvidenceUnanswered
                     title='Questions Unanswered by Evidence'
@@ -52,6 +58,6 @@ export function Overview({
                     questionsData={questionsData}
                 />
             </div>
-        </>
+        </div>
     );
 }
