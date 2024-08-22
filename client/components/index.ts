@@ -10,6 +10,6 @@ export * from './ui/CircularProgress';
 export * from './ui/Heading';
 export * from './ui/MenuItemButton';
 export * from './ui/ProgressBar';
-export * from './Summary/DetailedAnalysis';
-export * from './Summary/Overview';
+export * from './Layout/DetailedAnalysis';
+export * from './Layout/Overview';
 export * from './Tooltip/Tooltip';
