@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useMediaQuery } from 'react-responsive';
 import {
     ConfidenceScore,
     EvidenceAnalysis,
@@ -27,6 +28,8 @@ export function Overview({
         tw`dark:stroke-indigo-500`,
     );
 
+    const isXlScreen = useMediaQuery({ query: '(min-width: 1280px)' });
+
     return (
         <div className='space-y-4'>
             <div className='flex gap-4'>
@@ -49,25 +52,51 @@ export function Overview({
                 questionsData={questionsData}
             />
 
-            <div className='space-y-4'>
-                <div className='flex gap-4'>
-                    <EvidenceAnalysis
-                        llmResponse={llmResponse}
-                        questionsData={questionsData}
-                    />
+            {isXlScreen ? (
+                <div className='space-y-4'>
+                    <div className='flex gap-4'>
+                        <EvidenceAnalysis
+                            isXlScreen={isXlScreen}
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
+                        />
 
-                    <EvidenceProvided />
-                    <QuestionsAnalyzed
-                        llmResponse={llmResponse}
-                        questionsData={questionsData}
+                        <EvidenceProvided isXlScreen={isXlScreen} />
+                        <QuestionsAnalyzed
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
+                        />
+                    </div>
+                    <EvidenceUnanswered
+                        title='Questions Unanswered by Evidence'
+                        progressPercentage={40}
+                        twBgColor='bg-rose-400'
                     />
                 </div>
-                <EvidenceUnanswered
-                    title='Questions Unanswered by Evidence'
-                    progressPercentage={40}
-                    twBgColor='bg-rose-400'
-                />
-            </div>
+            ) : (
+                <div className='space-y-4'>
+                    <div className='flex gap-4'>
+                        <EvidenceAnalysis
+                            isXlScreen={isXlScreen}
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
+                        />
+                        <QuestionsAnalyzed
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
+                        />
+                    </div>
+
+                    <div className='space-y-4'>
+                        <EvidenceUnanswered
+                            title='Questions Unanswered by Evidence'
+                            progressPercentage={40}
+                            twBgColor='bg-rose-400'
+                        />
+                        <EvidenceProvided isXlScreen={isXlScreen} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

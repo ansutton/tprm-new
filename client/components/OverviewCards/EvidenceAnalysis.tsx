@@ -1,21 +1,27 @@
 import { ReactNode } from 'react';
+import clsx from 'clsx';
 import { Card, Heading, ProgressBarBase } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
 interface EvidenceAnalysisProps {
+    isXlScreen?: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
 }
 
 export function EvidenceAnalysis({
+    isXlScreen,
     llmResponse,
     questionsData,
     startIcon = null,
 }: EvidenceAnalysisProps): JSX.Element {
     return (
-        <Card width='w-64' additionalClasses='  min-w-64'>
+        <Card
+            width={clsx(isXlScreen ? tw`w-64` : tw`w-full`)}
+            additionalClasses={tw`min-w-64`}
+        >
             <Heading
                 level={4}
                 additionalClasses={tw`mb-4 opacity-80`}

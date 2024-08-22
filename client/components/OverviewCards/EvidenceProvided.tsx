@@ -1,10 +1,15 @@
+import clsx from 'clsx';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { Card, Heading } from '@/components';
 import { tw } from '@/utils';
 
-interface EvidenceProvidedProps {}
+interface EvidenceProvidedProps {
+    isXlScreen: boolean;
+}
 
-export function EvidenceProvided(): JSX.Element {
+export function EvidenceProvided({
+    isXlScreen,
+}: EvidenceProvidedProps): JSX.Element {
     const data = [
         {
             title: 'Attestations',
@@ -32,7 +37,12 @@ export function EvidenceProvided(): JSX.Element {
             >
                 Evidence Provided
             </Heading>
-            <div className='flex justify-around gap-4'>
+            <div
+                className={clsx(
+                    tw`flex justify-around gap-4`,
+                    // isXlScreen ? tw`` : tw`flex-col`,
+                )}
+            >
                 {data.map(({ title, pathColor, percentage }, index) => (
                     <div key={index}>
                         <p className='mb-3 text-center font-bold opacity-80'>
