@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import {
     ConfidenceScore,
     EvidenceAnalysis,
+    EvidenceProvided,
     EvidenceUnanswered,
     QuestionsAnalyzed,
     SecurityDomains,
@@ -65,6 +66,7 @@ export function Overview({
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
+                <EvidenceProvided />
             </div>
         </div>
     );

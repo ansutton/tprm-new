@@ -25,14 +25,15 @@ export function ThirdPartyInfo({
                     Third Party Information
                 </Heading>
                 <p>
-                    <b>Name</b>: N/A
+                    <b>Name</b>: Company, LLC
                 </p>
                 <p>
-                    <b>Service Description</b>: N/A
+                    <b>Service Description</b>: Provide Third Party Risk
+                    Management support to Deloitte Consulting, LLC.
                 </p>
                 <p>
-                    <b>Summary</b>: The third party and the AI model provided
-                    the same response for{' '}
+                    <b>Summary</b>: The Third Party and the AI model provided
+                    matching responses for{' '}
                     <b>
                         {llmResponse?.responses.length || 0}/
                         {questionsData?.length} (
