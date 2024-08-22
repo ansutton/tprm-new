@@ -5,13 +5,13 @@ import { Card } from '@/components';
 import { tw } from '@/utils';
 
 interface CircularProgressProps {
-    title: string;
+    title?: string;
     titleFontSize?: string;
     value: number;
-    minValue?: number | undefined;
-    maxValue?: number | undefined;
+    minValue: number | undefined;
+    maxValue: number | undefined;
     startIcon?: ReactNode;
-    text?: string | undefined;
+    text: string | undefined;
     textFontSize?: string;
 }
 
