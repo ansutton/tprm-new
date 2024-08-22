@@ -23,7 +23,7 @@ export function Summary({
             >
                 Summary
             </Heading>
-            <div className='space-y-4 text-sm font-bold opacity-80'>
+            <div className='space-y-4 text-sm font-bold'>
                 <SummaryItem
                     title='Questions Passed'
                     llmResponse={llmResponse}
@@ -56,8 +56,8 @@ function SummaryItem({
     twBgColor,
 }: SummaryItemsProps): JSX.Element {
     return (
-        <div>
-            <p className='mb-2 text-base'>{title}</p>
+        <div className=''>
+            <p className='mb-2 text-base opacity-80'>{title}</p>
             <p className='mb-1 text-2xl font-bold'>
                 {`${Math.round(progressPercentage * 0.01 * questionsData?.length)}/${questionsData?.length}`}
             </p>

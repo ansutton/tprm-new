@@ -17,10 +17,10 @@ export function ConfidenceScore({
         <CircularProgress
             title='Confidence Score'
             startIcon={startIcon}
-            value={0}
+            value={90}
             minValue={0}
             maxValue={100}
-            text='N/A'
+            text='90%'
             textFontSize='text-2xl'
         />
     );

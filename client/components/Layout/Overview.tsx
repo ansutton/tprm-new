@@ -1,16 +1,6 @@
-import {
-    BoltIcon,
-    DocumentChartBarIcon,
-    DocumentCheckIcon,
-    DocumentIcon,
-    DocumentTextIcon,
-    NewspaperIcon,
-} from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
-    Card,
     ConfidenceScore,
-    Heading,
     ProgressBar,
     QuestionsAnalyzed,
     Summary,
