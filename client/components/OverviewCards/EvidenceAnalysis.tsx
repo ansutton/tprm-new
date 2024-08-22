@@ -32,7 +32,7 @@ export function EvidenceAnalysis({
                     twBgColor='bg-cyan-400'
                 />
                 <EvidenceAnalysisItem
-                    title='Documents Matching Engagement Scope'
+                    title='Scope-Matching Documents'
                     llmResponse={llmResponse}
                     progressPercentage={67}
                     questionsData={questionsData}
