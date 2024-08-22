@@ -30,7 +30,7 @@ function HeadingWrapper({
 interface HeadingProps extends HeadingWrapperProps {
     additionalClasses?: string;
     startIcon?: ReactNode;
-    twFontSize?: string;
+    fontSize?: string;
 }
 
 export function Heading({
@@ -38,14 +38,14 @@ export function Heading({
     level = 4,
     startIcon = null,
     children,
-    twFontSize,
+    fontSize,
 }: HeadingProps): JSX.Element {
     function FinalHeading(): JSX.Element {
         switch (level) {
             case 3:
                 return (
                     <h3
-                        className={tw`${additionalClasses} ${twFontSize ? twFontSize : 'text-3xl'} mb-3 w-full text-center font-bold text-indigo-600 dark:text-indigo-500`}
+                        className={tw`${additionalClasses} ${fontSize ? fontSize : 'text-3xl'} mb-3 w-full text-center font-bold text-indigo-600 dark:text-indigo-500`}
                     >
                         {children}
                     </h3>
@@ -54,7 +54,7 @@ export function Heading({
             case 4:
                 return (
                     <h4
-                        className={tw`${additionalClasses} ${twFontSize ? twFontSize : 'text-2xl'} w-full font-bold`}
+                        className={tw`${additionalClasses} ${fontSize ? fontSize : 'text-2xl'} w-full font-bold`}
                     >
                         {children}
                     </h4>
