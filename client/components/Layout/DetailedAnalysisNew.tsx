@@ -6,6 +6,7 @@ import { tw } from '@/utils';
 import React, { useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
 import 'primereact/resources/themes/saga-blue/theme.css'; // Import theme
 import 'primereact/resources/primereact.min.css'; // Core CSS
 import 'primeicons/primeicons.css'; // Icons
@@ -30,7 +31,15 @@ const data: Data[] = [
         city: 'New York',
         job: 'Developer',
     },
-    // Add more rows here...
+    {
+        id: 2,
+        name: 'Jane Smith',
+        age: 32,
+        email: 'jane@example.com',
+        country: 'Canada',
+        city: 'Toronto',
+        job: 'Designer',
+    },
 ];
 
 interface DetailedAnalysisNewProps {
@@ -44,10 +53,18 @@ export function DetailedAnalysisNew({
     llmResponse,
     questionsData,
 }: DetailedAnalysisNewProps): JSX.Element {
-    const [expandedRows, setExpandedRows] = useState<any>(null);
+    const [expandedRows, setExpandedRows] = useState<any[]>([]);
 
     const onRowToggle = (e: any) => {
         setExpandedRows(e.data);
+    };
+
+    const toggleAllRows = () => {
+        if (expandedRows.length === data.length) {
+            setExpandedRows([]); // Contract all rows
+        } else {
+            setExpandedRows(data); // Expand all rows
+        }
     };
 
     const rowExpansionTemplate = (rowData: Data) => {
@@ -64,6 +81,15 @@ export function DetailedAnalysisNew({
         <>
             <div>DetailedAnalysisNew</div>
             <div>PrimeReactExample</div>
+            <Button
+                label={
+                    expandedRows.length === data.length
+                        ? 'Contract All'
+                        : 'Expand All'
+                }
+                onClick={toggleAllRows}
+                className='mb-3'
+            />
             <DataTable
                 value={data}
                 expandedRows={expandedRows}
