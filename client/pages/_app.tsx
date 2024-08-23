@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'next-themes';
+import { PrimeReactProvider } from 'primereact/api';
 import { Layout } from '@/components';
 import '@/styles/globals.css';
 
@@ -16,11 +17,13 @@ export default function App({ Component, pageProps }: AppProps) {
                 <link rel='icon' href='/images/favicon.png' />
             </Head>
 
-            <ThemeProvider attribute='class'>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </ThemeProvider>
+            <PrimeReactProvider value={{ unstyled: true, pt: {} }}>
+                <ThemeProvider attribute='class'>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </ThemeProvider>
+            </PrimeReactProvider>
         </>
     );
 }
