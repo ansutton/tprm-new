@@ -5,27 +5,11 @@ import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
-interface Product {
-    id: string;
-    name: string;
-    category: string;
-    quantity: number;
+interface DataTableItem {
+    questionNumber: string;
+    question: string | undefined;
+    tpResponse: string | undefined;
 }
-
-const products = [
-    {
-        id: '1',
-        name: 'Shirt',
-        category: 'Clothing',
-        quantity: 5,
-    },
-    {
-        id: '2',
-        name: 'Watch',
-        category: 'Accessories',
-        quantity: 6,
-    },
-];
 
 interface DetailedAnalysisNewProps {
     excelData: any[][];
@@ -38,15 +22,50 @@ export function DetailedAnalysisNew({
     llmResponse,
     questionsData,
 }: DetailedAnalysisNewProps): JSX.Element {
+    const dataTableItems: DataTableItem[] = questionsData?.map(
+        (question, index) => ({
+            questionNumber: (index + 1).toString(),
+            question: question,
+            tpResponse: llmResponse?.responses[index],
+        }),
+    );
+    const columns = [
+        {
+            field: 'questionNumber',
+            header: 'Question Number',
+        },
+        {
+            field: 'question',
+            header: 'Control Question',
+        },
+        {
+            field: 'tpResponse',
+            header: 'TP Response',
+        },
+    ];
+
     return (
         <>
             <div>DetailedAnalysisNew</div>
             <div>PrimeReactExample</div>
-            <DataTable value={products} tableStyle={{ minWidth: '50rem' }}>
-                <Column field='name' header='Name' />
-                <Column field='category' header='Category' />
-                <Column field='quantity' header='Quantity' />
-            </DataTable>
+            <Card>
+                <DataTable
+                    className={clsx(tw``)}
+                    value={dataTableItems}
+                    removableSort
+                    stripedRows
+                >
+                    {columns.map(({ field, header }, index) => (
+                        <Column
+                            key={index}
+                            field={field}
+                            header={header}
+                            sortable
+                            className={clsx(tw`cursor-pointer`)}
+                        />
+                    ))}
+                </DataTable>
+            </Card>
         </>
     );
 }
