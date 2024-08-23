@@ -1,14 +1,10 @@
-import clsx from 'clsx';
-import { Card, Heading, Tooltip } from '@/components';
-import { LlmResponse } from '@/types';
-import { tw } from '@/utils';
-
 import React, { useMemo, useState } from 'react';
 import {
-    useTable,
-    useExpanded,
     ColumnDef,
-    TableInstance,
+    ExpandedState,
+    useReactTable,
+    getCoreRowModel,
+    getExpandedRowModel,
 } from '@tanstack/react-table';
 import 'tailwindcss/tailwind.css'; // Ensure Tailwind is set up
 
@@ -45,7 +41,7 @@ const data: Data[] = [
 
 interface DetailedAnalysisNewProps {
     excelData: any[][];
-    llmResponse: LlmResponse;
+    llmResponse: any;
     questionsData: string[];
 }
 
@@ -54,9 +50,9 @@ export function DetailedAnalysisNew({
     llmResponse,
     questionsData,
 }: DetailedAnalysisNewProps): JSX.Element {
-    const [expandedRows, setExpandedRows] = useState<number[]>([]);
+    const [expandedRows, setExpandedRows] = useState<ExpandedState>({});
 
-    const columns: ColumnDef<Data>[] = useMemo(
+    const columns = useMemo<ColumnDef<Data>[]>(
         () => [
             {
                 id: 'expander',
@@ -77,33 +73,27 @@ export function DetailedAnalysisNew({
         [],
     );
 
-    const table = useTable({
+    const table = useReactTable({
         data,
         columns,
-        getRowCanExpand: () => true, // Enables row expansion
         state: {
-            expanded: expandedRows.reduce(
-                (prev, curr) => {
-                    prev[curr] = true;
-                    return prev;
-                },
-                {} as Record<number, boolean>,
-            ),
+            expanded: expandedRows,
         },
-        onExpandedChange: (expanded) => {
-            const newExpandedRows = Object.keys(expanded)
-                .filter((key) => expanded[Number(key)])
-                .map(Number);
-            setExpandedRows(newExpandedRows);
-        },
+        getCoreRowModel: getCoreRowModel(),
+        getExpandedRowModel: getExpandedRowModel(),
+        onExpandedChange: setExpandedRows,
+        getRowCanExpand: () => true,
     });
 
     const toggleAllRows = () => {
-        if (expandedRows.length === data.length) {
-            setExpandedRows([]); // Contract all rows
-        } else {
-            setExpandedRows(data.map((row) => row.id)); // Expand all rows
-        }
+        const allExpanded = Object.keys(expandedRows).length === data.length;
+        const newExpandedRows = allExpanded
+            ? {}
+            : data.reduce((acc, row) => {
+                  acc[String(row.id)] = true; // Ensure row.id is a string
+                  return acc;
+              }, {} as ExpandedState);
+        setExpandedRows(newExpandedRows);
     };
 
     return (
@@ -114,7 +104,7 @@ export function DetailedAnalysisNew({
                 onClick={toggleAllRows}
                 className='mb-3 rounded bg-blue-500 px-3 py-1 text-white'
             >
-                {expandedRows.length === data.length
+                {Object.keys(expandedRows).length === data.length
                     ? 'Contract All'
                     : 'Expand All'}
             </button>
@@ -126,7 +116,14 @@ export function DetailedAnalysisNew({
                                 <th key={header.id} className='border p-2'>
                                     {header.isPlaceholder
                                         ? null
-                                        : header.renderHeader()}
+                                        : header.column.columnDef.header
+                                          ? typeof header.column.columnDef
+                                                .header === 'function'
+                                              ? header.column.columnDef.header(
+                                                    header.getContext(),
+                                                )
+                                              : null
+                                          : null}
                                 </th>
                             ))}
                         </tr>
@@ -138,7 +135,14 @@ export function DetailedAnalysisNew({
                             <tr>
                                 {row.getVisibleCells().map((cell) => (
                                     <td key={cell.id} className='border p-2'>
-                                        {cell.renderCell()}
+                                        {cell.column.columnDef.cell
+                                            ? typeof cell.column.columnDef
+                                                  .cell === 'function'
+                                                ? cell.column.columnDef.cell(
+                                                      cell.getContext(),
+                                                  )
+                                                : null
+                                            : null}
                                     </td>
                                 ))}
                             </tr>
