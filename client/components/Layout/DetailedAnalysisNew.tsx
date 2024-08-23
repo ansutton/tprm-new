@@ -1,12 +1,15 @@
-import React, { useMemo, useState } from 'react';
-import {
-    ColumnDef,
-    ExpandedState,
-    useReactTable,
-    getCoreRowModel,
-    getExpandedRowModel,
-} from '@tanstack/react-table';
-import 'tailwindcss/tailwind.css'; // Ensure Tailwind is set up
+import clsx from 'clsx';
+import { Card, Heading, Tooltip } from '@/components';
+import { LlmResponse } from '@/types';
+import { tw } from '@/utils';
+
+import React, { useState } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
+import 'primereact/resources/themes/saga-blue/theme.css'; // Import theme
+import 'primereact/resources/primereact.min.css'; // Core CSS
+import 'primeicons/primeicons.css'; // Icons
 
 type Data = {
     id: number;
@@ -41,7 +44,7 @@ const data: Data[] = [
 
 interface DetailedAnalysisNewProps {
     excelData: any[][];
-    llmResponse: any;
+    llmResponse: LlmResponse;
     questionsData: string[];
 }
 
@@ -50,125 +53,59 @@ export function DetailedAnalysisNew({
     llmResponse,
     questionsData,
 }: DetailedAnalysisNewProps): JSX.Element {
-    const [expandedRows, setExpandedRows] = useState<ExpandedState>({});
+    const [expandedRows, setExpandedRows] = useState<any[]>([]);
 
-    const columns = useMemo<ColumnDef<Data>[]>(
-        () => [
-            {
-                id: 'expander',
-                header: () => null,
-                cell: ({ row }) => (
-                    <button onClick={() => row.toggleExpanded()}>
-                        {row.getIsExpanded() ? '−' : '+'}
-                    </button>
-                ),
-            },
-            { accessorKey: 'name', header: 'Name' },
-            { accessorKey: 'age', header: 'Age' },
-            { accessorKey: 'email', header: 'Email' },
-            { accessorKey: 'country', header: 'Country' },
-            { accessorKey: 'city', header: 'City' },
-            { accessorKey: 'job', header: 'Job' },
-        ],
-        [],
-    );
-
-    const table = useReactTable({
-        data,
-        columns,
-        state: {
-            expanded: expandedRows,
-        },
-        getCoreRowModel: getCoreRowModel(),
-        getExpandedRowModel: getExpandedRowModel(),
-        onExpandedChange: setExpandedRows,
-        getRowCanExpand: () => true,
-    });
+    const onRowToggle = (e: any) => {
+        setExpandedRows(e.data);
+    };
 
     const toggleAllRows = () => {
-        const allExpanded = Object.keys(expandedRows).length === data.length;
-        const newExpandedRows = allExpanded
-            ? {}
-            : data.reduce((acc, row) => {
-                  acc[String(row.id)] = true; // Ensure row.id is a string
-                  return acc;
-              }, {} as ExpandedState);
-        setExpandedRows(newExpandedRows);
+        if (expandedRows.length === data.length) {
+            setExpandedRows([]); // Contract all rows
+        } else {
+            setExpandedRows(data); // Expand all rows
+        }
+    };
+
+    const rowExpansionTemplate = (rowData: Data) => {
+        return (
+            <div className='p-3'>
+                <h5>Expanded Content for {rowData.name}</h5>
+                <p>Email: {rowData.email}</p>
+                <p>Country: {rowData.country}</p>
+            </div>
+        );
     };
 
     return (
         <>
             <div>DetailedAnalysisNew</div>
-            <div>TanStack Table Example</div>
-            <button
+            <div>PrimeReactExample</div>
+            <Button
+                label={
+                    expandedRows.length === data.length
+                        ? 'Contract All'
+                        : 'Expand All'
+                }
                 onClick={toggleAllRows}
-                className='mb-3 rounded bg-blue-500 px-3 py-1 text-white'
+                className='mb-3'
+            />
+            <DataTable
+                value={data}
+                expandedRows={expandedRows}
+                onRowToggle={onRowToggle}
+                rowExpansionTemplate={rowExpansionTemplate}
+                dataKey='id' // Ensures unique row identification
+                responsiveLayout='scroll'
             >
-                {Object.keys(expandedRows).length === data.length
-                    ? 'Contract All'
-                    : 'Expand All'}
-            </button>
-            <table className='min-w-full border-collapse'>
-                <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <th key={header.id} className='border p-2'>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : header.column.columnDef.header
-                                          ? typeof header.column.columnDef
-                                                .header === 'function'
-                                              ? header.column.columnDef.header(
-                                                    header.getContext(),
-                                                )
-                                              : null
-                                          : null}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                        <React.Fragment key={row.id}>
-                            <tr>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id} className='border p-2'>
-                                        {cell.column.columnDef.cell
-                                            ? typeof cell.column.columnDef
-                                                  .cell === 'function'
-                                                ? cell.column.columnDef.cell(
-                                                      cell.getContext(),
-                                                  )
-                                                : null
-                                            : null}
-                                    </td>
-                                ))}
-                            </tr>
-                            {row.getIsExpanded() && (
-                                <tr>
-                                    <td
-                                        colSpan={columns.length}
-                                        className='border p-2'
-                                    >
-                                        <div className='p-3'>
-                                            <h5>
-                                                Expanded Content for{' '}
-                                                {row.original.name}
-                                            </h5>
-                                            <p>Email: {row.original.email}</p>
-                                            <p>
-                                                Country: {row.original.country}
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )}
-                        </React.Fragment>
-                    ))}
-                </tbody>
-            </table>
+                <Column expander style={{ width: '3em' }} />
+                <Column field='name' header='Name' />
+                <Column field='age' header='Age' />
+                <Column field='email' header='Email' />
+                <Column field='country' header='Country' />
+                <Column field='city' header='City' />
+                <Column field='job' header='Job' />
+            </DataTable>
         </>
     );
 }
