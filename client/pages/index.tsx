@@ -9,6 +9,7 @@ import {
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
+    DetailedAnalysisNew,
     DetailedAnalysis,
     Overview,
     Button,
@@ -390,11 +391,18 @@ export default function Home(): JSX.Element {
                                 </div>
 
                                 {screen === 'detailedAnalysis' ? (
-                                    <DetailedAnalysis
-                                        excelData={excelData}
-                                        llmResponse={llmResponse}
-                                        questionsData={questionsData}
-                                    />
+                                    <>
+                                        <DetailedAnalysisNew
+                                            excelData={excelData}
+                                            llmResponse={llmResponse}
+                                            questionsData={questionsData}
+                                        />
+                                        <DetailedAnalysis
+                                            excelData={excelData}
+                                            llmResponse={llmResponse}
+                                            questionsData={questionsData}
+                                        />
+                                    </>
                                 ) : null}
                                 {screen === 'overview' ? (
                                     <Overview
