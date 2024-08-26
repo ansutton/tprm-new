@@ -40,14 +40,7 @@ const columns = [
         id: 'expander',
         header: () => null,
         cell: ({ row }) => (
-            <button
-                onClick={() => row.toggleExpanded()}
-                className={clsx(
-                    tw`rounded-lg p-1 transition-all`,
-                    tw`hover:bg-zinc-200`,
-                    tw`dark:hover:bg-zinc-800`,
-                )}
-            >
+            <button className={clsx(tw`transition-all`)}>
                 {row.getIsExpanded() ? (
                     <ChevronDownIcon className={clsx(iconClasses)} />
                 ) : (
@@ -159,9 +152,28 @@ export function DetailedAnalysisNew({
                 >
                     {table.getRowModel().rows.map((row) => (
                         <Fragment key={row.id}>
-                            <tr>
+                            <tr
+                                onClick={() => row.toggleExpanded()}
+                                className={clsx(
+                                    tw`hover:cursor-pointer`,
+                                    tw`transition-all duration-200 ease-out`,
+                                    tw`hover:bg-zinc-200 dark:hover:bg-zinc-900`,
+                                    row.getIsExpanded() &&
+                                        tw`bg-zinc-200 dark:bg-zinc-900`,
+                                )}
+                            >
                                 {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id} className='p-3 text-sm'>
+                                    <td
+                                        key={cell.id}
+                                        className={clsx(
+                                            tw`p-3 text-sm`,
+                                            (cell.column.id ===
+                                                'thirdPartyResponsePreview' ||
+                                                cell.column.id ===
+                                                    'evidenceAnalysisPreview') &&
+                                                tw`select-none`,
+                                        )}
+                                    >
                                         {flexRender(
                                             cell.column.columnDef.cell,
                                             cell.getContext(),
@@ -172,6 +184,7 @@ export function DetailedAnalysisNew({
                             {row.getIsExpanded() && (
                                 <>
                                     <ExpandedRow
+                                        borderClasses={tw`border-b border-zinc-300 dark:border-zinc-600`}
                                         content={
                                             row.original.thirdPartyResponseFull
                                         }
@@ -196,18 +209,27 @@ export function DetailedAnalysisNew({
 }
 
 interface ExpandedRowProps {
+    borderClasses?: string;
     content: string;
     row: Row<DataItem>;
     title: string;
 }
 
-function ExpandedRow({ content, row, title }: ExpandedRowProps): JSX.Element {
+function ExpandedRow({
+    borderClasses = 'border-none',
+    content,
+    row,
+    title,
+}: ExpandedRowProps): JSX.Element {
     return (
-        <tr className='border-none'>
-            <td colSpan={2} className='pl-5 text-sm'>
-                {title}
+        <tr className={clsx(borderClasses, tw`bg-zinc-200 dark:bg-zinc-900`)}>
+            <td colSpan={3} className='py-3 pl-12 pr-3 align-top text-sm'>
+                {title}:
             </td>
-            <td colSpan={row.getVisibleCells().length - 2} className='text-sm'>
+            <td
+                colSpan={row.getVisibleCells().length - 3}
+                className='p-3 text-sm'
+            >
                 {content}
             </td>
         </tr>
