@@ -8,7 +8,7 @@ import {
 import clsx from 'clsx';
 import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
-import { tw } from '@/utils';
+import { truncate, tw } from '@/utils';
 
 type DataItem = {
     questionNumber: number;
@@ -48,42 +48,43 @@ const defaultData: DataItem[] = [
 const columnHelper = createColumnHelper<DataItem>();
 
 const columns = [
-    // columnHelper.display({
-    //     id: 'expandContract',
-    //     cell: () => <button>Expand/Contract</button>,
-    // }),
+    columnHelper.display({
+        id: 'expandContract',
+        header: () => null,
+        cell: () => <button>Expand/ Contract</button>,
+    }),
 
     columnHelper.accessor('questionNumber', {
-        header: 'Control Question Number',
-        cell: () => <div>1</div>,
+        header: () => null,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('question', {
         header: 'Control Question',
-        cell: () => <div>What is his name?</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('thirdPartyResponsePreview', {
         header: 'Third Party Response',
-        cell: () => <div>His name...</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('evidenceAnalysisPreview', {
         header: 'Evidence Analysis',
-        cell: () => <div>John is...</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('answersAlign', {
         header: 'Answers Align',
-        cell: () => <div>N/A</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('confidenceScore', {
         header: 'Confidence Score',
-        cell: () => <div>N/A</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('similarityScore', {
         header: 'Similarity Score',
-        cell: () => <div>N/A</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
     columnHelper.accessor('citation', {
         header: 'Citation',
-        cell: () => <div>N/A</div>,
+        cell: ({ getValue }) => <div>{getValue()}</div>,
     }),
 ];
 
@@ -98,7 +99,22 @@ export function DetailedAnalysisNew({
     llmResponse,
     questionsData,
 }: DetailedAnalysisNewProps): JSX.Element {
-    const [data, _setData] = useState(() => [...defaultData]);
+    const [data, _setData] = useState(() =>
+        questionsData.map((question, index) => ({
+            questionNumber: index + 1,
+            question: question,
+            thirdPartyResponsePreview: truncate(excelData[index + 1][2], 20),
+            evidenceAnalysisPreview: 'N/A',
+            subRows: questionsData.map((question, index) => ({
+                thirdPartyResponseFull: excelData[index + 1][2],
+                evidenceAnalysisFull: 'N/A',
+            })),
+            answersAlign: 'N/A',
+            confidenceScore: 'N/A',
+            similarityScore: 'N/A',
+            citation: 'N/A',
+        })),
+    );
 
     const table = useReactTable({
         data,
