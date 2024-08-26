@@ -25,7 +25,7 @@ type DataItem = {
     citation: string;
 };
 
-// TODO: change from Array to Object.
+// TODO: Be prepared to take in Python Dictionary (and possibly convert put it into this Array, or convert this Array to an Object).
 const defaultData: DataItem[] = [
     {
         questionNumber: 1,
