@@ -164,17 +164,15 @@ function ThemeMenu(): JSX.Element {
     return (
         <Menu>
             <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
-                {theme === 'light' ? (
-                    <SunIcon className={iconClassesBase} />
-                ) : null}
-                {theme === 'dark' ? (
+                {theme === 'light' && <SunIcon className={iconClassesBase} />}
+                {theme === 'dark' && (
                     <MoonIcon
                         className={`${iconClassesBase} stroke-zinc-300`}
                     />
-                ) : null}
-                {theme === 'system' ? (
+                )}
+                {theme === 'system' && (
                     <IconSystem additionalClasses='dark:stroke-zinc-300' />
-                ) : null}
+                )}
             </MenuButton>
 
             <MenuItems
