@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import {
     createColumnHelper,
     flexRender,
@@ -10,7 +10,6 @@ import clsx from 'clsx';
 import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { truncate, tw } from '@/utils';
-import { DivideIcon } from '@heroicons/react/16/solid';
 
 type DataItem = {
     questionNumber: number;
@@ -24,22 +23,6 @@ type DataItem = {
     similarityScore: string;
     citation: string;
 };
-
-// TODO: Be prepared to take in Python Dictionary (and possibly convert put it into this Array, or convert this Array to an Object).
-const defaultData: DataItem[] = [
-    {
-        questionNumber: 1,
-        question: 'What is his name?',
-        thirdPartyResponsePreview: 'His name...',
-        evidenceAnalysisPreview: 'John is...',
-        thirdPartyResponseFull: 'His name is John.',
-        evidenceAnalysisFull: 'John is his name.',
-        answersAlign: 'N/A',
-        confidenceScore: 'N/A',
-        similarityScore: 'N/A',
-        citation: 'N/A',
-    },
-];
 
 const columnHelper = createColumnHelper<DataItem>();
 
@@ -56,35 +39,35 @@ const columns = [
 
     columnHelper.accessor('questionNumber', {
         header: () => null,
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
         header: 'Control Question',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('thirdPartyResponsePreview', {
         header: 'Third Party Response',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('evidenceAnalysisPreview', {
         header: 'Evidence Analysis',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('answersAlign', {
         header: 'Answers Align',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('confidenceScore', {
         header: 'Confidence Score',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('similarityScore', {
         header: 'Similarity Score',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('citation', {
         header: 'Citation',
-        cell: ({ getValue }) => <div>{getValue()}</div>,
+        cell: ({ getValue }) => getValue(),
     }),
 ];
 
@@ -122,72 +105,69 @@ export function DetailedAnalysisNew({
     });
 
     return (
-        <>
-            <div>DetailedAnalysisNew</div>
-            <table>
-                <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <th key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext(),
-                                          )}
-                                </th>
+        <table>
+            <thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                            <th key={header.id}>
+                                {header.isPlaceholder
+                                    ? null
+                                    : flexRender(
+                                          header.column.columnDef.header,
+                                          header.getContext(),
+                                      )}
+                            </th>
+                        ))}
+                    </tr>
+                ))}
+            </thead>
+
+            <tbody>
+                {table.getRowModel().rows.map((row) => (
+                    <Fragment key={row.id}>
+                        <tr>
+                            {row.getVisibleCells().map((cell) => (
+                                <td key={cell.id}>
+                                    {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext(),
+                                    )}
+                                </td>
                             ))}
                         </tr>
-                    ))}
-                </thead>
-
-                <tbody>
-                    {table.getRowModel().rows.map((row, index) => (
-                        <Fragment key={row.id}>
-                            <tr>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext(),
-                                        )}
-                                    </td>
-                                ))}
-                            </tr>
-                            {row.getIsExpanded() && (
-                                <>
-                                    <tr>
-                                        <td colSpan={1}>
-                                            Third Party Response
-                                        </td>
-                                        <td
-                                            colSpan={
-                                                row.getVisibleCells().length - 1
-                                            }
-                                        >
+                        {row.getIsExpanded() && (
+                            <>
+                                <tr>
+                                    <td
+                                        colSpan={row.getVisibleCells().length}
+                                        className='pl-4'
+                                    >
+                                        <p>Third Party Response</p>
+                                        <p>
                                             {
                                                 row.original
                                                     .thirdPartyResponseFull
                                             }
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan={1}>Evidence Analysis</td>
-                                        <td
-                                            colSpan={
-                                                row.getVisibleCells().length - 1
-                                            }
-                                        >
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        colSpan={row.getVisibleCells().length}
+                                        className='pl-4'
+                                    >
+                                        <p>Evidence Analysis</p>
+                                        <p>
                                             {row.original.evidenceAnalysisFull}
-                                        </td>
-                                    </tr>
-                                </>
-                            )}
-                        </Fragment>
-                    ))}
-                </tbody>
-            </table>
-        </>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </>
+                        )}
+                    </Fragment>
+                ))}
+            </tbody>
+        </table>
     );
 }
