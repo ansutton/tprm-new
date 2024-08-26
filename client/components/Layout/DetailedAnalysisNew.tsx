@@ -1,9 +1,11 @@
 import { Fragment, useState } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import {
     createColumnHelper,
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
+    Row,
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
@@ -28,7 +30,7 @@ const columnHelper = createColumnHelper<DataItem>();
 
 const columns = [
     columnHelper.display({
-        id: 'expandContract',
+        id: 'expander',
         header: () => null,
         cell: ({ row }) => (
             <button onClick={() => row.toggleExpanded()}>
@@ -105,69 +107,89 @@ export function DetailedAnalysisNew({
     });
 
     return (
-        <table>
-            <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => (
-                            <th key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.header,
-                                          header.getContext(),
-                                      )}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-
-            <tbody>
-                {table.getRowModel().rows.map((row) => (
-                    <Fragment key={row.id}>
-                        <tr>
-                            {row.getVisibleCells().map((cell) => (
-                                <td key={cell.id}>
-                                    {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
+        <div className='rounded-lg border border-zinc-300 dark:border-zinc-600'>
+            <table>
+                <thead>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => (
+                                <th
+                                    key={header.id}
+                                    className={clsx(
+                                        tw`w-fit whitespace-nowrap p-3 text-left text-sm`,
+                                        tw`border-b border-zinc-300 dark:border-zinc-600`,
                                     )}
-                                </td>
+                                >
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                              header.column.columnDef.header,
+                                              header.getContext(),
+                                          )}
+                                </th>
                             ))}
                         </tr>
-                        {row.getIsExpanded() && (
-                            <>
-                                <tr>
-                                    <td
-                                        colSpan={row.getVisibleCells().length}
-                                        className='pl-4'
-                                    >
-                                        <p>Third Party Response</p>
-                                        <p>
-                                            {
-                                                row.original
-                                                    .thirdPartyResponseFull
-                                            }
-                                        </p>
+                    ))}
+                </thead>
+
+                <tbody
+                    className={clsx(
+                        tw`divide-y divide-zinc-300 dark:divide-zinc-600`,
+                    )}
+                >
+                    {table.getRowModel().rows.map((row) => (
+                        <Fragment key={row.id}>
+                            <tr>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td key={cell.id} className='p-3 text-sm'>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext(),
+                                        )}
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td
-                                        colSpan={row.getVisibleCells().length}
-                                        className='pl-4'
-                                    >
-                                        <p>Evidence Analysis</p>
-                                        <p>
-                                            {row.original.evidenceAnalysisFull}
-                                        </p>
-                                    </td>
-                                </tr>
-                            </>
-                        )}
-                    </Fragment>
-                ))}
-            </tbody>
-        </table>
+                                ))}
+                            </tr>
+                            {row.getIsExpanded() && (
+                                <>
+                                    <ExpandedRow
+                                        content={
+                                            row.original.thirdPartyResponseFull
+                                        }
+                                        row={row}
+                                        title={'Third Party Response'}
+                                    />
+                                    <ExpandedRow
+                                        content={
+                                            row.original.evidenceAnalysisFull
+                                        }
+                                        row={row}
+                                        title={'Evidence Analysis'}
+                                    />
+                                </>
+                            )}
+                        </Fragment>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+interface ExpandedRowProps {
+    content: string;
+    row: Row<DataItem>;
+    title: string;
+}
+
+function ExpandedRow({ content, row, title }: ExpandedRowProps): JSX.Element {
+    return (
+        <tr className='border-none'>
+            <td colSpan={2} className='pl-5 text-sm'>
+                {title}
+            </td>
+            <td colSpan={row.getVisibleCells().length - 2} className='text-sm'>
+                {content}
+            </td>
+        </tr>
     );
 }
