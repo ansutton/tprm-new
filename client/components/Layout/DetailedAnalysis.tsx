@@ -35,7 +35,7 @@ export function DetailedAnalysis({
                         <tr>
                             {[
                                 'Control Question',
-                                'TP Response',
+                                'Third Party Response',
                                 'Evidence Analysis',
                                 'Answers Align',
                                 'Confidence Score',
