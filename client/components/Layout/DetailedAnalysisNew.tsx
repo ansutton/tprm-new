@@ -1,24 +1,24 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import {
     createColumnHelper,
     flexRender,
     getCoreRowModel,
+    getExpandedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { truncate, tw } from '@/utils';
+import { DivideIcon } from '@heroicons/react/16/solid';
 
 type DataItem = {
     questionNumber: number;
     question: string;
     thirdPartyResponsePreview: string;
     evidenceAnalysisPreview: string;
-    subRows: {
-        thirdPartyResponseFull: string;
-        evidenceAnalysisFull: string;
-    }[];
+    thirdPartyResponseFull: string;
+    evidenceAnalysisFull: string;
     answersAlign: string;
     confidenceScore: string;
     similarityScore: string;
@@ -32,12 +32,8 @@ const defaultData: DataItem[] = [
         question: 'What is his name?',
         thirdPartyResponsePreview: 'His name...',
         evidenceAnalysisPreview: 'John is...',
-        subRows: [
-            {
-                thirdPartyResponseFull: 'His name is John.',
-                evidenceAnalysisFull: 'John is his name.',
-            },
-        ],
+        thirdPartyResponseFull: 'His name is John.',
+        evidenceAnalysisFull: 'John is his name.',
         answersAlign: 'N/A',
         confidenceScore: 'N/A',
         similarityScore: 'N/A',
@@ -51,7 +47,11 @@ const columns = [
     columnHelper.display({
         id: 'expandContract',
         header: () => null,
-        cell: () => <button>Expand/ Contract</button>,
+        cell: ({ row }) => (
+            <button onClick={() => row.toggleExpanded()}>
+                {row.getIsExpanded() ? 'Contract' : 'Expand'}
+            </button>
+        ),
     }),
 
     columnHelper.accessor('questionNumber', {
@@ -105,10 +105,8 @@ export function DetailedAnalysisNew({
             question: question,
             thirdPartyResponsePreview: truncate(excelData[index + 1][2], 20),
             evidenceAnalysisPreview: 'N/A',
-            subRows: questionsData.map((question, index) => ({
-                thirdPartyResponseFull: excelData[index + 1][2],
-                evidenceAnalysisFull: 'N/A',
-            })),
+            thirdPartyResponseFull: excelData[index + 1][2],
+            evidenceAnalysisFull: 'N/A',
             answersAlign: 'N/A',
             confidenceScore: 'N/A',
             similarityScore: 'N/A',
@@ -120,6 +118,7 @@ export function DetailedAnalysisNew({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getExpandedRowModel: getExpandedRowModel(),
     });
 
     return (
@@ -144,17 +143,48 @@ export function DetailedAnalysisNew({
                 </thead>
 
                 <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id}>
-                            {row.getVisibleCells().map((cell) => (
-                                <td key={cell.id}>
-                                    {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                    )}
-                                </td>
-                            ))}
-                        </tr>
+                    {table.getRowModel().rows.map((row, index) => (
+                        <Fragment key={row.id}>
+                            <tr>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td key={cell.id}>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext(),
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                            {row.getIsExpanded() && (
+                                <>
+                                    <tr>
+                                        <td colSpan={1}>
+                                            Third Party Response
+                                        </td>
+                                        <td
+                                            colSpan={
+                                                row.getVisibleCells().length - 1
+                                            }
+                                        >
+                                            {
+                                                row.original
+                                                    .thirdPartyResponseFull
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={1}>Evidence Analysis</td>
+                                        <td
+                                            colSpan={
+                                                row.getVisibleCells().length - 1
+                                            }
+                                        >
+                                            {row.original.evidenceAnalysisFull}
+                                        </td>
+                                    </tr>
+                                </>
+                            )}
+                        </Fragment>
                     ))}
                 </tbody>
             </table>
