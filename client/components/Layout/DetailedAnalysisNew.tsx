@@ -54,11 +54,11 @@ const columns = [
     // }),
 
     columnHelper.accessor('questionNumber', {
-        header: 'Question Number',
+        header: 'Control Question Number',
         cell: () => <div>1</div>,
     }),
     columnHelper.accessor('question', {
-        header: 'Question',
+        header: 'Control Question',
         cell: () => <div>What is his name?</div>,
     }),
     columnHelper.accessor('thirdPartyResponsePreview', {
@@ -126,6 +126,21 @@ export function DetailedAnalysisNew({
                         </tr>
                     ))}
                 </thead>
+
+                <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id}>
+                            {row.getVisibleCells().map((cell) => (
+                                <td key={cell.id}>
+                                    {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext(),
+                                    )}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </>
     );
