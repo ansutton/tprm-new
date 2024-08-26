@@ -28,13 +28,33 @@ type DataItem = {
 
 const columnHelper = createColumnHelper<DataItem>();
 
+const iconClasses = clsx(
+    tw`size-6 stroke-0`,
+    tw`text-zinc-600`,
+    tw`dark:text-zinc-400`,
+    tw`transform transition-transform duration-200`,
+);
+
 const columns = [
     columnHelper.display({
         id: 'expander',
         header: () => null,
         cell: ({ row }) => (
-            <button onClick={() => row.toggleExpanded()}>
-                {row.getIsExpanded() ? 'Contract' : 'Expand'}
+            <button
+                onClick={() => row.toggleExpanded()}
+                className={clsx(
+                    tw`rounded-lg p-1 transition-all`,
+                    tw`hover:bg-zinc-200`,
+                    tw`dark:hover:bg-zinc-800`,
+                )}
+            >
+                {row.getIsExpanded() ? (
+                    <ChevronDownIcon className={clsx(iconClasses)} />
+                ) : (
+                    <ChevronDownIcon
+                        className={clsx(tw`-rotate-90`, iconClasses)}
+                    />
+                )}
             </button>
         ),
     }),
