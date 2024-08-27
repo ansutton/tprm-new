@@ -42,7 +42,7 @@ const columns = [
         cell: ({ row }) => (
             <button
                 className={clsx(
-                    tw`rounded-lg p-1 transition-all`,
+                    tw`rounded-full p-1 transition-all`,
                     tw`group-hover:bg-zinc-300`,
                     tw`dark:group-hover:bg-zinc-800`,
                 )}
@@ -126,123 +126,114 @@ export function DetailedAnalysisNew({
     });
 
     return (
-        <Card>
-            <Heading level={4} additionalClasses='mb-4'>
-                Results Table
-            </Heading>
-            <div
-                className={clsx(
-                    tw`bg-zinc-100 dark:bg-zinc-950`,
-                    tw`rounded-lg border border-zinc-300 dark:border-zinc-600`,
-                    tw`drop-shadow-md`,
-                )}
-            >
-                <table className='w-full dark:text-zinc-100'>
-                    <thead>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => (
-                                    <th
-                                        key={header.id}
-                                        className={clsx(
-                                            tw`whitespace-nowrap p-3 text-left text-sm`,
-                                            tw`border-b border-zinc-300 dark:border-zinc-600`,
-                                            header.id === 'expander' && tw`w-5`,
-                                            header.id === 'questionNumber' &&
-                                                tw`w-5`,
-                                            header.id === 'question' &&
-                                                tw`w-fit`,
-                                            header.id ===
-                                                'thirdPartyResponsePreview' &&
-                                                tw`w-1/6`,
-                                            header.id ===
-                                                'evidenceAnalysisPreview' &&
-                                                tw`w-1/6`,
-                                            header.id === 'answersAlign' &&
-                                                tw`w-1/12`,
-                                            header.id === 'confidenceScore' &&
-                                                tw`w-1/12`,
-                                            header.id === 'similarityScore' &&
-                                                tw`w-1/12`,
-                                            header.id === 'citation' &&
-                                                tw`w-1/12`,
-                                        )}
-                                    >
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext(),
-                                              )}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-
-                    <tbody
-                        className={clsx(
-                            tw`divide-y divide-zinc-300 dark:divide-zinc-600`,
-                        )}
-                    >
-                        {table.getRowModel().rows.map((row) => (
-                            <Fragment key={row.id}>
-                                <tr
-                                    onClick={() => row.toggleExpanded()}
+        <div
+            className={clsx(
+                tw`overflow-x-auto`,
+                tw`bg-zinc-100 dark:bg-zinc-950`,
+                tw`rounded-lg border border-zinc-300 dark:border-zinc-600`,
+                tw`drop-shadow-md`,
+            )}
+        >
+            <table className='w-full dark:text-zinc-100'>
+                <thead>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => (
+                                <th
+                                    key={header.id}
                                     className={clsx(
-                                        tw`group`,
-                                        tw`transition-all duration-200 ease-out`,
-                                        tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900`,
-                                        row.getIsExpanded() &&
-                                            tw`bg-zinc-200 dark:bg-zinc-900`,
+                                        tw`whitespace-nowrap p-3 text-left text-sm`,
+                                        tw`border-b border-zinc-300 dark:border-zinc-600`,
+                                        header.id === 'expander' && tw`w-5`,
+                                        header.id === 'questionNumber' &&
+                                            tw`w-5`,
+                                        header.id === 'question' && tw`w-fit`,
+                                        header.id ===
+                                            'thirdPartyResponsePreview' &&
+                                            tw`w-1/6`,
+                                        header.id ===
+                                            'evidenceAnalysisPreview' &&
+                                            tw`w-1/6`,
+                                        header.id === 'answersAlign' &&
+                                            tw`w-1/12`,
+                                        header.id === 'confidenceScore' &&
+                                            tw`w-1/12`,
+                                        header.id === 'similarityScore' &&
+                                            tw`w-1/12`,
+                                        header.id === 'citation' && tw`w-1/12`,
                                     )}
                                 >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <td
-                                            key={cell.id}
-                                            className={clsx(
-                                                tw`p-3 text-sm`,
-                                                (cell.column.id ===
-                                                    'thirdPartyResponsePreview' ||
-                                                    cell.column.id ===
-                                                        'evidenceAnalysisPreview') &&
-                                                    tw`select-none`,
-                                            )}
-                                        >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext(),
-                                            )}
-                                        </td>
-                                    ))}
-                                </tr>
-                                {row.getIsExpanded() && (
-                                    <>
-                                        <ExpandedRow
-                                            content={
-                                                row.original
-                                                    .thirdPartyResponseFull
-                                            }
-                                            row={row}
-                                            title={'Third Party Response'}
-                                        />
-                                        <ExpandedRow
-                                            content={
-                                                row.original
-                                                    .evidenceAnalysisFull
-                                            }
-                                            row={row}
-                                            title={'Evidence Analysis'}
-                                        />
-                                    </>
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                              header.column.columnDef.header,
+                                              header.getContext(),
+                                          )}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+
+                <tbody
+                    className={clsx(
+                        tw`divide-y divide-zinc-300 dark:divide-zinc-600`,
+                    )}
+                >
+                    {table.getRowModel().rows.map((row) => (
+                        <Fragment key={row.id}>
+                            <tr
+                                onClick={() => row.toggleExpanded()}
+                                className={clsx(
+                                    tw`group`,
+                                    tw`transition-all duration-200 ease-out`,
+                                    tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900`,
+                                    row.getIsExpanded() &&
+                                        tw`bg-zinc-200 dark:bg-zinc-900`,
                                 )}
-                            </Fragment>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </Card>
+                            >
+                                {row.getVisibleCells().map((cell) => (
+                                    <td
+                                        key={cell.id}
+                                        className={clsx(
+                                            tw`p-3 text-sm`,
+                                            (cell.column.id ===
+                                                'thirdPartyResponsePreview' ||
+                                                cell.column.id ===
+                                                    'evidenceAnalysisPreview') &&
+                                                tw`select-none`,
+                                        )}
+                                    >
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext(),
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                            {row.getIsExpanded() && (
+                                <>
+                                    <ExpandedRow
+                                        content={
+                                            row.original.thirdPartyResponseFull
+                                        }
+                                        row={row}
+                                        title={'Third Party Response'}
+                                    />
+                                    <ExpandedRow
+                                        content={
+                                            row.original.evidenceAnalysisFull
+                                        }
+                                        row={row}
+                                        title={'Evidence Analysis'}
+                                    />
+                                </>
+                            )}
+                        </Fragment>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 
