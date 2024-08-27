@@ -2,6 +2,7 @@
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
+from modules.utils.confidence_score import find_relevant_sections, semantic_similarity
 from modules.globals.app_state import app_state
 
 # Flask modules
@@ -36,11 +37,16 @@ def after_request(response):
 #    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
 # Submit endpoint
+questions = None
+ai_answers = None
+third_party_answers = None
 @app.route("/submit", methods=["POST"])
 def main():
+    global questions
+    global ai_answers
+    global third_party_answers
     try:
         request_data = request.json
-
         # Get csv file buffer and parse it.
         csv_file_buffer = request_data["questionsCsvFileBuffer"]
         questions = parse_csv_file_buffer(csv_file_buffer)
@@ -50,6 +56,10 @@ def main():
 
         # Set app state questions based on csv.
         app_state.questions = questions
+
+        # Set app state Third Party answers
+        third_party_buffer = request_data["thirdPartyResponsesXslxFileBuffer"]
+        third_party_answers = parse_csv_file_buffer(third_party_buffer)
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
@@ -61,7 +71,7 @@ def main():
         # Loop through each question and add responses to app state.
         for question in questions:
             response = generate_model_response(vector_db, question)
-            app_state.responses.append(response)
+            ai_answers = app_state.responses.append(response)
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
@@ -102,7 +112,6 @@ def load_document():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 # Generate RAG test endpoint.
 @app.route("/generate_rag", methods=["POST"])
 def generate_rag():
@@ -120,6 +129,29 @@ def generate_rag():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# create confidence score
+@app.route("/create_confidence", methods=["POST"])
+def create_confidence():
+    global test_faiss_index
+    global questions
+    global ai_answers
+    global third_party_answers
+    try:
+        # Set app state Third Party answers
+        app_state.responses = third_party_answers
+
+        #create relevant sections for comparison
+        relevant_sections = []
+        for question in questions:
+            relevant_section = find_relevant_sections(test_faiss_index, question)
+            relevant_sections.append(relevant_section)
+
+        # Assuming you have relevant_sections, questions, ai_answers, and third_party_answers defined
+        semantic_similarities = semantic_similarity(relevant_sections, questions, ai_answers, third_party_answers)
+        return semantic_similarities
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/hello_world", methods=["POST"])
 def hello_world():
