@@ -17,6 +17,7 @@ export function Tooltip({ children }: TooltipProps): JSX.Element {
                 transition
                 anchor={{ to: 'top', gap: 22 }}
                 className={clsx(
+                    'z-30',
                     'rounded-xl text-xs transition duration-200 ease-in-out data-[closed]:translate-y-1 data-[closed]:opacity-0',
                     'border border-indigo-400 dark:border-indigo-500',
                     'mb-10 w-64 p-2.5',
