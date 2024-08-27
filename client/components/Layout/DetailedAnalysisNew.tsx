@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, ReactNode, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import {
     createColumnHelper,
@@ -9,6 +9,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
+import { Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { truncate, tw } from '@/utils';
 
@@ -26,7 +27,22 @@ type DataItem = {
     citationFull: string;
 };
 
-const columnHelper = createColumnHelper<DataItem>();
+interface TableHeaderProps {
+    headerContent: string;
+    infoContent: ReactNode;
+}
+
+function TableHeader({
+    headerContent,
+    infoContent,
+}: TableHeaderProps): JSX.Element {
+    return (
+        <div className='flex items-center gap-1.5'>
+            <span>{headerContent}</span>
+            <Tooltip>{infoContent}</Tooltip>
+        </div>
+    );
+}
 
 const iconClasses = clsx(
     tw`size-6 stroke-0`,
@@ -34,6 +50,8 @@ const iconClasses = clsx(
     tw`dark:text-zinc-400`,
     tw`transform transition-transform duration-200`,
 );
+
+const columnHelper = createColumnHelper<DataItem>();
 
 const columns = [
     columnHelper.display({
@@ -63,31 +81,80 @@ const columns = [
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
-        header: 'Control Question',
+        header: () => (
+            <TableHeader
+                headerContent='Control Question'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('thirdPartyResponsePreview', {
-        header: 'Third Party Response',
+        header: () => (
+            <TableHeader
+                headerContent='Third Party Response'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('evidenceAnalysisPreview', {
-        header: 'Evidence Analysis',
+        header: () => (
+            <TableHeader
+                headerContent='Evidence Analysis'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('answersAlign', {
-        header: 'Answers Align',
+        header: () => (
+            <TableHeader
+                headerContent='Answers Align'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('confidenceScore', {
-        header: 'Confidence Score',
+        header: () => (
+            <TableHeader
+                headerContent='Confidence Score'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('similarityScore', {
-        header: 'Similarity Score',
+        header: () => (
+            <TableHeader
+                headerContent='Similarity Score'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('citationPreview', {
-        header: 'Citation',
+        header: () => (
+            <TableHeader
+                headerContent='Citation'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
 ];
