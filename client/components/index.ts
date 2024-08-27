@@ -1,5 +1,4 @@
 export * from './Layout/DetailedAnalysis';
-export * from './Layout/DetailedAnalysisNew';
 export * from './Layout/Layout';
 export * from './Layout/Overview';
 export * from './Layout/Sidebar';

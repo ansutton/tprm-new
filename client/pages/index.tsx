@@ -8,7 +8,6 @@ import {
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
-    DetailedAnalysisNew,
     DetailedAnalysis,
     Overview,
     Button,
@@ -361,7 +360,7 @@ export default function Home(): JSX.Element {
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 {screen === 'detailedAnalysis' && (
-                                    <DetailedAnalysisNew
+                                    <DetailedAnalysis
                                         excelData={excelData}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
