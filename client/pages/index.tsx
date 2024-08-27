@@ -4,7 +4,6 @@ import {
     ChartBarSquareIcon,
     ChatBubbleBottomCenterTextIcon,
     QuestionMarkCircleIcon,
-    PrinterIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
@@ -194,9 +193,9 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar mode={mode} setMode={setMode} />
+            <Topbar mode={mode} setMode={setMode} screen={screen} />
 
-            {screen !== 'fileUpload' ? (
+            {screen !== 'fileUpload' && (
                 <Sidebar
                     isSidebarExpanded={isSidebarExpanded}
                     setIsSidebarExpanded={setIsSidebarExpanded}
@@ -205,7 +204,7 @@ export default function Home(): JSX.Element {
                     screen={screen}
                     setScreen={setScreen}
                 />
-            ) : null}
+            )}
 
             <div
                 className={clsx(
@@ -217,15 +216,15 @@ export default function Home(): JSX.Element {
                         : tw`pl-16`,
                 )}
             >
-                {screen === 'fileUpload' ? (
+                {screen === 'fileUpload' && (
                     <Heading level={3}>AI Evidence Reviewer</Heading>
-                ) : null}
-                {screen === 'loading' ? (
+                )}
+                {screen === 'loading' && (
                     <Heading level={3}>Processing File</Heading>
-                ) : null}
+                )}
 
                 <div className='container mx-auto pb-5 pt-5'>
-                    {screen === 'fileUpload' ? (
+                    {screen === 'fileUpload' && (
                         <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                             <div className='mx-auto flex flex-col gap-6'>
                                 <div className='flex items-center gap-3'>
@@ -341,9 +340,9 @@ export default function Home(): JSX.Element {
                                 </form>
                             </div>
                         </Card>
-                    ) : null}
+                    )}
 
-                    {screen === 'loading' ? (
+                    {screen === 'loading' && (
                         <>
                             <Heading level={4} additionalClasses='text-center'>
                                 Hang tight. This process can take a while.
@@ -354,59 +353,30 @@ export default function Home(): JSX.Element {
                             </p>
                             <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
                         </>
-                    ) : null}
+                    )}
 
-                    {screen === 'detailedAnalysis' || screen === 'overview' ? (
+                    {(screen === 'detailedAnalysis' ||
+                        screen === 'overview') && (
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
-                                <div className='w-full'>
-                                    <div
-                                        className={clsx(
-                                            tw`w-fit rounded-lg p-2`,
-                                            tw`float-right`,
-                                            tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
-                                            tw`flex items-center gap-1.5`,
-                                        )}
-                                    >
-                                        <PrinterIcon
-                                            className={clsx(
-                                                tw`w-4`,
-                                                tw`stroke-indigo-600 stroke-2`,
-                                                tw`dark:stroke-indigo-400`,
-                                            )}
-                                        />
-                                        <button
-                                            className={clsx(
-                                                tw`float-right text-sm`,
-                                                tw`font-bold`,
-                                                tw`text-indigo-600`,
-                                                tw`dark:text-indigo-400`,
-                                            )}
-                                            onClick={() => window.print()}
-                                        >
-                                            Print Results
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {screen === 'detailedAnalysis' ? (
+                                {screen === 'detailedAnalysis' && (
                                     <DetailedAnalysis
                                         excelData={excelData}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
                                     />
-                                ) : null}
-                                {screen === 'overview' ? (
+                                )}
+                                {screen === 'overview' && (
                                     <Overview
                                         excelData={excelData}
                                         isSidebarExpanded={isSidebarExpanded}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
                                     />
-                                ) : null}
+                                )}
                             </div>
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </div>
         </div>

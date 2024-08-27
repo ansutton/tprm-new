@@ -37,7 +37,7 @@ export function Overview({
         query: '(min-width: 1280px)',
     });
 
-    const doesOverviewUnwrap = isSidebarExpanded
+    const isOverviewWide = isSidebarExpanded
         ? sidebarExpandedMediaQuery
         : sidebarContractedMediaQuery;
 
@@ -63,16 +63,16 @@ export function Overview({
                 questionsData={questionsData}
             />
 
-            {doesOverviewUnwrap ? (
+            {isOverviewWide ? (
                 <div className='space-y-4'>
                     <div className='flex gap-4'>
                         <EvidenceAnalysis
-                            doesOverviewUnwrap={doesOverviewUnwrap}
+                            isOverviewWide={isOverviewWide}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
                         <EvidenceProvided
-                            doesOverviewUnwrap={doesOverviewUnwrap}
+                            isOverviewWide={isOverviewWide}
                         />
                         <QuestionsAnalyzed
                             llmResponse={llmResponse}
@@ -90,7 +90,7 @@ export function Overview({
                 <div className='space-y-4'>
                     <div className='flex gap-4'>
                         <EvidenceAnalysis
-                            doesOverviewUnwrap={doesOverviewUnwrap}
+                            isOverviewWide={isOverviewWide}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
@@ -102,7 +102,7 @@ export function Overview({
 
                     <div className='space-y-4'>
                         <EvidenceProvided
-                            doesOverviewUnwrap={doesOverviewUnwrap}
+                            isOverviewWide={isOverviewWide}
                         />
                         <EvidenceUnanswered
                             title='Questions Unanswered by Evidence'
