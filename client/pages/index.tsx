@@ -362,7 +362,8 @@ export default function Home(): JSX.Element {
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 <div className='w-full'>
-                                    <div
+                                    <button
+                                        onClick={() => window.print()}
                                         className={clsx(
                                             tw`w-fit rounded-lg p-2`,
                                             tw`float-right`,
@@ -372,23 +373,22 @@ export default function Home(): JSX.Element {
                                     >
                                         <PrinterIcon
                                             className={clsx(
-                                                tw`w-4`,
+                                                tw`size-4`,
                                                 tw`stroke-indigo-600 stroke-2`,
                                                 tw`dark:stroke-indigo-400`,
                                             )}
                                         />
-                                        <button
+                                        <span
                                             className={clsx(
                                                 tw`float-right text-sm`,
                                                 tw`font-bold`,
                                                 tw`text-indigo-600`,
                                                 tw`dark:text-indigo-400`,
                                             )}
-                                            onClick={() => window.print()}
                                         >
                                             Print Results
-                                        </button>
-                                    </div>
+                                        </span>
+                                    </button>
                                 </div>
 
                                 {screen === 'detailedAnalysis' && (
