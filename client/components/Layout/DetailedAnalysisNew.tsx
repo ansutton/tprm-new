@@ -9,7 +9,6 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
-import { Card, Heading, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { truncate, tw } from '@/utils';
 
@@ -18,12 +17,13 @@ type DataItem = {
     question: string;
     thirdPartyResponsePreview: string;
     evidenceAnalysisPreview: string;
-    thirdPartyResponseFull: string;
-    evidenceAnalysisFull: string;
     answersAlign: string;
     confidenceScore: string;
     similarityScore: string;
-    citation: string;
+    citationPreview: string;
+    thirdPartyResponseFull: string;
+    evidenceAnalysisFull: string;
+    citationFull: string;
 };
 
 const columnHelper = createColumnHelper<DataItem>();
@@ -86,7 +86,7 @@ const columns = [
         header: 'Similarity Score',
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('citation', {
+    columnHelper.accessor('citationPreview', {
         header: 'Citation',
         cell: ({ getValue }) => getValue(),
     }),
@@ -109,12 +109,13 @@ export function DetailedAnalysisNew({
             question: question,
             thirdPartyResponsePreview: truncate(excelData[index + 1][2], 30),
             evidenceAnalysisPreview: 'N/A',
+            confidenceScore: 'N/A',
+            similarityScore: 'N/A',
+            citationPreview: 'N/A',
             thirdPartyResponseFull: excelData[index + 1][2],
             evidenceAnalysisFull: 'N/A',
             answersAlign: 'N/A',
-            confidenceScore: 'N/A',
-            similarityScore: 'N/A',
-            citation: 'N/A',
+            citationFull: 'N/A',
         })),
     );
 
@@ -160,7 +161,8 @@ export function DetailedAnalysisNew({
                                             tw`w-1/12`,
                                         header.id === 'similarityScore' &&
                                             tw`w-1/12`,
-                                        header.id === 'citation' && tw`w-1/12`,
+                                        header.id === 'citationPreview' &&
+                                            tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -226,6 +228,11 @@ export function DetailedAnalysisNew({
                                         }
                                         row={row}
                                         title={'Evidence Analysis'}
+                                    />
+                                    <ExpandedRow
+                                        content={row.original.citationFull}
+                                        row={row}
+                                        title={'Citation'}
                                     />
                                 </>
                             )}
