@@ -398,11 +398,11 @@ export default function Home(): JSX.Element {
                                             llmResponse={llmResponse}
                                             questionsData={questionsData}
                                         />
-                                        <DetailedAnalysis
+                                        {/* <DetailedAnalysis
                                             excelData={excelData}
                                             llmResponse={llmResponse}
                                             questionsData={questionsData}
-                                        />
+                                        /> */}
                                     </>
                                 )}
                                 {screen === 'overview' && (
