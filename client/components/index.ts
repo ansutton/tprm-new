@@ -1,5 +1,4 @@
 export * from './Layout/DetailedAnalysis';
-export * from './Layout/DetailedAnalysisNew';
 export * from './Layout/Layout';
 export * from './Layout/Overview';
 export * from './Layout/Sidebar';
@@ -13,10 +12,10 @@ export * from './OverviewCards/QuestionsAnalyzed';
 export * from './OverviewCards/SecurityDomains';
 export * from './OverviewCards/Summary';
 export * from './OverviewCards/ThirdPartyInfo';
-export * from './Tooltip/Tooltip';
 export * from './ui/Button';
 export * from './ui/Card';
 export * from './ui/CircularProgress';
 export * from './ui/Heading';
 export * from './ui/MenuItemButton';
 export * from './ui/ProgressBarBase';
+export * from './ui/Tooltip';

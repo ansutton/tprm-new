@@ -6,19 +6,21 @@ import {
     DevicePhoneMobileIcon,
     MoonIcon,
     SunIcon,
+    PrinterIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import { MenuItemButton, ModeMenu } from '@/components';
-import { Mode } from '@/types';
+import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
 interface TopbarProps {
     mode: Mode;
     setMode: React.Dispatch<React.SetStateAction<Mode>>;
+    screen: Screen;
 }
 
-export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
+export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
     return (
         <div
             className={clsx(
@@ -82,6 +84,10 @@ export function Topbar({ mode, setMode }: TopbarProps): JSX.Element {
                         </span>
                     </h2>
                 </div>
+
+                {(screen === 'overview' || screen === 'detailedAnalysis') && (
+                    <PrintResultsButton />
+                )}
 
                 <ModeMenu mode={mode} setMode={setMode} />
 
@@ -222,5 +228,36 @@ function ThemeMenu(): JSX.Element {
                 </MenuItem>
             </MenuItems>
         </Menu>
+    );
+}
+
+function PrintResultsButton(): JSX.Element {
+    return (
+        <button
+            onClick={() => window.print()}
+            className={clsx(
+                tw`w-fit whitespace-nowrap rounded-lg p-2`,
+                tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
+                tw`flex items-center gap-1.5`,
+            )}
+        >
+            <PrinterIcon
+                className={clsx(
+                    tw`size-4`,
+                    tw`stroke-indigo-600 stroke-2`,
+                    tw`dark:stroke-indigo-400`,
+                )}
+            />
+            <span
+                className={clsx(
+                    tw`float-right text-sm`,
+                    tw`font-bold`,
+                    tw`text-indigo-600`,
+                    tw`dark:text-indigo-400`,
+                )}
+            >
+                Print Results
+            </span>
+        </button>
     );
 }

@@ -4,12 +4,10 @@ import {
     ChartBarSquareIcon,
     ChatBubbleBottomCenterTextIcon,
     QuestionMarkCircleIcon,
-    PrinterIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
-    DetailedAnalysisNew,
     DetailedAnalysis,
     Overview,
     Button,
@@ -195,7 +193,7 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar mode={mode} setMode={setMode} />
+            <Topbar mode={mode} setMode={setMode} screen={screen} />
 
             {screen !== 'fileUpload' && (
                 <Sidebar
@@ -361,49 +359,12 @@ export default function Home(): JSX.Element {
                         screen === 'overview') && (
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
-                                <div className='w-full'>
-                                    <div
-                                        className={clsx(
-                                            tw`w-fit rounded-lg p-2`,
-                                            tw`float-right`,
-                                            tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
-                                            tw`flex items-center gap-1.5`,
-                                        )}
-                                    >
-                                        <PrinterIcon
-                                            className={clsx(
-                                                tw`w-4`,
-                                                tw`stroke-indigo-600 stroke-2`,
-                                                tw`dark:stroke-indigo-400`,
-                                            )}
-                                        />
-                                        <button
-                                            className={clsx(
-                                                tw`float-right text-sm`,
-                                                tw`font-bold`,
-                                                tw`text-indigo-600`,
-                                                tw`dark:text-indigo-400`,
-                                            )}
-                                            onClick={() => window.print()}
-                                        >
-                                            Print Results
-                                        </button>
-                                    </div>
-                                </div>
-
                                 {screen === 'detailedAnalysis' && (
-                                    <>
-                                        <DetailedAnalysisNew
-                                            excelData={excelData}
-                                            llmResponse={llmResponse}
-                                            questionsData={questionsData}
-                                        />
-                                        {/* <DetailedAnalysis
-                                            excelData={excelData}
-                                            llmResponse={llmResponse}
-                                            questionsData={questionsData}
-                                        /> */}
-                                    </>
+                                    <DetailedAnalysis
+                                        excelData={excelData}
+                                        llmResponse={llmResponse}
+                                        questionsData={questionsData}
+                                    />
                                 )}
                                 {screen === 'overview' && (
                                     <Overview
