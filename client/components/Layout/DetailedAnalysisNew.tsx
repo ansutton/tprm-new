@@ -40,7 +40,14 @@ const columns = [
         id: 'expander',
         header: () => null,
         cell: ({ row }) => (
-            <button className={clsx(tw`transition-all`)}>
+            <button
+                className={clsx(
+                    tw`transition-all`,
+                    tw`rounded-lg p-1 transition-all`,
+                    tw`group-hover:bg-zinc-200`,
+                    tw`dark:group-hover:bg-zinc-800`,
+                )}
+            >
                 {row.getIsExpanded() ? (
                     <ChevronDownIcon className={clsx(iconClasses)} />
                 ) : (
@@ -101,7 +108,7 @@ export function DetailedAnalysisNew({
         questionsData.map((question, index) => ({
             questionNumber: index + 1,
             question: question,
-            thirdPartyResponsePreview: truncate(excelData[index + 1][2], 20),
+            thirdPartyResponsePreview: truncate(excelData[index + 1][2], 30),
             evidenceAnalysisPreview: 'N/A',
             thirdPartyResponseFull: excelData[index + 1][2],
             evidenceAnalysisFull: 'N/A',
@@ -121,7 +128,7 @@ export function DetailedAnalysisNew({
 
     return (
         <div className='rounded-lg border border-zinc-300 dark:border-zinc-600'>
-            <table>
+            <table className='w-full'>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
@@ -129,8 +136,25 @@ export function DetailedAnalysisNew({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`w-fit whitespace-nowrap p-3 text-left text-sm`,
+                                        tw`whitespace-nowrap p-3 text-left text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
+                                        header.id === 'expander' && tw`w-5`,
+                                        header.id === 'questionNumber' &&
+                                            tw`w-5`,
+                                        header.id === 'question' && tw`w-fit`,
+                                        header.id ===
+                                            'thirdPartyResponsePreview' &&
+                                            tw`w-1/6`,
+                                        header.id ===
+                                            'evidenceAnalysisPreview' &&
+                                            tw`w-1/6`,
+                                        header.id === 'answersAlign' &&
+                                            tw`w-1/12`,
+                                        header.id === 'confidenceScore' &&
+                                            tw`w-1/12`,
+                                        header.id === 'similarityScore' &&
+                                            tw`w-1/12`,
+                                        header.id === 'citation' && tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -155,9 +179,9 @@ export function DetailedAnalysisNew({
                             <tr
                                 onClick={() => row.toggleExpanded()}
                                 className={clsx(
-                                    tw`hover:cursor-pointer`,
+                                    tw`group`,
                                     tw`transition-all duration-200 ease-out`,
-                                    tw`hover:bg-zinc-200 dark:hover:bg-zinc-900`,
+                                    tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900`,
                                     row.getIsExpanded() &&
                                         tw`bg-zinc-200 dark:bg-zinc-900`,
                                 )}
@@ -184,7 +208,6 @@ export function DetailedAnalysisNew({
                             {row.getIsExpanded() && (
                                 <>
                                     <ExpandedRow
-                                        borderClasses={tw`border-b border-zinc-300 dark:border-zinc-600`}
                                         content={
                                             row.original.thirdPartyResponseFull
                                         }
