@@ -42,7 +42,7 @@ export function Sidebar({
      * Constants
      */
     const iconClasses = clsx(
-        tw`w-6 stroke-2`,
+        tw`size-6 stroke-2`,
         tw`stroke-zinc-700`,
         tw`dark:stroke-zinc-200`,
     );
