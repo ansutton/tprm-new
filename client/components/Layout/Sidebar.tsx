@@ -150,7 +150,7 @@ export function Sidebar({
                             }}
                         >
                             {icon}
-                            {isSidebarFullyExpanded ? (
+                            {isSidebarFullyExpanded && (
                                 <span
                                     className={clsx(
                                         tw`ml-2.5 transition-opacity duration-300`,
@@ -161,7 +161,7 @@ export function Sidebar({
                                 >
                                     {title}
                                 </span>
-                            ) : null}
+                            )}
                         </button>
                     ),
                 )}

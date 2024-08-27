@@ -35,7 +35,7 @@ export function DetailedAnalysis({
                         <tr>
                             {[
                                 'Control Question',
-                                'TP Response',
+                                'Third Party Response',
                                 'Evidence Analysis',
                                 'Answers Align',
                                 'Confidence Score',
@@ -110,19 +110,19 @@ export function DetailedAnalysis({
                 <div className='w-full divide-y dark:divide-zinc-600'>
                     {questionsData.map((question, index) => (
                         <div key={index} className='py-2'>
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`Control Question ${index + 1}`}
                                 content={question}
                                 defaultOpen
                                 id={`control-question-${index + 1}`}
                             />
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`Third Party Response ${index + 1}`}
                                 content={excelData[index + 1][2]}
                                 defaultOpen
                                 id={`third-party-response-${index + 1}`}
                             />
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`AI Answer ${index + 1}`}
                                 content={
                                     llmResponse?.responses[index] ? (
@@ -134,25 +134,25 @@ export function DetailedAnalysis({
                                 defaultOpen
                                 id={`evidence-analysis-${index + 1}`}
                             />
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`Answers Align`}
                                 content={'N/A'}
                                 defaultOpen
                                 id={`answers-align-${index + 1}`}
                             />
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`Confidence Score`}
                                 content={'N/A'}
                                 defaultOpen
                                 id={`confidence-score-${index + 1}`}
                             />
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`Similarity Score`}
                                 content={'N/A'}
                                 defaultOpen
                                 id={`similarity-score-${index + 1}`}
                             />
-                            <AssessmentDetailItem
+                            <DetailedAnalysisItem
                                 title={`Citation`}
                                 content={'N/A'}
                                 defaultOpen
@@ -197,19 +197,19 @@ function TableItem({
     return <td className={clsx(finalClasses)}>{children}</td>;
 }
 
-interface AssessmentDetailItemProps {
+interface DetailedAnalysisItemProps {
     content: string | JSX.Element;
     defaultOpen?: boolean;
     id: string;
     title: string;
 }
 
-function AssessmentDetailItem({
+function DetailedAnalysisItem({
     content,
     defaultOpen = false,
     id,
     title,
-}: AssessmentDetailItemProps): JSX.Element {
+}: DetailedAnalysisItemProps): JSX.Element {
     return (
         <div id={id}>
             <Disclosure defaultOpen={defaultOpen}>

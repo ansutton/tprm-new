@@ -9,6 +9,7 @@ import {
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
+    DetailedAnalysisNew,
     DetailedAnalysis,
     Overview,
     Button,
@@ -196,7 +197,7 @@ export default function Home(): JSX.Element {
         <div className='w-full dark:text-zinc-50'>
             <Topbar mode={mode} setMode={setMode} />
 
-            {screen !== 'fileUpload' ? (
+            {screen !== 'fileUpload' && (
                 <Sidebar
                     isSidebarExpanded={isSidebarExpanded}
                     setIsSidebarExpanded={setIsSidebarExpanded}
@@ -205,7 +206,7 @@ export default function Home(): JSX.Element {
                     screen={screen}
                     setScreen={setScreen}
                 />
-            ) : null}
+            )}
 
             <div
                 className={clsx(
@@ -217,15 +218,15 @@ export default function Home(): JSX.Element {
                         : tw`pl-16`,
                 )}
             >
-                {screen === 'fileUpload' ? (
+                {screen === 'fileUpload' && (
                     <Heading level={3}>AI Evidence Reviewer</Heading>
-                ) : null}
-                {screen === 'loading' ? (
+                )}
+                {screen === 'loading' && (
                     <Heading level={3}>Processing File</Heading>
-                ) : null}
+                )}
 
                 <div className='container mx-auto pb-5 pt-5'>
-                    {screen === 'fileUpload' ? (
+                    {screen === 'fileUpload' && (
                         <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                             <div className='mx-auto flex flex-col gap-6'>
                                 <div className='flex items-center gap-3'>
@@ -341,9 +342,9 @@ export default function Home(): JSX.Element {
                                 </form>
                             </div>
                         </Card>
-                    ) : null}
+                    )}
 
-                    {screen === 'loading' ? (
+                    {screen === 'loading' && (
                         <>
                             <Heading level={4} additionalClasses='text-center'>
                                 Hang tight. This process can take a while.
@@ -354,9 +355,10 @@ export default function Home(): JSX.Element {
                             </p>
                             <ArrowPathIcon className='stroke-1.5 mx-auto size-14 animate-spin text-indigo-800 dark:text-indigo-500' />
                         </>
-                    ) : null}
+                    )}
 
-                    {screen === 'detailedAnalysis' || screen === 'overview' ? (
+                    {(screen === 'detailedAnalysis' ||
+                        screen === 'overview') && (
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 <div className='w-full'>
@@ -389,24 +391,31 @@ export default function Home(): JSX.Element {
                                     </div>
                                 </div>
 
-                                {screen === 'detailedAnalysis' ? (
-                                    <DetailedAnalysis
-                                        excelData={excelData}
-                                        llmResponse={llmResponse}
-                                        questionsData={questionsData}
-                                    />
-                                ) : null}
-                                {screen === 'overview' ? (
+                                {screen === 'detailedAnalysis' && (
+                                    <>
+                                        <DetailedAnalysisNew
+                                            excelData={excelData}
+                                            llmResponse={llmResponse}
+                                            questionsData={questionsData}
+                                        />
+                                        {/* <DetailedAnalysis
+                                            excelData={excelData}
+                                            llmResponse={llmResponse}
+                                            questionsData={questionsData}
+                                        /> */}
+                                    </>
+                                )}
+                                {screen === 'overview' && (
                                     <Overview
                                         excelData={excelData}
                                         isSidebarExpanded={isSidebarExpanded}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
                                     />
-                                ) : null}
+                                )}
                             </div>
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </div>
         </div>

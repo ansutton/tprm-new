@@ -42,14 +42,14 @@ export function SecurityDomains({
         light: {
             axisStroke: 'hsl(0, 0%, 55%)',
             border: '1px solid hsl(0, 0%, 80%)',
-            gridStroke: 'hsla(0, 0%, 80%, 0.5)',
+            // gridStroke: 'hsla(0, 0%, 80%, 0.5)',
             tooltipBackground: 'hsl(0, 0%, 100%)',
             tooltipColor: 'hsl(0, 0%, 0%)',
         },
         dark: {
             axisStroke: 'hsla(0, 0%, 98%, 0.8)',
             border: 'none',
-            gridStroke: 'hsla(0, 0%, 50%, 0.5)',
+            // gridStroke: 'hsla(0, 0%, 50%, 0.5)',
             tooltipBackground: 'hsl(240, 5%, 26%)',
             tooltipColor: 'hsl(0, 0%, 98%)',
         },
@@ -72,7 +72,7 @@ export function SecurityDomains({
                             bottom: 5,
                         }}
                     >
-                        <CartesianGrid stroke={styles?.gridStroke} />
+                        {/* <CartesianGrid stroke={styles?.gridStroke} /> */}
                         <XAxis
                             stroke={styles?.axisStroke}
                             dataKey='name'
