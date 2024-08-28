@@ -58,8 +58,8 @@ def main():
         app_state.questions = questions
 
         # Set app state Third Party answers
-        third_party_buffer = request_data["responsesXlsxFileBuffer"]
-        third_party_answers = parse_xlsx_file_buffer(third_party_buffer)
+        # third_party_buffer = request_data["responsesXlsxFileBuffer"]
+        # third_party_answers = parse_xlsx_file_buffer(third_party_buffer)
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
