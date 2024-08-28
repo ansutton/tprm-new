@@ -55,11 +55,20 @@ def main():
         app_state.number_of_questions = len(questions)
 
         # Set app state questions based on csv.
-        app_state.questions = questions
+        # app_state.questions = questions
+        for i in range(len(questions)):
+            app_state.analyses["analysis_%s" % i] = {}
+            app_state.analyses["analysis_%s" % i]["question"] = questions[i]
+        
+        # Get data from Third Party responses file.
+        parsed_excel_file = request_data["parsedExcelFile"]
 
-        # Set app state Third Party answers
-        # third_party_buffer = request_data["responsesXlsxFileBuffer"]
-        # third_party_answers = parse_xlsx_file_buffer(third_party_buffer)
+        # Set app state Third Party responses.
+        for i in range(len(parsed_excel_file)):
+            if i > 0: # skip header line
+                app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
+
+        # print(app_state.analyses)
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
@@ -69,9 +78,10 @@ def main():
         vector_db = create_vector_store(pdf_file_content)
 
         # Loop through each question and add responses to app state.
-        for question in questions:
-            response = generate_model_response(vector_db, question)
-            ai_answers = app_state.responses.append(response)
+        for i in range(len(questions)):
+            response = generate_model_response(vector_db, questions[i])
+            app_state.analyses["analysis_%s" % i]["ai_analysis"] = response
+            # app_state.responses.append(response)
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
