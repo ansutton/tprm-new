@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <title>TPRM Accelerator | Accelerate.AI</title>
                 <meta
                     name='description'
-                    content='A Deloitte Third-Party Risk Management application'
+                    content='A Deloitte Third Party Risk Management application'
                 />
                 <link rel='icon' href='/images/favicon.png' />
             </Head>

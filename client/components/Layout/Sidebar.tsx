@@ -42,7 +42,7 @@ export function Sidebar({
      * Constants
      */
     const iconClasses = clsx(
-        tw`w-6 stroke-2`,
+        tw`size-6 stroke-2`,
         tw`stroke-zinc-700`,
         tw`dark:stroke-zinc-200`,
     );
@@ -150,7 +150,7 @@ export function Sidebar({
                             }}
                         >
                             {icon}
-                            {isSidebarFullyExpanded ? (
+                            {isSidebarFullyExpanded && (
                                 <span
                                     className={clsx(
                                         tw`ml-2.5 transition-opacity duration-300`,
@@ -161,7 +161,7 @@ export function Sidebar({
                                 >
                                     {title}
                                 </span>
-                            ) : null}
+                            )}
                         </button>
                     ),
                 )}
