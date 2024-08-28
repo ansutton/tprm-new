@@ -1,5 +1,5 @@
 # Custom modules
-from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
+from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer, parse_xlsx_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
 from modules.utils.confidence_score import find_relevant_sections, semantic_similarity
@@ -34,7 +34,7 @@ def after_request(response):
 # {
 #    questionsCsvFileBuffer: [base64 string],
 #    evidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
-#    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
+#    responsesXlsxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
 # Submit endpoint
 questions = None
@@ -58,8 +58,8 @@ def main():
         app_state.questions = questions
 
         # Set app state Third Party answers
-        third_party_buffer = request_data["thirdPartyResponsesXslxFileBuffer"]
-        third_party_answers = parse_csv_file_buffer(third_party_buffer)
+        third_party_buffer = request_data["responsesXlsxFileBuffer"]
+        third_party_answers = parse_xlsx_file_buffer(third_party_buffer)
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]

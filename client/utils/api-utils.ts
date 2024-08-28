@@ -6,7 +6,7 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
         const data = {
             questionsCsvFileBuffer: params.csvFileBuffer,
             evidencePdfFileBuffer: params.pdfFileBuffer,
-            // responsesXlsxFileBuffer: params.xlsxFileBuffer,
+            responsesXlsxFileBuffer: params.xlsxFileBuffer,
         };
         const response = await fetch(
             `${localPythonServerConnectionString}/submit`,
