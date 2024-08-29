@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useState } from 'react';
+import { Fragment, ReactNode, useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
     createColumnHelper,
@@ -197,21 +197,53 @@ export function DetailedAnalysis({
     llmResponse,
     questionsData,
 }: DetailedAnalysisProps): JSX.Element {
-    const [data, _setData] = useState(() =>
-        questionsData.map((question, index) => ({
-            questionNumber: index + 1,
-            question: question,
-            thirdPartyResponsePreview: truncate(excelData[index + 1][2], 30),
-            evidenceAnalysisPreview: 'N/A',
-            confidenceScore: 'N/A',
-            similarityScore: 'N/A',
-            citationPreview: 'N/A',
-            thirdPartyResponseFull: excelData[index + 1][2],
-            evidenceAnalysisFull: 'N/A',
-            answersAlign: 'N/A',
-            citationFull: 'N/A',
-        })),
+    const [data, setData] = useState(() =>
+        questionsData.map(
+            (question, index) => ({
+                questionNumber: index + 1,
+                question: question,
+                thirdPartyResponsePreview: truncate(
+                    excelData[index + 1][2],
+                    30,
+                ),
+                evidenceAnalysisPreview: 'N/A',
+                confidenceScore: 'N/A',
+                similarityScore: 'N/A',
+                citationPreview: 'N/A',
+                thirdPartyResponseFull: excelData[index + 1][2],
+                evidenceAnalysisFull:
+                    llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                answersAlign: 'N/A',
+                citationFull: 'N/A',
+            }),
+            console.log(llmResponse),
+        ),
     );
+
+    useEffect(() => {
+        setData(() =>
+            questionsData.map(
+                (question, index) => ({
+                    questionNumber: index + 1,
+                    question: question,
+                    thirdPartyResponsePreview: truncate(
+                        excelData[index + 1][2],
+                        30,
+                    ),
+                    evidenceAnalysisPreview: 'N/A',
+                    confidenceScore: 'N/A',
+                    similarityScore: 'N/A',
+                    citationPreview: 'N/A',
+                    thirdPartyResponseFull: excelData[index + 1][2],
+                    evidenceAnalysisFull:
+                        llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                    answersAlign: 'N/A',
+                    citationFull: 'N/A',
+                }),
+                console.log(llmResponse),
+            ),
+        );
+    }, [llmResponse]);
 
     const table = useReactTable({
         data,
