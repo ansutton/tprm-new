@@ -37,14 +37,8 @@ def after_request(response):
 #    responsesXlsxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
 # Submit endpoint
-questions = None
-ai_answers = None
-third_party_answers = None
 @app.route("/submit", methods=["POST"])
 def main():
-    global questions
-    global ai_answers
-    global third_party_answers
     try:
         request_data = request.json
         # Get csv file buffer and parse it.
@@ -55,7 +49,6 @@ def main():
         app_state.number_of_questions = len(questions)
 
         # Set app state questions based on csv.
-        # app_state.questions = questions
         for i in range(len(questions)):
             app_state.analyses["analysis_%s" % i] = {}
             app_state.analyses["analysis_%s" % i]["question"] = questions[i]
@@ -81,7 +74,6 @@ def main():
         for i in range(len(questions)):
             response = generate_model_response(vector_db, questions[i])
             app_state.analyses["analysis_%s" % i]["ai_analysis"] = response
-            # app_state.responses.append(response)
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
@@ -143,12 +135,9 @@ def generate_rag():
 @app.route("/create_confidence", methods=["POST"])
 def create_confidence():
     global test_faiss_index
-    global questions
-    global ai_answers
-    global third_party_answers
     try:
         # Set app state Third Party answers
-        app_state.responses = third_party_answers
+        # app_state.responses = third_party_answers
 
         #create relevant sections for comparison
         relevant_sections = []
