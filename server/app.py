@@ -1,8 +1,8 @@
 # Custom modules
-from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer, parse_xlsx_file_buffer
+from modules.utils.confidence_score import find_relevant_sections, semantic_similarity
+from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
-from modules.utils.confidence_score import find_relevant_sections, semantic_similarity, semantic_similarity_all
 from modules.globals.app_state import app_state
 
 # Flask modules
@@ -62,9 +62,8 @@ def main():
         # Set app state Third Party responses.
         for i in range(len(parsed_excel_file)):
             if i > 0: # skip header line
-                app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
-
-        # print(app_state.analyses)
+                if "analysis_%s" % (i - 1) in app_state.analyses:
+                    app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
@@ -77,6 +76,13 @@ def main():
         for i in range(len(questions)):
             response = generate_model_response(vector_db, questions[i])
             app_state.analyses["analysis_%s" % i]["ai_analysis"] = response
+
+        # Loop through app_state.analyses dict and process similarity scores.
+        for key, value in app_state.analyses.items():
+            relevant_section = find_relevant_sections(vector_db, value["question"])
+            scores = semantic_similarity(relevant_section, value["ai_analysis"], value["tp_response"])
+            app_state.analyses[key]["tp_confidence_score"] = scores["third_party"]
+            app_state.analyses[key]["ai_confidence_score"] = scores["ai"]
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
