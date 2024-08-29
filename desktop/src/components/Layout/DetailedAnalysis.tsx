@@ -409,7 +409,7 @@ export function DetailedAnalysis({
 
 interface ExpandedRowProps {
     borderClasses?: string;
-    content: string;
+    content: number | string | null | undefined;
     row: Row<DataItem>;
     title: string;
 }
