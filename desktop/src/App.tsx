@@ -6,7 +6,7 @@ export default function App() {
 
     return (
         <>
-            <div className='bg-pink-300'>App</div>
+            <div className='underline'>App</div>
             <MyComponent />
         </>
     );
