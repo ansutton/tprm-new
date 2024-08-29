@@ -2,7 +2,7 @@
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer, parse_xlsx_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
-from modules.utils.confidence_score import find_relevant_sections, semantic_similarity
+from modules.utils.confidence_score import find_relevant_sections, semantic_similarity, semantic_similarity_all
 from modules.globals.app_state import app_state
 
 # Flask modules
@@ -11,6 +11,9 @@ from flask_cors import CORS
 
 # Misc modules
 import json
+import os
+
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 app = Flask(__name__)
 
@@ -136,18 +139,18 @@ def generate_rag():
 def create_confidence():
     global test_faiss_index
     try:
-        # Set app state Third Party answers
-        # app_state.responses = third_party_answers
+        request_data = request.json
+        question = request_data["question"]
+        ai_analysis = request_data["ai_analysis"]
+        tp_response = request_data["tp_response"]
 
-        #create relevant sections for comparison
-        relevant_sections = []
-        for question in questions:
-            relevant_section = find_relevant_sections(test_faiss_index, question)
-            relevant_sections.append(relevant_section)
+        if test_faiss_index is None:
+            return jsonify({"error": "Document not loaded. Use /load_document first."}), 400
 
-        # Assuming you have relevant_sections, questions, ai_answers, and third_party_answers defined
-        semantic_similarities = semantic_similarity(relevant_sections, questions, ai_answers, third_party_answers)
-        return semantic_similarities
+        relevant_section = find_relevant_sections(test_faiss_index, question)
+        sem = semantic_similarity(relevant_section, ai_analysis, tp_response)
+
+        return jsonify(sem)
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -155,7 +158,9 @@ def create_confidence():
 @app.route("/hello_world", methods=["POST"])
 def hello_world():
     try:
-        return jsonify({"hello_world": "Hello World! [from python server]"})
+        hello = { 'hi': 'world'}
+        return jsonify(hello)
+        # return jsonify({"hello_world": "Hello World! [from python server]"})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
