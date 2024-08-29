@@ -31,8 +31,7 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
                 'dark:shadow-indigo-500/50',
             )}
         >
-            Topbar
-            {/* <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
+            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
                     <a href='/' className='ml-2 flex font-["Open_Sans"]'>
                         <span
@@ -92,8 +91,8 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
 
                 <ModeMenu mode={mode} setMode={setMode} />
 
-                <ThemeMenu />
-            </div> */}
+                {/* <ThemeMenu /> */}
+            </div>
         </div>
     );
 }
@@ -106,131 +105,131 @@ function Pipe(): JSX.Element {
     );
 }
 
-function ThemeMenu(): JSX.Element {
-    /**
-     * Constants
-     */
-    const iconClassesBase = tw`size-5 stroke-2`;
+// function ThemeMenu(): JSX.Element {
+//     /**
+//      * Constants
+//      */
+//     const iconClassesBase = tw`size-5 stroke-2`;
 
-    /**
-     * Custom Hooks
-     */
-    const { theme, resolvedTheme, setTheme } = useTheme();
+//     /**
+//      * Custom Hooks
+//      */
+//     const { theme, resolvedTheme, setTheme } = useTheme();
 
-    /**
-     * State Hooks
-     */
-    const [mounted, setMounted] = useState(false);
+//     /**
+//      * State Hooks
+//      */
+//     const [mounted, setMounted] = useState(false);
 
-    /**
-     * Effect Hooks
-     */
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+//     /**
+//      * Effect Hooks
+//      */
+//     useEffect(() => {
+//         setMounted(true);
+//     }, []);
 
-    /**
-     * Helper Functions
-     */
-    function systemSelectedClasses(): string {
-        if (theme === 'system') {
-            if (resolvedTheme === 'light') {
-                return tw`stroke-indigo-600 text-indigo-600`;
-            }
-            return tw`stroke-indigo-400 text-indigo-400`;
-        }
-        return '';
-    }
+//     /**
+//      * Helper Functions
+//      */
+//     function systemSelectedClasses(): string {
+//         if (theme === 'system') {
+//             if (resolvedTheme === 'light') {
+//                 return tw`stroke-indigo-600 text-indigo-600`;
+//             }
+//             return tw`stroke-indigo-400 text-indigo-400`;
+//         }
+//         return '';
+//     }
 
-    /**
-     * Components
-     */
-    interface IconSystemProps {
-        additionalClasses?: string;
-    }
-    function IconSystem({ additionalClasses }: IconSystemProps): JSX.Element {
-        return (
-            <>
-                <ComputerDesktopIcon
-                    className={`${iconClassesBase} ${additionalClasses} hidden md:block`}
-                />
-                <DevicePhoneMobileIcon
-                    className={`${iconClassesBase} ${additionalClasses} md:hidden`}
-                />
-            </>
-        );
-    }
+//     /**
+//      * Components
+//      */
+//     interface IconSystemProps {
+//         additionalClasses?: string;
+//     }
+//     function IconSystem({ additionalClasses }: IconSystemProps): JSX.Element {
+//         return (
+//             <>
+//                 <ComputerDesktopIcon
+//                     className={`${iconClassesBase} ${additionalClasses} hidden md:block`}
+//                 />
+//                 <DevicePhoneMobileIcon
+//                     className={`${iconClassesBase} ${additionalClasses} md:hidden`}
+//                 />
+//             </>
+//         );
+//     }
 
-    /**
-     * Return Statements
-     */
-    if (!mounted) {
-        return <></>;
-    }
+//     /**
+//      * Return Statements
+//      */
+//     if (!mounted) {
+//         return <></>;
+//     }
 
-    return (
-        <Menu>
-            <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
-                {theme === 'light' && <SunIcon className={iconClassesBase} />}
-                {theme === 'dark' && (
-                    <MoonIcon
-                        className={`${iconClassesBase} stroke-zinc-300`}
-                    />
-                )}
-                {theme === 'system' && (
-                    <IconSystem additionalClasses='dark:stroke-zinc-300' />
-                )}
-            </MenuButton>
+//     return (
+//         <Menu>
+//             <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+//                 {theme === 'light' && <SunIcon className={iconClassesBase} />}
+//                 {theme === 'dark' && (
+//                     <MoonIcon
+//                         className={`${iconClassesBase} stroke-zinc-300`}
+//                     />
+//                 )}
+//                 {theme === 'system' && (
+//                     <IconSystem additionalClasses='dark:stroke-zinc-300' />
+//                 )}
+//             </MenuButton>
 
-            <MenuItems
-                transition
-                anchor='bottom end'
-                className={clsx(
-                    'mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
-                    'stroke-700 text-zinc-700',
-                    'dark:bg-zinc-800 dark:stroke-zinc-300 dark:text-zinc-300',
-                    'ring-1 ring-zinc-900/10',
-                    'dark:ring-0',
-                )}
-            >
-                <MenuItem>
-                    <MenuItemButton
-                        additionalClasses={
-                            theme === 'light'
-                                ? 'text-indigo-600 stroke-indigo-600'
-                                : ''
-                        }
-                        onClick={() => setTheme('light')}
-                    >
-                        <SunIcon className={`${iconClassesBase}`} />
-                        Light
-                    </MenuItemButton>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItemButton
-                        additionalClasses={
-                            theme === 'dark'
-                                ? 'text-indigo-400 stroke-indigo-400'
-                                : ''
-                        }
-                        onClick={() => setTheme('dark')}
-                    >
-                        <MoonIcon className={`${iconClassesBase}`} />
-                        Dark
-                    </MenuItemButton>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItemButton
-                        additionalClasses={systemSelectedClasses()}
-                        onClick={() => setTheme('system')}
-                    >
-                        <IconSystem /> System
-                    </MenuItemButton>
-                </MenuItem>
-            </MenuItems>
-        </Menu>
-    );
-}
+//             <MenuItems
+//                 transition
+//                 anchor='bottom end'
+//                 className={clsx(
+//                     'mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
+//                     'stroke-700 text-zinc-700',
+//                     'dark:bg-zinc-800 dark:stroke-zinc-300 dark:text-zinc-300',
+//                     'ring-1 ring-zinc-900/10',
+//                     'dark:ring-0',
+//                 )}
+//             >
+//                 <MenuItem>
+//                     <MenuItemButton
+//                         additionalClasses={
+//                             theme === 'light'
+//                                 ? 'text-indigo-600 stroke-indigo-600'
+//                                 : ''
+//                         }
+//                         onClick={() => setTheme('light')}
+//                     >
+//                         <SunIcon className={`${iconClassesBase}`} />
+//                         Light
+//                     </MenuItemButton>
+//                 </MenuItem>
+//                 <MenuItem>
+//                     <MenuItemButton
+//                         additionalClasses={
+//                             theme === 'dark'
+//                                 ? 'text-indigo-400 stroke-indigo-400'
+//                                 : ''
+//                         }
+//                         onClick={() => setTheme('dark')}
+//                     >
+//                         <MoonIcon className={`${iconClassesBase}`} />
+//                         Dark
+//                     </MenuItemButton>
+//                 </MenuItem>
+//                 <MenuItem>
+//                     <MenuItemButton
+//                         additionalClasses={systemSelectedClasses()}
+//                         onClick={() => setTheme('system')}
+//                     >
+//                         <IconSystem /> System
+//                     </MenuItemButton>
+//                 </MenuItem>
+//             </MenuItems>
+//         </Menu>
+//     );
+// }
 
 function PrintResultsButton(): JSX.Element {
     return (
