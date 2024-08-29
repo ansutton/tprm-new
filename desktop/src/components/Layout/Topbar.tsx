@@ -9,7 +9,7 @@ import {
     PrinterIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import { useTheme } from 'next-themes';
+// import { useTheme } from 'next-themes';
 import { MenuItemButton, ModeMenu } from '@/components';
 import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';

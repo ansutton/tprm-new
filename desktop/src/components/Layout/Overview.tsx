@@ -6,7 +6,7 @@ import {
     EvidenceProvided,
     EvidenceUnanswered,
     QuestionsAnalyzed,
-    SecurityDomains,
+    // SecurityDomains,
     Summary,
     ThirdPartyInfo,
 } from '@/components';
