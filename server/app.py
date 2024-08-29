@@ -1,4 +1,5 @@
 # Custom modules
+from modules.utils.confidence_score import find_relevant_sections, semantic_similarity
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
@@ -10,6 +11,9 @@ from flask_cors import CORS
 
 # Misc modules
 import json
+import os
+
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 app = Flask(__name__)
 
@@ -33,14 +37,13 @@ def after_request(response):
 # {
 #    questionsCsvFileBuffer: [base64 string],
 #    evidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
-#    thirdPartyResponsesXslxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
+#    responsesXlsxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
 # }
 # Submit endpoint
 @app.route("/submit", methods=["POST"])
 def main():
     try:
         request_data = request.json
-
         # Get csv file buffer and parse it.
         csv_file_buffer = request_data["questionsCsvFileBuffer"]
         questions = parse_csv_file_buffer(csv_file_buffer)
@@ -49,7 +52,18 @@ def main():
         app_state.number_of_questions = len(questions)
 
         # Set app state questions based on csv.
-        app_state.questions = questions
+        for i in range(len(questions)):
+            app_state.analyses["analysis_%s" % i] = {}
+            app_state.analyses["analysis_%s" % i]["question"] = questions[i]
+        
+        # Get data from Third Party responses file.
+        parsed_excel_file = request_data["parsedExcelFile"]
+
+        # Set app state Third Party responses.
+        for i in range(len(parsed_excel_file)):
+            if i > 0: # skip header line
+                if "analysis_%s" % (i - 1) in app_state.analyses:
+                    app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
@@ -59,9 +73,16 @@ def main():
         vector_db = create_vector_store(pdf_file_content)
 
         # Loop through each question and add responses to app state.
-        for question in questions:
-            response = generate_model_response(vector_db, question)
-            app_state.responses.append(response)
+        for i in range(len(questions)):
+            response = generate_model_response(vector_db, questions[i])
+            app_state.analyses["analysis_%s" % i]["ai_analysis"] = response
+
+        # Loop through app_state.analyses dict and process similarity scores.
+        for key, value in app_state.analyses.items():
+            relevant_section = find_relevant_sections(vector_db, value["question"])
+            scores = semantic_similarity(relevant_section, value["ai_analysis"], value["tp_response"])
+            app_state.analyses[key]["tp_confidence_score"] = scores["third_party"]
+            app_state.analyses[key]["ai_confidence_score"] = scores["ai"]
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
@@ -102,7 +123,6 @@ def load_document():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 # Generate RAG test endpoint.
 @app.route("/generate_rag", methods=["POST"])
 def generate_rag():
@@ -120,11 +140,33 @@ def generate_rag():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# create confidence score
+@app.route("/create_confidence", methods=["POST"])
+def create_confidence():
+    global test_faiss_index
+    try:
+        request_data = request.json
+        question = request_data["question"]
+        ai_analysis = request_data["ai_analysis"]
+        tp_response = request_data["tp_response"]
+
+        if test_faiss_index is None:
+            return jsonify({"error": "Document not loaded. Use /load_document first."}), 400
+
+        relevant_section = find_relevant_sections(test_faiss_index, question)
+        sem = semantic_similarity(relevant_section, ai_analysis, tp_response)
+
+        return jsonify(sem)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/hello_world", methods=["POST"])
 def hello_world():
     try:
-        return jsonify({"hello_world": "Hello World! [from python server]"})
+        hello = { 'hi': 'world'}
+        return jsonify(hello)
+        # return jsonify({"hello_world": "Hello World! [from python server]"})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

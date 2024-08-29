@@ -18,6 +18,7 @@ export interface PythonAppState {
 export interface SubmitRequestParams {
     csvFileBuffer: string;
     pdfFileBuffer: string;
+    parsedExcelFile: any[][];
     // xlsxFileBuffer: string,
 }
 

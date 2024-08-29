@@ -5,7 +5,6 @@
 ### Python Backend
 
 * Install Python 3.10 (on Windows, use the [Microsoft Store](https://apps.microsoft.com/detail/9pjpw5ldxlz5?hl=en-us&gl=US))
-* ``cd /server``
 * Create a [virtual Python environment](https://medium.com/@lucasthedev/a-comprehensive-guide-to-python-virtual-environments-with-venv-cb76fea6a550) for the project by running:
 
 ```powershell
@@ -24,8 +23,11 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 .\.venv\Scripts\Activate.ps1
 ```
 
-> <b>Note</b>: Anytime you run the Python flask server, it's best practice to do so inside this virtual environment.
+> <b>Note A</b>: Anytime you run the Python flask server, it's best practice to do so inside this virtual environment.
 
+> <b>Note B</b>: By setting up the .venv in the root directory of the project VS Code will pick up the newly created virtual environment. The Python interpreter can be switched in the bottom right area of the editor when a Python file is opened and focused. Doing this will avoid the need to activate the virtual environment via PowerShell.
+
+* ``cd /server``
 * Install Python dependencies by running:
 
 ```powershell
