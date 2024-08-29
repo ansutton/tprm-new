@@ -1,3 +1,3 @@
 export function MyComponent(): JSX.Element {
-    return <div>MyComponent</div>;
+    return <div className='bg-blue-300'>MyComponent</div>;
 }
