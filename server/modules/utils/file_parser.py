@@ -2,6 +2,18 @@ import base64
 import csv
 import io
 
+# Note: Currently not working.
+def parse_xlsx_file_buffer(xlsx_file_buffer):
+    # Decode csv file content.
+    encoded_xlsx_content = _extract_base64(xlsx_file_buffer, "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,")
+    xlsx_content = _decode_base64_xlsx(encoded_xlsx_content)
+
+    if xlsx_content:
+        responses = _parse_csv(xlsx_content)
+        return responses
+    else:
+        return []
+
 
 def parse_csv_file_buffer(csv_file_buffer):
     # Decode csv file content.
@@ -33,6 +45,10 @@ def _extract_base64(encoded_data, prefix):
     if encoded_data.startswith(prefix):
         return encoded_data[len(prefix) :]
 
+def _decode_base64_xlsx(encoded_str):
+    decoded_bytes = base64.b64decode(encoded_str)
+    decoded_str = decoded_bytes.decode("utf-8-sig", "ignore")
+    return decoded_str
 
 # Decodes base64 encoded PDF file content
 def _decode_base64_pdf(encoded_str):
