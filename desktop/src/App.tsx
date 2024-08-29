@@ -17,7 +17,7 @@ import {
     Topbar,
 } from '@/components';
 import { poll, submit, tw } from '@/utils';
-import { LlmResponse, Mode, PythonAppState, Screen } from '@/types';
+import { Mode, Screen } from '@/types';
 
 export default function Home(): JSX.Element {
     /**
@@ -33,7 +33,7 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<any>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
-    const [mode, setMode] = useState<Mode>('demo');
+    const [mode, setMode] = useState<Mode>('llm');
 
     /**
      * Helper Functions

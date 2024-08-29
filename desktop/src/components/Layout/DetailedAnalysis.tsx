@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, useEffect, useState } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
     createColumnHelper,
     flexRender,
@@ -9,22 +9,22 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
-import { Button, Tooltip } from '@/components';
+import { Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { truncate, tw } from '@/utils';
 
 type DataItem = {
     questionNumber: number;
     question: string;
-    thirdPartyResponsePreview: string;
-    evidenceAnalysisPreview: string;
-    answersAlign: string;
-    confidenceScore: string;
-    similarityScore: string;
-    citationPreview: string;
-    thirdPartyResponseFull: string;
-    evidenceAnalysisFull: string;
-    citationFull: string;
+    thirdPartyResponsePreview: string | number | null | undefined;
+    evidenceAnalysisPreview: string | number | null | undefined;
+    answersAlign: string | number | null | undefined;
+    confidenceScore: string | number | null | undefined;
+    similarityScore: string | number | null | undefined;
+    citationPreview: string | number | null | undefined;
+    thirdPartyResponseFull: string | number | null | undefined;
+    evidenceAnalysisFull: string | number | null | undefined;
+    citationFull: string | number | null | undefined;
 };
 
 interface TableHeaderProps {
@@ -197,31 +197,16 @@ export function DetailedAnalysis({
     llmResponse,
     questionsData,
 }: DetailedAnalysisProps): JSX.Element {
-    const [data, setData] = useState(() =>
-        questionsData.map(
-            (question, index) => ({
-                questionNumber: index + 1,
-                question: question,
-                thirdPartyResponsePreview: truncate(
-                    excelData[index + 1][2],
-                    30,
-                ),
-                evidenceAnalysisPreview: 'N/A',
-                confidenceScore: 'N/A',
-                similarityScore: 'N/A',
-                citationPreview: 'N/A',
-                thirdPartyResponseFull: excelData[index + 1][2],
-                evidenceAnalysisFull:
-                    llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
-                answersAlign: 'N/A',
-                citationFull: 'N/A',
-            }),
-            console.log(llmResponse),
-        ),
-    );
+    /**
+     * State Hook
+     */
+    const [data, setData] = useState(handleData());
 
-    useEffect(() => {
-        setData(() =>
+    /**
+     * Helper Functions
+     */
+    function handleData() {
+        return () =>
             questionsData.map(
                 (question, index) => ({
                     questionNumber: index + 1,
@@ -230,21 +215,73 @@ export function DetailedAnalysis({
                         excelData[index + 1][2],
                         30,
                     ),
-                    evidenceAnalysisPreview: 'N/A',
-                    confidenceScore: 'N/A',
+                    evidenceAnalysisPreview: handleSpinner(
+                        truncate(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.ai_analysis,
+                            30,
+                        ),
+                    ),
+                    confidenceScore: handleSpinner(
+                        confidenceScore(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.ai_confidence_score,
+                        ),
+                    ),
                     similarityScore: 'N/A',
+                    // handleSpinner(
+                    //     truncate(
+                    //         llmResponse?.analyses[`analysis_${index}`]
+                    //             ?.ai_similarity_score,
+                    //         30,
+                    //     ),
+                    // ),
                     citationPreview: 'N/A',
+                    // handleSpinner(
+                    //     truncate(
+                    //         llmResponse?.analyses[`analysis_${index}`]
+                    //             ?.citation,
+                    //         30,
+                    //     ),
+                    // ),
                     thirdPartyResponseFull: excelData[index + 1][2],
-                    evidenceAnalysisFull:
+                    evidenceAnalysisFull: handleSpinner(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                    ),
                     answersAlign: 'N/A',
                     citationFull: 'N/A',
+                    // handleSpinner(
+                    //     llmResponse?.analyses[`analysis_${index}`]
+                    //         ?.citation,
+                    // ),
                 }),
                 console.log(llmResponse),
-            ),
+            );
+    }
+    function handleSpinner(field: ReactNode | undefined): ReactNode {
+        return field ? (
+            field
+        ) : (
+            <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
+    }
+    function confidenceScore(score: string | number | null | undefined) {
+        if (score && typeof score === 'number' && score === score)
+            return score
+                ? `${Math.round(((score + 1) / 2) * 100).toString()}%`
+                : null;
+    }
+
+    /**
+     * Effect Hook
+     */
+    useEffect(() => {
+        setData(handleData());
     }, [llmResponse]);
 
+    /**
+     * Table Declaration
+     */
     const table = useReactTable({
         data,
         columns,
