@@ -35,14 +35,15 @@ export function ThirdPartyInfo({
                     <b>Summary</b>: The Third Party and the AI model provided
                     matching responses for{' '}
                     <b>
-                        {llmResponse?.responses.length || 0}/
+                        {/* {llmResponse?.responses.length || 0}/
                         {questionsData?.length} (
                         {Math.round(
                             ((llmResponse?.responses.length || 0) /
                                 questionsData?.length) *
                                 100,
                         )}
-                        %)
+                        %) */}
+                        N/A
                     </b>{' '}
                     of questions uploaded.
                 </p>

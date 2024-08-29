@@ -33,7 +33,7 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<any>(null);
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
-    const [mode, setMode] = useState<Mode>('llm');
+    const [mode, setMode] = useState<Mode>('demo');
 
     /**
      * Helper Functions

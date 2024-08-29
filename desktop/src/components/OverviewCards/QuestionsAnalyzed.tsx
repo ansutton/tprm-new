@@ -14,7 +14,11 @@ export function QuestionsAnalyzed({
     startIcon = null,
 }: QuestionsAnsweredProps): JSX.Element {
     const numberOfQuestions = questionsData?.length;
-    const questionsAnalyzed = llmResponse?.responses.length || 0;
+    const questionsAnalyzed = questionsData.reduce(
+        (count, index) =>
+            llmResponse?.analyses[`analysis_${index}`] ? count + 1 : count,
+        0,
+    );
 
     return (
         <CircularProgress
