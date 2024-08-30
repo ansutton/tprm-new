@@ -9,3 +9,8 @@ __pycache__
 
 # Ignore mypy cached files.
 .mypy_cache/
+
+# Ignore PyInstaller output files.
+*.egg-info
+build
+dist
