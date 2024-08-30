@@ -136,6 +136,42 @@ npm run dev
 
 ___
 
+### Packaging
+TPRM Accelerator is intended to run out-of-the-box on users' local machines. To achieve this, we have packaging steps for TPRM Accelerator's primary dependencies including Python, JavaScript and Ollama.
+
+#### Python Flask Server with PyInstaller
+We use [PyInstaller](https://pyinstaller.org/en/stable/) to output an .exe program that includes all required Python dependencies (both the packages and the interpreter).
+
+To package the latest changes into a .exe format, ``cd /server`` and run:
+
+```powershell
+pyinstaller pyinstaller.spec
+```
+
+This will bundle the Python scripts into a single executable called ``app.exe`` which can be found here: ``server/dist/tprm_accelerator/app.exe``.
+
+> <b>Note</b>: Alongside the .exe file you will see various DLLs which are also required to run the Flask server without a system installed Python interpreter. When distributing you should include everything that's found in ``server/dist/tprm_accelerator/``.
+
+#### Next.js Desktop Client with Electron
+We use [Electron](https://www.electronjs.org/) to output a native desktop application that includes all JavaScript dependencies (both the packages and the Node runtime).
+
+To package the latest changes into a .exe format, ``cd /desktop`` and run:
+
+```powershell
+npm run dev
+```
+
+More instructions coming soon...
+
+#### Ollama
+See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli).
+
+See [Ollama downloads](https://github.com/ollama/ollama/releases/tag/v0.3.8).
+
+More instructions coming soon...
+
+___
+
 ### GitHub SSH Instructions
 
 Eliminate need to authenticate on every git command.
