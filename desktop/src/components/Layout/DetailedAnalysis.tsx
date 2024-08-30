@@ -16,17 +16,21 @@ import { truncate, tw } from '@/utils';
 type DataItem = {
     questionNumber: number;
     question: string;
-    thirdPartyResponsePreview: ReactNode | string | number | null | undefined;
-    evidenceAnalysisPreview: ReactNode | string | number | null | undefined;
-    answersAlign: ReactNode | string | number | null | undefined;
-    confidenceScore: ReactNode | string | number | null | undefined;
-    similarityScore: ReactNode | string | number | null | undefined;
-    citationPreview: ReactNode | string | number | null | undefined;
-    thirdPartyResponseFull: ReactNode | string | number | null | undefined;
-    evidenceAnalysisFull: ReactNode | string | number | null | undefined;
-    citationFull: ReactNode | string | number | null | undefined;
+    tpResponsePreview: DataItemField;
+    aiAnalysisPreview: DataItemField;
+    answersAlignment: DataItemField;
+    aiConfidenceScore: DataItemField;
+    tpConfidenceScore: DataItemField;
+    aiSimilarityScore: DataItemField;
+    tpSimilarityScore: DataItemField;
+    citationPreview: DataItemField;
+    tpResponseFull: DataItemField;
+    aiAnalysisFull: DataItemField;
+    citationFull: DataItemField;
+    pageNumbers: DataItemField;
 };
 
+type DataItemField = ReactNode | string | number | null | undefined;
 interface TableHeaderProps {
     headerContent: string;
     infoContent: ReactNode;
@@ -118,7 +122,7 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('thirdPartyResponsePreview', {
+    columnHelper.accessor('tpResponsePreview', {
         header: () => (
             <TableHeader
                 headerContent='Third Party Response'
@@ -129,7 +133,7 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('evidenceAnalysisPreview', {
+    columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
                 headerContent='Evidence Analysis'
@@ -140,7 +144,7 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('answersAlign', {
+    columnHelper.accessor('answersAlignment', {
         header: () => (
             <TableHeader
                 headerContent='Answers Align'
@@ -151,10 +155,10 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('confidenceScore', {
+    columnHelper.accessor('aiConfidenceScore', {
         header: () => (
             <TableHeader
-                headerContent='Confidence Score'
+                headerContent='Evidence Analysis Confidence Score'
                 infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Adipisci eos eius veniam quibusdam corporis eum quae explicabo
                 dicta non! Obcaecati.'
@@ -162,10 +166,32 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('similarityScore', {
+    columnHelper.accessor('tpConfidenceScore', {
         header: () => (
             <TableHeader
-                headerContent='Similarity Score'
+                headerContent='Third Party Confidence Score'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
+        cell: ({ getValue }) => getValue(),
+    }),
+    columnHelper.accessor('aiSimilarityScore', {
+        header: () => (
+            <TableHeader
+                headerContent='Evidence Analysis Similarity Score'
+                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+                dicta non! Obcaecati.'
+            />
+        ),
+        cell: ({ getValue }) => getValue(),
+    }),
+    columnHelper.accessor('tpSimilarityScore', {
+        header: () => (
+            <TableHeader
+                headerContent='Third Party Similarity Score'
                 infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Adipisci eos eius veniam quibusdam corporis eum quae explicabo
                 dicta non! Obcaecati.'
@@ -211,28 +237,39 @@ export function DetailedAnalysis({
                 (question, index) => ({
                     questionNumber: index + 1,
                     question: question,
-                    thirdPartyResponsePreview: truncate(
-                        excelData[index + 1][2],
-                        30,
-                    ),
-                    evidenceAnalysisPreview: handleSpinner(
+                    tpResponsePreview: truncate(excelData[index + 1][2], 30),
+                    aiAnalysisPreview: handleSpinner(
                         truncate(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.ai_analysis,
                             30,
                         ),
                     ),
-                    confidenceScore: handleSpinner(
-                        confidenceScore(
+                    aiConfidenceScore: handleSpinner(
+                        scorePercent(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.ai_confidence_score,
                         ),
                     ),
-                    similarityScore: 'N/A',
+                    tpConfidenceScore: handleSpinner(
+                        scorePercent(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.tp_confidence_score,
+                        ),
+                    ),
+                    aiSimilarityScore: 'N/A',
                     // handleSpinner(
                     //     truncate(
                     //         llmResponse?.analyses[`analysis_${index}`]
                     //             ?.ai_similarity_score,
+                    //         30,
+                    //     ),
+                    // ),
+                    tpSimilarityScore: 'N/A',
+                    // handleSpinner(
+                    //     truncate(
+                    //         llmResponse?.analyses[`analysis_${index}`]
+                    //             ?.tp_similarity_score,
                     //         30,
                     //     ),
                     // ),
@@ -244,15 +281,20 @@ export function DetailedAnalysis({
                     //         30,
                     //     ),
                     // ),
-                    thirdPartyResponseFull: excelData[index + 1][2],
-                    evidenceAnalysisFull: handleSpinner(
+                    tpResponseFull: excelData[index + 1][2],
+                    aiAnalysisFull: handleSpinner(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                     ),
-                    answersAlign: 'N/A',
+                    answersAlignment: 'N/A',
                     citationFull: 'N/A',
                     // handleSpinner(
                     //     llmResponse?.analyses[`analysis_${index}`]
                     //         ?.citation,
+                    // ),
+                    pageNumbers: 'N/A',
+                    // handleSpinner(
+                    //     llmResponse?.analyses[`analysis_${index}`]
+                    //         ?.pageNumbers,
                     // ),
                 }),
                 console.log(llmResponse),
@@ -265,7 +307,7 @@ export function DetailedAnalysis({
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
     }
-    function confidenceScore(score: string | number | null | undefined) {
+    function scorePercent(score: string | number | null | undefined) {
         if (score && typeof score === 'number' && score === score)
             return score
                 ? `${Math.round(((score + 1) / 2) * 100).toString()}%`
@@ -277,6 +319,7 @@ export function DetailedAnalysis({
      */
     useEffect(() => {
         setData(handleData());
+        console.log('🚀 ~ llmResponse:', llmResponse);
     }, [llmResponse]);
 
     /**
@@ -306,23 +349,25 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`whitespace-nowrap p-3 text-left text-sm`,
+                                        tw`p-3 text-left text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
                                         header.id === 'expander' && tw`w-5`,
                                         header.id === 'questionNumber' &&
-                                            tw`w-5`,
+                                            tw`w-3`,
                                         header.id === 'question' && tw`w-fit`,
-                                        header.id ===
-                                            'thirdPartyResponsePreview' &&
+                                        header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
-                                        header.id ===
-                                            'evidenceAnalysisPreview' &&
+                                        header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
-                                        header.id === 'answersAlign' &&
+                                        header.id === 'answersAlignment' &&
                                             tw`w-1/12`,
-                                        header.id === 'confidenceScore' &&
+                                        header.id === 'aiConfidenceScore' &&
                                             tw`w-1/12`,
-                                        header.id === 'similarityScore' &&
+                                        header.id === 'tpConfidenceScore' &&
+                                            tw`w-1/12`,
+                                        header.id === 'aiSimilarityScore' &&
+                                            tw`w-1/12`,
+                                        header.id === 'tpSimilarityScore' &&
                                             tw`w-1/12`,
                                         header.id === 'citationPreview' &&
                                             tw`w-1/12`,
@@ -363,9 +408,9 @@ export function DetailedAnalysis({
                                         className={clsx(
                                             tw`p-3 text-sm`,
                                             (cell.column.id ===
-                                                'thirdPartyResponsePreview' ||
+                                                'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'evidenceAnalysisPreview') &&
+                                                    'aiAnalysisPreview') &&
                                                 tw`select-none`,
                                         )}
                                     >
@@ -379,16 +424,12 @@ export function DetailedAnalysis({
                             {row.getIsExpanded() && (
                                 <>
                                     <ExpandedRow
-                                        content={
-                                            row.original.thirdPartyResponseFull
-                                        }
+                                        content={row.original.tpResponseFull}
                                         row={row}
                                         title={'Third Party Response'}
                                     />
                                     <ExpandedRow
-                                        content={
-                                            row.original.evidenceAnalysisFull
-                                        }
+                                        content={row.original.aiAnalysisFull}
                                         row={row}
                                         title={'Evidence Analysis'}
                                     />
@@ -396,6 +437,11 @@ export function DetailedAnalysis({
                                         content={row.original.citationFull}
                                         row={row}
                                         title={'Citation'}
+                                    />
+                                    <ExpandedRow
+                                        content={row.original.pageNumbers}
+                                        row={row}
+                                        title={'Pages'}
                                     />
                                 </>
                             )}

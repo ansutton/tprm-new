@@ -163,7 +163,10 @@ export default function Home(): JSX.Element {
                     submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile }); // xlsxFileBuffer});
                     setInterval(async () => {
                         const pollResponse = await poll();
-                        console.log(pollResponse);
+                        console.log(
+                            '🚀 ~ setInterval ~ pollResponse:',
+                            pollResponse,
+                        );
                         setLlmResponse(pollResponse);
                     }, 10000);
                     break;
