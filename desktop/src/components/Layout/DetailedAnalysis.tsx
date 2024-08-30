@@ -323,7 +323,7 @@ export function DetailedAnalysis({
     }, [llmResponse]);
 
     /**
-     * Table Declaration
+     * React Table Hook
      */
     const table = useReactTable({
         data,
@@ -332,6 +332,9 @@ export function DetailedAnalysis({
         getExpandedRowModel: getExpandedRowModel(),
     });
 
+    /**
+     * Return Statement
+     */
     return (
         <div
             className={clsx(
