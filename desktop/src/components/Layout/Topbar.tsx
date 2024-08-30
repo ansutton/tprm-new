@@ -77,10 +77,10 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
 
                     <h2 className='select-none text-lg hover:cursor-pointer'>
                         <span className='font-bold text-zinc-700 dark:text-zinc-300'>
-                            Accelerate
+                            Cyber{' '}
                         </span>
                         <span className='bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent'>
-                            .AI
+                            AI
                         </span>
                     </h2>
                 </div>
