@@ -9,7 +9,6 @@ export * from './OverviewCards/EvidenceAnalysis';
 export * from './OverviewCards/EvidenceProvided';
 export * from './OverviewCards/EvidenceUnanswered';
 export * from './OverviewCards/QuestionsAnalyzed';
-export * from './OverviewCards/SecurityDomains';
 export * from './OverviewCards/Summary';
 export * from './OverviewCards/ThirdPartyInfo';
 export * from './ui/Button';
