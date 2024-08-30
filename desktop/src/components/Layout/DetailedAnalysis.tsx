@@ -16,15 +16,15 @@ import { truncate, tw } from '@/utils';
 type DataItem = {
     questionNumber: number;
     question: string;
-    thirdPartyResponsePreview: string | number | null | undefined;
-    evidenceAnalysisPreview: string | number | null | undefined;
-    answersAlign: string | number | null | undefined;
-    confidenceScore: string | number | null | undefined;
-    similarityScore: string | number | null | undefined;
-    citationPreview: string | number | null | undefined;
-    thirdPartyResponseFull: string | number | null | undefined;
-    evidenceAnalysisFull: string | number | null | undefined;
-    citationFull: string | number | null | undefined;
+    thirdPartyResponsePreview: ReactNode | string | number | null | undefined;
+    evidenceAnalysisPreview: ReactNode | string | number | null | undefined;
+    answersAlign: ReactNode | string | number | null | undefined;
+    confidenceScore: ReactNode | string | number | null | undefined;
+    similarityScore: ReactNode | string | number | null | undefined;
+    citationPreview: ReactNode | string | number | null | undefined;
+    thirdPartyResponseFull: ReactNode | string | number | null | undefined;
+    evidenceAnalysisFull: ReactNode | string | number | null | undefined;
+    citationFull: ReactNode | string | number | null | undefined;
 };
 
 interface TableHeaderProps {
@@ -409,7 +409,7 @@ export function DetailedAnalysis({
 
 interface ExpandedRowProps {
     borderClasses?: string;
-    content: number | string | null | undefined;
+    content: ReactNode | string | number | null | undefined;
     row: Row<DataItem>;
     title: string;
 }
