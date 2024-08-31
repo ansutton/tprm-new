@@ -136,10 +136,10 @@ npm run dev
 
 ___
 
-### Packaging
+## Packaging
 TPRM Accelerator is intended to run out-of-the-box on users' local machines. To achieve this, we have packaging steps for TPRM Accelerator's primary dependencies including Python, JavaScript and Ollama.
 
-#### Python Flask Server with PyInstaller
+### Python Flask Server with PyInstaller
 We use [PyInstaller](https://pyinstaller.org/en/stable/) to output an .exe program that includes all required Python dependencies (both the packages and the interpreter).
 
 To package the latest changes into a .exe format, ``cd /server`` and run:
@@ -178,7 +178,7 @@ a = Analysis(
 
 > <b>Note</b>: I am manually setting the paths to where these binaries live on my local machine in the virtual environment I'm using to run and build the project. For another local machine to successfully build the Python Flask server via the PyInstaller process, each of these paths would need to modified to the location of their own virtual environment's binaries' paths. Also note, there's probably a relative way to import these, just not sure how to do it in the ``pyinstaller.spec`` file.
 
-#### Next.js Desktop Client with Electron
+### Next.js Desktop Client with Electron
 We use [Electron](https://www.electronjs.org/) to output a native desktop application that includes all JavaScript dependencies (both the packages and the Node runtime).
 
 To package the latest changes into a .exe format, ``cd /desktop`` and set the new version number in ``package.json`` like so:
@@ -208,16 +208,20 @@ All the contents in that output folder ``TPRM Accelerator`` should be included i
 
 To run the client application, open the ``TPRM Accelerator.exe`` file.
 
-#### Ollama
+### Ollama
 See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli).
 
 See [Ollama downloads](https://github.com/ollama/ollama/releases/tag/v0.3.8).
 
 More instructions coming soon...
 
+### Builds
+
+For the latest builds, check the [releases](https://github.com/Deloitte-Default/TPRM-Accelerator/releases). You will need access to the Cyber AI SharePoint link to download.
+
 ___
 
-### GitHub SSH Instructions
+## GitHub SSH Instructions
 
 Eliminate need to authenticate on every git command.
 
