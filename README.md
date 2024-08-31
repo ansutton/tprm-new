@@ -152,7 +152,7 @@ This will bundle the Python scripts into a single executable called ``app.exe`` 
 
 > <b>Note</b>: Alongside the .exe file you will see various DLLs which are also required to run the Flask server without a system installed Python interpreter. When distributing you should include everything that's found in ``server/dist/tprm_accelerator/``.
 
-Also, PyInstaller won't successfully link all the binaries necessary for the program to run on it's own. In the ``pyinstaller.spec`` file you will see the binaries section here:
+Also, PyInstaller won't successfully link all the binaries necessary for the program to run on it's own. In the ``pyinstaller.spec`` file you will see the binaries field in the Analysis section here:
 
 ```spec
 # -*- mode: python ; coding: utf-8 -*-
@@ -173,7 +173,7 @@ a = Analysis(
         ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll', '.'),
         ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll', '.'),
         ],
-        ...
+        # ...
 ```
 
 > <b>Note</b>: I am manually setting the paths to where these binaries live on my local machine in the virtual environment I'm using to run and build the project. For another local machine to successfully build the Python Flask server via the PyInstaller process, each of these paths would need to modified to the location of their own virtual environment's binaries' paths. Also note, there's probably a relative way to import these, just not sure how to do it in the ``pyinstaller.spec`` file.
@@ -205,6 +205,8 @@ In the release version folder you will see a filed called ``TPRM Accelerator-Win
 The output will default to: ``%Appdata%\Local\Programs\TPRM Accelerator``.
 
 All the contents in that output folder ``TPRM Accelerator`` should be included in the software package to distribute.
+
+To run the client application, open the ``TPRM Accelerator.exe`` file.
 
 #### Ollama
 See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli).
