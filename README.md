@@ -152,16 +152,59 @@ This will bundle the Python scripts into a single executable called ``app.exe`` 
 
 > <b>Note</b>: Alongside the .exe file you will see various DLLs which are also required to run the Flask server without a system installed Python interpreter. When distributing you should include everything that's found in ``server/dist/tprm_accelerator/``.
 
+Also, PyInstaller won't successfully link all the binaries necessary for the program to run on it's own. In the ``pyinstaller.spec`` file you will see the binaries section here:
+
+```spec
+# -*- mode: python ; coding: utf-8 -*-
+import sys ; sys.setrecursionlimit(sys.getrecursionlimit() * 5)
+
+
+a = Analysis(
+    ['app.py'],
+    pathex=[],
+    binaries=[
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\numpy.libs\\libopenblas64__v0.3.23-293-gc2f4bdbb-gcc_10_3_0-2bde3a66a51006b2b53eb373ff767a3f.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\libomp140.x86_64-342e80c06daee0da2e436795e93b0163.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\libomp-7dc934d99dfa591f473ae5d975972b7c.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\openblas-54c31036ecda6ab8856f9aac9fdee712.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\msvcp140-b9d2f1930e3a04e4b9f88e2514052f10.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\flangrti-5bbaf6aff159e72f9b015d5bc31c7584.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\flang-d38962844214aa9b06fc3989f9adae5b.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll', '.'),
+        ],
+        ...
+```
+
+> <b>Note</b>: I am manually setting the paths to where these binaries live on my local machine in the virtual environment I'm using to run and build the project. For another local machine to successfully build the Python Flask server via the PyInstaller process, each of these paths would need to modified to the location of their own virtual environment's binaries' paths. Also note, there's probably a relative way to import these, just not sure how to do it in the ``pyinstaller.spec`` file.
+
 #### Next.js Desktop Client with Electron
 We use [Electron](https://www.electronjs.org/) to output a native desktop application that includes all JavaScript dependencies (both the packages and the Node runtime).
 
-To package the latest changes into a .exe format, ``cd /desktop`` and run:
+To package the latest changes into a .exe format, ``cd /desktop`` and set the new version number in ``package.json`` like so:
 
-```powershell
-npm run dev
+```json
+{
+    "name": "desktop",
+    "private": true,
+    "version": "0.0.2-alpha", // <- modify this field.
+    "type": "module",
+    // ...
 ```
 
-More instructions coming soon...
+Then run:
+
+```powershell
+npm run build
+```
+
+Once the build completes, go to: ``/desktop/release/0.0.2-alpha`` where the release folder will be named after whatever value you set in the ``version`` field in ``/desktop/package.json``.
+
+In the release version folder you will see a filed called ``TPRM Accelerator-Windows-0.0.2-alpha-Setup.exe``. Run this program and walk through the installer.
+
+The output will default to: ``%Appdata%\Local\Programs\TPRM Accelerator``.
+
+All the contents in that output folder ``TPRM Accelerator`` should be included in the software package to distribute.
 
 #### Ollama
 See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli).
