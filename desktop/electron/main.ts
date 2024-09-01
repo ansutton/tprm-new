@@ -5,7 +5,7 @@ import * as cp from 'node:child_process';
 import path from 'node:path';
 
 const devEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
-const prodEnvPathToAppServer = 'tprm_accelerator/app.exe'
+const prodEnvPathToAppServer = '../../../tprm_accelerator/app.exe'
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -83,7 +83,7 @@ app.whenReady().then(() => {
     console.log("hello from electron")
 
     // Spawn app.exe Python Flash server on start up.
-    cp.spawn(`${__dirname}/${devEnvPathToAppServer}`)
+    cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`)
 });
 
 // Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
