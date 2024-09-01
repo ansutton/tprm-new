@@ -89,7 +89,21 @@ app.whenReady().then(() => {
     AppLogger.instance.writeInfo("hello from electron")
 
     // Spawn app.exe Python Flask server on start up.
-    cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`)
+    const child = cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`)
+
+    // Set up child process stdout "info" logs.
+    child.stdout.setEncoding('utf8');
+    child.stdout.on('data', function(data) {
+        console.log('stdout: ' + data);
+        AppLogger.instance.writeInfo(data.toString())
+    });
+
+    // Set up child process stderr "error" logs.
+    child.stderr.setEncoding('utf8');
+    child.stderr.on('data', function(data) {
+        console.log('stderr: ' + data);
+        AppLogger.instance.writeError(data.toString())
+    });
 });
 
 // Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
