@@ -1,3 +1,4 @@
+import { AppLogger } from './utils/app-logger'
 import { app, BrowserWindow } from 'electron';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -6,6 +7,8 @@ import path from 'node:path';
 
 const devEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
 const prodEnvPathToAppServer = '../../../tprm_accelerator/app.exe'
+
+const appLoggerLogPath = '../../logs'
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -78,11 +81,14 @@ app.on('activate', () => {
     }
 });
 
+app.setAppLogsPath(`${__dirname}/${appLoggerLogPath}`)
+
 app.whenReady().then(() => {
     createWindow()
     console.log("hello from electron")
+    AppLogger.instance.writeInfo("hello from electron")
 
-    // Spawn app.exe Python Flash server on start up.
+    // Spawn app.exe Python Flask server on start up.
     cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`)
 });
 
