@@ -1,7 +1,14 @@
 import { app, BrowserWindow } from 'electron';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import * as cp from 'node:child_process';
 import path from 'node:path';
+// import * as terminate from 'terminate'
+
+let childProcess: cp.ChildProcess
+let children: Array<cp.ChildProcess> = []
+const devEnvPathToAppServer = '\\..\\..\\server\\dist\\tprm_accelerator\\app.exe'
+const prodEnvPathToAppServer = `\\tprm_accelerator\\app.exe`
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +28,10 @@ process.env.APP_ROOT = path.join(__dirname, '..');
 export const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron');
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist');
+
+var cleanExit = function() { process.exit() };
+process.on('SIGINT', cleanExit); // catch ctrl-c
+process.on('SIGTERM', cleanExit); // catch kill
 
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
     ? path.join(process.env.APP_ROOT, 'public')
@@ -57,6 +68,19 @@ function createWindow() {
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
+        // if (childProcess) {
+        //     childProcess.stdout?.destroy()
+        //     childProcess.stdin?.destroy()
+        //     childProcess.stderr?.destroy()
+        //     // terminate.default(childProcess.pid ?? 0, err => console.log(err))
+        //     // childProcess.kill('SIGINT')
+        //     // childProcess.kill('SIGTERM')
+        //     childProcess.kill()
+
+        //     // setTimeout(() => {
+        //     //     childProcess.kill('SIGINT');
+        //     // }, 2000);
+        // }
         app.quit();
         win = null;
     }
@@ -70,5 +94,25 @@ app.on('activate', () => {
     }
 });
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    createWindow()
+    console.log("hello from electron")
+    // console.log(__dirname)
+    childProcess = cp.spawn(`${__dirname}\\..\\..\\server\\dist\\tprm_accelerator\\app.exe`) //(error, stdout, stderr) => {
+    children.push(childProcess)
+    //     if (error) {
+    //       console.error(`exec error: ${error}`);
+    //       return;
+    //     }
+    //     console.log(`stdout: ${stdout}`);
+    //     console.error(`stderr: ${stderr}`);
+    //   }); //, { shell: true, detached: true })
+});
 
+process.on('exit', function() {
+    cp.exec('taskkill /F /T /PID ' + process.pid)
+    // console.log('killing', children.length, 'child processes');
+    // children.forEach(function(child) {
+    //   child.kill();
+    // });
+  });
