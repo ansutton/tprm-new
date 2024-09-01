@@ -3,12 +3,9 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import * as cp from 'node:child_process';
 import path from 'node:path';
-// import * as terminate from 'terminate'
 
-let childProcess: cp.ChildProcess
-let children: Array<cp.ChildProcess> = []
-const devEnvPathToAppServer = '\\..\\..\\server\\dist\\tprm_accelerator\\app.exe'
-const prodEnvPathToAppServer = `\\tprm_accelerator\\app.exe`
+const devEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
+const prodEnvPathToAppServer = 'tprm_accelerator/app.exe'
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -68,19 +65,6 @@ function createWindow() {
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        // if (childProcess) {
-        //     childProcess.stdout?.destroy()
-        //     childProcess.stdin?.destroy()
-        //     childProcess.stderr?.destroy()
-        //     // terminate.default(childProcess.pid ?? 0, err => console.log(err))
-        //     // childProcess.kill('SIGINT')
-        //     // childProcess.kill('SIGTERM')
-        //     childProcess.kill()
-
-        //     // setTimeout(() => {
-        //     //     childProcess.kill('SIGINT');
-        //     // }, 2000);
-        // }
         app.quit();
         win = null;
     }
@@ -97,22 +81,13 @@ app.on('activate', () => {
 app.whenReady().then(() => {
     createWindow()
     console.log("hello from electron")
-    // console.log(__dirname)
-    childProcess = cp.spawn(`${__dirname}\\..\\..\\server\\dist\\tprm_accelerator\\app.exe`) //(error, stdout, stderr) => {
-    children.push(childProcess)
-    //     if (error) {
-    //       console.error(`exec error: ${error}`);
-    //       return;
-    //     }
-    //     console.log(`stdout: ${stdout}`);
-    //     console.error(`stderr: ${stderr}`);
-    //   }); //, { shell: true, detached: true })
+
+    // Spawn app.exe Python Flash server on start up.
+    cp.spawn(`${__dirname}/${devEnvPathToAppServer}`)
 });
 
+// Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
+// See answer to this Stackoverflow question: https://stackoverflow.com/questions/70803840/how-to-kill-a-nodejs-child-exec-process
 process.on('exit', function() {
     cp.exec('taskkill /F /T /PID ' + process.pid)
-    // console.log('killing', children.length, 'child processes');
-    // children.forEach(function(child) {
-    //   child.kill();
-    // });
-  });
+});
