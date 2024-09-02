@@ -227,6 +227,25 @@ For the latest builds, check the [releases](https://github.com/Deloitte-Default/
 
 ___
 
+## Logging
+For production builds, logs will be written to both the ``info.output`` and ``error.output`` files which will be located in a ``logs`` directory inside ``/resources`` within the software package. As the Electron desktop client kicks off the app.exe Python Flask server child process, ``stdout`` streams will be written to ``info.output`` and ``stderr`` streams will be written to ``error.output``.
+
+To tail these log streams using PowerShell, run:
+
+```powershell
+cd path/to/TPRM Accelerator/resources/logs
+```
+
+and then:
+
+```powershell
+Get-Content -Path "error.output" -Wait
+```
+
+Since this application will run on local machines, we may need to provide instructions to users on how to access these logs to email to a support team or at least view the logs by opening them in the Notepad app.
+
+___
+
 ## GitHub SSH Instructions
 
 Eliminate need to authenticate on every git command.

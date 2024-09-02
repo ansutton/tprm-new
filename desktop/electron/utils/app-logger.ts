@@ -13,7 +13,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * @description AppLogger singleton class for writing logs to output text files.
  * @usage To consume the ``writeInfo`` and ``writeError`` methods do NOT new up an instance of this class.
  * Instead access the ``instance`` singleton field by ``AppLogger.instance.writeInfo(...)``
- * The ``logs`` directory will be located at the root of the project directory.``
+ * In the dev env the ``logs`` directory will be located at the root of the project directory.
+ * In the prod env the ``logs`` directory will be located in the ``resources`` directory.
  */
 export class AppLogger {
     private static _instance: AppLogger
@@ -25,7 +26,7 @@ export class AppLogger {
     }
 
     private write(logType: LogTypes, logData: string) {
-        const currentTimeUTC = new Date().toUTCString()
+        const currentTimeUTC = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"}) + " CT"
         const log = `LogId: ${this.logId} at ${currentTimeUTC}: ${logData}`
         let logPath = ''
 
