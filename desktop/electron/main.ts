@@ -85,8 +85,9 @@ app.setAppLogsPath(`${__dirname}/${appLoggerLogPath}`)
 
 app.whenReady().then(() => {
     createWindow()
-    console.log("hello from electron")
-    AppLogger.instance.writeInfo("hello from electron")
+    const createWindowMessage = "***** NEW INSTANCE OF TPRM ACCELERATOR OPENED *****"
+    AppLogger.instance.writeInfo(createWindowMessage)
+    AppLogger.instance.writeError(createWindowMessage)
 
     // Spawn app.exe Python Flask server on start up.
     const child = cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`)

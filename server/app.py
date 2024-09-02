@@ -7,7 +7,7 @@ from modules.globals.app_state import app_state
 
 # Flask modules
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS # type: ignore
 
 # Misc modules
 import json
@@ -37,7 +37,7 @@ def after_request(response):
 # {
 #    questionsCsvFileBuffer: [base64 string],
 #    evidencePdfFileBuffer: [base64 string], # TODO: should handle multiple files in the future
-#    responsesXlsxFileBuffer: [base64 string] # TODO: Ensure data structure for this is defined.
+#    parsedExcelFile: [][]any # TODO: Ensure data structure for this is defined.
 # }
 # Submit endpoint
 @app.route("/submit", methods=["POST"])

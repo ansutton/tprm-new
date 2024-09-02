@@ -4,7 +4,7 @@ from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain.docstore.document import Document
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
-import faiss
+import faiss # type: ignore
 import numpy as np
 import tempfile
 import os
