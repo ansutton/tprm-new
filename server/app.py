@@ -3,6 +3,7 @@ from modules.utils.confidence_score import find_relevant_sections, semantic_simi
 from modules.utils.file_parser import parse_csv_file_buffer, parse_pdf_file_buffer
 from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
+from modules.utils.ollama import init_ollama_models
 from modules.globals.app_state import app_state
 
 # Flask modules
@@ -19,7 +20,6 @@ app = Flask(__name__)
 
 CORS(app)
 
-
 # CORS Headers
 @app.after_request
 def after_request(response):
@@ -30,7 +30,6 @@ def after_request(response):
         "Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS"
     )
     return response
-
 
 # Submit endpoint.
 # Request data expected:
@@ -68,6 +67,10 @@ def main():
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
         pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
+
+        # Pull latest models, update if already pulled.
+        init_ollama_models()
+        app_state.models_pulled = True
 
         # Create Ollama Embeddings and database vectors based on the pdf.
         vector_db = create_vector_store(pdf_file_content)

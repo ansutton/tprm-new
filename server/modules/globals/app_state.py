@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 
 class AppState:
+    models_pulled = False
     number_of_questions = 0
     analyses: dict[str, object] = {}
 
     def to_dict(self):
         return {
             "number_of_questions": self.number_of_questions,
+            "models_pulled": self.models_pulled,
             "analyses": self.analyses
         }
 
