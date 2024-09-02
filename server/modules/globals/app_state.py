@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 class AppState:
+    models_pulled = False
     number_of_questions = 0
     analyses: dict[str, object] = {}
 
