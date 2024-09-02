@@ -213,11 +213,17 @@ To run the client application, open the ``TPRM Accelerator.exe`` file.
 ___
 
 ### Ollama
-See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli).
+Similar to how we kick off child process of ``app.exe`` we will do the same with an external depedency of ``ollama.exe``. Typically, Ollama would be installed at a system level and users would manage their models using the Ollama CLI. Since TPRM Accelerator is being distributed to non-technical users, we won't expect them to have or mess with the Ollama CLI.
 
-See [Ollama downloads](https://github.com/ollama/ollama/releases/tag/v0.3.8).
+Instead, we include an ``/ext`` directory at the root of the TPRM Accelerator software package whose contents include everything that would be downloaded and extracted from here: [Ollama V0.3.8 download](https://github.com/ollama/ollama/releases/tag/v0.3.8).
 
-More instructions coming soon...
+When the Electron desktop client is launched, it spins up a ``ollama.exe`` child process. This is a locally hosted server akin to ``app.exe`` that is default hosted at port ``11434``.
+
+If a user already has Ollama installed at a system level for whatever reason, this child process will fail to spin up since that port will already be taken up.
+
+In addition to this, before any LLM processing happens in the ``/submit`` endpoint, we use the [ollama-python](https://github.com/ollama/ollama-python) library to pull and / or update any models required to run the TPRM Accelerator process.
+
+See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli) for more information.
 
 ___
 

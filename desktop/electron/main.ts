@@ -102,7 +102,7 @@ app.whenReady().then(() => {
     // Don't kick of child processes if devMode = false.
     if (!devMode) {
         // Spawn ollama.exe model framework server on start up.
-        const ollamaChild = cp.spawn(`${__dirname}/${localEnvPathToOllamaServer}`, ['serve']);
+        const ollamaChild = cp.spawn(`${__dirname}/${prodEnvPathToOllamaServer}`, ['serve']);
 
         // Set up ollama child process stdout "info" logs.
         ollamaChild.stdout.setEncoding('utf8');
@@ -119,7 +119,7 @@ app.whenReady().then(() => {
         });
 
         // Spawn app.exe Python Flask server on start up.
-        const appChild = cp.spawn(`${__dirname}/${localEnvPathToAppServer}`);
+        const appChild = cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`);
 
         // Set up app child process stdout "info" logs.
         appChild.stdout.setEncoding('utf8');
