@@ -8,6 +8,7 @@ class AppState:
     def to_dict(self):
         return {
             "number_of_questions": self.number_of_questions,
+            "models_pulled": self.models_pulled,
             "analyses": self.analyses
         }
 

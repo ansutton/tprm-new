@@ -68,6 +68,10 @@ def main():
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]
         pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
 
+        # Pull latest models, update if already pulled.
+        init_ollama_models()
+        app_state.models_pulled = True
+
         # Create Ollama Embeddings and database vectors based on the pdf.
         vector_db = create_vector_store(pdf_file_content)
 
@@ -103,9 +107,6 @@ def poll():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Pull latest models.
-init_ollama_models()
-app_state.models_pulled = True
 
 # Test vector db for test endpoints.
 test_faiss_index = None
