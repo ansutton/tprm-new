@@ -5,10 +5,17 @@ import { fileURLToPath } from 'node:url';
 import * as cp from 'node:child_process';
 import path from 'node:path';
 
-const devEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
+// If true, Electron desktop client won't kick off child processes.
+const devMode = false
+
+// Local = repo path to app.exe.
+const localEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
+// Prod = prod path to app.exe.
 const prodEnvPathToAppServer = '../../../tprm_accelerator/app.exe'
 
-const devEnvPathToOllamaServer = '../../server/ext/ollama.exe'
+// Local = repo path to ollama.exe.
+const localEnvPathToOllamaServer = '../../server/ext/ollama.exe'
+// Prod = prod path to ollama.exe.
 const prodEnvPathToOllamaServer = '../../../ext/ollama.exe'
 
 const appLoggerLogPath = '../../logs'
@@ -92,27 +99,27 @@ app.whenReady().then(() => {
     AppLogger.instance.writeInfo(createWindowMessage)
     AppLogger.instance.writeError(createWindowMessage)
 
-    // Spawn ollama.exe model framework server on start up.
-    const ollamaChild = cp.spawn(`${__dirname}/${devEnvPathToOllamaServer}`, ['serve']);
+    // Don't kick of child processes if devMode = false.
+    if (!devMode) {
+        // Spawn ollama.exe model framework server on start up.
+        const ollamaChild = cp.spawn(`${__dirname}/${localEnvPathToOllamaServer}`, ['serve']);
 
-    // Set up ollama child process stdout "info" logs.
-    ollamaChild.stdout.setEncoding('utf8');
-    ollamaChild.stdout.on('data', function(data) {
-        console.log('stdout: ' + data);
-        AppLogger.instance.writeInfo(data.toString())
-    });
+        // Set up ollama child process stdout "info" logs.
+        ollamaChild.stdout.setEncoding('utf8');
+        ollamaChild.stdout.on('data', function(data) {
+            console.log('stdout: ' + data);
+            AppLogger.instance.writeInfo(data.toString())
+        });
 
-    // Set up ollama child process stderr "error" logs.
-    ollamaChild.stderr.setEncoding('utf8');
-    ollamaChild.stderr.on('data', function(data) {
-        console.log('stderr: ' + data);
-        AppLogger.instance.writeError(data.toString())
-    });
+        // Set up ollama child process stderr "error" logs.
+        ollamaChild.stderr.setEncoding('utf8');
+        ollamaChild.stderr.on('data', function(data) {
+            console.log('stderr: ' + data);
+            AppLogger.instance.writeError(data.toString())
+        });
 
-    // 5 second delay b/c we want ollama server initialized first.
-    setTimeout(() => {
         // Spawn app.exe Python Flask server on start up.
-        const appChild = cp.spawn(`${__dirname}/${devEnvPathToAppServer}`);
+        const appChild = cp.spawn(`${__dirname}/${localEnvPathToAppServer}`);
 
         // Set up app child process stdout "info" logs.
         appChild.stdout.setEncoding('utf8');
@@ -127,7 +134,7 @@ app.whenReady().then(() => {
             console.log('stderr: ' + data);
             AppLogger.instance.writeError(data.toString());
         });
-    }, 5000)
+    }
 });
 
 // Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
