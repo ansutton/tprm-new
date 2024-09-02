@@ -8,6 +8,9 @@ import path from 'node:path';
 const devEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
 const prodEnvPathToAppServer = '../../../tprm_accelerator/app.exe'
 
+const devEnvPathToOllamaServer = '../../server/ext/ollama.exe'
+const prodEnvPathToOllamaServer = '../../../ext/ollama.exe'
+
 const appLoggerLogPath = '../../logs'
 
 const require = createRequire(import.meta.url);
@@ -89,22 +92,42 @@ app.whenReady().then(() => {
     AppLogger.instance.writeInfo(createWindowMessage)
     AppLogger.instance.writeError(createWindowMessage)
 
-    // Spawn app.exe Python Flask server on start up.
-    const child = cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`)
+    // Spawn ollama.exe model framework server on start up.
+    const ollamaChild = cp.spawn(`${__dirname}/${devEnvPathToOllamaServer}`, ['serve']);
 
-    // Set up child process stdout "info" logs.
-    child.stdout.setEncoding('utf8');
-    child.stdout.on('data', function(data) {
+    // Set up ollama child process stdout "info" logs.
+    ollamaChild.stdout.setEncoding('utf8');
+    ollamaChild.stdout.on('data', function(data) {
         console.log('stdout: ' + data);
         AppLogger.instance.writeInfo(data.toString())
     });
 
-    // Set up child process stderr "error" logs.
-    child.stderr.setEncoding('utf8');
-    child.stderr.on('data', function(data) {
+    // Set up ollama child process stderr "error" logs.
+    ollamaChild.stderr.setEncoding('utf8');
+    ollamaChild.stderr.on('data', function(data) {
         console.log('stderr: ' + data);
         AppLogger.instance.writeError(data.toString())
     });
+
+    // 5 second delay b/c we want ollama server initialized first.
+    setTimeout(() => {
+        // Spawn app.exe Python Flask server on start up.
+        const appChild = cp.spawn(`${__dirname}/${devEnvPathToAppServer}`);
+
+        // Set up app child process stdout "info" logs.
+        appChild.stdout.setEncoding('utf8');
+        appChild.stdout.on('data', function(data) {
+            console.log('stdout: ' + data);
+            AppLogger.instance.writeInfo(data.toString());
+        });
+
+        // Set up app child process stderr "error" logs.
+        appChild.stderr.setEncoding('utf8');
+        appChild.stderr.on('data', function(data) {
+            console.log('stderr: ' + data);
+            AppLogger.instance.writeError(data.toString());
+        });
+    }, 5000)
 });
 
 // Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
