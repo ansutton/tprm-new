@@ -1,9 +1,9 @@
-import { AppLogger } from './utils/app-logger';
 import { app, BrowserWindow } from 'electron';
-import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
 import * as cp from 'node:child_process';
+import { createRequire } from 'node:module';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { AppLogger } from './utils/app-logger';
 
 // If true, Electron desktop client won't kick off child processes.
 // const devMode = process.env.DEV_MODE === 'true';
