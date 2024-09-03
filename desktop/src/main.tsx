@@ -16,3 +16,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 window.ipcRenderer.on('main-process-message', (_event, message) => {
     console.log(message);
 });
+
+// Apply Dark Theme
+window.ipcRenderer.on('theme-changed', (isDarkMode) => {
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+});
