@@ -136,10 +136,10 @@ npm run dev
 
 ___
 
-### Packaging
+## Packaging
 TPRM Accelerator is intended to run out-of-the-box on users' local machines. To achieve this, we have packaging steps for TPRM Accelerator's primary dependencies including Python, JavaScript and Ollama.
 
-#### Python Flask Server with PyInstaller
+### Python Flask Server with PyInstaller
 We use [PyInstaller](https://pyinstaller.org/en/stable/) to output an .exe program that includes all required Python dependencies (both the packages and the interpreter).
 
 To package the latest changes into a .exe format, ``cd /server`` and run:
@@ -152,27 +152,107 @@ This will bundle the Python scripts into a single executable called ``app.exe`` 
 
 > <b>Note</b>: Alongside the .exe file you will see various DLLs which are also required to run the Flask server without a system installed Python interpreter. When distributing you should include everything that's found in ``server/dist/tprm_accelerator/``.
 
-#### Next.js Desktop Client with Electron
-We use [Electron](https://www.electronjs.org/) to output a native desktop application that includes all JavaScript dependencies (both the packages and the Node runtime).
+Also, PyInstaller won't successfully link all the binaries necessary for the program to run on it's own. In the ``pyinstaller.spec`` file you will see the binaries field in the Analysis section here:
 
-To package the latest changes into a .exe format, ``cd /desktop`` and run:
+```spec
+# -*- mode: python ; coding: utf-8 -*-
+import sys ; sys.setrecursionlimit(sys.getrecursionlimit() * 5)
 
-```powershell
-npm run dev
+
+a = Analysis(
+    ['app.py'],
+    pathex=[],
+    binaries=[
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\numpy.libs\\libopenblas64__v0.3.23-293-gc2f4bdbb-gcc_10_3_0-2bde3a66a51006b2b53eb373ff767a3f.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\libomp140.x86_64-342e80c06daee0da2e436795e93b0163.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\libomp-7dc934d99dfa591f473ae5d975972b7c.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\openblas-54c31036ecda6ab8856f9aac9fdee712.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\msvcp140-b9d2f1930e3a04e4b9f88e2514052f10.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\flangrti-5bbaf6aff159e72f9b015d5bc31c7584.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\flang-d38962844214aa9b06fc3989f9adae5b.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll', '.'),
+        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll', '.'),
+        ],
+        # ...
 ```
 
-More instructions coming soon...
-
-#### Ollama
-See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli).
-
-See [Ollama downloads](https://github.com/ollama/ollama/releases/tag/v0.3.8).
-
-More instructions coming soon...
+> <b>Note</b>: I am manually setting the paths to where these binaries live on my local machine in the virtual environment I'm using to run and build the project. For another local machine to successfully build the Python Flask server via the PyInstaller process, each of these paths would need to modified to the location of their own virtual environment's binaries' paths. Also note, there's probably a relative way to import these, just not sure how to do it in the ``pyinstaller.spec`` file.
 
 ___
 
-### GitHub SSH Instructions
+### Next.js Desktop Client with Electron
+We use [Electron](https://www.electronjs.org/) to output a native desktop application that includes all JavaScript dependencies (both the packages and the Node runtime).
+
+To package the latest changes into a .exe format, ``cd /desktop`` and set the new version number in ``package.json`` like so:
+
+```json
+{
+    "name": "desktop",
+    "private": true,
+    "version": "0.0.2-alpha", // <- modify this field.
+    "type": "module",
+    // ...
+```
+
+Then run:
+
+```powershell
+npm run build
+```
+
+Once the build completes, go to: ``/desktop/release/0.0.2-alpha`` where the release folder will be named after whatever value you set in the ``version`` field in ``/desktop/package.json``.
+
+In the release version folder you will see a filed called ``TPRM Accelerator-Windows-0.0.2-alpha-Setup.exe``. Run this program and walk through the installer.
+
+The output will default to: ``%Appdata%\Local\Programs\TPRM Accelerator``.
+
+All the contents in that output folder ``TPRM Accelerator`` should be included in the software package to distribute.
+
+To run the client application, open the ``TPRM Accelerator.exe`` file.
+
+___
+
+### Ollama
+Similar to how we kick off child process of ``app.exe`` we will do the same with an external depedency of ``ollama.exe``. Typically, Ollama would be installed at a system level and users would manage their models using the Ollama CLI. Since TPRM Accelerator is being distributed to non-technical users, we won't expect them to have or mess with the Ollama CLI.
+
+Instead, we include an ``/ext`` directory at the root of the TPRM Accelerator software package whose contents include everything that would be downloaded and extracted from here: [Ollama V0.3.8 download](https://github.com/ollama/ollama/releases/tag/v0.3.8).
+
+When the Electron desktop client is launched, it spins up a ``ollama.exe`` child process. This is a locally hosted server akin to ``app.exe`` that is default hosted at port ``11434``.
+
+If a user already has Ollama installed at a system level for whatever reason, this child process will fail to spin up since that port will already be taken up.
+
+In addition to this, before any LLM processing happens in the ``/submit`` endpoint, we use the [ollama-python](https://github.com/ollama/ollama-python) library to pull and / or update any models required to run the TPRM Accelerator process.
+
+See [integrating Ollama as a standalone service](https://github.com/ollama/ollama/blob/main/docs/windows.md#standalone-cli) for more information.
+
+___
+
+### Builds
+
+For the latest builds, check the [releases](https://github.com/Deloitte-Default/TPRM-Accelerator/releases). You will need access to the Cyber AI SharePoint link to download.
+
+___
+
+## Logging
+For production builds, logs will be written to both the ``info.output`` and ``error.output`` files which will be located in a ``logs`` directory inside ``/resources`` within the software package. As the Electron desktop client kicks off the app.exe Python Flask server child process, ``stdout`` streams will be written to ``info.output`` and ``stderr`` streams will be written to ``error.output``.
+
+To tail these log streams using PowerShell, run:
+
+```powershell
+cd path/to/TPRM Accelerator/resources/logs
+```
+
+and then:
+
+```powershell
+Get-Content -Path "error.output" -Wait
+```
+
+Since this application will run on local machines, we may need to provide instructions to users on how to access these logs to email to a support team or at least view the logs by opening them in the Notepad app.
+
+___
+
+## GitHub SSH Instructions
 
 Eliminate need to authenticate on every git command.
 

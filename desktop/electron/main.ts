@@ -1,7 +1,24 @@
+import { AppLogger } from './utils/app-logger'
 import { app, BrowserWindow } from 'electron';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import * as cp from 'node:child_process';
 import path from 'node:path';
+
+// If true, Electron desktop client won't kick off child processes.
+const devMode = false
+
+// Local = repo path to app.exe.
+const localEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe'
+// Prod = prod path to app.exe.
+const prodEnvPathToAppServer = '../../../tprm_accelerator/app.exe'
+
+// Local = repo path to ollama.exe.
+const localEnvPathToOllamaServer = '../../server/ext/ollama.exe'
+// Prod = prod path to ollama.exe.
+const prodEnvPathToOllamaServer = '../../../ext/ollama.exe'
+
+const appLoggerLogPath = '../../logs'
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +38,10 @@ process.env.APP_ROOT = path.join(__dirname, '..');
 export const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron');
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist');
+
+var cleanExit = function() { process.exit() };
+process.on('SIGINT', cleanExit); // catch ctrl-c
+process.on('SIGTERM', cleanExit); // catch kill
 
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
     ? path.join(process.env.APP_ROOT, 'public')
@@ -70,5 +91,54 @@ app.on('activate', () => {
     }
 });
 
-app.whenReady().then(createWindow);
+app.setAppLogsPath(`${__dirname}/${appLoggerLogPath}`)
 
+app.whenReady().then(() => {
+    createWindow()
+    const createWindowMessage = "***** NEW INSTANCE OF TPRM ACCELERATOR OPENED *****"
+    AppLogger.instance.writeInfo(createWindowMessage)
+    AppLogger.instance.writeError(createWindowMessage)
+
+    // Don't kick of child processes if devMode = false.
+    if (!devMode) {
+        // Spawn ollama.exe model framework server on start up.
+        const ollamaChild = cp.spawn(`${__dirname}/${prodEnvPathToOllamaServer}`, ['serve']);
+
+        // Set up ollama child process stdout "info" logs.
+        ollamaChild.stdout.setEncoding('utf8');
+        ollamaChild.stdout.on('data', function(data) {
+            console.log('stdout: ' + data);
+            AppLogger.instance.writeInfo(data.toString())
+        });
+
+        // Set up ollama child process stderr "error" logs.
+        ollamaChild.stderr.setEncoding('utf8');
+        ollamaChild.stderr.on('data', function(data) {
+            console.log('stderr: ' + data);
+            AppLogger.instance.writeError(data.toString())
+        });
+
+        // Spawn app.exe Python Flask server on start up.
+        const appChild = cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`);
+
+        // Set up app child process stdout "info" logs.
+        appChild.stdout.setEncoding('utf8');
+        appChild.stdout.on('data', function(data) {
+            console.log('stdout: ' + data);
+            AppLogger.instance.writeInfo(data.toString());
+        });
+
+        // Set up app child process stderr "error" logs.
+        appChild.stderr.setEncoding('utf8');
+        appChild.stderr.on('data', function(data) {
+            console.log('stderr: ' + data);
+            AppLogger.instance.writeError(data.toString());
+        });
+    }
+});
+
+// Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
+// See answer to this Stackoverflow question: https://stackoverflow.com/questions/70803840/how-to-kill-a-nodejs-child-exec-process
+process.on('exit', function() {
+    cp.exec('taskkill /F /T /PID ' + process.pid)
+});
