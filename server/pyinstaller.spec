@@ -13,8 +13,6 @@ a = Analysis(
         ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\msvcp140-b9d2f1930e3a04e4b9f88e2514052f10.dll', '.'),
         ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\flangrti-5bbaf6aff159e72f9b015d5bc31c7584.dll', '.'),
         ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\faiss_cpu.libs\\flang-d38962844214aa9b06fc3989f9adae5b.dll', '.'),
-        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll', '.'),
-        ('C:\\Users\\jacwallace\\Repos\\.venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll', '.'),
         ],
     datas=[],
     hiddenimports=[],
