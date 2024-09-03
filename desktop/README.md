@@ -2,15 +2,34 @@
 
 The `desktop/` directory contains the Electron app.
 
-To get started, ensure you have LTS versions of Node.js and npm installed on your machine.
+## Get Started
+
+Ensure you have Node.js and npm LTS versions installed on your local machine:
+
+```sh
+node -v
+npm -v
+```
 
 Install npm packages:
 
-`npm install`
+```sh
+npm i
+```
+
+In `desktop/`, copy `.env.example` to `.env.local`.
+
+Ensure that `.env.local` contains the following line of code:
+
+```dotenv
+IS_DEV_MODE=true
+```
 
 Run a development server:
 
-`npm run dev`
+```sh
+npm run dev
+```
 
 ## React + TypeScript + Vite
 
@@ -45,7 +64,7 @@ export default {
 
 ## Server Response Shape
 
-```typescript
+```ts
 interface ServerRespone {
     number_of_questions: number;
     models_pulled: boolean;
@@ -71,7 +90,7 @@ interface ServerRespone {
 
 I.e.
 
-```typescript
+```ts
 interface Analysis {
     question: string;
     tp_response: string;

@@ -1,13 +1,16 @@
 import { app, BrowserWindow } from 'electron';
+import * as dotenv from 'dotenv';
 import * as cp from 'node:child_process';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AppLogger } from './utils/app-logger';
 
-// If true, Electron desktop client won't kick off child processes.
-// const devMode = process.env.DEV_MODE === 'true';
-const devMode = true;
+// Configure dev mode based on if app is packaged or local environment variable.
+if (!app.isPackaged) {
+    dotenv.config({ path: '.env.local' });
+}
+const isDevMode = process.env.IS_DEV_MODE === 'true' || !app.isPackaged;
 
 // Local = repo path to app.exe.
 const localEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe';
@@ -103,8 +106,8 @@ app.whenReady().then(() => {
     AppLogger.instance.writeInfo(createWindowMessage);
     AppLogger.instance.writeError(createWindowMessage);
 
-    // Don't kick of child processes if devMode = false.
-    if (!devMode) {
+    // Don't kick of child processes if isDevMode = false.
+    if (!isDevMode) {
         // Spawn ollama.exe model framework server on start up.
         const ollamaChild = cp.spawn(
             `${__dirname}/${prodEnvPathToOllamaServer}`,
