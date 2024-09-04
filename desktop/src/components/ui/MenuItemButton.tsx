@@ -1,23 +1,24 @@
-import { ReactNode } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import clsx from 'clsx';
 import { useTheme } from '@/hooks';
 import { tw } from '@/utils';
 
 interface MenuItemButtonProps {
-    additionalClasses?: string;
+    additionalClasses?: string | false | null | undefined;
     children: ReactNode;
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export function MenuItemButton({
-    additionalClasses = '',
-    children,
-    onClick,
-}: MenuItemButtonProps): JSX.Element {
+export const MenuItemButton = forwardRef<
+    HTMLButtonElement,
+    MenuItemButtonProps
+>((props, ref) => {
+    const { additionalClasses = '', children, onClick } = props;
     const { theme } = useTheme();
 
     return (
         <button
+            ref={ref}
             onClick={onClick}
             className={clsx(
                 `${additionalClasses}`,
@@ -29,4 +30,4 @@ export function MenuItemButton({
             {children}
         </button>
     );
-}
+});

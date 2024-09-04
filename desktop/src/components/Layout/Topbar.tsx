@@ -1,3 +1,4 @@
+// TODO: Refactor commented system theme preferences implementation code with next-themes.
 import { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
@@ -192,20 +193,18 @@ function ThemeMenu(): JSX.Element {
                 transition
                 anchor='bottom end'
                 className={clsx(
-                    tw`mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg`,
-                    tw`stroke-700 text-zinc-700`,
+                    tw`mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg`,
+                    theme === 'light' &&
+                        tw`stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10`,
                     theme === 'dark' &&
-                        tw`bg-zinc-800 stroke-zinc-300 text-zinc-300`,
-                    tw`ring-1 ring-zinc-900/10`,
-                    theme === 'dark' && tw`ring-0`,
+                        tw`bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0`,
                 )}
             >
                 <MenuItem>
                     <MenuItemButton
                         additionalClasses={
-                            (theme === 'light' &&
-                                tw`stroke-indigo-600 text-indigo-600`) ||
-                            ''
+                            theme === 'light' &&
+                            tw`stroke-indigo-600 text-indigo-600`
                         }
                         onClick={() => setTheme('light')}
                     >
@@ -216,9 +215,8 @@ function ThemeMenu(): JSX.Element {
                 <MenuItem>
                     <MenuItemButton
                         additionalClasses={
-                            theme === 'dark'
-                                ? tw`stroke-indigo-400 text-indigo-400`
-                                : ''
+                            theme === 'dark' &&
+                            tw`stroke-indigo-400 text-indigo-400`
                         }
                         onClick={() => setTheme('dark')}
                     >
