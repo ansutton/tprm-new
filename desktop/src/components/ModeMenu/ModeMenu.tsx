@@ -63,8 +63,9 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
                     <MenuItem>
                         <MenuItemButton
                             additionalClasses={
-                                mode === 'llm' &&
-                                tw`text-indigo-600 dark:text-indigo-400`
+                                mode === 'llm'
+                                    ? tw`text-indigo-600 dark:text-indigo-400`
+                                    : ''
                             }
                             onClick={() => setMode('llm')}
                         >

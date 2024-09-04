@@ -8,7 +8,7 @@ interface MenuItemButtonProps {
 }
 
 export function MenuItemButton({
-    additionalClasses,
+    additionalClasses = '',
     children,
     onClick,
 }: MenuItemButtonProps): JSX.Element {
