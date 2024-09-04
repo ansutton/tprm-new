@@ -15,7 +15,12 @@ import json
 import os
 
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
-os.environ["TF_PLUGGABLE_DEVICE_LIBRARY_PATH"]= os.path.abspath("ext/lib/tensorflow/_pywrap_tensorflow_internal.pyd")
+
+# For pyinstaller builds, check if tensorflow pyd file is at root.
+# Then set Tensorflow environment variable: TF_PLUGGABLE_DEVICE_LIBRARY_PATH
+tensorflow_dynamic_lib = "_pywrap_tensorflow_internal.pyd"
+if os.path.isfile(tensorflow_dynamic_lib):
+    os.environ["TF_PLUGGABLE_DEVICE_LIBRARY_PATH"]= tensorflow_dynamic_lib
 
 app = Flask(__name__)
 
