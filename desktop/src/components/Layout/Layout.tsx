@@ -17,14 +17,14 @@ export function Layout({ children }: LayoutProps): JSX.Element {
                 tw`min-h-dvh bg-cover`,
             )}
         >
-            <button onClick={() => setTheme('light')}>
-                Switch to Light Mode
-            </button>
-            <button onClick={() => setTheme('dark')}>
-                Switch to Dark Mode
-            </button>
             <div className='min-h-dvh bg-zinc-50 bg-opacity-70 dark:bg-zinc-950 dark:bg-opacity-70'>
                 {children}
+                <button onClick={() => setTheme('light')} className='hidden'>
+                    Switch to Light Mode
+                </button>
+                <button onClick={() => setTheme('dark')} className='hidden'>
+                    Switch to Dark Mode
+                </button>
             </div>
         </main>
     );
