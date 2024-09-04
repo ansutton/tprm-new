@@ -247,14 +247,14 @@ export function DetailedAnalysis({
                     ),
                     aiConfidenceScore: handleSpinner(
                         scorePercent(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.ai_confidence_score,
+                            Number(llmResponse?.analyses[`analysis_${index}`]
+                                ?.ai_confidence_score),
                         ),
                     ),
                     tpConfidenceScore: handleSpinner(
                         scorePercent(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.tp_confidence_score,
+                            Number(llmResponse?.analyses[`analysis_${index}`]
+                                ?.tp_confidence_score),
                         ),
                     ),
                     aiSimilarityScore: 'N/A',
