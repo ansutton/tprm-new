@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import Link from 'next/link';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
     ComputerDesktopIcon,
@@ -171,7 +170,13 @@ function ThemeMenu(): JSX.Element {
 
     return (
         <Menu>
-            <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+            <MenuButton
+                className={clsx(
+                    tw`rounded-lg p-2`,
+                    theme === 'light' && tw`hover:bg-zinc-200`,
+                    theme === 'dark' && tw`hover:bg-zinc-800`,
+                )}
+            >
                 {theme === 'light' && <SunIcon className={iconClassesBase} />}
                 {theme === 'dark' && (
                     <MoonIcon
@@ -187,19 +192,20 @@ function ThemeMenu(): JSX.Element {
                 transition
                 anchor='bottom end'
                 className={clsx(
-                    'mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
-                    'stroke-700 text-zinc-700',
-                    'dark:bg-zinc-800 dark:stroke-zinc-300 dark:text-zinc-300',
-                    'ring-1 ring-zinc-900/10',
-                    'dark:ring-0',
+                    tw`mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg`,
+                    tw`stroke-700 text-zinc-700`,
+                    theme === 'dark' &&
+                        tw`bg-zinc-800 stroke-zinc-300 text-zinc-300`,
+                    tw`ring-1 ring-zinc-900/10`,
+                    theme === 'dark' && tw`ring-0`,
                 )}
             >
                 <MenuItem>
                     <MenuItemButton
                         additionalClasses={
-                            theme === 'light'
-                                ? 'text-indigo-600 stroke-indigo-600'
-                                : ''
+                            (theme === 'light' &&
+                                tw`stroke-indigo-600 text-indigo-600`) ||
+                            ''
                         }
                         onClick={() => setTheme('light')}
                     >
@@ -211,7 +217,7 @@ function ThemeMenu(): JSX.Element {
                     <MenuItemButton
                         additionalClasses={
                             theme === 'dark'
-                                ? 'text-indigo-400 stroke-indigo-400'
+                                ? tw`stroke-indigo-400 text-indigo-400`
                                 : ''
                         }
                         onClick={() => setTheme('dark')}
