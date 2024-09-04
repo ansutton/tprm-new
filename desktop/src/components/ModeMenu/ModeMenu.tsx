@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import clsx from 'clsx';
 import { MenuItemButton } from '@/components';
 import { Mode } from '@/types';
+import { tw } from '@/utils';
 
 interface ModeMenuProps {
     mode: Mode;
@@ -14,28 +15,23 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
             <Menu>
                 <MenuButton
                     className={clsx(
-                        'flex gap-1 p-1 text-zinc-600',
-                        'hover:bg-zinc-200',
-                        'dark:text-zinc-300',
-                        'dark:hover:bg-zinc-800',
+                        tw`flex gap-1 p-1 text-zinc-600`,
+                        tw`hover:bg-zinc-200`,
+                        tw`dark:text-zinc-300`,
+                        tw`dark:hover:bg-zinc-800`,
                     )}
                 >
                     Mode:
                     <span className='relative text-indigo-600 dark:text-indigo-400'>
                         <span
                             className={clsx(
-                                'absolute',
-                                mode === 'demo' ? 'invisible' : '',
+                                tw`absolute`,
+                                mode === 'demo' && 'invisible',
                             )}
                         >
                             LLM
                         </span>
-                        <span
-                            className={clsx(
-                                '',
-                                mode === 'llm' ? 'invisible' : '',
-                            )}
-                        >
+                        <span className={clsx(mode === 'llm' && 'invisible')}>
                             Demo
                         </span>
                     </span>
@@ -67,9 +63,8 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
                     <MenuItem>
                         <MenuItemButton
                             additionalClasses={
-                                mode === 'llm'
-                                    ? 'text-indigo-600 dark:text-indigo-400'
-                                    : ''
+                                mode === 'llm' &&
+                                tw`text-indigo-600 dark:text-indigo-400`
                             }
                             onClick={() => setMode('llm')}
                         >
