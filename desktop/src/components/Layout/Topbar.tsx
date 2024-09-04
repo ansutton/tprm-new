@@ -11,6 +11,7 @@ import {
 import clsx from 'clsx';
 // import { useTheme } from 'next-themes';
 import { MenuItemButton, ModeMenu } from '@/components';
+import { useTheme } from '@/hooks';
 import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
@@ -22,7 +23,6 @@ interface TopbarProps {
 
 export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
     return (
-        // <>Topbar</>
         <div
             className={clsx(
                 'fixed z-20 mb-10 flex w-full justify-around bg-gradient-to-r pb-0.5 shadow-sm',
@@ -92,7 +92,7 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
 
                 <ModeMenu mode={mode} setMode={setMode} />
 
-                {/* <ThemeMenu /> */}
+                <ThemeMenu />
             </div>
         </div>
     );
@@ -116,7 +116,7 @@ function ThemeMenu(): JSX.Element {
      * Custom Hooks
      */
     // const { theme, resolvedTheme, setTheme } = useTheme();
-    const { isDarkMode, toggleTheme } = useTheme();
+    const { theme, setTheme } = useTheme();
 
     /**
      * State Hooks
@@ -172,8 +172,8 @@ function ThemeMenu(): JSX.Element {
     return (
         <Menu>
             <MenuButton className='rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800'>
-                {!isDarkMode && <SunIcon className={iconClassesBase} />}
-                {isDarkMode && (
+                {theme === 'light' && <SunIcon className={iconClassesBase} />}
+                {theme === 'dark' && (
                     <MoonIcon
                         className={`${iconClassesBase} stroke-zinc-300`}
                     />
@@ -197,11 +197,11 @@ function ThemeMenu(): JSX.Element {
                 <MenuItem>
                     <MenuItemButton
                         additionalClasses={
-                            !isDarkMode
+                            theme === 'light'
                                 ? 'text-indigo-600 stroke-indigo-600'
                                 : ''
                         }
-                        onClick={toggleTheme}
+                        onClick={() => setTheme('light')}
                     >
                         <SunIcon className={`${iconClassesBase}`} />
                         Light
@@ -210,11 +210,11 @@ function ThemeMenu(): JSX.Element {
                 <MenuItem>
                     <MenuItemButton
                         additionalClasses={
-                            isDarkMode
+                            theme === 'dark'
                                 ? 'text-indigo-400 stroke-indigo-400'
                                 : ''
                         }
-                        onClick={toggleTheme}
+                        onClick={() => setTheme('dark')}
                     >
                         <MoonIcon className={`${iconClassesBase}`} />
                         Dark
