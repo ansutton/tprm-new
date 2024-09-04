@@ -69,10 +69,6 @@ function createWindow() {
             'main-process-message',
             new Date().toLocaleString(),
         );
-
-        // Send the current theme to the renderer process
-        const isDarkMode = nativeTheme.shouldUseDarkColors;
-        win?.webContents.send('theme-changed', isDarkMode);
     });
 
     if (VITE_DEV_SERVER_URL) {
@@ -149,16 +145,10 @@ app.whenReady().then(() => {
             AppLogger.instance.writeError(data.toString());
         });
     }
-
-    // Listen for dark mode changes
-    nativeTheme.on('updated', () => {
-        const isDarkMode = nativeTheme.shouldUseDarkColors;
-        win?.webContents.send('theme-changed', isDarkMode);
-    });
 });
 
 // Force kill process on exit. This is necessary for killing ALL Node spawned child processes on Windows platform.
-// See answer to this Stackoverflow question: https://stackoverflow.com/questions/70803840/how-to-kill-a-nodejs-child-exec-process
+// See answer to this Stackoverflow question: <https://stackoverflow.com/questions/70803840/how-to-kill-a-nodejs-child-exec-process>
 process.on('exit', function () {
     cp.exec('taskkill /F /T /PID ' + process.pid);
 });
