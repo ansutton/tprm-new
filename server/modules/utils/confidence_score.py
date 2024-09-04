@@ -38,6 +38,9 @@ def semantic_similarity(relevant_sections, ai_analysis, tp_response):
         max_similarities['ai'] = max(max_similarities['ai'], ai_similarity.numpy())
         max_similarities['third_party'] = max(max_similarities['third_party'], tp_similarity.numpy())
 
+    max_similarities['ai'] = str(max_similarities['ai'])
+    max_similarities['third_party'] = str(max_similarities['third_party'])
+
     return max_similarities
 
 

@@ -15,7 +15,7 @@ import json
 import os
 
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
-# os.environ["TF_PLUGGABLE_DEVICE_LIBRARY_PATH"]= "C:/Users/jacwallace/Repos/.venv/lib/site-packages/tensorflow/python/_pywrap_tensorflow_internal.pyd" #dist/tprm_accelerator/_pywrap_tensorflow_internal.pyd"
+os.environ["TF_PLUGGABLE_DEVICE_LIBRARY_PATH"]= "C:/Users/jacwallace/Repos/.venv/lib/site-packages/tensorflow/python/_pywrap_tensorflow_internal.pyd" #dist/tprm_accelerator/_pywrap_tensorflow_internal.pyd"
 
 app = Flask(__name__)
 
