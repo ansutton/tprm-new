@@ -1,5 +1,6 @@
 import { ReactNode, useState } from 'react';
 import clsx from 'clsx';
+import { useTheme } from '@/hooks';
 import { tw } from '@/utils';
 
 interface LayoutProps {
@@ -7,7 +8,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps): JSX.Element {
-    const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+    const { theme, setTheme } = useTheme();
 
     return (
         <main
@@ -19,10 +20,10 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         >
             <div className='min-h-dvh bg-zinc-50 bg-opacity-70 dark:bg-zinc-950 dark:bg-opacity-70'>
                 {children}
-                <button onClick={() => setTheme('light')} className='hidden'>
+                <button onClick={() => setTheme('light')} className=''>
                     Switch to Light Mode
                 </button>
-                <button onClick={() => setTheme('dark')} className='hidden'>
+                <button onClick={() => setTheme('dark')} className=''>
                     Switch to Dark Mode
                 </button>
             </div>
