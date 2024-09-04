@@ -1,5 +1,4 @@
-
-import torch
+import tensorflow as tf # type: ignore
 from langchain_community.embeddings import OllamaEmbeddings
 
 def find_relevant_sections(vector_store, question, top_n=50):
@@ -20,20 +19,27 @@ def find_relevant_sections(vector_store, question, top_n=50):
 def semantic_similarity(relevant_sections, ai_analysis, tp_response):
     # Use the same OllamaEmbeddings model
     embedding_model = OllamaEmbeddings(model='nomic-embed-text', show_progress=True)
-    answer_embeddings = embedding_model.embed_documents([ai_analysis, tp_response])
-
+    ai_answer_embedding = embedding_model.embed_query(ai_analysis)
+    third_party_answer_embedding = embedding_model.embed_query(tp_response)
     max_similarities = {'ai': 0, 'third_party': 0}
 
     for section in relevant_sections:
         # Embed the relevant section
         section_embedding = embedding_model.embed_query(section)
 
-        # Calculate semantic similarity 
-        similarities_for_section = torch.cosine_similarity(torch.tensor(section_embedding).unsqueeze(0), 
-                                                            torch.tensor(answer_embeddings), dim=1)
+        # Calculate semantic similarity
+        section_embedding_tensor = tf.constant(section_embedding)
+        ai_answer_embedding_tensor = tf.constant(ai_answer_embedding)
+        third_party_answer_embedding_tensor = tf.constant(third_party_answer_embedding)
 
-        max_similarities['ai'] = max(max_similarities['ai'], similarities_for_section[0].item())
-        max_similarities['third_party'] = max(max_similarities['third_party'], similarities_for_section[1].item())
+        ai_similarity = tf.reduce_sum(section_embedding_tensor * ai_answer_embedding_tensor) / (tf.norm(section_embedding_tensor) * tf.norm(ai_answer_embedding_tensor))
+        tp_similarity = tf.reduce_sum(section_embedding_tensor * third_party_answer_embedding_tensor) / (tf.norm(section_embedding_tensor) * tf.norm(third_party_answer_embedding_tensor))
+
+        max_similarities['ai'] = max(max_similarities['ai'], ai_similarity.numpy())
+        max_similarities['third_party'] = max(max_similarities['third_party'], tp_similarity.numpy())
+
+    max_similarities['ai'] = str(max_similarities['ai'])
+    max_similarities['third_party'] = str(max_similarities['third_party'])
 
     return max_similarities
 
@@ -44,20 +50,25 @@ def semantic_similarity_all(relevant_sections, questions, ai_answers, third_part
 
     similarities = {'ai': [], 'third_party': []}
     for question, rel_sections, ai_answer, third_party_answer in zip(questions, relevant_sections, ai_answers, third_party_answers):
-        # Embed the answers 
-        answer_embeddings = embedding_model.embed_documents([ai_answer, third_party_answer]) 
+        # Embed the answers
+        ai_answer_embedding = embedding_model.embed_query(ai_answer)
+        third_party_answer_embedding = embedding_model.embed_query(third_party_answer)
 
         max_similarities = {'ai': 0, 'third_party': 0}
         for section in rel_sections:
             # Embed the relevant section
             section_embedding = embedding_model.embed_query(section)
 
-            # Calculate semantic similarity 
-            similarities_for_section = torch.cosine_similarity(torch.tensor(section_embedding).unsqueeze(0), 
-                                                               torch.tensor(answer_embeddings), dim=1)
+            # Calculate semantic similarity
+            section_embedding_tensor = tf.constant(section_embedding)
+            ai_answer_embedding_tensor = tf.constant(ai_answer_embedding)
+            third_party_answer_embedding_tensor = tf.constant(third_party_answer_embedding)
 
-            max_similarities['ai'] = max(max_similarities['ai'], similarities_for_section[0].item())
-            max_similarities['third_party'] = max(max_similarities['third_party'], similarities_for_section[1].item())
+            ai_similarity = tf.reduce_sum(section_embedding_tensor * ai_answer_embedding_tensor) / (tf.norm(section_embedding_tensor) * tf.norm(ai_answer_embedding_tensor))
+            tp_similarity = tf.reduce_sum(section_embedding_tensor * third_party_answer_embedding_tensor) / (tf.norm(section_embedding_tensor) * tf.norm(third_party_answer_embedding_tensor))
+
+            max_similarities['ai'] = max(max_similarities['ai'], ai_similarity.numpy())
+            max_similarities['third_party'] = max(max_similarities['third_party'], tp_similarity.numpy())
 
         similarities['ai'].append(max_similarities['ai'])
         similarities['third_party'].append(max_similarities['third_party'])
