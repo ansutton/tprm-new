@@ -4,6 +4,8 @@ The `desktop/` directory contains the Electron app.
 
 ## Get Started
 
+### Install Node Modules
+
 Ensure you have Node.js and npm LTS versions installed on your local machine.
 
 ```sh
@@ -17,15 +19,11 @@ Install npm packages.
 npm i
 ```
 
-In `desktop/`, copy `.env.local.example` to `.env.local`.
+### Configure Environment Variables
 
-Ensure that `.env.local` contains the following line of code.
+Create a `.env` file in `./env_configs/`. Copy the contents to `.env` from the environment variable configuration file corresponding to the mode you are developing or testing.
 
-```dotenv
-IS_DEV_MODE=true
-```
-
-Run a development server.
+### Run a Development Server
 
 ```sh
 npm run dev
