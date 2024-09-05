@@ -60,6 +60,17 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
 
                     <Pipe />
 
+                    <h2 className='text-lg'>
+                        <span className='font-bold text-zinc-700 dark:text-zinc-300'>
+                            Cyber{' '}
+                        </span>
+                        <span className='bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent'>
+                            AI
+                        </span>
+                    </h2>
+
+                    <Pipe />
+
                     <h1
                         className={clsx(
                             'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
@@ -71,17 +82,6 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
                     >
                         TPRM Accelerator
                     </h1>
-
-                    <Pipe />
-
-                    <h2 className='text-lg'>
-                        <span className='font-bold text-zinc-700 dark:text-zinc-300'>
-                            Cyber{' '}
-                        </span>
-                        <span className='bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent'>
-                            AI
-                        </span>
-                    </h2>
                 </div>
 
                 {(screen === 'overview' || screen === 'detailedAnalysis') && (
