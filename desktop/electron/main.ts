@@ -11,7 +11,7 @@ dotenv.config({ path: 'env_configs/.env' });
 /**
  * Dev Mode and Paths Configuration
  */
-const isDevMode = process.env.IS_DEV_MODE === 'true'
+const isDevMode = process.env.IS_DEV_MODE === 'true';
 // Log Path
 const appLoggerLogPath = '../../logs';
 // Misc
@@ -100,9 +100,10 @@ app.whenReady().then(() => {
     // Don't kick off child processes if isDevMode = false.
     if (!isDevMode) {
         // Spawn ollama.exe model framework server on start up.
-        const ollamaChild = cp.spawn(`${__dirname}/${process.env.OLLAMA_SERVER_PATH}`, [
-            'serve',
-        ]);
+        const ollamaChild = cp.spawn(
+            `${__dirname}/${process.env.OLLAMA_SERVER_PATH}`,
+            ['serve'],
+        );
 
         // Set up ollama child process stdout "info" logs.
         ollamaChild.stdout.setEncoding('utf8');
@@ -119,7 +120,9 @@ app.whenReady().then(() => {
         });
 
         // Spawn app.exe Python Flask server on start up.
-        const appChild = cp.spawn(`${__dirname}/${process.env.APP_SERVER_PATH}`);
+        const appChild = cp.spawn(
+            `${__dirname}/${process.env.APP_SERVER_PATH}`,
+        );
 
         // Set up app child process stdout "info" logs.
         appChild.stdout.setEncoding('utf8');
