@@ -19,7 +19,7 @@ npm i
 
 In `desktop/`, copy `.env.local.example` to `.env.local`.
 
-Ensure that `.env.example.local` contains the following line of code:
+Ensure that `.env.local` contains the following line of code:
 
 ```dotenv
 IS_DEV_MODE=true
