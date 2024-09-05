@@ -112,7 +112,7 @@ app.whenReady().then(() => {
     if (!isDevMode) {
         // Spawn ollama.exe model framework server on start up.
         const ollamaChild = cp.spawn(
-            `${__dirname}/${prodEnvPathToOllamaServer}`,
+            `${__dirname}/${localEnvPathToOllamaServer}`,
             ['serve'],
         );
 
@@ -131,7 +131,7 @@ app.whenReady().then(() => {
         });
 
         // Spawn app.exe Python Flask server on start up.
-        const appChild = cp.spawn(`${__dirname}/${prodEnvPathToAppServer}`);
+        const appChild = cp.spawn(`${__dirname}/${localEnvPathToAppServer}`);
 
         // Set up app child process stdout "info" logs.
         appChild.stdout.setEncoding('utf8');
