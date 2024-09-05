@@ -6,29 +6,29 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AppLogger } from './utils/app-logger';
 
-// Configure dev mode based on if app is packaged or local environment variable.
+/**
+ * Dev Mode and Paths Configuration
+ */
+// Dev Mode
 if (!app.isPackaged) {
     dotenv.config({ path: '.env.local' });
 }
 const isDevMode = process.env.IS_DEV_MODE === 'true' || !app.isPackaged;
-
-// Local = repo path to app.exe.
-const localEnvPathToAppServer = '../../server/dist/tprm_accelerator/app.exe';
-// Prod = prod path to app.exe.
-const prodEnvPathToAppServer = '../../../tprm_accelerator/app.exe';
-
-// Local = repo path to ollama.exe.
-const localEnvPathToOllamaServer = '../../server/ext/ollama.exe';
-// Prod = prod path to ollama.exe.
-const prodEnvPathToOllamaServer = '../../../ext/ollama.exe';
-
+// App Server Path
+const devAppServerPath = '../../server/dist/tprm_accelerator/app.exe';
+const prodAppServerPath = '../../../tprm_accelerator/app.exe';
+const appServerPath = isDevMode ? devAppServerPath : prodAppServerPath;
+// Ollama Server Path
+const devOllamaServerPath = '../../server/ext/ollama.exe';
+const prodOllamaServerPath = '../../../ext/ollama.exe';
+const ollamaServerPath = isDevMode ? devOllamaServerPath : prodOllamaServerPath;
+// Log Path
 const appLoggerLogPath = '../../logs';
-
+// Misc
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// The built directory structure
-//
+process.env.APP_ROOT = path.join(__dirname, '..');
+// Build Directory Structure
 // ├─┬─┬ dist
 // │ │ └── index.html
 // │ │
@@ -36,7 +36,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // │ │ ├── main.js
 // │ │ └── preload.mjs
 // │
-process.env.APP_ROOT = path.join(__dirname, '..');
 
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 export const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
@@ -111,10 +110,9 @@ app.whenReady().then(() => {
     // Don't kick off child processes if isDevMode = false.
     if (!isDevMode) {
         // Spawn ollama.exe model framework server on start up.
-        const ollamaChild = cp.spawn(
-            `${__dirname}/${localEnvPathToOllamaServer}`,
-            ['serve'],
-        );
+        const ollamaChild = cp.spawn(`${__dirname}/${ollamaServerPath}`, [
+            'serve',
+        ]);
 
         // Set up ollama child process stdout "info" logs.
         ollamaChild.stdout.setEncoding('utf8');
@@ -131,7 +129,7 @@ app.whenReady().then(() => {
         });
 
         // Spawn app.exe Python Flask server on start up.
-        const appChild = cp.spawn(`${__dirname}/${localEnvPathToAppServer}`);
+        const appChild = cp.spawn(`${__dirname}/${appServerPath}`);
 
         // Set up app child process stdout "info" logs.
         appChild.stdout.setEncoding('utf8');
