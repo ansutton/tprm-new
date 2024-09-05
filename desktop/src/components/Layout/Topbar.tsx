@@ -32,9 +32,9 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
                 'dark:shadow-indigo-500/50',
             )}
         >
-            <div className='flex w-full items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
+            <div className='flex w-full cursor-default items-center justify-between bg-zinc-50 px-4 py-2 dark:bg-black'>
                 <div className='flex w-full items-center gap-2'>
-                    <a href='/' className='ml-2 flex font-["Open_Sans"]'>
+                    <div className='ml-2 flex font-["Open_Sans"]'>
                         <span
                             className={clsx(
                                 'bg-clip-text text-lg font-extrabold text-transparent',
@@ -56,27 +56,25 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
                                 <circle cx='50' cy='50' r='50' />
                             </svg>
                         </span>
-                    </a>
+                    </div>
 
                     <Pipe />
 
-                    <a href='/'>
-                        <h1
-                            className={clsx(
-                                'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
-                                'from-indigo-800 via-indigo-500 to-zinc-400/50',
-                                'hover:from-zinc-400/50 hover:via-indigo-500 hover:to-indigo-800',
-                                'dark:from-zinc-600 dark:via-indigo-500 dark:to-zinc-400',
-                                'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
-                            )}
-                        >
-                            TPRM Accelerator
-                        </h1>
-                    </a>
+                    <h1
+                        className={clsx(
+                            'bg-gradient-to-b bg-clip-text text-lg font-bold text-transparent',
+                            'from-indigo-800 via-indigo-500 to-zinc-400/50',
+                            'hover:from-zinc-400/50 hover:via-indigo-500 hover:to-indigo-800',
+                            'dark:from-zinc-600 dark:via-indigo-500 dark:to-zinc-400',
+                            'dark:hover:from-zinc-400 dark:hover:via-indigo-500 dark:hover:to-zinc-700',
+                        )}
+                    >
+                        TPRM Accelerator
+                    </h1>
 
                     <Pipe />
 
-                    <h2 className='select-none text-lg hover:cursor-pointer'>
+                    <h2 className='text-lg'>
                         <span className='font-bold text-zinc-700 dark:text-zinc-300'>
                             Cyber{' '}
                         </span>
