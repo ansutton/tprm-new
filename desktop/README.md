@@ -17,7 +17,7 @@ Install npm packages:
 npm i
 ```
 
-In `desktop/`, copy `.env.example` to `.env.local`.
+In `desktop/`, copy `.env.local.example` to `.env.local`.
 
 Ensure that `.env.example.local` contains the following line of code:
 
