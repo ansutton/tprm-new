@@ -1,5 +1,10 @@
-import { ReactNode } from 'react';
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
+import { ReactNode, useState } from 'react';
+import {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    Transition,
+} from '@headlessui/react';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { useTheme } from '@/hooks';
@@ -12,26 +17,34 @@ interface TooltipProps {
 export function Tooltip({ children }: TooltipProps): JSX.Element {
     const { theme } = useTheme();
 
+    const [isShowing, setIsShowing] = useState(false);
+
     return (
-        <Popover className='flex'>
+        <Popover
+            className='flex'
+            onMouseEnter={() => setIsShowing(true)}
+            onMouseLeave={() => setIsShowing(false)}
+        >
             <PopoverButton>
                 <InformationCircleIcon className={clsx('w-5')} />
             </PopoverButton>
-            <PopoverPanel
-                transition
-                anchor={{ to: 'top', gap: 22 }}
-                className={clsx(
-                    tw`z-30`,
-                    tw`rounded-xl text-xs transition duration-200 ease-in-out data-[closed]:translate-y-1 data-[closed]:opacity-0`,
-                    theme === 'light' && tw`border-indigo-400 bg-zinc-50`,
-                    theme === 'dark' &&
-                        tw`border-indigo-500 bg-zinc-900 text-zinc-100`,
-                    tw`border`,
-                    tw`mb-10 w-64 p-2.5`,
-                )}
-            >
-                {children}
-            </PopoverPanel>
+            <Transition show={isShowing}>
+                <PopoverPanel
+                    transition
+                    anchor={{ to: 'top', gap: 22 }}
+                    className={clsx(
+                        tw`z-30`,
+                        tw`rounded-xl text-xs transition duration-300 ease-in-out data-[closed]:translate-y-1 data-[closed]:opacity-0`,
+                        theme === 'light' && tw`border-indigo-400 bg-zinc-50`,
+                        theme === 'dark' &&
+                            tw`border-indigo-500 bg-zinc-900 text-zinc-100`,
+                        tw`border`,
+                        tw`mb-10 w-64 p-2.5`,
+                    )}
+                >
+                    {children}
+                </PopoverPanel>
+            </Transition>
         </Popover>
     );
 }
