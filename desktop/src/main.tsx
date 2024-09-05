@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Layout } from './components/Layout/Layout';
+import { Layout } from '@/components';
+import { ThemeProvider } from '@/contexts';
 import App from './App.tsx';
 import './styles/globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <Layout>
-            <App />
-        </Layout>
+        <ThemeProvider>
+            <Layout>
+                <App />
+            </Layout>
+        </ThemeProvider>
     </React.StrictMode>,
 );
 
@@ -16,4 +19,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 window.ipcRenderer.on('main-process-message', (_event, message) => {
     console.log(message);
 });
-

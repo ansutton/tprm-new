@@ -16,6 +16,7 @@ module.exports = {
         'no-console': 'off',
         'no-debugger': 'off',
         'no-unused-imports/no-unused-imports': 'off',
+        'no-var': 'off',
         'react/react-in-jsx-scope': 'off',
         'react-refresh/only-export-components': [
             'warn',

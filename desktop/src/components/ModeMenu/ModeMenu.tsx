@@ -1,7 +1,9 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import clsx from 'clsx';
 import { MenuItemButton } from '@/components';
+import { useTheme } from '@/hooks';
 import { Mode } from '@/types';
+import { tw } from '@/utils';
 
 interface ModeMenuProps {
     mode: Mode;
@@ -9,33 +11,42 @@ interface ModeMenuProps {
 }
 
 export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
+    const { theme } = useTheme();
+
     return (
-        <div className='rounded-lg p-1 text-sm font-bold hover:bg-zinc-200 dark:hover:bg-zinc-800'>
+        <div
+            className={clsx(
+                tw`rounded-lg p-1 text-sm font-bold`,
+                theme === 'light' && tw`hover:bg-zinc-200`,
+                theme === 'dark' && tw`hover:bg-zinc-800`,
+            )}
+        >
             <Menu>
                 <MenuButton
                     className={clsx(
-                        'flex gap-1 p-1 text-zinc-600',
-                        'hover:bg-zinc-200',
-                        'dark:text-zinc-300',
-                        'dark:hover:bg-zinc-800',
+                        tw`flex gap-1 p-1`,
+                        theme === 'light' &&
+                            tw`text-zinc-600 hover:bg-zinc-200`,
+                        theme === 'dark' && tw`text-zinc-300 hover:bg-zinc-800`,
                     )}
                 >
                     Mode:
-                    <span className='relative text-indigo-600 dark:text-indigo-400'>
+                    <span
+                        className={clsx(
+                            theme === 'light' && tw`text-indigo-600`,
+                            theme === 'dark' && tw`text-indigo-400`,
+                            tw`relative`,
+                        )}
+                    >
                         <span
                             className={clsx(
-                                'absolute',
-                                mode === 'demo' ? 'invisible' : '',
+                                tw`absolute`,
+                                mode === 'demo' && tw`invisible`,
                             )}
                         >
                             LLM
                         </span>
-                        <span
-                            className={clsx(
-                                '',
-                                mode === 'llm' ? 'invisible' : '',
-                            )}
-                        >
+                        <span className={clsx(mode === 'llm' && tw`invisible`)}>
                             Demo
                         </span>
                     </span>
@@ -44,21 +55,24 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
                 <MenuItems
                     anchor='bottom'
                     className={clsx(
-                        'mt-6 flex w-36 flex-col rounded-lg bg-zinc-100 py-1 text-sm font-bold shadow-lg',
-                        'text-zinc-700',
-                        'dark:bg-zinc-800 dark:stroke-zinc-300 dark:text-zinc-300',
-                        'ring-1 ring-zinc-900/10',
-                        'dark:ring-0',
+                        tw`mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg`,
+                        theme === 'light' &&
+                            tw`bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10`,
+                        theme === 'dark' &&
+                            tw`bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0`,
                     )}
                     transition
                 >
                     <MenuItem>
                         <MenuItemButton
-                            additionalClasses={
-                                mode === 'demo'
-                                    ? 'text-indigo-600 dark:text-indigo-400'
-                                    : ''
-                            }
+                            additionalClasses={clsx(
+                                mode === 'demo' &&
+                                    theme === 'light' &&
+                                    tw`text-indigo-600`,
+                                mode === 'demo' &&
+                                    theme === 'dark' &&
+                                    tw`text-indigo-400`,
+                            )}
                             onClick={() => setMode('demo')}
                         >
                             Demo
@@ -66,11 +80,14 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
                     </MenuItem>
                     <MenuItem>
                         <MenuItemButton
-                            additionalClasses={
-                                mode === 'llm'
-                                    ? 'text-indigo-600 dark:text-indigo-400'
-                                    : ''
-                            }
+                            additionalClasses={clsx(
+                                mode === 'llm' &&
+                                    theme === 'light' &&
+                                    tw`text-indigo-600`,
+                                mode === 'llm' &&
+                                    theme === 'dark' &&
+                                    tw`text-indigo-400`,
+                            )}
                             onClick={() => setMode('llm')}
                         >
                             LLM
