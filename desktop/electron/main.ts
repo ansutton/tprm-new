@@ -6,22 +6,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AppLogger } from './utils/app-logger';
 
+dotenv.config({ path: 'env_configs/.env' });
+
 /**
  * Dev Mode and Paths Configuration
  */
-// Dev Mode
-if (!app.isPackaged) {
-    dotenv.config({ path: '.env.local' });
-}
-const isDevMode = process.env.IS_DEV_MODE === 'true' || !app.isPackaged;
-// App Server Path
-const devAppServerPath = '../../server/dist/tprm_accelerator/app.exe';
-const prodAppServerPath = '../../../tprm_accelerator/app.exe';
-const appServerPath = isDevMode ? devAppServerPath : prodAppServerPath;
-// Ollama Server Path
-const devOllamaServerPath = '../../server/ext/ollama.exe';
-const prodOllamaServerPath = '../../../ext/ollama.exe';
-const ollamaServerPath = isDevMode ? devOllamaServerPath : prodOllamaServerPath;
+const isDevMode = process.env.IS_DEV_MODE === 'true'
 // Log Path
 const appLoggerLogPath = '../../logs';
 // Misc
@@ -110,7 +100,7 @@ app.whenReady().then(() => {
     // Don't kick off child processes if isDevMode = false.
     if (!isDevMode) {
         // Spawn ollama.exe model framework server on start up.
-        const ollamaChild = cp.spawn(`${__dirname}/${ollamaServerPath}`, [
+        const ollamaChild = cp.spawn(`${__dirname}/${process.env.OLLAMA_SERVER_PATH}`, [
             'serve',
         ]);
 
@@ -129,7 +119,7 @@ app.whenReady().then(() => {
         });
 
         // Spawn app.exe Python Flask server on start up.
-        const appChild = cp.spawn(`${__dirname}/${appServerPath}`);
+        const appChild = cp.spawn(`${__dirname}/${process.env.APP_SERVER_PATH}`);
 
         // Set up app child process stdout "info" logs.
         appChild.stdout.setEncoding('utf8');
