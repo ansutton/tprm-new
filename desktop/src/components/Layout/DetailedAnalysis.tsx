@@ -22,7 +22,6 @@ type DataItem = {
     aiConfidenceScore: DataItemField;
     tpConfidenceScore: DataItemField;
     similarityScore: DataItemField;
-    // tpSimilarityScore: DataItemField; // na
     citationsPreview: DataItemField;
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
@@ -188,17 +187,6 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    // columnHelper.accessor('tpSimilarityScore', {
-    //     header: () => (
-    //         <TableHeader
-    //             headerContent='Third Party Similarity Score'
-    //             infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    //             Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-    //             dicta non! Obcaecati.'
-    //         />
-    //     ),
-    //     cell: ({ getValue }) => getValue(),
-    // }),
     columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
@@ -259,22 +247,14 @@ export function DetailedAnalysis({
                         ),
                     ),
                 ),
-                similarityScore: 'N/A',
-                // handleSpinner(
-                //     truncate(
-                //         llmResponse?.analyses[`analysis_${index}`]
-                //             ?.ai_similarity_score,
-                //         30,
-                //     ),
-                // ),
-                // tpSimilarityScore: 'N/A',
-                // handleSpinner(
-                //     truncate(
-                //         llmResponse?.analyses[`analysis_${index}`]
-                //             ?.tp_similarity_score,
-                //         30,
-                //     ),
-                // ),
+                similarityScore: handleSpinner(
+                    scorePercent(
+                        Number(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.similarity_score,
+                        ),
+                    ),
+                ),
                 citationsPreview: 'N/A',
                 // handleSpinner(
                 //     truncate(
@@ -370,8 +350,6 @@ export function DetailedAnalysis({
                                             tw`w-1/12`,
                                         header.id === 'similarityScore' &&
                                             tw`w-1/12`,
-                                        // header.id === 'tpSimilarityScore' &&
-                                        //     tw`w-1/12`,
                                         header.id === 'citationsPreview' &&
                                             tw`w-1/12`,
                                     )}
