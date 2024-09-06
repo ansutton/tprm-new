@@ -18,16 +18,16 @@ type DataItem = {
     question: string;
     tpResponsePreview: DataItemField;
     aiAnalysisPreview: DataItemField;
-    answersAlignment: DataItemField;
+    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=75%, else No)
     aiConfidenceScore: DataItemField;
     tpConfidenceScore: DataItemField;
-    aiSimilarityScore: DataItemField;
-    tpSimilarityScore: DataItemField;
-    citationPreview: DataItemField;
+    similarityScore: DataItemField;
+    // tpSimilarityScore: DataItemField; // na
+    citationsPreview: DataItemField;
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
-    citationFull: DataItemField;
-    pageNumbers: DataItemField;
+    citationsFull: DataItemField; // now array of tuples (tuple shape: [number, string])
+    pageNumbers: DataItemField; // now array of numbers
 };
 
 type DataItemField = ReactNode | string | number | null | undefined;
@@ -177,10 +177,10 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('aiSimilarityScore', {
+    columnHelper.accessor('similarityScore', {
         header: () => (
             <TableHeader
-                headerContent='Evidence Analysis Similarity Score'
+                headerContent='Similarity Score'
                 infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Adipisci eos eius veniam quibusdam corporis eum quae explicabo
                 dicta non! Obcaecati.'
@@ -188,21 +188,21 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('tpSimilarityScore', {
+    // columnHelper.accessor('tpSimilarityScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='Third Party Similarity Score'
+    //             infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    //             Adipisci eos eius veniam quibusdam corporis eum quae explicabo
+    //             dicta non! Obcaecati.'
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
+    columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
-                headerContent='Third Party Similarity Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('citationPreview', {
-        header: () => (
-            <TableHeader
-                headerContent='Citation'
+                headerContent='Citation(s)'
                 infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Adipisci eos eius veniam quibusdam corporis eum quae explicabo
                 dicta non! Obcaecati.'
@@ -233,72 +233,72 @@ export function DetailedAnalysis({
      */
     function handleData() {
         return () =>
-            questionsData.map(
-                (question, index) => ({
-                    questionNumber: index + 1,
-                    question: question,
-                    tpResponsePreview: truncate(excelData[index + 1][2], 30),
-                    aiAnalysisPreview: handleSpinner(
-                        truncate(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.ai_analysis,
-                            30,
-                        ),
-                    ),
-                    aiConfidenceScore: handleSpinner(
-                        scorePercent(
-                            Number(llmResponse?.analyses[`analysis_${index}`]
-                                ?.ai_confidence_score),
-                        ),
-                    ),
-                    tpConfidenceScore: handleSpinner(
-                        scorePercent(
-                            Number(llmResponse?.analyses[`analysis_${index}`]
-                                ?.tp_confidence_score),
-                        ),
-                    ),
-                    aiSimilarityScore: 'N/A',
-                    // handleSpinner(
-                    //     truncate(
-                    //         llmResponse?.analyses[`analysis_${index}`]
-                    //             ?.ai_similarity_score,
-                    //         30,
-                    //     ),
-                    // ),
-                    tpSimilarityScore: 'N/A',
-                    // handleSpinner(
-                    //     truncate(
-                    //         llmResponse?.analyses[`analysis_${index}`]
-                    //             ?.tp_similarity_score,
-                    //         30,
-                    //     ),
-                    // ),
-                    citationPreview: 'N/A',
-                    // handleSpinner(
-                    //     truncate(
-                    //         llmResponse?.analyses[`analysis_${index}`]
-                    //             ?.citation,
-                    //         30,
-                    //     ),
-                    // ),
-                    tpResponseFull: excelData[index + 1][2],
-                    aiAnalysisFull: handleSpinner(
+            questionsData.map((question, index) => ({
+                questionNumber: index + 1,
+                question: question,
+                tpResponsePreview: truncate(excelData[index + 1][2], 30),
+                aiAnalysisPreview: handleSpinner(
+                    truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                        30,
                     ),
-                    answersAlignment: 'N/A',
-                    citationFull: 'N/A',
-                    // handleSpinner(
-                    //     llmResponse?.analyses[`analysis_${index}`]
-                    //         ?.citation,
-                    // ),
-                    pageNumbers: 'N/A',
-                    // handleSpinner(
-                    //     llmResponse?.analyses[`analysis_${index}`]
-                    //         ?.pageNumbers,
-                    // ),
-                }),
-                console.log(llmResponse),
-            );
+                ),
+                aiConfidenceScore: handleSpinner(
+                    scorePercent(
+                        Number(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.ai_confidence_score,
+                        ),
+                    ),
+                ),
+                tpConfidenceScore: handleSpinner(
+                    scorePercent(
+                        Number(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.tp_confidence_score,
+                        ),
+                    ),
+                ),
+                similarityScore: 'N/A',
+                // handleSpinner(
+                //     truncate(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.ai_similarity_score,
+                //         30,
+                //     ),
+                // ),
+                // tpSimilarityScore: 'N/A',
+                // handleSpinner(
+                //     truncate(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.tp_similarity_score,
+                //         30,
+                //     ),
+                // ),
+                citationsPreview: 'N/A',
+                // handleSpinner(
+                //     truncate(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.citation,
+                //         30,
+                //     ),
+                // ),
+                tpResponseFull: excelData[index + 1][2],
+                aiAnalysisFull: handleSpinner(
+                    llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                ),
+                answersAlignment: 'Yes/No (sim score >=75%)',
+                citationsFull: 'N/A', // display in paragraphs
+                // handleSpinner(
+                //     llmResponse?.analyses[`analysis_${index}`]
+                //         ?.citation,
+                // ),
+                pageNumbers: 'N/A',
+                // handleSpinner(
+                //     llmResponse?.analyses[`analysis_${index}`]
+                //         ?.pageNumbers,
+                // ),
+            }));
     }
     function handleSpinner(field: ReactNode | undefined): ReactNode {
         return field ? (
@@ -319,7 +319,7 @@ export function DetailedAnalysis({
      */
     useEffect(() => {
         setData(handleData());
-        console.log('🚀 ~ llmResponse:', llmResponse);
+        // console.log('🚀 ~ llmResponse:', llmResponse);
     }, [llmResponse]);
 
     /**
@@ -368,11 +368,11 @@ export function DetailedAnalysis({
                                             tw`w-1/12`,
                                         header.id === 'tpConfidenceScore' &&
                                             tw`w-1/12`,
-                                        header.id === 'aiSimilarityScore' &&
+                                        header.id === 'similarityScore' &&
                                             tw`w-1/12`,
-                                        header.id === 'tpSimilarityScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'citationPreview' &&
+                                        // header.id === 'tpSimilarityScore' &&
+                                        //     tw`w-1/12`,
+                                        header.id === 'citationsPreview' &&
                                             tw`w-1/12`,
                                     )}
                                 >
@@ -437,7 +437,7 @@ export function DetailedAnalysis({
                                         title={'Evidence Analysis'}
                                     />
                                     <ExpandedRow
-                                        content={row.original.citationFull}
+                                        content={row.original.citationsFull}
                                         row={row}
                                         title={'Citation'}
                                     />
