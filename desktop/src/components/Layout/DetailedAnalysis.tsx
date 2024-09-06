@@ -136,9 +136,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Evidence Analysis'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -169,9 +167,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Third Party Confidence Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -180,9 +176,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Similarity Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -232,28 +226,28 @@ export function DetailedAnalysis({
                     ),
                 ),
                 aiConfidenceScore: handleSpinner(
-                    scorePercent(
+                    `${scorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.ai_confidence_score,
                         ),
-                    ),
+                    )?.toString()}%`,
                 ),
                 tpConfidenceScore: handleSpinner(
-                    scorePercent(
+                    `${scorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.tp_confidence_score,
                         ),
-                    ),
+                    )?.toString()}%`,
                 ),
                 similarityScore: handleSpinner(
-                    scorePercent(
+                    `${scorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.similarity_score,
                         ),
-                    ),
+                    )?.toString()}%`,
                 ),
                 citationsPreview: 'N/A',
                 // handleSpinner(
@@ -267,7 +261,15 @@ export function DetailedAnalysis({
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                 ),
-                answersAlignment: 'Yes/No (sim score >=75%)',
+                answersAlignment: handleSpinner(
+                    scorePercent(
+                        Number(
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.similarity_score,
+                        ),
+                    ),
+                ),
+                // 'Yes/No (sim score >=75%)',
                 citationsFull: 'N/A', // display in paragraphs
                 // handleSpinner(
                 //     llmResponse?.analyses[`analysis_${index}`]
@@ -287,13 +289,14 @@ export function DetailedAnalysis({
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
     }
-    function scorePercent(score: string | number | null | undefined) {
+    function scorePercent(score: number | null | undefined) {
         if (score && typeof score === 'number' && score === score)
-            return score
-                ? `${Math.round(((score + 1) / 2) * 100).toString()}%`
-                : null;
+            console.log(
+                '🚀 ~ scorePercent ~ Math.round(((score + 1) / 2) * 100):',
+                Math.round(((score + 1) / 2) * 100),
+            );
+        return score ? Math.round(((score + 1) / 2) * 100) : null;
     }
-
     /**
      * Effect Hook
      */
