@@ -46,7 +46,7 @@ export function Sidebar({
         tw`stroke-zinc-700`,
         tw`dark:stroke-zinc-200`,
     );
-    const navItemContent = [
+    const navItemContents = [
         {
             additionalButtonClasses: tw`mb-8`,
             icon: <ArrowUpCircleIcon className={iconClasses} />,
@@ -120,7 +120,7 @@ export function Sidebar({
             </button>
 
             <nav className='mt-6 space-y-2'>
-                {navItemContent.map(
+                {navItemContents.map(
                     (
                         {
                             additionalButtonClasses,
