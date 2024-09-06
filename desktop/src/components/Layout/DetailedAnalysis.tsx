@@ -209,7 +209,7 @@ export function DetailedAnalysis({
     const [data, setData] = useState(handleData());
 
     /**
-     * Helper Functions
+     * Helper Function to Handle Data
      */
     function handleData() {
         return () =>
@@ -272,13 +272,10 @@ export function DetailedAnalysis({
                 // ),
             }));
     }
-    function handleSpinner(field: DataItemField): ReactNode {
-        return field ? (
-            field
-        ) : (
-            <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
-        );
-    }
+
+    /**
+     * Helper Functions - Utilities
+     */
     function primitiveScoreFormula(score: number): number {
         return Math.round(((score + 1) / 2) * 100);
     }
@@ -303,6 +300,14 @@ export function DetailedAnalysis({
             return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
         }
     }
+    function handleSpinner(field: DataItemField): ReactNode {
+        return field ? (
+            field
+        ) : (
+            <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+        );
+    }
+
     /**
      * Effect Hook
      */
