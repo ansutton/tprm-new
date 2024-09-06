@@ -224,28 +224,28 @@ export function DetailedAnalysis({
                     ),
                 ),
                 aiConfidenceScore: handleSpinner(
-                    `${scorePercent(
+                    handleScorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.ai_confidence_score,
                         ),
-                    )?.toString()}%`,
+                    ),
                 ),
                 tpConfidenceScore: handleSpinner(
-                    `${scorePercent(
+                    handleScorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.tp_confidence_score,
                         ),
-                    )?.toString()}%`,
+                    ),
                 ),
                 similarityScore: handleSpinner(
-                    `${scorePercent(
+                    handleScorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.similarity_score,
                         ),
-                    )?.toString()}%`,
+                    ),
                 ),
                 citationsPreview: 'N/A',
                 // handleSpinner(
@@ -260,7 +260,7 @@ export function DetailedAnalysis({
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                 ),
                 answersAlignment: handleSpinner(
-                    scorePercent(
+                    handleScorePercent(
                         Number(
                             llmResponse?.analyses[`analysis_${index}`]
                                 ?.similarity_score,
@@ -287,11 +287,16 @@ export function DetailedAnalysis({
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
     }
-    function scorePercent(score: number): number | null {
+    function primitiveScorePercent(score: number): number | null {
         if (score && typeof score === 'number' && score === score) {
             return Math.round(((score + 1) / 2) * 100);
         }
         return null;
+    }
+    function handleScorePercent(score: number): string | null {
+        return primitiveScorePercent(score)
+            ? `${primitiveScorePercent(score)?.toString()}%`
+            : null;
     }
     /**
      * Effect Hook
