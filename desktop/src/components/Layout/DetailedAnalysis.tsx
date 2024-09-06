@@ -225,26 +225,20 @@ export function DetailedAnalysis({
                 ),
                 aiConfidenceScore: handleSpinner(
                     handleScorePercent(
-                        Number(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.ai_confidence_score,
-                        ),
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.ai_confidence_score,
                     ),
                 ),
                 tpConfidenceScore: handleSpinner(
                     handleScorePercent(
-                        Number(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.tp_confidence_score,
-                        ),
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.tp_confidence_score,
                     ),
                 ),
                 similarityScore: handleSpinner(
                     handleScorePercent(
-                        Number(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.similarity_score,
-                        ),
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.similarity_score,
                     ),
                 ),
                 citationsPreview: 'N/A',
@@ -260,11 +254,9 @@ export function DetailedAnalysis({
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                 ),
                 answersAlignment: handleSpinner(
-                    handleScorePercent(
-                        Number(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.similarity_score,
-                        ),
+                    handleAnswersAlignment(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.similarity_score,
                     ),
                 ),
                 // 'Yes/No (sim score >=88%)',
@@ -287,16 +279,29 @@ export function DetailedAnalysis({
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
     }
-    function primitiveScorePercent(score: number): number | null {
-        if (score && typeof score === 'number' && score === score) {
-            return Math.round(((score + 1) / 2) * 100);
+    function primitiveScorePercent(score: number): number {
+        return Math.round(((score + 1) / 2) * 100);
+    }
+    function handlePrimitiveScorePercent(score: any): number | null {
+        const scoreResult = Number(score);
+        if (
+            scoreResult &&
+            typeof scoreResult === 'number' &&
+            scoreResult === scoreResult
+        ) {
+            return primitiveScorePercent(scoreResult);
         }
         return null;
     }
-    function handleScorePercent(score: number): string | null {
-        return primitiveScorePercent(score)
-            ? `${primitiveScorePercent(score)?.toString()}%`
+    function handleScorePercent(score: DataItemField): string | null {
+        return handlePrimitiveScorePercent(score)
+            ? `${handlePrimitiveScorePercent(score)?.toString()}%`
             : null;
+    }
+    function handleAnswersAlignment(score: any) {
+        if (handlePrimitiveScorePercent(score)) {
+            return primitiveScorePercent(score) >= 88 ? 'Yes' : 'No';
+        }
     }
     /**
      * Effect Hook
