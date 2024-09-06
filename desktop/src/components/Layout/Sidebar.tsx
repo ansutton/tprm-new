@@ -108,6 +108,11 @@ export function Sidebar({
                     screen={screen}
                     screenAssignment='fileUpload'
                 />
+
+                <div className='px-2 py-4'>
+                    <hr className='border-t-[1.5px] border-zinc-400/50 dark:border-zinc-600/60' />
+                </div>
+
                 <SidebarMenuItem
                     title='Overview'
                     additionalButtonClasses={tw``}
