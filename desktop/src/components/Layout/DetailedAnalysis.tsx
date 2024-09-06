@@ -224,19 +224,19 @@ export function DetailedAnalysis({
                     ),
                 ),
                 aiConfidenceScore: handleSpinner(
-                    handleScorePercent(
+                    displayScore(
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.ai_confidence_score,
                     ),
                 ),
                 tpConfidenceScore: handleSpinner(
-                    handleScorePercent(
+                    displayScore(
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.tp_confidence_score,
                     ),
                 ),
                 similarityScore: handleSpinner(
-                    handleScorePercent(
+                    displayScore(
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.similarity_score,
                     ),
@@ -279,28 +279,28 @@ export function DetailedAnalysis({
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
     }
-    function primitiveScorePercent(score: number): number {
+    function primitiveScoreFormula(score: number): number {
         return Math.round(((score + 1) / 2) * 100);
     }
-    function handlePrimitiveScorePercent(score: any): number | null {
+    function calculateScore(score: any): number | null {
         const scoreResult = Number(score);
         if (
             scoreResult &&
             typeof scoreResult === 'number' &&
             scoreResult === scoreResult
         ) {
-            return primitiveScorePercent(scoreResult);
+            return primitiveScoreFormula(scoreResult);
         }
         return null;
     }
-    function handleScorePercent(score: DataItemField): string | null {
-        return handlePrimitiveScorePercent(score)
-            ? `${handlePrimitiveScorePercent(score)?.toString()}%`
+    function displayScore(score: DataItemField): string | null {
+        return calculateScore(score)
+            ? `${calculateScore(score)?.toString()}%`
             : null;
     }
     function handleAnswersAlignment(score: any) {
-        if (handlePrimitiveScorePercent(score)) {
-            return primitiveScorePercent(score) >= 88 ? 'Yes' : 'No';
+        if (calculateScore(score)) {
+            return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
         }
     }
     /**
