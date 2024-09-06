@@ -16,11 +16,10 @@ class AnalysisData:
     question = ""
     ai_analysis = ""
     tp_response = ""
-    citation = ""
+    citations = ""
     pages = ""
     tp_confidence_score = 0
     ai_confidence_score = 0
-    tp_similarity_score = 0
-    ai_similarity_score = 0
+    similarity_score = 0
 
 app_state = AppState()
