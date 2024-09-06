@@ -60,11 +60,16 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
 
                     <Pipe />
 
-                    <h2 className='text-lg'>
+                    <h2 className='group text-lg'>
                         <span className='font-bold text-zinc-700 dark:text-zinc-300'>
                             Cyber{' '}
                         </span>
-                        <span className='bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent'>
+                        <span
+                            className={clsx(
+                                tw`bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text font-bold text-transparent`,
+                                tw`group-hover:bg-gradient-to-l group-hover:from-indigo-500 group-hover:to-pink-500`,
+                            )}
+                        >
                             AI
                         </span>
                     </h2>
