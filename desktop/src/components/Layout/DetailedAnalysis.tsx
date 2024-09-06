@@ -18,7 +18,7 @@ type DataItem = {
     question: string;
     tpResponsePreview: DataItemField;
     aiAnalysisPreview: DataItemField;
-    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=75%, else No)
+    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
     aiConfidenceScore: DataItemField;
     tpConfidenceScore: DataItemField;
     similarityScore: DataItemField;
@@ -145,9 +145,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Answers Align'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`How aligned the app's generated response is to the third-party's response. Based on a similarity score percentage with higher scores indicating stronger similarity with a threshold of 88% defining an aligned output.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -269,7 +267,7 @@ export function DetailedAnalysis({
                         ),
                     ),
                 ),
-                // 'Yes/No (sim score >=75%)',
+                // 'Yes/No (sim score >=88%)',
                 citationsFull: 'N/A', // display in paragraphs
                 // handleSpinner(
                 //     llmResponse?.analyses[`analysis_${index}`]
@@ -282,20 +280,18 @@ export function DetailedAnalysis({
                 // ),
             }));
     }
-    function handleSpinner(field: ReactNode | undefined): ReactNode {
+    function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
             field
         ) : (
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
     }
-    function scorePercent(score: number | null | undefined) {
-        if (score && typeof score === 'number' && score === score)
-            console.log(
-                '🚀 ~ scorePercent ~ Math.round(((score + 1) / 2) * 100):',
-                Math.round(((score + 1) / 2) * 100),
-            );
-        return score ? Math.round(((score + 1) / 2) * 100) : null;
+    function scorePercent(score: number): number | null {
+        if (score && typeof score === 'number' && score === score) {
+            return Math.round(((score + 1) / 2) * 100);
+        }
+        return null;
     }
     /**
      * Effect Hook
