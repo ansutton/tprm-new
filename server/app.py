@@ -5,6 +5,7 @@ from modules.utils.model_inference import generate_model_response
 from modules.utils.faiss import create_vector_store
 from modules.utils.ollama import init_ollama_models
 from modules.globals.app_state import app_state
+from modules.utils import similarity_score
 
 # Flask modules
 from flask import Flask, request, jsonify
@@ -81,17 +82,24 @@ def main():
         # Create Ollama Embeddings and database vectors based on the pdf.
         vector_db = create_vector_store(pdf_file_content)
 
-        # Loop through each question and add responses to app state.
+        # Loop through each question and add responses, citations, and pages to app state.
         for i in range(len(questions)):
-            response = generate_model_response(vector_db, questions[i])
-            app_state.analyses["analysis_%s" % i]["ai_analysis"] = response
+            response_dict = generate_model_response(vector_db, questions[i])
+            app_state.analyses["analysis_%s" % i]["ai_analysis"] = response_dict["response"]
+            app_state.analyses["analysis_%s" % i]["citations"] = response_dict["citations"]
+            app_state.analyses["analysis_%s" % i]["pages"] = response_dict["pages"]
 
-        # Loop through app_state.analyses dict and process similarity scores.
+        # Loop through app_state.analyses dict and process confidence and similarity scores.
         for key, value in app_state.analyses.items():
+            # Calculate confidence scores for ai_analysis and tp_response.
             relevant_section = find_relevant_sections(vector_db, value["question"])
-            scores = semantic_similarity(relevant_section, value["ai_analysis"], value["tp_response"])
-            app_state.analyses[key]["tp_confidence_score"] = scores["third_party"]
-            app_state.analyses[key]["ai_confidence_score"] = scores["ai"]
+            conf_scores = semantic_similarity(relevant_section, value["ai_analysis"], value["tp_response"])
+            app_state.analyses[key]["tp_confidence_score"] = conf_scores["third_party"]
+            app_state.analyses[key]["ai_confidence_score"] = conf_scores["ai"]
+
+            # Calculate similarity score between ai_analysis and tp_response.
+            sim_score = similarity_score.semantic_similarity(value["ai_analysis"], value["tp_response"])
+            app_state.analyses[key]["similarity_score"] = sim_score
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 

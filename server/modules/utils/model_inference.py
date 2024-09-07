@@ -3,6 +3,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.chat_models import ChatOllama
+from langchain.chains import RetrievalQA
 
 
 def generate_model_response(vector_db, question):
@@ -10,34 +11,29 @@ def generate_model_response(vector_db, question):
     local_model = "llama2"
     llm = ChatOllama(model=local_model)
 
-    QUERY_PROMPT = PromptTemplate(
-        input_variables=["question"],
-        template="""You are an AI language model assistant. Your task is to generate five different versions of 
-        the given user question to retrieve relevant documents from vector database. By generating multiple respectives 
-        on the user question, your goal is to help the user overcome some of the limitations of the distance-based 
-        similarity search. Provide these alternative questions separated by newlines.
-        Original question: {question}""",
-    )
+    qa_chain = RetrievalQA.from_chain_type(
+        llm = llm,
+        chain_type="stuff",
+        retriever = vector_db.as_retriever(search_kwargs={"k":3}),
+        return_source_documents = True
+        )
+    
+    def get_answer(query):
+        result = qa_chain({"query": query})
+        response = result['result']
 
-    retriever = MultiQueryRetriever.from_llm(
-        vector_db.as_retriever(), llm, prompt=QUERY_PROMPT
-    )
+        source_documents = result['source_documents']
+        pages = set()
+        citations = []
+        for doc in source_documents:
+            pages.add(doc.metadata['page'])
+            citations.append((doc.metadata['page'], doc.page_content))
 
-    # RAG Prompt
-    template = """Answer the question based ONLY on the following context:
-    {context}
-    Question: {question}
-    """
+        return {
+            "response": response,
+            "pages": list(pages),
+            "citations": citations
+        }
 
-    prompt = ChatPromptTemplate.from_template(template)
-
-    chain = (
-        {"context": retriever, "question": RunnablePassthrough()}
-        | prompt
-        | llm
-        | StrOutputParser()
-    )
-
-    rag_response = chain.invoke((question))
-
-    return rag_response
+    structured_answer = get_answer(question)
+    return structured_answer

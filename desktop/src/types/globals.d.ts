@@ -5,13 +5,32 @@ export interface ProgressBarBaseProps {
     progressPercentage: number;
     twBgColor?: string;
 }
-export interface PythonAnalysis {
-    [key: string]: string | number | null | undefined;
+// export interface PythonAnalysis {
+//     [key: string]: string | number | null | undefined;
+// }
+// export interface PythonAnalyses {
+//     analyses: Record<string, PythonAnalysis>;
+//     models_pulled: boolean;
+//     number_of_questions: number;
+// }
+export interface Analysis {
+    question?: string;
+    tp_response?: string;
+    ai_analysis?: string;
+    citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
+    pages?: number[]; // Expecting an array of numbers
+    [key: string]:
+        | string
+        | number
+        | null
+        | undefined
+        | Array<[number, string]>
+        | number[]; // Catch-all for other keys
 }
-export interface PythonAppState {
-    number_of_questions: number;
+export interface LlmResponse {
+    analyses: Record<string, Analysis>;
     models_pulled: boolean;
-    analyses: Record<string, PythonAnalysis>;
+    number_of_questions: number;
 }
 export interface SubmitRequestParams {
     csvFileBuffer: string;
@@ -23,7 +42,8 @@ export interface SubmitRequestParams {
 /**
  * Types
  */
-export type LlmResponse = PythonAppState | null;
+// export type LlmResponse = PythonAppState | null;
+// export type LlmResponse = any;
 export type Mode = 'demo' | 'llm';
 export type ModeAction = { type: 'set_demo' } | { type: 'set_llm' };
 export type Screen = 'fileUpload' | 'loading' | 'detailedAnalysis' | 'overview';

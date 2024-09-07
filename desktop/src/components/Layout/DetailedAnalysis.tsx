@@ -18,16 +18,15 @@ type DataItem = {
     question: string;
     tpResponsePreview: DataItemField;
     aiAnalysisPreview: DataItemField;
-    answersAlignment: DataItemField;
+    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
     aiConfidenceScore: DataItemField;
     tpConfidenceScore: DataItemField;
-    aiSimilarityScore: DataItemField;
-    tpSimilarityScore: DataItemField;
-    citationPreview: DataItemField;
+    similarityScore: DataItemField;
+    citationsPreview: DataItemField;
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
-    citationFull: DataItemField;
-    pageNumbers: DataItemField;
+    citationsFull: DataItemField; // now array of tuples (tuple shape: [number, string])
+    pageNumbers: DataItemField; // now array of numbers
 };
 
 type DataItemField = ReactNode | string | number | null | undefined;
@@ -137,9 +136,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Evidence Analysis'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -148,9 +145,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Answers Align'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`How aligned the app's generated response is to the third-party's response. Based on a similarity score percentage with higher scores indicating stronger similarity with a threshold of 88% defining an aligned output.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -170,39 +165,24 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Third Party Confidence Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('aiSimilarityScore', {
+    columnHelper.accessor('similarityScore', {
         header: () => (
             <TableHeader
-                headerContent='Evidence Analysis Similarity Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                headerContent='Similarity Score'
+                infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('tpSimilarityScore', {
+    columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
-                headerContent='Third Party Similarity Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('citationPreview', {
-        header: () => (
-            <TableHeader
-                headerContent='Citation'
+                headerContent='Citation(s)'
                 infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Adipisci eos eius veniam quibusdam corporis eum quae explicabo
                 dicta non! Obcaecati.'
@@ -229,89 +209,118 @@ export function DetailedAnalysis({
     const [data, setData] = useState(handleData());
 
     /**
-     * Helper Functions
+     * Helper Function to Handle Data
      */
     function handleData() {
         return () =>
-            questionsData.map(
-                (question, index) => ({
-                    questionNumber: index + 1,
-                    question: question,
-                    tpResponsePreview: truncate(excelData[index + 1][2], 30),
-                    aiAnalysisPreview: handleSpinner(
-                        truncate(
-                            llmResponse?.analyses[`analysis_${index}`]
-                                ?.ai_analysis,
-                            30,
-                        ),
-                    ),
-                    aiConfidenceScore: handleSpinner(
-                        scorePercent(
-                            Number(llmResponse?.analyses[`analysis_${index}`]
-                                ?.ai_confidence_score),
-                        ),
-                    ),
-                    tpConfidenceScore: handleSpinner(
-                        scorePercent(
-                            Number(llmResponse?.analyses[`analysis_${index}`]
-                                ?.tp_confidence_score),
-                        ),
-                    ),
-                    aiSimilarityScore: 'N/A',
-                    // handleSpinner(
-                    //     truncate(
-                    //         llmResponse?.analyses[`analysis_${index}`]
-                    //             ?.ai_similarity_score,
-                    //         30,
-                    //     ),
-                    // ),
-                    tpSimilarityScore: 'N/A',
-                    // handleSpinner(
-                    //     truncate(
-                    //         llmResponse?.analyses[`analysis_${index}`]
-                    //             ?.tp_similarity_score,
-                    //         30,
-                    //     ),
-                    // ),
-                    citationPreview: 'N/A',
-                    // handleSpinner(
-                    //     truncate(
-                    //         llmResponse?.analyses[`analysis_${index}`]
-                    //             ?.citation,
-                    //         30,
-                    //     ),
-                    // ),
-                    tpResponseFull: excelData[index + 1][2],
-                    aiAnalysisFull: handleSpinner(
+            questionsData.map((question, index) => ({
+                questionNumber: index + 1,
+                question: question,
+                tpResponsePreview: truncate(excelData[index + 1][2], 30),
+                aiAnalysisPreview: handleSpinner(
+                    truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                        30,
                     ),
-                    answersAlignment: 'N/A',
-                    citationFull: 'N/A',
-                    // handleSpinner(
-                    //     llmResponse?.analyses[`analysis_${index}`]
-                    //         ?.citation,
-                    // ),
-                    pageNumbers: 'N/A',
-                    // handleSpinner(
-                    //     llmResponse?.analyses[`analysis_${index}`]
-                    //         ?.pageNumbers,
-                    // ),
-                }),
-                console.log(llmResponse),
-            );
+                ),
+                aiConfidenceScore: handleSpinner(
+                    displayScore(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.ai_confidence_score,
+                    ),
+                ),
+                tpConfidenceScore: handleSpinner(
+                    displayScore(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.tp_confidence_score,
+                    ),
+                ),
+                similarityScore: handleSpinner(
+                    displayScore(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.similarity_score,
+                    ),
+                ),
+                citationsPreview: handleSpinner(
+                    llmResponse?.analyses[`analysis_${index}`]?.citations
+                        ?.length,
+                ),
+                // 'N/A',
+                tpResponseFull: excelData[index + 1][2],
+                aiAnalysisFull: handleSpinner(
+                    llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
+                ),
+                answersAlignment: handleSpinner(
+                    handleAnswersAlignment(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.similarity_score,
+                    ),
+                ),
+                citationsFull: (
+                    <div className='space-y-4'>
+                        {handleSpinner(
+                            llmResponse?.analyses[
+                                `analysis_${index}`
+                            ]?.citations?.map((citation, index) => (
+                                <div key={index} className='flex gap-4'>
+                                    <span className='whitespace-nowrap'>
+                                        Page {citation[0]}:
+                                    </span>
+                                    <span>...{citation[1]}...</span>
+                                </div>
+                            )),
+                        )}
+                    </div>
+                ),
+                pageNumbers: (
+                    <div className='flex gap-2'>
+                        {handleSpinner(
+                            llmResponse?.analyses[
+                                `analysis_${index}`
+                            ]?.pages?.map((pageNumber, j) => (
+                                <p key={j} className='flex'>
+                                    <span className=''>{pageNumber},</span>
+                                </p>
+                            )),
+                        )}
+                    </div>
+                ),
+            }));
     }
-    function handleSpinner(field: ReactNode | undefined): ReactNode {
+
+    /**
+     * Helper Functions - Utilities
+     */
+    function primitiveScoreFormula(score: number): number {
+        return Math.round(((score + 1) / 2) * 100);
+    }
+    function calculateScore(score: any): number | null {
+        const scoreResult = Number(score);
+        if (
+            scoreResult &&
+            typeof scoreResult === 'number' &&
+            scoreResult === scoreResult
+        ) {
+            return primitiveScoreFormula(scoreResult);
+        }
+        return null;
+    }
+    function displayScore(score: DataItemField): string | null {
+        return calculateScore(score)
+            ? `${calculateScore(score)?.toString()}%`
+            : null;
+    }
+    function handleAnswersAlignment(score: any) {
+        if (calculateScore(score)) {
+            return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
+        }
+    }
+    function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
             field
         ) : (
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
-    }
-    function scorePercent(score: string | number | null | undefined) {
-        if (score && typeof score === 'number' && score === score)
-            return score
-                ? `${Math.round(((score + 1) / 2) * 100).toString()}%`
-                : null;
     }
 
     /**
@@ -319,7 +328,7 @@ export function DetailedAnalysis({
      */
     useEffect(() => {
         setData(handleData());
-        console.log('🚀 ~ llmResponse:', llmResponse);
+        // console.log('🚀 ~ llmResponse:', llmResponse);
     }, [llmResponse]);
 
     /**
@@ -368,11 +377,9 @@ export function DetailedAnalysis({
                                             tw`w-1/12`,
                                         header.id === 'tpConfidenceScore' &&
                                             tw`w-1/12`,
-                                        header.id === 'aiSimilarityScore' &&
+                                        header.id === 'similarityScore' &&
                                             tw`w-1/12`,
-                                        header.id === 'tpSimilarityScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'citationPreview' &&
+                                        header.id === 'citationsPreview' &&
                                             tw`w-1/12`,
                                     )}
                                 >
@@ -437,14 +444,14 @@ export function DetailedAnalysis({
                                         title={'Evidence Analysis'}
                                     />
                                     <ExpandedRow
-                                        content={row.original.citationFull}
+                                        content={row.original.citationsFull}
                                         row={row}
-                                        title={'Citation'}
+                                        title={`Citation(s)`}
                                     />
                                     <ExpandedRow
                                         content={row.original.pageNumbers}
                                         row={row}
-                                        title={'Pages'}
+                                        title={'Page(s)'}
                                     />
                                 </>
                             )}

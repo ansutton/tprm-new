@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
     ArrowUpCircleIcon,
     ChartBarSquareIcon,
@@ -46,39 +47,6 @@ export function Sidebar({
         tw`stroke-zinc-700`,
         tw`dark:stroke-zinc-200`,
     );
-    const navItemContent = [
-        {
-            additionalButtonClasses: tw`mb-8`,
-            icon: <ArrowUpCircleIcon className={iconClasses} />,
-            onClick: function () {
-                if (
-                    confirm(
-                        'Are you sure? This action will end the current process and start over.',
-                    )
-                ) {
-                    setScreen('fileUpload');
-                } else {
-                    return null;
-                }
-            },
-            screenTypeAssignment: 'fileUpload',
-            title: 'File Upload',
-        },
-        {
-            additionalButtonClasses: tw``,
-            icon: <ChartBarSquareIcon className={iconClasses} />,
-            onClick: () => setScreen('overview'),
-            screenTypeAssignment: 'overview',
-            title: 'Overview',
-        },
-        {
-            additionalButtonClasses: tw``,
-            icon: <DocumentMagnifyingGlassIcon className={iconClasses} />,
-            onClick: () => setScreen('detailedAnalysis'),
-            screenTypeAssignment: 'detailedAnalysis',
-            title: 'Detailed Analysis',
-        },
-    ];
 
     /**
      * Return Statement
@@ -120,52 +88,108 @@ export function Sidebar({
             </button>
 
             <nav className='mt-6 space-y-2'>
-                {navItemContent.map(
-                    (
-                        {
-                            additionalButtonClasses,
-                            icon,
-                            onClick,
-                            screenTypeAssignment,
-                            title,
-                        },
-                        index,
-                    ) => (
-                        <button
-                            key={index}
-                            onClick={onClick}
-                            className={clsx(
-                                additionalButtonClasses,
-                                screen === screenTypeAssignment
-                                    ? tw`bg-zinc-300 dark:bg-zinc-700`
-                                    : '',
-                                tw`flex items-center rounded-lg p-2`,
-                                tw`transition-all duration-300`,
-                                tw`hover:bg-zinc-300`,
-                                tw`dark:hover:bg-zinc-700`,
-                            )}
-                            style={{
-                                width: isSidebarExpanded ? '100%' : 'fit',
-                                transition: 'width 0.3s ease',
-                            }}
-                        >
-                            {icon}
-                            {isSidebarFullyExpanded && (
-                                <span
-                                    className={clsx(
-                                        tw`ml-2.5 transition-opacity duration-300`,
-                                        isSidebarFullyExpanded
-                                            ? tw`opacity-100`
-                                            : tw`opacity-0`,
-                                    )}
-                                >
-                                    {title}
-                                </span>
-                            )}
-                        </button>
-                    ),
-                )}
+                <SidebarMenuItem
+                    title='File Upload'
+                    additionalButtonClasses={tw``}
+                    icon={<ArrowUpCircleIcon className={iconClasses} />}
+                    onClick={() => {
+                        if (
+                            confirm(
+                                'Are you sure? This action will end the current process and start over.',
+                            )
+                        ) {
+                            setScreen('fileUpload');
+                        } else {
+                            return null;
+                        }
+                    }}
+                    isSidebarExpanded={isSidebarExpanded}
+                    isSidebarFullyExpanded={isSidebarFullyExpanded}
+                    screen={screen}
+                    screenAssignment='fileUpload'
+                />
+
+                <div className='px-2 py-4'>
+                    <hr className='border-t-[1.5px] border-zinc-400/50 dark:border-zinc-600/60' />
+                </div>
+
+                <SidebarMenuItem
+                    title='Overview'
+                    additionalButtonClasses={tw``}
+                    icon={<ChartBarSquareIcon className={iconClasses} />}
+                    onClick={() => setScreen('overview')}
+                    isSidebarExpanded={isSidebarExpanded}
+                    isSidebarFullyExpanded={isSidebarFullyExpanded}
+                    screen={screen}
+                    screenAssignment='overview'
+                />
+                <SidebarMenuItem
+                    title='Detailed Analysis'
+                    additionalButtonClasses={tw``}
+                    icon={
+                        <DocumentMagnifyingGlassIcon className={iconClasses} />
+                    }
+                    onClick={() => setScreen('detailedAnalysis')}
+                    isSidebarExpanded={isSidebarExpanded}
+                    isSidebarFullyExpanded={isSidebarFullyExpanded}
+                    screen={screen}
+                    screenAssignment='detailedAnalysis'
+                />
             </nav>
         </div>
+    );
+}
+
+interface SidebarMenuItemProps {
+    title: string;
+    additionalButtonClasses?: string;
+    icon: ReactNode;
+    onClick: () => void;
+    isSidebarExpanded: boolean;
+    isSidebarFullyExpanded: boolean;
+    screen: Screen;
+    screenAssignment: Screen;
+}
+
+function SidebarMenuItem({
+    title,
+    additionalButtonClasses,
+    screen,
+    isSidebarExpanded,
+    isSidebarFullyExpanded,
+    icon,
+    onClick,
+    screenAssignment,
+}: SidebarMenuItemProps): JSX.Element {
+    return (
+        <button
+            onClick={onClick}
+            className={clsx(
+                additionalButtonClasses,
+                screen === screenAssignment && tw`bg-zinc-300 dark:bg-zinc-700`,
+                tw`flex items-center rounded-lg p-2`,
+                tw`transition-all duration-300`,
+                tw`hover:bg-zinc-300`,
+                tw`dark:hover:bg-zinc-700`,
+            )}
+            style={{
+                width: isSidebarExpanded ? '100%' : 'fit',
+                transition: 'width 0.3s ease',
+            }}
+        >
+            {icon}
+            {isSidebarFullyExpanded && (
+                <span
+                    className={clsx(
+                        tw`ml-2.5 transition-opacity duration-300`,
+                        isSidebarFullyExpanded
+                            ? tw`opacity-100`
+                            : tw`opacity-0`,
+                    )}
+                >
+                    {title}
+                </span>
+            )}
+        </button>
     );
 }
