@@ -324,10 +324,11 @@ export function DetailedAnalysis({
             ? `${calculateScore(score)?.toString()}%`
             : null;
     }
-    function handleAnswersAlignment(score: any) {
+    function handleAnswersAlignment(score: any): 'Yes' | 'No' | null {
         if (calculateScore(score)) {
             return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
         }
+        return null;
     }
     function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
