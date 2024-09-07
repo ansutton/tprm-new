@@ -1,5 +1,5 @@
 import { localPythonServerConnectionString } from '@/utils/connections';
-import { PythonAppState, SubmitRequestParams } from '@/types';
+import { LlmResponse, SubmitRequestParams } from '@/types';
 
 export async function submit(params: SubmitRequestParams): Promise<void> {
     try {
@@ -25,7 +25,7 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
     }
 }
 
-export async function poll(): Promise<PythonAppState> {
+export async function poll(): Promise<LlmResponse> {
     const response = await fetch(`${localPythonServerConnectionString}/poll`, {
         method: 'GET',
         headers: {
