@@ -241,14 +241,11 @@ export function DetailedAnalysis({
                             ?.similarity_score,
                     ),
                 ),
-                citationsPreview: 'N/A',
-                // handleSpinner(
-                //     truncate(
-                //         llmResponse?.analyses[`analysis_${index}`]
-                //             ?.citation,
-                //         30,
-                //     ),
-                // ),
+                citationsPreview: handleSpinner(
+                    llmResponse?.analyses[`analysis_${index}`]?.citations
+                        ?.length,
+                ),
+                // 'N/A',
                 tpResponseFull: excelData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
@@ -259,17 +256,35 @@ export function DetailedAnalysis({
                             ?.similarity_score,
                     ),
                 ),
-                // 'Yes/No (sim score >=88%)',
-                citationsFull: 'N/A', // display in paragraphs
-                // handleSpinner(
-                //     llmResponse?.analyses[`analysis_${index}`]
-                //         ?.citation,
-                // ),
-                pageNumbers: 'N/A',
-                // handleSpinner(
-                //     llmResponse?.analyses[`analysis_${index}`]
-                //         ?.pageNumbers,
-                // ),
+                citationsFull: (
+                    <div className='space-y-4'>
+                        {handleSpinner(
+                            llmResponse?.analyses[
+                                `analysis_${index}`
+                            ]?.citations?.map((citation, index) => (
+                                <div key={index} className='flex gap-4'>
+                                    <span className='whitespace-nowrap'>
+                                        Page {citation[0]}:
+                                    </span>
+                                    <span>...{citation[1]}...</span>
+                                </div>
+                            )),
+                        )}
+                    </div>
+                ),
+                pageNumbers: (
+                    <div className='flex gap-2'>
+                        {handleSpinner(
+                            llmResponse?.analyses[
+                                `analysis_${index}`
+                            ]?.pages?.map((pageNumber, j) => (
+                                <p key={j} className='flex'>
+                                    <span className=''>{pageNumber},</span>
+                                </p>
+                            )),
+                        )}
+                    </div>
+                ),
             }));
     }
 
@@ -431,12 +446,12 @@ export function DetailedAnalysis({
                                     <ExpandedRow
                                         content={row.original.citationsFull}
                                         row={row}
-                                        title={'Citation'}
+                                        title={`Citation(s)`}
                                     />
                                     <ExpandedRow
                                         content={row.original.pageNumbers}
                                         row={row}
-                                        title={'Pages'}
+                                        title={'Page(s)'}
                                     />
                                 </>
                             )}
