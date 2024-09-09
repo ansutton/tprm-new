@@ -147,6 +147,15 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
+    columnHelper.accessor('similarityScore', {
+        header: () => (
+            <TableHeader
+                headerContent='Similarity Score'
+                infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
+            />
+        ),
+        cell: ({ getValue }) => getValue(),
+    }),
     columnHelper.accessor('aiConfidenceScore', {
         header: () => (
             <TableHeader
@@ -161,15 +170,6 @@ const columns = [
             <TableHeader
                 headerContent='Third Party Confidence Score'
                 infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections.`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('similarityScore', {
-        header: () => (
-            <TableHeader
-                headerContent='Similarity Score'
-                infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -216,6 +216,18 @@ export function DetailedAnalysis({
                         30,
                     ),
                 ),
+                answersAlignment: handleSpinner(
+                    handleAnswersAlignment(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.similarity_score,
+                    ),
+                ),
+                similarityScore: handleSpinner(
+                    displayScore(
+                        llmResponse?.analyses[`analysis_${index}`]
+                            ?.similarity_score,
+                    ),
+                ),
                 aiConfidenceScore: handleSpinner(
                     displayScore(
                         llmResponse?.analyses[`analysis_${index}`]
@@ -228,12 +240,6 @@ export function DetailedAnalysis({
                             ?.tp_confidence_score,
                     ),
                 ),
-                similarityScore: handleSpinner(
-                    displayScore(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.similarity_score,
-                    ),
-                ),
                 citationsPreview: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.citations
                         ?.length,
@@ -242,12 +248,6 @@ export function DetailedAnalysis({
                 tpResponseFull: excelData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
-                ),
-                answersAlignment: handleSpinner(
-                    handleAnswersAlignment(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.similarity_score,
-                    ),
                 ),
                 citationsFull: (
                     <div className='space-y-4'>
@@ -339,34 +339,56 @@ export function DetailedAnalysis({
             console.error('No data available for export.');
             return;
         }
-        const worksheet = XLSX.utils.json_to_sheet(data);
+        const columnTitles = [
+            'Control Question',
+            'Third Party Response',
+            'Evidence Analysis',
+            'Answers Align',
+            'Similarity Score',
+            'Evidence Analysis Confidence Score',
+            'Third Party Confidence Score',
+        ];
+        const worksheetData = [
+            // columnTitles,
+            ...data.map((row) => [
+                row.question,
+                row.tpResponseFull,
+                row.aiAnalysisFull,
+                row.answersAlignment,
+                row.similarityScore,
+                row.aiConfidenceScore,
+                row.tpConfidenceScore,
+                row.citationsFull,
+            ]),
+        ];
+        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
         const timestamp = getTimestamp();
         const fullFilename = `${filename}-${timestamp}.xlsx`;
         XLSX.writeFile(workbook, fullFilename);
     }
-    // function exportToXlsx(data: any[], filename: string) {
-    //     if (data.length === 0) {
-    //         console.error('No data available for export');
-    //         return;
-    //     }
-    //     const headers = columns.map((col) => col.header);
-    //     const worksheetData = [
-    //         headers,
-    //         ...data.map((row) =>
-    //             columns.map((column) => row[column?.id ?? ''] ?? ''),
-    //         ),
-    //     ];
-    //     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-    //     const workbook = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    //     XLSX.writeFile(workbook, `${filename}.xlsx`);
-    // }
     function handleExportXlsx() {
         const data = table.getRowModel().rows.map((row) => row.original);
         console.log('Export button clicked');
         exportToXlsx(data, 'tprm-table-data');
+    }
+    function exportToXlsx2(data: any[], filename: string) {
+        if (data.length === 0) {
+            console.error('No data available for export');
+            return;
+        }
+        const headers = columns.map((col) => col.header);
+        const worksheetData = [
+            headers,
+            ...data.map((row) =>
+                columns.map((column) => row[column?.id ?? ''] ?? ''),
+            ),
+        ];
+        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        XLSX.writeFile(workbook, `${filename}.xlsx`);
     }
 
     /**
@@ -420,11 +442,11 @@ export function DetailedAnalysis({
                                             tw`w-1/6`,
                                         header.id === 'answersAlignment' &&
                                             tw`w-1/12`,
+                                        header.id === 'similarityScore' &&
+                                            tw`w-1/12`,
                                         header.id === 'aiConfidenceScore' &&
                                             tw`w-1/12`,
                                         header.id === 'tpConfidenceScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'similarityScore' &&
                                             tw`w-1/12`,
                                         header.id === 'citationsPreview' &&
                                             tw`w-1/12`,
