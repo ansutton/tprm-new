@@ -12,7 +12,7 @@ import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import { Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
-import { truncate, tw } from '@/utils';
+import { getTimestamp, truncate, tw } from '@/utils';
 
 type DataItem = {
     questionNumber: number;
@@ -296,32 +296,6 @@ export function DetailedAnalysis({
     }
 
     /**
-     * Helper Functions: Export Table
-     */
-    function exportToXlsx(data: any[], filename: string) {
-        if (data.length === 0) {
-            console.error('No data available for export');
-            return;
-        }
-        const headers = columns.map((col) => col.header);
-        const worksheetData = [
-            headers,
-            ...data.map((row) =>
-                columns.map((column) => row[column?.id ?? ''] ?? ''),
-            ),
-        ];
-        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        XLSX.writeFile(workbook, `${filename}.xlsx`);
-    }
-    function handleExportXlsx() {
-        const data = table.getRowModel().rows.map((row) => row.original);
-        console.log('Export button clicked');
-        exportToXlsx(data, 'tprm-table-data');
-    }
-
-    /**
      * Helper Functions: Utilities
      */
     function primitiveScoreFormula(score: number): number {
@@ -355,6 +329,44 @@ export function DetailedAnalysis({
         ) : (
             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
         );
+    }
+
+    /**
+     * Helper Functions: Export Table
+     */
+    function exportToXlsx(data: any[], filename: string) {
+        if (data.length === 0) {
+            console.error('No data available for export.');
+            return;
+        }
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        const timestamp = getTimestamp();
+        const fullFilename = `${filename}-${timestamp}.xlsx`;
+        XLSX.writeFile(workbook, fullFilename);
+    }
+    // function exportToXlsx(data: any[], filename: string) {
+    //     if (data.length === 0) {
+    //         console.error('No data available for export');
+    //         return;
+    //     }
+    //     const headers = columns.map((col) => col.header);
+    //     const worksheetData = [
+    //         headers,
+    //         ...data.map((row) =>
+    //             columns.map((column) => row[column?.id ?? ''] ?? ''),
+    //         ),
+    //     ];
+    //     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    //     const workbook = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    //     XLSX.writeFile(workbook, `${filename}.xlsx`);
+    // }
+    function handleExportXlsx() {
+        const data = table.getRowModel().rows.map((row) => row.original);
+        console.log('Export button clicked');
+        exportToXlsx(data, 'tprm-table-data');
     }
 
     /**
