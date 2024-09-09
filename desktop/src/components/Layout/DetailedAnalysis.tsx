@@ -9,6 +9,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
+import * as XLSX from 'xlsx';
 import { Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { truncate, tw } from '@/utils';
@@ -209,7 +210,7 @@ export function DetailedAnalysis({
     const [data, setData] = useState(handleData());
 
     /**
-     * Helper Function to Handle Data
+     * Helper Function: Data Handler
      */
     function handleData() {
         return () =>
@@ -303,7 +304,41 @@ export function DetailedAnalysis({
     }
 
     /**
-     * Helper Functions - Utilities
+     * Helper Functions: Export Table
+     */
+    // function exportToXlsx(data: any[], filename: string) {
+    //     const worksheet = XLSX.utils.json_to_sheet(data);
+    //     const workbook = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    // }
+    function exportToXlsx(data: any[], filename: string) {
+        // Check if there is data to export
+        if (data.length === 0) {
+            console.error('No data available for export.');
+            return;
+        }
+
+        // Convert JSON data to a worksheet
+        const worksheet = XLSX.utils.json_to_sheet(data);
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Append the worksheet to the workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+        // Write the workbook to a file and trigger download
+        XLSX.writeFile(workbook, `${filename}.xlsx`);
+    }
+
+    function handleExportXlsx() {
+        const data = table.getRowModel().rows.map((row) => row.original);
+        exportToXlsx(data, 'tprm-table-data');
+        console.log('clicked');
+    }
+
+    /**
+     * Helper Functions: Utilities
      */
     function primitiveScoreFormula(score: number): number {
         return Math.round(((score + 1) / 2) * 100);
@@ -368,6 +403,7 @@ export function DetailedAnalysis({
                 tw`drop-shadow-md`,
             )}
         >
+            <button onClick={handleExportXlsx}>Export to XLSX</button>
             <table className='w-full dark:text-zinc-100'>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
