@@ -177,6 +177,7 @@ function ThemeMenu(): JSX.Element {
             <MenuButton
                 className={clsx(
                     tw`rounded-lg p-2`,
+                    tw`focus:outline-none`,
                     theme === 'light' && tw`hover:bg-zinc-200`,
                     theme === 'dark' && tw`hover:bg-zinc-800`,
                 )}
@@ -248,6 +249,7 @@ function PrintResultsButton(): JSX.Element {
                 tw`w-fit whitespace-nowrap rounded-lg p-2`,
                 tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
                 tw`flex items-center gap-1.5`,
+                tw`focus:outline-none`,
             )}
         >
             <PrinterIcon
