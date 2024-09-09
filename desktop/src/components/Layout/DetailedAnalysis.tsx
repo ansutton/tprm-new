@@ -241,8 +241,11 @@ export function DetailedAnalysis({
                     ),
                 ),
                 citationsPreview: handleSpinner(
-                    llmResponse?.analyses[`analysis_${index}`]?.citations
-                        ?.length,
+                    <Pages
+                        index={index}
+                        llmResponse={llmResponse}
+                        prefix='Pages: '
+                    />,
                 ),
                 // 'N/A',
                 tpResponseFull: excelData[index + 1][2],
@@ -265,12 +268,27 @@ export function DetailedAnalysis({
                         )}
                     </div>
                 ),
-                pageNumbers: (
+                pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
+            }));
+    }
+
+    interface PagesProps {
+        index: number;
+        llmResponse: LlmResponse;
+        prefix?: string;
+    }
+    function Pages({
+        index,
+        llmResponse,
+        prefix = '',
+    }: PagesProps): JSX.Element {
+        return (
+            <>
+                {llmResponse?.analyses[`analysis_${index}`]?.pages ? (
                     <div className='flex gap-2'>
-                        {handleSpinner(
-                            llmResponse?.analyses[
-                                `analysis_${index}`
-                            ]?.pages?.map((pageNumber, j) => (
+                        {prefix}
+                        {llmResponse?.analyses[`analysis_${index}`]?.pages?.map(
+                            (pageNumber, j) => (
                                 <p key={j} className='flex'>
                                     <span>{pageNumber}</span>
                                     {j + 1 !==
@@ -282,18 +300,21 @@ export function DetailedAnalysis({
                                         ]?.pages?.length ?? 0) > 1 &&
                                         ', '}
                                 </p>
-                            )),
+                            ),
                         )}
-                        {/* {[4, 2].map((item, j)=> (
+                    </div>
+                ) : (
+                    <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                )}
+            </>
+        );
+    }
+    /* {[4, 2].map((item, j)=> (
                             <div key={j}>
                                 <span className="">{item}</span>
                                 {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
                             </div>
-                        ))} */}
-                    </div>
-                ),
-            }));
-    }
+                        ))} */
 
     /**
      * Helper Functions: Utilities
@@ -334,11 +355,58 @@ export function DetailedAnalysis({
     /**
      * Helper Functions: Export Table
      */
-    function exportToXlsx(data: any[], filename: string) {
+    // function exportToXlsx(data: any[], filename: string) {
+    //     if (data.length === 0) {
+    //         console.error('No data available for export.');
+    //         return;
+    //     }
+    //     const columnTitles = [
+    //         'Control Question',
+    //         'Third Party Response',
+    //         'Evidence Analysis',
+    //         'Answers Align',
+    //         'Similarity Score',
+    //         'Evidence Analysis Confidence Score',
+    //         'Third Party Confidence Score',
+    //     ];
+    //     const worksheetData = [
+    //         // columnTitles,
+    //         ...data.map((row) => [
+    //             row.question,
+    //             row.tpResponseFull,
+    //             row.aiAnalysisFull,
+    //             row.answersAlignment,
+    //             row.similarityScore,
+    //             row.aiConfidenceScore,
+    //             row.tpConfidenceScore,
+    //             row.citationsFull,
+    //         ]),
+    //     ];
+    //     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    //     const workbook = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    //     const timestamp = getTimestamp();
+    //     const fullFilename = `${filename}-${timestamp}.xlsx`;
+    //     XLSX.writeFile(workbook, fullFilename);
+    // }
+    // function handleExportXlsx() {
+    //     const data = table.getRowModel().rows.map((row) => row.original);
+    //     console.log('Export button clicked');
+    //     exportToXlsx(data, 'tprm-table-data');
+    // }
+    function handleExportXlsx(
+        table: any,
+        filename: string = 'tprm-table-data',
+    ) {
+        // Extract data from the table
+        const data = table.getRowModel().rows.map((row: any) => row.original);
+
         if (data.length === 0) {
             console.error('No data available for export.');
             return;
         }
+
+        // Define column titles
         const columnTitles = [
             'Control Question',
             'Third Party Response',
@@ -348,9 +416,11 @@ export function DetailedAnalysis({
             'Evidence Analysis Confidence Score',
             'Third Party Confidence Score',
         ];
+
+        // Prepare data rows under column titles
         const worksheetData = [
-            // columnTitles,
-            ...data.map((row) => [
+            columnTitles, // Add column headers as the first row
+            ...data.map((row: any) => [
                 row.question,
                 row.tpResponseFull,
                 row.aiAnalysisFull,
@@ -361,17 +431,18 @@ export function DetailedAnalysis({
                 row.citationsFull,
             ]),
         ];
-        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+
+        // Create worksheet and workbook
+        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData); // Use aoa_to_sheet for array of arrays
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+        // Generate filename with timestamp and export
         const timestamp = getTimestamp();
         const fullFilename = `${filename}-${timestamp}.xlsx`;
         XLSX.writeFile(workbook, fullFilename);
-    }
-    function handleExportXlsx() {
-        const data = table.getRowModel().rows.map((row) => row.original);
+
         console.log('Export button clicked');
-        exportToXlsx(data, 'tprm-table-data');
     }
     function exportToXlsx2(data: any[], filename: string) {
         if (data.length === 0) {
