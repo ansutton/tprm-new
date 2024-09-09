@@ -279,10 +279,24 @@ export function DetailedAnalysis({
                                 `analysis_${index}`
                             ]?.pages?.map((pageNumber, j) => (
                                 <p key={j} className='flex'>
-                                    <span className=''>{pageNumber},</span>
+                                    <span>{pageNumber}</span>
+                                    {j + 1 !==
+                                        llmResponse?.analyses[
+                                            `analysis_${index}`
+                                        ]?.pages?.length &&
+                                        (llmResponse?.analyses[
+                                            `analysis_${index}`
+                                        ]?.pages?.length ?? 0) > 1 &&
+                                        ', '}
                                 </p>
                             )),
                         )}
+                        {/* {[4, 2].map((item, j)=> (
+                            <div key={j}>
+                                <span className="">{item}</span>
+                                {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
+                            </div>
+                        ))} */}
                     </div>
                 ),
             }));
@@ -310,10 +324,11 @@ export function DetailedAnalysis({
             ? `${calculateScore(score)?.toString()}%`
             : null;
     }
-    function handleAnswersAlignment(score: any) {
+    function handleAnswersAlignment(score: any): 'Yes' | 'No' | null {
         if (calculateScore(score)) {
             return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
         }
+        return null;
     }
     function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
