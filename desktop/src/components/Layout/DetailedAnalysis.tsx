@@ -115,9 +115,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Control Question'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Question concerning the security controls and practices of the organization being assessed.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -126,9 +124,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Third Party Response'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`The response to the question given by the third party. The response is not necessarily tied to the context of the evidence document`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -155,9 +151,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Evidence Analysis Confidence Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -166,7 +160,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Third Party Confidence Score'
-                infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
+                infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -184,9 +178,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Citation(s)'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`"The relevant section(s) from the evidence document that the app has referenced in response to the question.`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -308,10 +300,17 @@ export function DetailedAnalysis({
      */
     function exportToXlsx(data: any[], filename: string) {
         if (data.length === 0) {
-            console.error('No data available for export.');
+            console.error('No data available for export');
             return;
         }
-        const worksheet = XLSX.utils.json_to_sheet(data);
+        const headers = columns.map((col) => col.header);
+        const worksheetData = [
+            headers,
+            ...data.map((row) =>
+                columns.map((column) => row[column?.id ?? ''] ?? ''),
+            ),
+        ];
+        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
         XLSX.writeFile(workbook, `${filename}.xlsx`);
