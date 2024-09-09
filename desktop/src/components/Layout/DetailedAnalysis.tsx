@@ -406,7 +406,7 @@ export function DetailedAnalysis({
             return;
         }
 
-        // Define column titles
+        // Define column titles for the export
         const columnTitles = [
             'Control Question',
             'Third Party Response',
@@ -415,11 +415,12 @@ export function DetailedAnalysis({
             'Similarity Score',
             'Evidence Analysis Confidence Score',
             'Third Party Confidence Score',
+            'Citation(s)',
         ];
 
-        // Prepare data rows under column titles
+        // Prepare data rows under column titles using the "full" fields
         const worksheetData = [
-            columnTitles, // Add column headers as the first row
+            columnTitles,
             ...data.map((row: any) => [
                 row.question,
                 row.tpResponseFull,
@@ -432,8 +433,8 @@ export function DetailedAnalysis({
             ]),
         ];
 
-        // Create worksheet and workbook
-        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData); // Use aoa_to_sheet for array of arrays
+        // Create the worksheet and workbook
+        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
@@ -443,23 +444,6 @@ export function DetailedAnalysis({
         XLSX.writeFile(workbook, fullFilename);
 
         console.log('Export button clicked');
-    }
-    function exportToXlsx2(data: any[], filename: string) {
-        if (data.length === 0) {
-            console.error('No data available for export');
-            return;
-        }
-        const headers = columns.map((col) => col.header);
-        const worksheetData = [
-            headers,
-            ...data.map((row) =>
-                columns.map((column) => row[column?.id ?? ''] ?? ''),
-            ),
-        ];
-        const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        XLSX.writeFile(workbook, `${filename}.xlsx`);
     }
 
     /**
