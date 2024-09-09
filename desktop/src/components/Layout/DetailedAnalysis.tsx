@@ -26,8 +26,8 @@ type DataItem = {
     citationsPreview: DataItemField;
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
-    citationsFull: DataItemField; // now array of tuples (tuple shape: [number, string])
-    pageNumbers: DataItemField; // now array of numbers
+    citationsFull: DataItemField; // array of tuples (tuple shape: [number, string])
+    pageNumbers: DataItemField; // array of numbers
 };
 
 type DataItemField = ReactNode | string | number | null | undefined;
@@ -240,12 +240,12 @@ export function DetailedAnalysis({
                             ?.tp_confidence_score,
                     ),
                 ),
-                citationsPreview: handleSpinner(
+                citationsPreview: (
                     <Pages
                         index={index}
                         llmResponse={llmResponse}
-                        prefix='Pages: '
-                    />,
+                        prefix='Pages:'
+                    />
                 ),
                 // 'N/A',
                 tpResponseFull: excelData[index + 1][2],
