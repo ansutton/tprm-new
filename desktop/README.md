@@ -62,48 +62,4 @@ export default {
 
 ## Server Response Shape
 
-```ts
-interface ServerRespone {
-    number_of_questions: number;
-    models_pulled: boolean;
-    analyses: {
-        analyses_0: {
-            question: string;
-            tp_response: string;
-            ai_analysis: string;
-            tp_confidence_score: number;
-            ai_confidence_score: number;
-        };
-        analysis_1: {
-            question: string;
-            tp_response: string;
-            ai_analysis: string;
-            tp_confidence_score: number;
-            ai_confidence_score: number;
-        }
-        ...
-    };
-}
-```
-
-I.e.
-
-```ts
-interface Analysis {
-    question: string;
-    tp_response: string;
-    ai_analysis: string;
-    tp_confidence_score: number;
-    ai_confidence_score: number;
-}
-
-interface ServerRespone {
-    number_of_questions: number;
-    models_pulled: boolean;
-    analyses: {
-        analysis_0: Analysis;
-        analysis_1: Analysis;
-        ...
-    };
-}
-```
+TODO: update this section.
