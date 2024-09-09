@@ -306,35 +306,20 @@ export function DetailedAnalysis({
     /**
      * Helper Functions: Export Table
      */
-    // function exportToXlsx(data: any[], filename: string) {
-    //     const worksheet = XLSX.utils.json_to_sheet(data);
-    //     const workbook = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    // }
     function exportToXlsx(data: any[], filename: string) {
-        // Check if there is data to export
         if (data.length === 0) {
             console.error('No data available for export.');
             return;
         }
-
-        // Convert JSON data to a worksheet
         const worksheet = XLSX.utils.json_to_sheet(data);
-
-        // Create a new workbook
         const workbook = XLSX.utils.book_new();
-
-        // Append the worksheet to the workbook
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-        // Write the workbook to a file and trigger download
         XLSX.writeFile(workbook, `${filename}.xlsx`);
     }
-
     function handleExportXlsx() {
         const data = table.getRowModel().rows.map((row) => row.original);
+        console.log('Export button clicked');
         exportToXlsx(data, 'tprm-table-data');
-        console.log('clicked');
     }
 
     /**
