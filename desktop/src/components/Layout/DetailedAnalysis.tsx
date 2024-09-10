@@ -233,7 +233,7 @@ export function DetailedAnalysis({
                     <Pages
                         index={index}
                         llmResponse={llmResponse}
-                        prefix='Pages:'
+                        prefix='Page(s):'
                     />
                 ),
                 // 'N/A',
