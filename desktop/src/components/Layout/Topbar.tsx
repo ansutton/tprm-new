@@ -6,7 +6,6 @@ import {
     DevicePhoneMobileIcon,
     MoonIcon,
     SunIcon,
-    PrinterIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 // import { useTheme } from 'next-themes';
@@ -95,10 +94,8 @@ export function Topbar({
                     </h1>
                 </div>
 
-                {(screen === 'overview' || screen === 'detailedAnalysis') && (
-                    <ExportTable
-                        appLevelTableData={appLevelTableData}
-                    />
+                {screen === 'detailedAnalysis' && (
+                    <ExportTable appLevelTableData={appLevelTableData} />
                 )}
 
                 <ModeMenu mode={mode} setMode={setMode} />
@@ -248,35 +245,3 @@ function ThemeMenu(): JSX.Element {
         </Menu>
     );
 }
-
-// function PrintResultsButton(): JSX.Element {
-//     return (
-//         <button
-//             onClick={() => window.print()}
-//             className={clsx(
-//                 tw`w-fit whitespace-nowrap rounded-lg p-2`,
-//                 tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
-//                 tw`flex items-center gap-1.5`,
-//                 tw`focus:outline-none`,
-//             )}
-//         >
-//             <PrinterIcon
-//                 className={clsx(
-//                     tw`size-4`,
-//                     tw`stroke-indigo-600 stroke-2`,
-//                     tw`dark:stroke-indigo-400`,
-//                 )}
-//             />
-//             <span
-//                 className={clsx(
-//                     tw`float-right text-sm`,
-//                     tw`font-bold`,
-//                     tw`text-indigo-600`,
-//                     tw`dark:text-indigo-400`,
-//                 )}
-//             >
-//                 Print Results
-//             </span>
-//         </button>
-//     );
-// }

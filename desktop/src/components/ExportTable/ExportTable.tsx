@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { getTimestamp } from '@/utils';
+import { getTimestamp, tw } from '@/utils';
 
 interface ExportTableProps {
     appLevelTableData: React.Dispatch<React.SetStateAction<any>>;
@@ -57,8 +59,32 @@ export function ExportTable({
     */
     }
     return (
-        <>
-            <>ExportTable</>
-        </>
+        <button
+            onClick={handleExportTable}
+            className={clsx(
+                tw`w-fit whitespace-nowrap rounded-lg p-2`,
+                tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
+                tw`flex items-center gap-1.5`,
+                tw`focus:outline-none`,
+            )}
+        >
+            <span
+                className={clsx(
+                    tw`float-right text-sm`,
+                    tw`font-bold`,
+                    tw`text-indigo-600`,
+                    tw`dark:text-indigo-400`,
+                )}
+            >
+                Export Table
+            </span>
+            <ArrowDownTrayIcon
+                className={clsx(
+                    tw`size-4`,
+                    tw`stroke-indigo-600 stroke-2`,
+                    tw`dark:stroke-indigo-400`,
+                )}
+            />
+        </button>
     );
 }
