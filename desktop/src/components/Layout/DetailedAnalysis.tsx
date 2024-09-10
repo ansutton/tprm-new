@@ -10,31 +10,20 @@ import {
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { Tooltip } from '@/components';
-import { LlmResponse } from '@/types';
-import { getTimestamp, truncate, tw } from '@/utils';
-
-type DataItem = {
-    questionNumber: number;
-    question: string;
-    tpResponsePreview: DataItemField;
-    aiAnalysisPreview: DataItemField;
-    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
-    aiConfidenceScore: DataItemField;
-    tpConfidenceScore: DataItemField;
-    similarityScore: DataItemField;
-    citationsPreview: DataItemField;
-    tpResponseFull: DataItemField;
-    aiAnalysisFull: DataItemField;
-    citationsFull: DataItemField; // array of tuples (tuple shape: [number, string])
-    pageNumbers: DataItemField; // array of numbers
-};
-
-type DataItemField = ReactNode | string | number | null | undefined;
-interface TableHeaderProps {
-    headerContent: string;
-    infoContent: ReactNode;
-}
+import { Pages, Tooltip } from '@/components';
+import {
+    DataItem,
+    DataItemField,
+    LlmResponse,
+    TableHeaderProps,
+} from '@/types';
+import {
+    displayScore,
+    getTimestamp,
+    handleAnswersAlignment,
+    truncate,
+    tw,
+} from '@/utils';
 
 function TableHeader({
     headerContent,
@@ -271,79 +260,9 @@ export function DetailedAnalysis({
                 pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
             }));
     }
-
-    interface PagesProps {
-        index: number;
-        llmResponse: LlmResponse;
-        prefix?: string;
-    }
-    function Pages({
-        index,
-        llmResponse,
-        prefix = '',
-    }: PagesProps): JSX.Element {
-        return (
-            <>
-                {llmResponse?.analyses[`analysis_${index}`]?.pages ? (
-                    <div className='flex gap-2'>
-                        {prefix}
-                        {llmResponse?.analyses[`analysis_${index}`]?.pages?.map(
-                            (pageNumber, j) => (
-                                <p key={j} className='flex'>
-                                    <span>{pageNumber}</span>
-                                    {j + 1 !==
-                                        llmResponse?.analyses[
-                                            `analysis_${index}`
-                                        ]?.pages?.length &&
-                                        (llmResponse?.analyses[
-                                            `analysis_${index}`
-                                        ]?.pages?.length ?? 0) > 1 &&
-                                        ', '}
-                                </p>
-                            ),
-                        )}
-                    </div>
-                ) : (
-                    <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
-                )}
-            </>
-        );
-    }
-    /* {[4, 2].map((item, j)=> (
-                            <div key={j}>
-                                <span className="">{item}</span>
-                                {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
-                            </div>
-                        ))} */
-
     /**
      * Helper Functions: Utilities
      */
-    function primitiveScoreFormula(score: number): number {
-        return Math.round(((score + 1) / 2) * 100);
-    }
-    function calculateScore(score: any): number | null {
-        const scoreResult = Number(score);
-        if (
-            scoreResult &&
-            typeof scoreResult === 'number' &&
-            scoreResult === scoreResult
-        ) {
-            return primitiveScoreFormula(scoreResult);
-        }
-        return null;
-    }
-    function displayScore(score: DataItemField): string | null {
-        return calculateScore(score)
-            ? `${calculateScore(score)?.toString()}%`
-            : null;
-    }
-    function handleAnswersAlignment(score: any): 'Yes' | 'No' | null {
-        if (calculateScore(score)) {
-            return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
-        }
-        return null;
-    }
     function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
             field

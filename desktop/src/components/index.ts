@@ -1,6 +1,7 @@
 export * from './Layout/DetailedAnalysis';
 export * from './Layout/Layout';
 export * from './Layout/Overview';
+export * from './Layout/Pages';
 export * from './Layout/Sidebar';
 export * from './Layout/Topbar';
 export * from './ModeMenu/ModeMenu';

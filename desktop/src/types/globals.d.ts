@@ -38,12 +38,32 @@ export interface SubmitRequestParams {
     parsedExcelFile: any[][];
     // xlsxFileBuffer: string,
 }
+export interface TableHeaderProps {
+    headerContent: string;
+    infoContent: ReactNode;
+}
 
 /**
  * Types
  */
 // export type LlmResponse = PythonAppState | null;
 // export type LlmResponse = any;
+export type DataItem = {
+    questionNumber: number;
+    question: string;
+    tpResponsePreview: DataItemField;
+    aiAnalysisPreview: DataItemField;
+    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
+    aiConfidenceScore: DataItemField;
+    tpConfidenceScore: DataItemField;
+    similarityScore: DataItemField;
+    citationsPreview: DataItemField;
+    tpResponseFull: DataItemField;
+    aiAnalysisFull: DataItemField;
+    citationsFull: DataItemField; // array of tuples (tuple shape: [number, string])
+    pageNumbers: DataItemField; // array of numbers
+};
+export type DataItemField = ReactNode | string | number | null | undefined;
 export type Mode = 'demo' | 'llm';
 export type ModeAction = { type: 'set_demo' } | { type: 'set_llm' };
 export type Screen = 'fileUpload' | 'loading' | 'detailedAnalysis' | 'overview';
