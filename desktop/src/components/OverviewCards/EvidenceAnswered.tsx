@@ -2,17 +2,17 @@ import { ReactNode } from 'react';
 import { Card, ProgressBarBase } from '@/components';
 import { ProgressBarBaseProps } from '@/types';
 
-interface EvidenceUnansweredProps extends ProgressBarBaseProps {
+interface EvidenceAnsweredProps extends ProgressBarBaseProps {
     startIcon?: ReactNode;
     title: string;
 }
 
-export function EvidenceUnanswered({
+export function EvidenceAnswered({
     progressPercentage,
     startIcon = null,
     title,
     twBgColor,
-}: EvidenceUnansweredProps): JSX.Element {
+}: EvidenceAnsweredProps): JSX.Element {
     return (
         <Card>
             <div className='flex items-center gap-2'>

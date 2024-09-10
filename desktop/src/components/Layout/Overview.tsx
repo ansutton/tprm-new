@@ -4,7 +4,7 @@ import {
     ConfidenceScore,
     EvidenceAnalysis,
     EvidenceProvided,
-    EvidenceUnanswered,
+    EvidenceAnswered,
     QuestionsAnalyzed,
     // SecurityDomains,
     Summary,
@@ -78,10 +78,10 @@ export function Overview({
                         />
                     </div>
 
-                    <EvidenceUnanswered
-                        title='Questions Unanswered by Evidence'
-                        progressPercentage={40}
-                        twBgColor='bg-rose-400'
+                    <EvidenceAnswered
+                        title='Questions Answered by Evidence'
+                        progressPercentage={100}
+                        twBgColor='bg-cyan-400'
                     />
                 </div>
             ) : (
@@ -100,9 +100,9 @@ export function Overview({
 
                     <div className='space-y-4'>
                         <EvidenceProvided isOverviewWide={isOverviewWide} />
-                        <EvidenceUnanswered
-                            title='Questions Unanswered by Evidence'
-                            progressPercentage={40}
+                        <EvidenceAnswered
+                            title='Questions Answered by Evidence'
+                            progressPercentage={100}
                             twBgColor='bg-cyan-400'
                         />
                     </div>
