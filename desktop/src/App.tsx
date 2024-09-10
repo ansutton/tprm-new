@@ -34,6 +34,8 @@ export default function Home(): JSX.Element {
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>('llm');
+    const [appLevelTableData, setAppLevelTableData] =
+        useState<any>(null); // TODO: refactor to global state (currently prop drilling)
 
     /**
      * Helper Functions
@@ -221,7 +223,12 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar mode={mode} setMode={setMode} screen={screen} />
+            <Topbar
+                mode={mode}
+                setMode={setMode}
+                screen={screen}
+                appLevelTableData={appLevelTableData}
+            />
 
             {screen !== 'fileUpload' && (
                 <Sidebar
@@ -392,6 +399,9 @@ export default function Home(): JSX.Element {
                                         excelData={excelData}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}
+                                        setAppLevelTableData={
+                                            setAppLevelTableData
+                                        }
                                     />
                                 )}
                                 {screen === 'overview' && (

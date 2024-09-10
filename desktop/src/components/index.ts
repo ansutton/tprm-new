@@ -1,4 +1,4 @@
-export * from './ExportTable';
+export * from './ExportTable/ExportTable';
 export * from './Layout/DetailedAnalysis';
 export * from './Layout/Layout';
 export * from './Layout/Overview';

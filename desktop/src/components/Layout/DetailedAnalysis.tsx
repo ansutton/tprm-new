@@ -171,12 +171,14 @@ interface DetailedAnalysisProps {
     excelData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
+    setAppLevelTableData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export function DetailedAnalysis({
     excelData,
     llmResponse,
     questionsData,
+    setAppLevelTableData,
 }: DetailedAnalysisProps): JSX.Element {
     /**
      * State Hook
@@ -269,6 +271,7 @@ export function DetailedAnalysis({
      */
     useEffect(() => {
         setData(handleData());
+        setAppLevelTableData(handleData());
         // console.log('🚀 ~ llmResponse:', llmResponse);
     }, [llmResponse]);
 

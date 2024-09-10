@@ -10,18 +10,24 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 // import { useTheme } from 'next-themes';
-import { MenuItemButton, ModeMenu } from '@/components';
+import { ExportTable, MenuItemButton, ModeMenu } from '@/components';
 import { useTheme } from '@/hooks';
 import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
 interface TopbarProps {
+    appLevelTableData: any;
     mode: Mode;
     setMode: React.Dispatch<React.SetStateAction<Mode>>;
     screen: Screen;
 }
 
-export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
+export function Topbar({
+    appLevelTableData,
+    mode,
+    setMode,
+    screen,
+}: TopbarProps): JSX.Element {
     return (
         <div
             className={clsx(
@@ -89,9 +95,11 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
                     </h1>
                 </div>
 
-                {/* {(screen === 'overview' || screen === 'detailedAnalysis') && (
-                    <PrintResultsButton />
-                )} */}
+                {(screen === 'overview' || screen === 'detailedAnalysis') && (
+                    <ExportTable
+                        appLevelTableData={appLevelTableData}
+                    />
+                )}
 
                 <ModeMenu mode={mode} setMode={setMode} />
 

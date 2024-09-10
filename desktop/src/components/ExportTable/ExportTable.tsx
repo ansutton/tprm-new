@@ -3,11 +3,14 @@ import * as XLSX from 'xlsx';
 import { getTimestamp } from '@/utils';
 
 interface ExportTableProps {
-    table: any;
+    appLevelTableData: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export function ExportTable({ table }: ExportTableProps): JSX.Element {
-    const [rowsState, setRowsState] = useState<any>(null);
+// TODO: Only show when table is ready for export.
+export function ExportTable({
+    appLevelTableData,
+}: ExportTableProps): JSX.Element {
+    // const [rowsState, setRowsState] = useState<any>(appLevelTableData.getRowModel().rows.map((row: any) => row.original);
 
     function handleExportTable() {
         // Manually set column titles
@@ -22,8 +25,8 @@ export function ExportTable({ table }: ExportTableProps): JSX.Element {
             'Citation(s)',
         ];
         // Extract data from the table
-        const rows = table.getRowModel().rows.map((row: any) => row.original);
-        setRowsState(rows);
+        // const rows = table.getRowModel().rows.map((row: any) => row.original);
+        // setRowsState(rows);
         /*if (rows.length === 0) {
         console.error('No data available for export.');
         return;
