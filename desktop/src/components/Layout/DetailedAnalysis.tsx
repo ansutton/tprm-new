@@ -274,57 +274,16 @@ export function DetailedAnalysis({
     /**
      * Helper Functions: Export Table
      */
-    // function exportToXlsx(data: any[], filename: string) {
-    //     if (data.length === 0) {
-    //         console.error('No data available for export.');
-    //         return;
-    //     }
-    //     const columnTitles = [
-    //         'Control Question',
-    //         'Third Party Response',
-    //         'Evidence Analysis',
-    //         'Answers Align',
-    //         'Similarity Score',
-    //         'Evidence Analysis Confidence Score',
-    //         'Third Party Confidence Score',
-    //     ];
-    //     const worksheetData = [
-    //         // columnTitles,
-    //         ...data.map((row) => [
-    //             row.question,
-    //             row.tpResponseFull,
-    //             row.aiAnalysisFull,
-    //             row.answersAlignment,
-    //             row.similarityScore,
-    //             row.aiConfidenceScore,
-    //             row.tpConfidenceScore,
-    //             row.citationsFull,
-    //         ]),
-    //     ];
-    //     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-    //     const workbook = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    //     const timestamp = getTimestamp();
-    //     const fullFilename = `${filename}-${timestamp}.xlsx`;
-    //     XLSX.writeFile(workbook, fullFilename);
-    // }
-    // function handleExportXlsx() {
-    //     const data = table.getRowModel().rows.map((row) => row.original);
-    //     console.log('Export button clicked');
-    //     exportToXlsx(data, 'tprm-table-data');
-    // }
     function handleExportXlsx(
         table: any,
         filename: string = 'tprm-table-data',
     ) {
         // Extract data from the table
         const data = table.getRowModel().rows.map((row: any) => row.original);
-
         if (data.length === 0) {
             console.error('No data available for export.');
             return;
         }
-
         // Define column titles for the export
         const columnTitles = [
             'Control Question',
@@ -336,7 +295,6 @@ export function DetailedAnalysis({
             'Third Party Confidence Score',
             'Citation(s)',
         ];
-
         // Prepare data rows under column titles using the "full" fields
         const worksheetData = [
             columnTitles,
@@ -351,17 +309,14 @@ export function DetailedAnalysis({
                 row.citationsFull,
             ]),
         ];
-
-        // Create the worksheet and workbook
+        // Create worksheet and workbook
         const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
         // Generate filename with timestamp and export
         const timestamp = getTimestamp();
         const fullFilename = `${filename}-${timestamp}.xlsx`;
         XLSX.writeFile(workbook, fullFilename);
-
         console.log('Export button clicked');
     }
 
@@ -484,7 +439,7 @@ export function DetailedAnalysis({
                                     <ExpandedRow
                                         content={row.original.aiAnalysisFull}
                                         row={row}
-                                        title={'Evidence Analysis'}
+                                        title={'AI Response'}
                                     />
                                     <ExpandedRow
                                         content={row.original.citationsFull}
