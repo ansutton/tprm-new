@@ -132,7 +132,7 @@ const columns = [
     columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
-                headerContent='Evidence Analysis'
+                headerContent='AI Response'
                 infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
@@ -159,7 +159,7 @@ const columns = [
     columnHelper.accessor('aiConfidenceScore', {
         header: () => (
             <TableHeader
-                headerContent='Evidence Analysis Confidence Score'
+                headerContent='AI Confidence Score'
                 infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
             />
         ),
