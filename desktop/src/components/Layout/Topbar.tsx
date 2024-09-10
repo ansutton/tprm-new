@@ -89,9 +89,9 @@ export function Topbar({ mode, setMode, screen }: TopbarProps): JSX.Element {
                     </h1>
                 </div>
 
-                {(screen === 'overview' || screen === 'detailedAnalysis') && (
+                {/* {(screen === 'overview' || screen === 'detailedAnalysis') && (
                     <PrintResultsButton />
-                )}
+                )} */}
 
                 <ModeMenu mode={mode} setMode={setMode} />
 
@@ -241,34 +241,34 @@ function ThemeMenu(): JSX.Element {
     );
 }
 
-function PrintResultsButton(): JSX.Element {
-    return (
-        <button
-            onClick={() => window.print()}
-            className={clsx(
-                tw`w-fit whitespace-nowrap rounded-lg p-2`,
-                tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
-                tw`flex items-center gap-1.5`,
-                tw`focus:outline-none`,
-            )}
-        >
-            <PrinterIcon
-                className={clsx(
-                    tw`size-4`,
-                    tw`stroke-indigo-600 stroke-2`,
-                    tw`dark:stroke-indigo-400`,
-                )}
-            />
-            <span
-                className={clsx(
-                    tw`float-right text-sm`,
-                    tw`font-bold`,
-                    tw`text-indigo-600`,
-                    tw`dark:text-indigo-400`,
-                )}
-            >
-                Print Results
-            </span>
-        </button>
-    );
-}
+// function PrintResultsButton(): JSX.Element {
+//     return (
+//         <button
+//             onClick={() => window.print()}
+//             className={clsx(
+//                 tw`w-fit whitespace-nowrap rounded-lg p-2`,
+//                 tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
+//                 tw`flex items-center gap-1.5`,
+//                 tw`focus:outline-none`,
+//             )}
+//         >
+//             <PrinterIcon
+//                 className={clsx(
+//                     tw`size-4`,
+//                     tw`stroke-indigo-600 stroke-2`,
+//                     tw`dark:stroke-indigo-400`,
+//                 )}
+//             />
+//             <span
+//                 className={clsx(
+//                     tw`float-right text-sm`,
+//                     tw`font-bold`,
+//                     tw`text-indigo-600`,
+//                     tw`dark:text-indigo-400`,
+//                 )}
+//             >
+//                 Print Results
+//             </span>
+//         </button>
+//     );
+// }

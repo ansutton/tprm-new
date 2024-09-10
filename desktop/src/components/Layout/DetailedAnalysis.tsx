@@ -9,7 +9,6 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
-import * as XLSX from 'xlsx';
 import { Pages, Tooltip } from '@/components';
 import {
     DataItem,
@@ -17,14 +16,7 @@ import {
     LlmResponse,
     TableHeaderProps,
 } from '@/types';
-import {
-    displayScore,
-    handleExportXlsx,
-    getTimestamp,
-    handleAnswersAlignment,
-    truncate,
-    tw,
-} from '@/utils';
+import { displayScore, handleAnswersAlignment, truncate, tw } from '@/utils';
 
 function TableHeader({
     headerContent,
@@ -273,13 +265,6 @@ export function DetailedAnalysis({
     }
 
     /**
-     * Helper Functions: Export Table
-     */
-    function handleExportXlsx() {
-        return;
-    }
-
-    /**
      * Effect Hook
      */
     useEffect(() => {
@@ -309,7 +294,6 @@ export function DetailedAnalysis({
                 tw`drop-shadow-md`,
             )}
         >
-            <button onClick={handleExportXlsx}>Export to XLSX</button>
             <table className='w-full dark:text-zinc-100'>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
