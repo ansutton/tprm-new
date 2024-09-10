@@ -14,19 +14,21 @@ export function EvidenceProvided({
         {
             title: 'Attestations',
             pathColor: 'hsl(351, 95%, 71%)', // rose-400
-            percentage: 68,
+            count: 1,
         },
         {
             title: 'Policies/Procedures',
             pathColor: 'hsl(43, 96%, 56%)', // amber-400
-            percentage: 82,
+            count: 0,
         },
         {
             title: 'Others',
             pathColor: 'hsl(188, 86%, 53%)', // cyan-400
-            percentage: 34,
+            count: 0,
         },
     ];
+
+    const totalCount = data.reduce((acc, item) => acc + item.count, 0);
 
     return (
         <Card>
@@ -43,7 +45,7 @@ export function EvidenceProvided({
                     // isOverviewWide ? tw`` : tw`flex-col`,
                 )}
             >
-                {data.map(({ title, pathColor, percentage }, index) => (
+                {data.map(({ title, pathColor, count }, index) => (
                     <div key={index}>
                         <p className='mb-3 text-center font-bold opacity-80'>
                             {title}
@@ -51,10 +53,10 @@ export function EvidenceProvided({
                         <div className='mx-auto h-44 w-44'>
                             <CircularProgressbar
                                 className='text-3xl'
-                                value={percentage}
+                                value={count}
                                 minValue={0}
-                                maxValue={100}
-                                text={`${percentage.toString()}%`}
+                                maxValue={totalCount}
+                                text={`${count.toString()}`}
                                 styles={buildStyles({ pathColor: pathColor })}
                             />
                         </div>
