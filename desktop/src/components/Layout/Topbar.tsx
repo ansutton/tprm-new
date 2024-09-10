@@ -8,16 +8,16 @@ import {
     SunIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-// import { useTheme } from 'next-themes';
 import { ExportTable, MenuItemButton, ModeMenu } from '@/components';
 import { useTheme } from '@/hooks';
 import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
+// TODO: put mode props back as not optional if we bring back this feature.
 interface TopbarProps {
     appLevelTableData: any;
-    mode: Mode;
-    setMode: React.Dispatch<React.SetStateAction<Mode>>;
+    mode?: Mode;
+    setMode?: React.Dispatch<React.SetStateAction<Mode>>;
     screen: Screen;
 }
 
@@ -98,7 +98,7 @@ export function Topbar({
                     <ExportTable appLevelTableData={appLevelTableData} />
                 )}
 
-                <ModeMenu mode={mode} setMode={setMode} />
+                {/* <ModeMenu mode={mode} setMode={setMode} /> */}
 
                 <ThemeMenu />
             </div>

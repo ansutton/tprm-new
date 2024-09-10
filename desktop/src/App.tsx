@@ -19,6 +19,13 @@ import {
 import { poll, submit, tw } from '@/utils';
 import { Mode, Screen } from '@/types';
 
+/**
+ * Configuration and Constants
+ */
+// dotenv.config();
+// const mode = process.env...;
+// const mode: Mode = 'llm';
+
 export default function Home(): JSX.Element {
     /**
      * State Hooks
@@ -34,8 +41,7 @@ export default function Home(): JSX.Element {
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>('llm');
-    const [appLevelTableData, setAppLevelTableData] =
-        useState<any>(null); // TODO: refactor to global state (currently prop drilling)
+    const [appLevelTableData, setAppLevelTableData] = useState<any>(null); // TODO: refactor to global state (currently prop drilling)
 
     /**
      * Helper Functions
@@ -106,6 +112,7 @@ export default function Home(): JSX.Element {
                 );
             setQuestionsData(questionsArray);
             setScreen('detailedAnalysis');
+            console.log('🚀 ~ onSubmit ~ mode:', mode);
             switch (mode) {
                 case 'demo':
                     // const demoPollResponse: PythonAppState = {
@@ -223,12 +230,7 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar
-                mode={mode}
-                setMode={setMode}
-                screen={screen}
-                appLevelTableData={appLevelTableData}
-            />
+            <Topbar screen={screen} appLevelTableData={appLevelTableData} />
 
             {screen !== 'fileUpload' && (
                 <Sidebar
