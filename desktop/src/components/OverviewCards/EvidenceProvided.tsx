@@ -13,7 +13,7 @@ export function EvidenceProvided({
     const data = [
         {
             title: 'Attestations',
-            pathColor: 'hsl(351, 95%, 71%)', // rose-400
+            pathColor: 'hsl(188, 86%, 53%)', // cyan-400
             count: 1,
         },
         {
@@ -23,7 +23,7 @@ export function EvidenceProvided({
         },
         {
             title: 'Others',
-            pathColor: 'hsl(188, 86%, 53%)', // cyan-400
+            pathColor: 'hsl(351, 95%, 71%)', // rose-400
             count: 0,
         },
     ];

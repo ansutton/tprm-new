@@ -21,22 +21,22 @@ export function Summary({
                 additionalClasses={tw`mb-4 opacity-80`}
                 fontSize='text-lg'
             >
-                Summary
+                Answers Align
             </Heading>
             <div className='space-y-4 text-sm font-bold'>
                 <SummaryItem
-                    title='Questions Passed'
+                    title='Yes'
                     llmResponse={llmResponse}
                     progressPercentage={90}
                     questionsData={questionsData}
                     twBgColor='bg-emerald-400'
                 />
                 <SummaryItem
-                    title='Questions Failed'
+                    title='No'
                     llmResponse={llmResponse}
                     progressPercentage={20}
                     questionsData={questionsData}
-                    twBgColor='bg-rose-400'
+                    twBgColor='bg-cyan-400'
                 />
             </div>
         </Card>

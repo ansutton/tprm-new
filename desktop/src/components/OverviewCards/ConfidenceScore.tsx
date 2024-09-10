@@ -17,7 +17,7 @@ export function ConfidenceScore({
 
     return (
         <CircularProgress
-            title='Confidence Score'
+            title='AI Confidence Score'
             startIcon={startIcon}
             value={90}
             minValue={0}

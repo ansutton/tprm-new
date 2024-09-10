@@ -81,7 +81,7 @@ export function Overview({
                     <EvidenceAnswered
                         title='Questions Answered by Evidence'
                         progressPercentage={100}
-                        twBgColor='bg-cyan-400'
+                        twBgColor='bg-emerald-400'
                     />
                 </div>
             ) : (
@@ -103,7 +103,7 @@ export function Overview({
                         <EvidenceAnswered
                             title='Questions Answered by Evidence'
                             progressPercentage={100}
-                            twBgColor='bg-cyan-400'
+                            twBgColor='bg-emerald-400'
                         />
                     </div>
                 </div>
