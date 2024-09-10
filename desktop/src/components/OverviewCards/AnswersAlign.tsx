@@ -3,17 +3,17 @@ import { Card, Heading, ProgressBarBase } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
-interface SummaryProps {
+interface AnswersAlignProps {
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
 }
 
-export function Summary({
+export function AnswersAlign({
     llmResponse,
     questionsData,
     startIcon = null,
-}: SummaryProps): JSX.Element {
+}: AnswersAlignProps): JSX.Element {
     return (
         <Card>
             <Heading
@@ -24,14 +24,14 @@ export function Summary({
                 Answers Align
             </Heading>
             <div className='space-y-4 text-sm font-bold'>
-                <SummaryItem
+                <AnswersAlignItem
                     title='Yes'
                     llmResponse={llmResponse}
                     progressPercentage={90}
                     questionsData={questionsData}
                     twBgColor='bg-emerald-400'
                 />
-                <SummaryItem
+                <AnswersAlignItem
                     title='No'
                     llmResponse={llmResponse}
                     progressPercentage={20}
@@ -43,18 +43,18 @@ export function Summary({
     );
 }
 
-interface SummaryItemsProps extends SummaryProps {
+interface AnswersAlignItemProps extends AnswersAlignProps {
     progressPercentage: number;
     title: string;
     twBgColor: string;
 }
 
-function SummaryItem({
+function AnswersAlignItem({
     questionsData,
     progressPercentage,
     title,
     twBgColor,
-}: SummaryItemsProps): JSX.Element {
+}: AnswersAlignItemProps): JSX.Element {
     return (
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>

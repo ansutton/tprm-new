@@ -7,7 +7,7 @@ import {
     EvidenceAnswered,
     QuestionsAnalyzed,
     // SecurityDomains,
-    Summary,
+    AnswersAlign,
     ThirdPartyInfo,
 } from '@/components';
 import { LlmResponse } from '@/types';
@@ -52,7 +52,7 @@ export function Overview({
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
-                <Summary
+                <AnswersAlign
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />

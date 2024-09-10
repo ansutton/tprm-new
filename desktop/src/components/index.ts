@@ -9,7 +9,7 @@ export * from './OverviewCards/EvidenceAnalysis';
 export * from './OverviewCards/EvidenceProvided';
 export * from './OverviewCards/EvidenceAnswered';
 export * from './OverviewCards/QuestionsAnalyzed';
-export * from './OverviewCards/Summary';
+export * from './OverviewCards/AnswersAlign';
 export * from './OverviewCards/ThirdPartyInfo';
 export * from './ui/Button';
 export * from './ui/Card';
