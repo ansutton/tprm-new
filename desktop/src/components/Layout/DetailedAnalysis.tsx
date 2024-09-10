@@ -123,7 +123,7 @@ const columns = [
     columnHelper.accessor('answersAlignment', {
         header: () => (
             <TableHeader
-                headerContent='Answers Align'
+                headerContent='Responses Align'
                 infoContent={`How aligned the app's generated response is to the third-party's response. Based on a similarity score percentage with higher scores indicating stronger similarity with a threshold of 88% defining an aligned output.`}
             />
         ),

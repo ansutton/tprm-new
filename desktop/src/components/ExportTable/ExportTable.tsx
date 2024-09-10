@@ -18,7 +18,7 @@ export function ExportTable({
             'Control Question',
             'Third Party Response',
             'AI Response',
-            'Answers Align',
+            'Responses Align',
             'Similarity Score',
             'AI Confidence Score',
             'Third Party Confidence Score',

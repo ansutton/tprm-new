@@ -21,7 +21,7 @@ export function AnswersAlign({
                 additionalClasses={tw`mb-4 opacity-80`}
                 fontSize='text-lg'
             >
-                Answers Align
+                Responses Align
             </Heading>
             <div className='space-y-4 text-sm font-bold'>
                 <AnswersAlignItem
