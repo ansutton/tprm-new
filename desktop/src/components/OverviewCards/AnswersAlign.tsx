@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Card, Heading, ProgressBarBase } from '@/components';
+import { Card, ProgressBarBase, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
@@ -16,13 +16,14 @@ export function AnswersAlign({
 }: AnswersAlignProps): JSX.Element {
     return (
         <Card>
-            <Heading
-                level={4}
-                additionalClasses={tw`mb-4 opacity-80`}
-                fontSize='text-lg'
-            >
+            <h4 className='mb-4 inline text-lg font-bold opacity-80'>
                 AI and Third Party Responses Align?
-            </Heading>
+                <span className='relative ml-1.5 inline-flex'>
+                    <span className='absolute -top-4'>
+                        <Tooltip twStroke='stroke-2'>{`Do the third party responses align with the AI generated responses?`}</Tooltip>
+                    </span>
+                </span>
+            </h4>
             <div className='space-y-4 text-sm font-bold'>
                 <AnswersAlignItem
                     title='Yes'
