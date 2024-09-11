@@ -7,6 +7,7 @@ import { tw } from '@/utils';
 interface CircularProgressProps {
     title?: string;
     titleFontSize?: string;
+    subtitle?: string;
     value: number;
     minValue: number | undefined;
     maxValue: number | undefined;
@@ -19,6 +20,7 @@ interface CircularProgressProps {
 export function CircularProgress({
     title,
     titleFontSize = 'text-lg',
+    subtitle = '',
     value,
     minValue,
     maxValue,
@@ -41,6 +43,9 @@ export function CircularProgress({
                         {title}
                     </h4>
                 </div>
+                {subtitle && (
+                    <p className='mb-3 font-bold opacity-80'>{subtitle}</p>
+                )}
                 <div className='mx-auto h-48 w-48'>
                     <CircularProgressbar
                         className={`${textFontSize}`}

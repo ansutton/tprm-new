@@ -51,6 +51,7 @@ export function Overview({
                 <ConfidenceScore
                     llmResponse={llmResponse}
                     questionsData={questionsData}
+                    subtitle='Aggregate'
                 />
                 <AnswersAlign
                     llmResponse={llmResponse}
