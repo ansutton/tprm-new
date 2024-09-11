@@ -53,11 +53,11 @@ export type DataItem = {
     question: string;
     tpResponsePreview: DataItemField;
     aiAnalysisPreview: DataItemField;
+    citationsPreview: DataItemField;
     answersAlign: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
     // similarityScore: DataItemField;
     aiConfidenceScore: DataItemField;
     // tpConfidenceScore: DataItemField;
-    citationsPreview: DataItemField;
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
     citationsFull: DataItemField; // array of tuples (tuple shape: [number, string])

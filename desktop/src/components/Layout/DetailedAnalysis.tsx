@@ -116,10 +116,19 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
+    columnHelper.accessor('citationsPreview', {
+        header: () => (
+            <TableHeader
+                headerContent='Citation(s)'
+                infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
+            />
+        ),
+        cell: ({ getValue }) => getValue(),
+    }),
     columnHelper.accessor('answersAlign', {
         header: () => (
             <TableHeader
-                headerContent='Responses Align'
+                headerContent='Responses Align?'
                 infoContent={`Does the third party response align with the AI generated response?`}
             />
         ),
@@ -152,15 +161,6 @@ const columns = [
     //     ),
     //     cell: ({ getValue }) => getValue(),
     // }),
-    columnHelper.accessor('citationsPreview', {
-        header: () => (
-            <TableHeader
-                headerContent='Citation(s)'
-                infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
 ];
 
 interface DetailedAnalysisProps {
@@ -209,6 +209,13 @@ export function DetailedAnalysis({
                         30,
                     ),
                 ),
+                citationsPreview: (
+                    <Pages
+                        index={index}
+                        llmResponse={llmResponse}
+                        prefix='Page(s):'
+                    />
+                ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
                         llmResponse?.analyses[`analysis_${index}`]
@@ -233,13 +240,6 @@ export function DetailedAnalysis({
                 //             ?.tp_confidence_score,
                 //     ),
                 // ),
-                citationsPreview: (
-                    <Pages
-                        index={index}
-                        llmResponse={llmResponse}
-                        prefix='Page(s):'
-                    />
-                ),
                 // 'N/A',
                 tpResponseFull: excelData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
@@ -267,6 +267,7 @@ export function DetailedAnalysis({
     /**
      * Helper Functions: Utilities
      */
+    // TODO: Refactor to a component (e.g. <SpinnerResolver field='...' />, return <>field</> if resolved).
     function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
             field
