@@ -397,14 +397,20 @@ export default function Home(): JSX.Element {
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 {screen === 'detailedAnalysis' && (
-                                    <DetailedAnalysis
-                                        excelData={excelData}
-                                        llmResponse={llmResponse}
-                                        questionsData={questionsData}
-                                        setAppLevelTableData={
-                                            setAppLevelTableData
-                                        }
-                                    />
+                                    <div>
+                                        <p className='mb-3 text-sm'>
+                                            The third party and the AI model
+                                            provided the same response.
+                                        </p>
+                                        <DetailedAnalysis
+                                            excelData={excelData}
+                                            llmResponse={llmResponse}
+                                            questionsData={questionsData}
+                                            setAppLevelTableData={
+                                                setAppLevelTableData
+                                            }
+                                        />
+                                    </div>
                                 )}
                                 {screen === 'overview' && (
                                     <Overview
