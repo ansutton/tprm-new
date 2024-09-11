@@ -48,13 +48,13 @@ export function Overview({
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
-                <ConfidenceScore
+                {/* <ConfidenceScore
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                     title='AI Confidence Score'
                     tooltipContent={`How confident is the AI is when determining whether its responses align with the third party responses? (0-100%, aggregated)`}
                     subtitle='Aggregate'
-                />
+                /> */}
                 <AnswersAlign
                     llmResponse={llmResponse}
                     questionsData={questionsData}
