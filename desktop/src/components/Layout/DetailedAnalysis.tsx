@@ -311,7 +311,6 @@ export function DetailedAnalysis({
                 tw`drop-shadow-md`,
             )}
         >
-            <button onClick={handleExportTable}>Export Table</button>
             <table ref={tableRef} className='w-full dark:text-zinc-100'>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
