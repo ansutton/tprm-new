@@ -21,5 +21,6 @@ class AnalysisData:
     tp_confidence_score = 0
     ai_confidence_score = 0
     similarity_score = 0
+    answers_align = False
 
 app_state = AppState()
