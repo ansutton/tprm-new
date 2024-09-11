@@ -40,7 +40,7 @@ export interface SubmitRequestParams {
 }
 export interface TableHeaderProps {
     headerContent: string;
-    infoContent: ReactNode;
+    infoContent?: ReactNode;
 }
 
 /**

@@ -26,7 +26,7 @@ function TableHeader({
     return (
         <div className='flex items-center gap-1.5'>
             <span>{headerContent}</span>
-            <Tooltip>{infoContent}</Tooltip>
+            {infoContent && <Tooltip>{infoContent}</Tooltip>}
         </div>
     );
 }
@@ -95,19 +95,14 @@ const columns = [
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
-        header: () => (
-            <TableHeader
-                headerContent='Control Question'
-                infoContent={`Question concerning the security controls and practices of the organization being assessed.`}
-            />
-        ),
+        header: () => <TableHeader headerContent='Control Question' />,
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('tpResponsePreview', {
         header: () => (
             <TableHeader
                 headerContent='Third Party Response'
-                infoContent={`The response to the question given by the third party. The response is not necessarily tied to the context of the evidence document`}
+                infoContent={`The third party's response to the question`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -116,7 +111,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='AI Response'
-                infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
+                infoContent={`The AI's response to the question`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -125,7 +120,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Responses Align'
-                infoContent={`How aligned the app's generated response is to the third-party's response. Based on a similarity score percentage with higher scores indicating stronger similarity with a threshold of 88% defining an aligned output.`}
+                infoContent={`Does the third party response align with the AI generated response?`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -143,7 +138,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='AI Confidence Score'
-                infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
+                infoContent={`How confident is the AI when determining whether its response aligns with the third party response? (0-100%)`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -161,7 +156,7 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Citation(s)'
-                infoContent={`"The relevant section(s) from the evidence document that the app has referenced in response to the question.`}
+                infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
             />
         ),
         cell: ({ getValue }) => getValue(),
