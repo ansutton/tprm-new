@@ -56,7 +56,7 @@ export type DataItem = {
     citationsPreview: DataItemField;
     answersAlign: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
     // similarityScore: DataItemField;
-    aiConfidenceScore: DataItemField;
+    // aiConfidenceScore: DataItemField;
     // tpConfidenceScore: DataItemField;
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
