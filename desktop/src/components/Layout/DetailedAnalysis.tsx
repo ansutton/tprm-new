@@ -322,13 +322,13 @@ export function DetailedAnalysis({
                                             tw`w-3`,
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
-                                            tw`w-1/5`,
+                                            tw`w-1/6`,
                                         header.id === 'aiAnalysisPreview' &&
-                                            tw`w-1/5`,
+                                            tw`w-1/6`,
                                         header.id === 'citationsPreview' &&
-                                            tw`w-1/5`,
+                                            tw`w-1/6`,
                                         header.id === 'answersAlign' &&
-                                            tw`w-1/5`,
+                                            tw`w-1/6`,
                                         // header.id === 'similarityScore' &&
                                         //     tw`w-1/12`,
                                         // header.id === 'aiConfidenceScore' &&
@@ -438,7 +438,10 @@ function ExpandedRow({
                 tw`text-zinc-900 dark:text-zinc-200/80`,
             )}
         >
-            <td colSpan={3} className='py-3 pl-[100px] pr-3 align-top text-sm'>
+            <td
+                colSpan={3}
+                className='py-3 pl-[103.5px] pr-3 align-top text-sm'
+            >
                 {title}:
             </td>
             <td
