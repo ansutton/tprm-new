@@ -219,7 +219,7 @@ export function DetailedAnalysis({
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
                         llmResponse?.analyses[`analysis_${index}`]
-                            ?.similarity_score,
+                            ?.answers_align,
                     ),
                 ),
                 // similarityScore: handleSpinner(

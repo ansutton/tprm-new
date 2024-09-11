@@ -19,9 +19,9 @@ export function displayScore(score: DataItemField): string | null {
         ? `${calculateScore(score)?.toString()}%`
         : null;
 }
-export function handleAnswersAlign(score: any): 'Yes' | 'No' | null {
-    if (calculateScore(score)) {
-        return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
+export function handleAnswersAlign(field: DataItemField): 'Yes' | 'No' | null {
+    if (field !== undefined && field !== null) {
+        return field === true ? 'Yes' : 'No';
     }
     return null;
 }
