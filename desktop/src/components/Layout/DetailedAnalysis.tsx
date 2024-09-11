@@ -322,13 +322,13 @@ export function DetailedAnalysis({
                                             tw`w-3`,
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
-                                            tw`w-1/6`,
+                                            tw`w-1/5`,
                                         header.id === 'aiAnalysisPreview' &&
-                                            tw`w-1/6`,
+                                            tw`w-1/5`,
                                         header.id === 'citationsPreview' &&
-                                            tw`w-1/6`,
+                                            tw`w-1/5`,
                                         header.id === 'answersAlign' &&
-                                            tw`w-1/6`,
+                                            tw`w-1/5`,
                                         // header.id === 'similarityScore' &&
                                         //     tw`w-1/12`,
                                         // header.id === 'aiConfidenceScore' &&
