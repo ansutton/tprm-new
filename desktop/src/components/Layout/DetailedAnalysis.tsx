@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useEffect, useState } from 'react';
+import { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
     createColumnHelper,
@@ -9,6 +9,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
+import * as XLSX from 'xlsx';
 import { Pages, Tooltip } from '@/components';
 import {
     DataItem,
@@ -186,6 +187,19 @@ export function DetailedAnalysis({
     const [data, setData] = useState(handleData());
 
     /**
+     * Ref Hook and Export
+     */
+    const tableRef = useRef<HTMLTableElement>(null);
+    function handleExportTable() {
+        if (!tableRef.current) {
+            console.error('Table element not found');
+            return;
+        }
+        const workbook = XLSX.utils.table_to_book(tableRef.current);
+        XLSX.writeFile(workbook, 'test.xlsx');
+    }
+
+    /**
      * Helper Function: Data Handler
      */
     function handleData() {
@@ -297,7 +311,8 @@ export function DetailedAnalysis({
                 tw`drop-shadow-md`,
             )}
         >
-            <table className='w-full dark:text-zinc-100'>
+            <button onClick={handleExportTable}>Export Table</button>
+            <table ref={tableRef} className='w-full dark:text-zinc-100'>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
