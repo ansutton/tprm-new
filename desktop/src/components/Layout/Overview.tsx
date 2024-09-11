@@ -1,13 +1,14 @@
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
 import {
+    AnswersAlign,
     ConfidenceScore,
     EvidenceAnalysis,
     EvidenceProvided,
     EvidenceAnswered,
     QuestionsAnalyzed,
     // SecurityDomains,
-    AnswersAlign,
+    Summary,
     ThirdPartyInfo,
 } from '@/components';
 import { LlmResponse } from '@/types';
@@ -48,6 +49,10 @@ export function Overview({
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
+                <Summary
+                    llmResponse={llmResponse}
+                    questionsData={questionsData}
+                />
                 {/* <ConfidenceScore
                     llmResponse={llmResponse}
                     questionsData={questionsData}
@@ -55,11 +60,12 @@ export function Overview({
                     tooltipContent={`How confident is the AI is when determining whether its responses align with the third party responses? (0-100%, aggregated)`}
                     subtitle='Aggregate'
                 /> */}
-                <AnswersAlign
-                    llmResponse={llmResponse}
-                    questionsData={questionsData}
-                />
             </div>
+
+            <AnswersAlign
+                llmResponse={llmResponse}
+                questionsData={questionsData}
+            />
 
             {/* <SecurityDomains
                 llmResponse={llmResponse}

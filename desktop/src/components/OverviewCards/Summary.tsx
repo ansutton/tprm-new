@@ -2,17 +2,17 @@ import { ReactNode } from 'react';
 import { Card, Heading } from '@/components';
 import { LlmResponse } from '@/types';
 
-interface ThirdPartyInfoProps {
+interface SummaryProps {
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
 }
 
-export function ThirdPartyInfo({
+export function Summary({
     llmResponse,
     questionsData,
     startIcon = null,
-}: ThirdPartyInfoProps): JSX.Element {
+}: SummaryProps): JSX.Element {
     return (
         <Card>
             <div className='space-y-2 opacity-80'>
@@ -22,15 +22,10 @@ export function ThirdPartyInfo({
                     fontSize='text-lg'
                     startIcon={startIcon}
                 >
-                    Third Party Information
+                    Summary
                 </Heading>
                 <p>
-                    <b>Name</b>: Google LLC
-                </p>
-                <p>
-                    <b>Engagement Scope</b>: The third party is providing their
-                    Google Cloud Platform (GCP) which we use to host external
-                    (consumer-facing) and internal cloud-based applications.
+                    The third party and the AI model provided the same response.
                 </p>
             </div>
         </Card>
