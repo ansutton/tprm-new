@@ -107,7 +107,7 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('aiResponsePreview', {
+    columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
                 headerContent='AI Response'
@@ -203,7 +203,7 @@ export function DetailedAnalysis({
                 questionNumber: index + 1,
                 question: question,
                 tpResponsePreview: truncate(excelData[index + 1][2], 30),
-                aiResponsePreview: handleSpinner(
+                aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                         30,
@@ -322,7 +322,7 @@ export function DetailedAnalysis({
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
-                                        header.id === 'aiResponsePreview' &&
+                                        header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
                                         header.id === 'answersAlign' &&
                                             tw`w-1/12`,
@@ -373,7 +373,7 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiResponsePreview') &&
+                                                    'aiAnalysisPreview') &&
                                                 tw`select-none`,
                                         )}
                                     >
