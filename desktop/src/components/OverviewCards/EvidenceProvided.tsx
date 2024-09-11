@@ -12,12 +12,12 @@ export function EvidenceProvided({
 }: EvidenceProvidedProps): JSX.Element {
     const data = [
         {
-            title: 'Attestations',
+            title: 'SOC 2 Type 2 Reports',
             pathColor: 'hsl(188, 86%, 53%)', // cyan-400
             count: 1,
         },
         {
-            title: 'Policies/Procedures',
+            title: 'Policies',
             pathColor: 'hsl(43, 96%, 56%)', // amber-400
             count: 0,
         },
@@ -37,7 +37,7 @@ export function EvidenceProvided({
                 additionalClasses={tw`mb-4 opacity-80`}
                 fontSize='text-lg'
             >
-                Evidence Provided
+                Types of Third Party Evidence Uploaded
             </Heading>
             <div
                 className={clsx(
