@@ -125,15 +125,15 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('similarityScore', {
-        header: () => (
-            <TableHeader
-                headerContent='Similarity Score'
-                infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
+    // columnHelper.accessor('similarityScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='Similarity Score'
+    //             infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
     columnHelper.accessor('aiConfidenceScore', {
         header: () => (
             <TableHeader
@@ -143,15 +143,15 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('tpConfidenceScore', {
-        header: () => (
-            <TableHeader
-                headerContent='Third Party Confidence Score'
-                infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections.`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
+    // columnHelper.accessor('tpConfidenceScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='Third Party Confidence Score'
+    //             infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections.`}
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
     columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
@@ -215,24 +215,24 @@ export function DetailedAnalysis({
                             ?.similarity_score,
                     ),
                 ),
-                similarityScore: handleSpinner(
-                    displayScore(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.similarity_score,
-                    ),
-                ),
+                // similarityScore: handleSpinner(
+                //     displayScore(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.similarity_score,
+                //     ),
+                // ),
                 aiConfidenceScore: handleSpinner(
                     displayScore(
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.ai_confidence_score,
                     ),
                 ),
-                tpConfidenceScore: handleSpinner(
-                    displayScore(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.tp_confidence_score,
-                    ),
-                ),
+                // tpConfidenceScore: handleSpinner(
+                //     displayScore(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.tp_confidence_score,
+                //     ),
+                // ),
                 citationsPreview: (
                     <Pages
                         index={index}
