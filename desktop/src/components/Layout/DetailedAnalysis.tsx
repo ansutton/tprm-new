@@ -143,15 +143,15 @@ const columns = [
     //     ),
     //     cell: ({ getValue }) => getValue(),
     // }),
-    columnHelper.accessor('aiConfidenceScore', {
-        header: () => (
-            <TableHeader
-                headerContent='AI Confidence Score'
-                infoContent={`How confident is the AI when determining whether its response aligns with the third party response? (0-100%)`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
+    // columnHelper.accessor('aiConfidenceScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='AI Confidence Score'
+    //             infoContent={`How confident is the AI when determining whether its response aligns with the third party response? (0-100%)`}
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
     // columnHelper.accessor('tpConfidenceScore', {
     //     header: () => (
     //         <TableHeader
@@ -228,12 +228,12 @@ export function DetailedAnalysis({
                 //             ?.similarity_score,
                 //     ),
                 // ),
-                aiConfidenceScore: handleSpinner(
-                    displayScore(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.ai_confidence_score,
-                    ),
-                ),
+                // aiConfidenceScore: handleSpinner(
+                //     displayScore(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.ai_confidence_score,
+                //     ),
+                // ),
                 // tpConfidenceScore: handleSpinner(
                 //     displayScore(
                 //         llmResponse?.analyses[`analysis_${index}`]
@@ -325,16 +325,16 @@ export function DetailedAnalysis({
                                             tw`w-1/6`,
                                         header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
-                                        header.id === 'answersAlign' &&
-                                            tw`w-1/12`,
-                                        header.id === 'similarityScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'aiConfidenceScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'tpConfidenceScore' &&
-                                            tw`w-1/12`,
                                         header.id === 'citationsPreview' &&
-                                            tw`w-1/12`,
+                                            tw`w-1/6`,
+                                        header.id === 'answersAlign' &&
+                                            tw`w-1/6`,
+                                        // header.id === 'similarityScore' &&
+                                        //     tw`w-1/12`,
+                                        // header.id === 'aiConfidenceScore' &&
+                                        //     tw`w-1/12`,
+                                        // header.id === 'tpConfidenceScore' &&
+                                        //     tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
