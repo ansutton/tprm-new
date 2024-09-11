@@ -19,7 +19,7 @@ export function displayScore(score: DataItemField): string | null {
         ? `${calculateScore(score)?.toString()}%`
         : null;
 }
-export function handleAnswersAlignment(score: any): 'Yes' | 'No' | null {
+export function handleAnswersAlign(score: any): 'Yes' | 'No' | null {
     if (calculateScore(score)) {
         return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
     }

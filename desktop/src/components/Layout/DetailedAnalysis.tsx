@@ -17,7 +17,7 @@ import {
     LlmResponse,
     TableHeaderProps,
 } from '@/types';
-import { displayScore, handleAnswersAlignment, truncate, tw } from '@/utils';
+import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
 function TableHeader({
     headerContent,
@@ -107,7 +107,7 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('aiAnalysisPreview', {
+    columnHelper.accessor('aiResponsePreview', {
         header: () => (
             <TableHeader
                 headerContent='AI Response'
@@ -116,7 +116,7 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('answersAlignment', {
+    columnHelper.accessor('answersAlign', {
         header: () => (
             <TableHeader
                 headerContent='Responses Align'
@@ -203,14 +203,14 @@ export function DetailedAnalysis({
                 questionNumber: index + 1,
                 question: question,
                 tpResponsePreview: truncate(excelData[index + 1][2], 30),
-                aiAnalysisPreview: handleSpinner(
+                aiResponsePreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                         30,
                     ),
                 ),
-                answersAlignment: handleSpinner(
-                    handleAnswersAlignment(
+                answersAlign: handleSpinner(
+                    handleAnswersAlign(
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.similarity_score,
                     ),
@@ -322,9 +322,9 @@ export function DetailedAnalysis({
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
-                                        header.id === 'aiAnalysisPreview' &&
+                                        header.id === 'aiResponsePreview' &&
                                             tw`w-1/6`,
-                                        header.id === 'answersAlignment' &&
+                                        header.id === 'answersAlign' &&
                                             tw`w-1/12`,
                                         header.id === 'similarityScore' &&
                                             tw`w-1/12`,
@@ -373,7 +373,7 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiAnalysisPreview') &&
+                                                    'aiResponsePreview') &&
                                                 tw`select-none`,
                                         )}
                                     >

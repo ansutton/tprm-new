@@ -52,8 +52,8 @@ export type DataItem = {
     questionNumber: number;
     question: string;
     tpResponsePreview: DataItemField;
-    aiAnalysisPreview: DataItemField;
-    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
+    aiResponsePreview: DataItemField;
+    answersAlign: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
     // similarityScore: DataItemField;
     aiConfidenceScore: DataItemField;
     // tpConfidenceScore: DataItemField;
