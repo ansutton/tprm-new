@@ -15,7 +15,7 @@ import { tw } from '@/utils';
 
 // TODO: put mode props back as not optional if we bring back this feature.
 interface TopbarProps {
-    appLevelTableData: any;
+    appLevelTableData: any[];
     mode?: Mode;
     setMode?: React.Dispatch<React.SetStateAction<Mode>>;
     screen: Screen;

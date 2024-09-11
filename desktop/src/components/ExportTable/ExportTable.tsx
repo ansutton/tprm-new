@@ -5,18 +5,18 @@ import * as XLSX from 'xlsx';
 import { getTimestamp, tw } from '@/utils';
 
 interface ExportTableProps {
-    appLevelTableData: React.Dispatch<React.SetStateAction<any>>;
+    appLevelTableData: any[];
 }
 
 // TODO: Only show when table is ready for export.
 export function ExportTable({
     appLevelTableData,
 }: ExportTableProps): JSX.Element {
-    // const [rowsState, setRowsState] = useState<any>(appLevelTableData.getRowModel().rows.map((row: any) => row.original);
+    const [worksheetDataState, setWorksheetDataState] = useState<any[]>([]);
 
     function handleExportTable() {
-        // Manually set column titles
-        const columnTitles = [
+        const tableHeaderRow = [
+            '#',
             'Control Question',
             'Third Party Response',
             'AI Response',
@@ -25,38 +25,67 @@ export function ExportTable({
             'AI Confidence Score',
             'Third Party Confidence Score',
             'Citation(s)',
+            'Page(s)',
         ];
-        // Extract data from the table
-        // const rows = table.getRowModel().rows.map((row: any) => row.original);
-        // setRowsState(rows);
-        /*if (rows.length === 0) {
-        console.error('No data available for export.');
-        return;
-    }
-    // Prepare data rows under column titles using the "full" fields
-    const worksheetData = [
-        columnTitles,
-        ...rows.map((row: any) => [
+        const tableBodyRows = appLevelTableData.map((row) => [
+            // row.questionNumber.toString(),
+            // row.question.toString(),
+            // row.tpResponseFull.toString(),
+            // row.aiResponseFull.toString(),
+            // row.answersAlignment.toString(),
+            // row.similarityScore.toString(),
+            // row.aiConfidenceScore.toString(),
+            // row.tpConfidenceScore.toString(),
+            // row.citationsFull.toString(),
+            // row.pageNumbers.toString(),
+            row.questionNumber.toString(),
             row.question,
             row.tpResponseFull,
-            row.aiAnalysisFull,
+            row.aiResponseFull,
             row.answersAlignment,
             row.similarityScore,
             row.aiConfidenceScore,
             row.tpConfidenceScore,
             row.citationsFull,
-        ]),
-    ];
-    // Create worksheet and workbook
-    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    // Generate filename with timestamp and export
-    const timestamp = getTimestamp();
-    const fullFilename = `tprm-detailed-analysis-${timestamp}.xlsx`;
-    XLSX.writeFile(workbook, fullFilename);
-    console.log('Export button clicked');
-    */
+            row.pageNumbers,
+        ]);
+        // const tableRows = [
+        //     [...tableHeaderRow],
+        //     // ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        //     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
+        // ];
+        const data = [
+            ['Alice', '30', 'New York'],
+            ['Bob', '25', 'London'],
+            ['Charlie', '35', 'Paris'],
+        ];
+        const tableRows = [
+            { name: 'Alice', age: 30, city: 'New York' },
+            { name: 'Bob', age: 25, city: 'London' },
+            { name: 'Charlie', age: 35, city: 'Paris' },
+        ];
+
+        //   const exportToExcel = () => {
+        //     const worksheet = XLSX.utils.book_new();
+        //     const ws = XLSX.utils.aoa_to_sheet(data);
+        //     XLSX.utils.book_append_sheet(worksheet, ws, 'Sheet1');
+        //     XLSX.writeFile(worksheet, 'exported-data.xlsx');
+        //   };
+        if (tableRows.length === 0) {
+            console.error('No data available for export.');
+            return;
+        }
+        const worksheetData = [tableRows];
+        setWorksheetDataState(tableRows);
+        console.log('🚀 ~ handleExportTable ~ worksheetData:', worksheetData);
+        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        // Generate filename with timestamp and export
+        const timestamp = getTimestamp();
+        const fullFilename = `tprm-detailed-analysis-${timestamp}.xlsx`;
+        XLSX.writeFile(workbook, fullFilename);
+        console.log('Export button clicked');
     }
     return (
         <button

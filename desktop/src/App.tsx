@@ -41,7 +41,7 @@ export default function Home(): JSX.Element {
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>('llm');
-    const [appLevelTableData, setAppLevelTableData] = useState<any>(null); // TODO: refactor to global state (currently prop drilling)
+    const [appLevelTableData, setAppLevelTableData] = useState<any[]>([]); // TODO: refactor to global state (currently prop drilling)
 
     /**
      * Helper Functions
