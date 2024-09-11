@@ -94,6 +94,12 @@ def main():
             # Calculate similarity score between ai_analysis and tp_response.
             sim_score = similarity_score.semantic_similarity(value["ai_analysis"], value["tp_response"])
             app_state.analyses[key]["similarity_score"] = sim_score
+
+            # Calculate if answers align based on threshold (>= 88%)
+            alignment_threshhold = 88
+            sim_score_float = float(sim_score) # convert from string to float.
+            sim_score_percentage = round(((sim_score_float + 1) / 2) * 100) # convert to cosign percentage.
+            app_state.analyses[key]["answers_align"] = sim_score_percentage >= alignment_threshhold
     
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
