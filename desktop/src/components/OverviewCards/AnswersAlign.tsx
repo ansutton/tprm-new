@@ -16,7 +16,7 @@ export function AnswersAlign({
 }: AnswersAlignProps): JSX.Element {
     return (
         <Card>
-            <h4 className='mb-4 inline text-lg font-bold opacity-80'>
+            <h4 className='mb-4 text-lg font-bold opacity-80'>
                 AI and Third Party Responses Align?
                 <span className='relative ml-1.5 inline-flex'>
                     <span className='absolute -top-4'>
