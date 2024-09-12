@@ -170,7 +170,7 @@ export default function Home(): JSX.Element {
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
                     // const xlsxFileBuffer = await readFileAsDataUrl(responsesFile)
                     submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile }); // xlsxFileBuffer});
-                    setInterval(async () => {
+                    const interval = setInterval(async () => {
                         const pollResponse = await poll();
                         console.log(
                             '🚀 ~ setInterval ~ pollResponse:',
@@ -178,6 +178,9 @@ export default function Home(): JSX.Element {
                         );
                         setLlmResponse(pollResponse);
                     }, 10000);
+                    if (llmResponse?.is_complete) {
+                        return () => clearInterval(interval);
+                    }
                     break;
             }
             setIsSidebarExpanded(true);
@@ -399,8 +402,9 @@ export default function Home(): JSX.Element {
                                 {screen === 'detailedAnalysis' && (
                                     <div>
                                         <p className='mb-3 text-sm'>
-                                            The third party and the AI model
-                                            provided the same response.
+                                            {llmResponse?.is_complete
+                                                ? `The third party and the AI model provided the same response for X/${questionsData?.length}.`
+                                                : 'Analyzing...'}
                                         </p>
                                         <DetailedAnalysis
                                             excelData={excelData}
