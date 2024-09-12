@@ -16,7 +16,7 @@ import {
     Sidebar,
     Topbar,
 } from '@/components';
-import { poll, submit, tw } from '@/utils';
+import { countResponsesAlign, poll, submit, tw } from '@/utils';
 import { Mode, Screen } from '@/types';
 
 /**
@@ -170,13 +170,17 @@ export default function Home(): JSX.Element {
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
                     // const xlsxFileBuffer = await readFileAsDataUrl(responsesFile)
                     submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile }); // xlsxFileBuffer});
-                    setInterval(async () => {
+                    const interval = setInterval(async () => {
                         const pollResponse = await poll();
                         console.log(
                             '🚀 ~ setInterval ~ pollResponse:',
                             pollResponse,
                         );
                         setLlmResponse(pollResponse);
+                        // Clear interval when response is complete
+                        if (pollResponse?.is_complete) {
+                            clearInterval(interval);
+                        }
                     }, 10000);
                     break;
             }
@@ -399,8 +403,11 @@ export default function Home(): JSX.Element {
                                 {screen === 'detailedAnalysis' && (
                                     <div>
                                         <p className='mb-3 text-sm'>
-                                            The third party and the AI model
-                                            provided the same response.
+                                            {llmResponse?.is_complete ? (
+                                                `The third party and the AI model provided the same response for ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
+                                            ) : (
+                                                <i>Analyzing...</i>
+                                            )}
                                         </p>
                                         <DetailedAnalysis
                                             excelData={excelData}

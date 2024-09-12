@@ -65,7 +65,7 @@ function EvidenceAnalysisItem({
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>
             <p className='mb-1 text-2xl font-bold'>
-                {`${Math.round(progressPercentage * 0.01 * 1)}/1`}
+                {`${Math.round(progressPercentage * 0.01)}/1`}
             </p>
             <ProgressBarBase
                 progressPercentage={progressPercentage}

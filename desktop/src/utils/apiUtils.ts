@@ -1,6 +1,13 @@
-import { localPythonServerConnectionString } from '@/utils/connections';
 import { LlmResponse, SubmitRequestParams } from '@/types';
 
+/**
+ * Connections
+ */
+const localPythonServerConnectionString = 'http://localhost:8001';
+
+/**
+ * Utils
+ */
 export async function submit(params: SubmitRequestParams): Promise<void> {
     try {
         const data = {

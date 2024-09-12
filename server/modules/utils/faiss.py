@@ -9,6 +9,9 @@ import numpy as np
 import tempfile
 import os
 
+# Custom modules.
+from modules.globals.app_state import app_state # type: ignore
+
 def create_vector_store(pdf_file, from_file_path=False):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
@@ -32,11 +35,16 @@ def create_vector_store(pdf_file, from_file_path=False):
     texts=[doc for doc in documents]
     documents_embeddings = []
 
+    # Set total embeddings on app_state.
+    app_state.embeddings_total = len(texts)
 
     for i in range(0, len(texts),batch_size):
         batch_texts = texts[i:i+batch_size]
         batch_embeddings = embedding_model.embed_documents(batch_texts)
         documents_embeddings.extend(batch_embeddings)
+
+        # Increment app_state's embeddings_count.
+        app_state.embeddings_count += len(batch_embeddings)
     
     #create FAISS index and add the embeddings
     document_embeddings_np = np.array(documents_embeddings)
