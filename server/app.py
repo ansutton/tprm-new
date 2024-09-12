@@ -100,7 +100,8 @@ def main():
             sim_score_float = float(sim_score) # convert from string to float.
             sim_score_percentage = round(((sim_score_float + 1) / 2) * 100) # convert to cosign percentage.
             app_state.analyses[key]["answers_align"] = sim_score_percentage >= alignment_threshhold
-    
+
+        app_state.is_complete = True
         return jsonify({"message": "Finished TPRM Accelerator process."})
 
     except Exception as e:
