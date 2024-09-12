@@ -5,6 +5,7 @@ export * from './Layout/Overview';
 export * from './Layout/Pages';
 export * from './Layout/Sidebar';
 export * from './Layout/Topbar';
+export * from './Layout/TruncatedContent';
 export * from './ModeMenu/ModeMenu';
 export * from './OverviewCards/ConfidenceScore';
 export * from './OverviewCards/EvidenceAnalysis';
