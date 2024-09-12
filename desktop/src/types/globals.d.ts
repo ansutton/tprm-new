@@ -29,6 +29,8 @@ export interface Analysis {
 }
 export interface LlmResponse {
     analyses: Record<string, Analysis>;
+    embeddings_count: number;
+    embeddings_total: number;
     is_complete: boolean;
     models_pulled: boolean;
     number_of_questions: number;
