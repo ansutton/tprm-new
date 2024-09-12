@@ -177,10 +177,11 @@ export default function Home(): JSX.Element {
                             pollResponse,
                         );
                         setLlmResponse(pollResponse);
+                        // Clear interval when response is complete
+                        if (pollResponse?.is_complete) {
+                            clearInterval(interval);
+                        }
                     }, 10000);
-                    if (llmResponse?.is_complete) {
-                        return () => clearInterval(interval);
-                    }
                     break;
             }
             setIsSidebarExpanded(true);
