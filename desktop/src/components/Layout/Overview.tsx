@@ -86,8 +86,9 @@ export function Overview({
                     </div>
 
                     <EvidenceAnswered
+                        llmResponse={llmResponse}
+                        questionsData={questionsData}
                         title='Questions Answered by Evidence'
-                        progressPercentage={100}
                         twBgColor='bg-emerald-400'
                     />
                 </div>
@@ -108,6 +109,8 @@ export function Overview({
                     <div className='space-y-4'>
                         <EvidenceProvided isOverviewWide={isOverviewWide} />
                         <EvidenceAnswered
+                            llmResponse={llmResponse}
+                            questionsData={questionsData}
                             title='Questions Answered by Evidence'
                             progressPercentage={100}
                             twBgColor='bg-emerald-400'

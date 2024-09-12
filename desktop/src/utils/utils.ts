@@ -51,11 +51,53 @@ export function handleAnswersAlign(field: DataItemField): 'Yes' | 'No' | null {
     return null;
 }
 export function countQuestionsAnalyzed(llmResponse: LlmResponse): number {
-    const { analyses } = llmResponse;
-    return Object.values(analyses).reduce((count, analysis) => {
-        // Safely check if is_analysis_complete exists and is true
-        return (analysis?.is_analysis_complete ?? false) ? count + 1 : count;
-    }, 0);
+    if (llmResponse?.analyses) {
+        const { analyses } = llmResponse;
+        return Object.values(analyses).reduce((count, analysis) => {
+            // Safely check if is_analysis_complete exists and is true
+            return (analysis?.is_analysis_complete ?? false)
+                ? count + 1
+                : count;
+        }, 0);
+    }
+    return 0;
+}
+export function countResponsesAlign(llmResponse: LlmResponse): {
+    yesCount: number;
+    noCount: number;
+} {
+    let yesCount = 0;
+    let noCount = 0;
+    if (llmResponse?.analyses) {
+        Object.values(llmResponse.analyses).forEach((analysis) => {
+            // Ensure analysis is valid and check answers_align
+            if (analysis && analysis.answers_align !== undefined) {
+                if (analysis.answers_align) {
+                    yesCount += 1;
+                } else {
+                    noCount += 1;
+                }
+            } else {
+                // If answers_align is missing or null, treat it as false by default
+                noCount += 1;
+            }
+        });
+    }
+    return { yesCount, noCount };
+}
+export function countQuestionsAnsweredByEvidence(
+    llmResponse: LlmResponse | undefined,
+): number {
+    let count = 0;
+    if (llmResponse?.analyses) {
+        const { analyses } = llmResponse;
+        Object.values(analyses).forEach((analysis) => {
+            if (analysis && analysis?.citations !== undefined) {
+                count++;
+            }
+        });
+    }
+    return count;
 }
 export function truncate(
     field: number | string | null | undefined,

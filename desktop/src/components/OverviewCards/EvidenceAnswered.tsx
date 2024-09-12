@@ -1,18 +1,29 @@
 import { ReactNode } from 'react';
 import { Card, ProgressBarBase, Tooltip } from '@/components';
-import { ProgressBarBaseProps } from '@/types';
+import { LlmResponse, ProgressBarBaseProps } from '@/types';
+import { countQuestionsAnsweredByEvidence } from '@/utils';
 
 interface EvidenceAnsweredProps extends ProgressBarBaseProps {
+    llmResponse?: LlmResponse;
+    questionsData?: string[];
     startIcon?: ReactNode;
     title: string;
 }
 
 export function EvidenceAnswered({
-    progressPercentage,
+    llmResponse,
+    questionsData,
     startIcon = null,
     title,
     twBgColor,
 }: EvidenceAnsweredProps): JSX.Element {
+    const numberOfQuestions = questionsData?.length;
+    const questionsAnsweredByEvidence =
+        countQuestionsAnsweredByEvidence(llmResponse);
+    const progressPercentage = Math.round(
+        (questionsAnsweredByEvidence / (numberOfQuestions ?? 0)) * 100,
+    );
+
     return (
         <Card>
             <div className='flex items-center gap-2'>
@@ -26,7 +37,7 @@ export function EvidenceAnswered({
                     </span>
                 </h4>
             </div>
-            <p className='mb-1 text-3xl font-bold'>{progressPercentage}%</p>
+            <p className='mb-1 text-3xl font-bold'>{`${questionsAnsweredByEvidence}/${numberOfQuestions}`}</p>
             <ProgressBarBase
                 progressPercentage={progressPercentage}
                 twBgColor={twBgColor}
