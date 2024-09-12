@@ -404,7 +404,7 @@ export default function Home(): JSX.Element {
                                     <div>
                                         <p className='mb-3 text-sm'>
                                             {llmResponse?.is_complete
-                                                ? `The third party and the AI model provided the same response for X/${questionsData?.length}.`
+                                                ? `The third party and the AI model provided the same response for X/${questionsData?.length} questions uploaded.`
                                                 : 'Analyzing...'}
                                         </p>
                                         <DetailedAnalysis
