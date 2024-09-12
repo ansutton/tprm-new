@@ -1,4 +1,4 @@
-import { DataItemField } from '@/types';
+import { DataItemField, LlmResponse } from '@/types';
 
 /**
  * Score
@@ -50,6 +50,13 @@ export function handleAnswersAlign(field: DataItemField): 'Yes' | 'No' | null {
     }
     return null;
 }
+export function countQuestionsAnalyzed(llmResponse: LlmResponse): number {
+    const { analyses } = llmResponse;
+    return Object.values(analyses).reduce((count, analysis) => {
+        return analysis.is_analysis_complete ? count + 1 : count;
+    }, 0);
+}
+
 export function truncate(
     field: number | string | null | undefined,
     maxLength: number,

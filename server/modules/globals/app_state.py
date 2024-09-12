@@ -28,5 +28,6 @@ class AnalysisData:
     ai_confidence_score = 0
     similarity_score = 0
     answers_align = False
+    is_analysis_complete = False
 
 app_state = AppState()

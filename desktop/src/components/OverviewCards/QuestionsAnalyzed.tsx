@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { CircularProgress } from '@/components';
 import { LlmResponse } from '@/types';
+import { countQuestionsAnalyzed } from '@/utils';
 
 interface QuestionsAnsweredProps {
     llmResponse: LlmResponse;
@@ -14,11 +15,7 @@ export function QuestionsAnalyzed({
     startIcon = null,
 }: QuestionsAnsweredProps): JSX.Element {
     const numberOfQuestions = questionsData?.length;
-    const questionsAnalyzed = questionsData.reduce(
-        (count, index) =>
-            llmResponse?.analyses[`analysis_${index}`] ? count + 1 : count,
-        0,
-    );
+    const questionsAnalyzed = countQuestionsAnalyzed(llmResponse);
 
     return (
         <CircularProgress

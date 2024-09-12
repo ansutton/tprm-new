@@ -16,6 +16,7 @@ export interface ProgressBarBaseProps {
 export interface Analysis {
     question?: string;
     tp_response?: string;
+    is_analysis_complete?: boolean;
     ai_analysis?: string;
     citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
     pages?: number[]; // Expecting an array of numbers
