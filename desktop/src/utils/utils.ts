@@ -53,10 +53,10 @@ export function handleAnswersAlign(field: DataItemField): 'Yes' | 'No' | null {
 export function countQuestionsAnalyzed(llmResponse: LlmResponse): number {
     const { analyses } = llmResponse;
     return Object.values(analyses).reduce((count, analysis) => {
-        return analysis.is_analysis_complete ? count + 1 : count;
+        // Safely check if is_analysis_complete exists and is true
+        return (analysis?.is_analysis_complete ?? false) ? count + 1 : count;
     }, 0);
 }
-
 export function truncate(
     field: number | string | null | undefined,
     maxLength: number,
