@@ -403,9 +403,11 @@ export default function Home(): JSX.Element {
                                 {screen === 'detailedAnalysis' && (
                                     <div>
                                         <p className='mb-3 text-sm'>
-                                            {llmResponse?.is_complete
-                                                ? `The third party and the AI model provided the same response for ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
-                                                : 'Analyzing...'}
+                                            {llmResponse?.is_complete ? (
+                                                `The third party and the AI model provided the same response for ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
+                                            ) : (
+                                                <i>Analyzing...</i>
+                                            )}
                                         </p>
                                         <DetailedAnalysis
                                             excelData={excelData}
