@@ -11,10 +11,14 @@ import { useTheme } from '@/hooks';
 import { tw } from '@/utils';
 
 interface TooltipProps {
+    twStroke?: string;
     children: ReactNode;
 }
 
-export function Tooltip({ children }: TooltipProps): JSX.Element {
+export function Tooltip({
+    children,
+    twStroke = '',
+}: TooltipProps): JSX.Element {
     const { theme } = useTheme();
 
     const [isShowing, setIsShowing] = useState(false);
@@ -26,7 +30,9 @@ export function Tooltip({ children }: TooltipProps): JSX.Element {
             onMouseLeave={() => setIsShowing(false)}
         >
             <PopoverButton>
-                <InformationCircleIcon className={clsx('w-5')} />
+                <InformationCircleIcon
+                    className={clsx(tw`size-5`, tw`${twStroke}`)}
+                />
             </PopoverButton>
             <Transition show={isShowing}>
                 <PopoverPanel

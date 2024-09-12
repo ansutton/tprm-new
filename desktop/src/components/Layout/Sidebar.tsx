@@ -109,7 +109,7 @@ export function Sidebar({
                     screenAssignment='fileUpload'
                 />
 
-                <div className='px-2 py-4'>
+                <div className='px-2 py-2'>
                     <hr className='border-t-[1.5px] border-zinc-400/50 dark:border-zinc-600/60' />
                 </div>
 

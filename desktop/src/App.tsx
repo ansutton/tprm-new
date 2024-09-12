@@ -19,6 +19,13 @@ import {
 import { poll, submit, tw } from '@/utils';
 import { Mode, Screen } from '@/types';
 
+/**
+ * Configuration and Constants
+ */
+// dotenv.config();
+// const mode = process.env...;
+// const mode: Mode = 'llm';
+
 export default function Home(): JSX.Element {
     /**
      * State Hooks
@@ -34,6 +41,7 @@ export default function Home(): JSX.Element {
     const [excelData, setExcelData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>('llm');
+    const [appLevelTableData, setAppLevelTableData] = useState<any[]>([]); // TODO: refactor to global state (currently prop drilling)
 
     /**
      * Helper Functions
@@ -104,6 +112,7 @@ export default function Home(): JSX.Element {
                 );
             setQuestionsData(questionsArray);
             setScreen('detailedAnalysis');
+            console.log('🚀 ~ onSubmit ~ mode:', mode);
             switch (mode) {
                 case 'demo':
                     // const demoPollResponse: PythonAppState = {
@@ -221,7 +230,7 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar mode={mode} setMode={setMode} screen={screen} />
+            <Topbar screen={screen} appLevelTableData={appLevelTableData} />
 
             {screen !== 'fileUpload' && (
                 <Sidebar
@@ -388,11 +397,20 @@ export default function Home(): JSX.Element {
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 {screen === 'detailedAnalysis' && (
-                                    <DetailedAnalysis
-                                        excelData={excelData}
-                                        llmResponse={llmResponse}
-                                        questionsData={questionsData}
-                                    />
+                                    <div>
+                                        <p className='mb-3 text-sm'>
+                                            The third party and the AI model
+                                            provided the same response.
+                                        </p>
+                                        <DetailedAnalysis
+                                            excelData={excelData}
+                                            llmResponse={llmResponse}
+                                            questionsData={questionsData}
+                                            setAppLevelTableData={
+                                                setAppLevelTableData
+                                            }
+                                        />
+                                    </div>
                                 )}
                                 {screen === 'overview' && (
                                     <Overview

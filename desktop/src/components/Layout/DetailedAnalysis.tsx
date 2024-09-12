@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useEffect, useState } from 'react';
+import { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
     createColumnHelper,
@@ -9,31 +9,15 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
-import { Tooltip } from '@/components';
-import { LlmResponse } from '@/types';
-import { truncate, tw } from '@/utils';
-
-type DataItem = {
-    questionNumber: number;
-    question: string;
-    tpResponsePreview: DataItemField;
-    aiAnalysisPreview: DataItemField;
-    answersAlignment: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
-    aiConfidenceScore: DataItemField;
-    tpConfidenceScore: DataItemField;
-    similarityScore: DataItemField;
-    citationsPreview: DataItemField;
-    tpResponseFull: DataItemField;
-    aiAnalysisFull: DataItemField;
-    citationsFull: DataItemField; // now array of tuples (tuple shape: [number, string])
-    pageNumbers: DataItemField; // now array of numbers
-};
-
-type DataItemField = ReactNode | string | number | null | undefined;
-interface TableHeaderProps {
-    headerContent: string;
-    infoContent: ReactNode;
-}
+import * as XLSX from 'xlsx';
+import { Pages, Tooltip } from '@/components';
+import {
+    DataItem,
+    DataItemField,
+    LlmResponse,
+    TableHeaderProps,
+} from '@/types';
+import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
 function TableHeader({
     headerContent,
@@ -42,7 +26,7 @@ function TableHeader({
     return (
         <div className='flex items-center gap-1.5'>
             <span>{headerContent}</span>
-            <Tooltip>{infoContent}</Tooltip>
+            {infoContent && <Tooltip>{infoContent}</Tooltip>}
         </div>
     );
 }
@@ -111,23 +95,14 @@ const columns = [
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
-        header: () => (
-            <TableHeader
-                headerContent='Control Question'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
-            />
-        ),
+        header: () => <TableHeader headerContent='Control Question' />,
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('tpResponsePreview', {
         header: () => (
             <TableHeader
                 headerContent='Third Party Response'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`The third party's response to the question`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -135,46 +110,8 @@ const columns = [
     columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
-                headerContent='Evidence Analysis'
-                infoContent={`Measures how accurate the app's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('answersAlignment', {
-        header: () => (
-            <TableHeader
-                headerContent='Answers Align'
-                infoContent={`How aligned the app's generated response is to the third-party's response. Based on a similarity score percentage with higher scores indicating stronger similarity with a threshold of 88% defining an aligned output.`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('aiConfidenceScore', {
-        header: () => (
-            <TableHeader
-                headerContent='Evidence Analysis Confidence Score'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('tpConfidenceScore', {
-        header: () => (
-            <TableHeader
-                headerContent='Third Party Confidence Score'
-                infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections used to answer the response.`}
-            />
-        ),
-        cell: ({ getValue }) => getValue(),
-    }),
-    columnHelper.accessor('similarityScore', {
-        header: () => (
-            <TableHeader
-                headerContent='Similarity Score'
-                infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
+                headerContent='AI Response'
+                infoContent={`The AI's response to the question`}
             />
         ),
         cell: ({ getValue }) => getValue(),
@@ -183,25 +120,61 @@ const columns = [
         header: () => (
             <TableHeader
                 headerContent='Citation(s)'
-                infoContent='Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Adipisci eos eius veniam quibusdam corporis eum quae explicabo
-                dicta non! Obcaecati.'
+                infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
             />
         ),
         cell: ({ getValue }) => getValue(),
     }),
+    columnHelper.accessor('answersAlign', {
+        header: () => (
+            <TableHeader
+                headerContent='Responses Align?'
+                infoContent={`Does the third party response align with the AI generated response?`}
+            />
+        ),
+        cell: ({ getValue }) => getValue(),
+    }),
+    // columnHelper.accessor('similarityScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='Similarity Score'
+    //             infoContent={`Measures how similar the app's response is to the third-party response, with higher scores indicating stronger similarity. Similarity is based on the meaning and context of the responses, rather than exact wording.`}
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
+    // columnHelper.accessor('aiConfidenceScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='AI Confidence Score'
+    //             infoContent={`How confident is the AI when determining whether its response aligns with the third party response? (0-100%)`}
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
+    // columnHelper.accessor('tpConfidenceScore', {
+    //     header: () => (
+    //         <TableHeader
+    //             headerContent='Third Party Confidence Score'
+    //             infoContent={`Measures how accurate the Third Party's response is to the evidence documentation taking the related question into account, with higher scores indicating stronger accuracy. Accuracy is based on the content of the response up against the relevant sections.`}
+    //         />
+    //     ),
+    //     cell: ({ getValue }) => getValue(),
+    // }),
 ];
 
 interface DetailedAnalysisProps {
     excelData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
+    setAppLevelTableData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export function DetailedAnalysis({
     excelData,
     llmResponse,
     questionsData,
+    setAppLevelTableData,
 }: DetailedAnalysisProps): JSX.Element {
     /**
      * State Hook
@@ -209,7 +182,20 @@ export function DetailedAnalysis({
     const [data, setData] = useState(handleData());
 
     /**
-     * Helper Function to Handle Data
+     * Ref Hook and Export
+     */
+    const tableRef = useRef<HTMLTableElement>(null);
+    function handleExportTable() {
+        if (!tableRef.current) {
+            console.error('Table element not found');
+            return;
+        }
+        const workbook = XLSX.utils.table_to_book(tableRef.current);
+        XLSX.writeFile(workbook, 'test.xlsx');
+    }
+
+    /**
+     * Helper Function: Data Handler
      */
     function handleData() {
         return () =>
@@ -223,38 +209,41 @@ export function DetailedAnalysis({
                         30,
                     ),
                 ),
-                aiConfidenceScore: handleSpinner(
-                    displayScore(
+                citationsPreview: (
+                    <Pages
+                        index={index}
+                        llmResponse={llmResponse}
+                        prefix='Page(s):'
+                    />
+                ),
+                answersAlign: handleSpinner(
+                    handleAnswersAlign(
                         llmResponse?.analyses[`analysis_${index}`]
-                            ?.ai_confidence_score,
+                            ?.answers_align,
                     ),
                 ),
-                tpConfidenceScore: handleSpinner(
-                    displayScore(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.tp_confidence_score,
-                    ),
-                ),
-                similarityScore: handleSpinner(
-                    displayScore(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.similarity_score,
-                    ),
-                ),
-                citationsPreview: handleSpinner(
-                    llmResponse?.analyses[`analysis_${index}`]?.citations
-                        ?.length,
-                ),
+                // similarityScore: handleSpinner(
+                //     displayScore(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.similarity_score,
+                //     ),
+                // ),
+                // aiConfidenceScore: handleSpinner(
+                //     displayScore(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.ai_confidence_score,
+                //     ),
+                // ),
+                // tpConfidenceScore: handleSpinner(
+                //     displayScore(
+                //         llmResponse?.analyses[`analysis_${index}`]
+                //             ?.tp_confidence_score,
+                //     ),
+                // ),
                 // 'N/A',
                 tpResponseFull: excelData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
-                ),
-                answersAlignment: handleSpinner(
-                    handleAnswersAlignment(
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.similarity_score,
-                    ),
                 ),
                 citationsFull: (
                     <div className='space-y-4'>
@@ -272,64 +261,13 @@ export function DetailedAnalysis({
                         )}
                     </div>
                 ),
-                pageNumbers: (
-                    <div className='flex gap-2'>
-                        {handleSpinner(
-                            llmResponse?.analyses[
-                                `analysis_${index}`
-                            ]?.pages?.map((pageNumber, j) => (
-                                <p key={j} className='flex'>
-                                    <span>{pageNumber}</span>
-                                    {j + 1 !==
-                                        llmResponse?.analyses[
-                                            `analysis_${index}`
-                                        ]?.pages?.length &&
-                                        (llmResponse?.analyses[
-                                            `analysis_${index}`
-                                        ]?.pages?.length ?? 0) > 1 &&
-                                        ', '}
-                                </p>
-                            )),
-                        )}
-                        {/* {[4, 2].map((item, j)=> (
-                            <div key={j}>
-                                <span className="">{item}</span>
-                                {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
-                            </div>
-                        ))} */}
-                    </div>
-                ),
+                pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
             }));
     }
-
     /**
-     * Helper Functions - Utilities
+     * Helper Functions: Utilities
      */
-    function primitiveScoreFormula(score: number): number {
-        return Math.round(((score + 1) / 2) * 100);
-    }
-    function calculateScore(score: any): number | null {
-        const scoreResult = Number(score);
-        if (
-            scoreResult &&
-            typeof scoreResult === 'number' &&
-            scoreResult === scoreResult
-        ) {
-            return primitiveScoreFormula(scoreResult);
-        }
-        return null;
-    }
-    function displayScore(score: DataItemField): string | null {
-        return calculateScore(score)
-            ? `${calculateScore(score)?.toString()}%`
-            : null;
-    }
-    function handleAnswersAlignment(score: any): 'Yes' | 'No' | null {
-        if (calculateScore(score)) {
-            return primitiveScoreFormula(score) >= 88 ? 'Yes' : 'No';
-        }
-        return null;
-    }
+    // TODO: Refactor to a component (e.g. <SpinnerResolver field='...' />, return <>field</> if resolved).
     function handleSpinner(field: DataItemField): ReactNode {
         return field ? (
             field
@@ -343,6 +281,7 @@ export function DetailedAnalysis({
      */
     useEffect(() => {
         setData(handleData());
+        setAppLevelTableData(handleData());
         // console.log('🚀 ~ llmResponse:', llmResponse);
     }, [llmResponse]);
 
@@ -368,7 +307,7 @@ export function DetailedAnalysis({
                 tw`drop-shadow-md`,
             )}
         >
-            <table className='w-full dark:text-zinc-100'>
+            <table ref={tableRef} className='w-full dark:text-zinc-100'>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
@@ -386,16 +325,16 @@ export function DetailedAnalysis({
                                             tw`w-1/6`,
                                         header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
-                                        header.id === 'answersAlignment' &&
-                                            tw`w-1/12`,
-                                        header.id === 'aiConfidenceScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'tpConfidenceScore' &&
-                                            tw`w-1/12`,
-                                        header.id === 'similarityScore' &&
-                                            tw`w-1/12`,
                                         header.id === 'citationsPreview' &&
-                                            tw`w-1/12`,
+                                            tw`w-1/6`,
+                                        header.id === 'answersAlign' &&
+                                            tw`w-1/6`,
+                                        // header.id === 'similarityScore' &&
+                                        //     tw`w-1/12`,
+                                        // header.id === 'aiConfidenceScore' &&
+                                        //     tw`w-1/12`,
+                                        // header.id === 'tpConfidenceScore' &&
+                                        //     tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -456,7 +395,7 @@ export function DetailedAnalysis({
                                     <ExpandedRow
                                         content={row.original.aiAnalysisFull}
                                         row={row}
-                                        title={'Evidence Analysis'}
+                                        title={'AI Response'}
                                     />
                                     <ExpandedRow
                                         content={row.original.citationsFull}
@@ -499,7 +438,10 @@ function ExpandedRow({
                 tw`text-zinc-900 dark:text-zinc-200/80`,
             )}
         >
-            <td colSpan={3} className='py-3 pl-[100px] pr-3 align-top text-sm'>
+            <td
+                colSpan={3}
+                className='py-3 pl-[103.5px] pr-3 align-top text-sm'
+            >
                 {title}:
             </td>
             <td

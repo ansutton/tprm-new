@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
-import { Card, Heading, ProgressBarBase } from '@/components';
+import { Card, Heading } from '@/components';
 import { LlmResponse } from '@/types';
-import { tw } from '@/utils';
 
 interface SummaryProps {
     llmResponse: LlmResponse;
@@ -16,55 +15,19 @@ export function Summary({
 }: SummaryProps): JSX.Element {
     return (
         <Card>
-            <Heading
-                level={4}
-                additionalClasses={tw`mb-4 opacity-80`}
-                fontSize='text-lg'
-            >
-                Summary
-            </Heading>
-            <div className='space-y-4 text-sm font-bold'>
-                <SummaryItem
-                    title='Questions Passed'
-                    llmResponse={llmResponse}
-                    progressPercentage={90}
-                    questionsData={questionsData}
-                    twBgColor='bg-emerald-400'
-                />
-                <SummaryItem
-                    title='Questions Failed'
-                    llmResponse={llmResponse}
-                    progressPercentage={20}
-                    questionsData={questionsData}
-                    twBgColor='bg-rose-400'
-                />
+            <div className='space-y-2 opacity-80'>
+                <Heading
+                    level={4}
+                    additionalClasses='mb-4'
+                    fontSize='text-lg'
+                    startIcon={startIcon}
+                >
+                    Summary
+                </Heading>
+                <p>
+                    The third party and the AI model provided the same response.
+                </p>
             </div>
         </Card>
-    );
-}
-
-interface SummaryItemsProps extends SummaryProps {
-    progressPercentage: number;
-    title: string;
-    twBgColor: string;
-}
-
-function SummaryItem({
-    questionsData,
-    progressPercentage,
-    title,
-    twBgColor,
-}: SummaryItemsProps): JSX.Element {
-    return (
-        <div className=''>
-            <p className='mb-2 text-base opacity-80'>{title}</p>
-            <p className='mb-1 text-2xl font-bold'>
-                {`${Math.round(progressPercentage * 0.01 * questionsData?.length)}/${questionsData?.length}`}
-            </p>
-            <ProgressBarBase
-                progressPercentage={progressPercentage}
-                twBgColor={twBgColor}
-            />
-        </div>
     );
 }

@@ -6,19 +6,27 @@ interface ConfidenceScoreProps {
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
+    title: string;
+    tooltipContent: string;
+    subtitle?: string;
 }
 
 export function ConfidenceScore({
     llmResponse,
     questionsData,
     startIcon = null,
+    title,
+    subtitle = '',
+    tooltipContent = '',
 }: ConfidenceScoreProps): JSX.Element {
     const pathColor = 'hsl(292, 91%, 73%)'; // fuchsia-400
 
     return (
         <CircularProgress
-            title='Confidence Score'
+            title={title}
+            subtitle={subtitle}
             startIcon={startIcon}
+            tooltipContent={tooltipContent}
             value={90}
             minValue={0}
             maxValue={100}

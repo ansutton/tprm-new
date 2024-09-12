@@ -1,10 +1,11 @@
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
 import {
+    AnswersAlign,
     ConfidenceScore,
     EvidenceAnalysis,
     EvidenceProvided,
-    EvidenceUnanswered,
+    EvidenceAnswered,
     QuestionsAnalyzed,
     // SecurityDomains,
     Summary,
@@ -48,15 +49,23 @@ export function Overview({
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
-                <ConfidenceScore
-                    llmResponse={llmResponse}
-                    questionsData={questionsData}
-                />
                 <Summary
                     llmResponse={llmResponse}
                     questionsData={questionsData}
                 />
+                {/* <ConfidenceScore
+                    llmResponse={llmResponse}
+                    questionsData={questionsData}
+                    title='AI Confidence Score'
+                    tooltipContent={`How confident is the AI is when determining whether its responses align with the third party responses? (0-100%, aggregated)`}
+                    subtitle='Aggregate'
+                /> */}
             </div>
+
+            <AnswersAlign
+                llmResponse={llmResponse}
+                questionsData={questionsData}
+            />
 
             {/* <SecurityDomains
                 llmResponse={llmResponse}
@@ -78,10 +87,10 @@ export function Overview({
                         />
                     </div>
 
-                    <EvidenceUnanswered
-                        title='Questions Unanswered by Evidence'
-                        progressPercentage={40}
-                        twBgColor='bg-rose-400'
+                    <EvidenceAnswered
+                        title='Questions Answered by Evidence'
+                        progressPercentage={100}
+                        twBgColor='bg-emerald-400'
                     />
                 </div>
             ) : (
@@ -100,10 +109,10 @@ export function Overview({
 
                     <div className='space-y-4'>
                         <EvidenceProvided isOverviewWide={isOverviewWide} />
-                        <EvidenceUnanswered
-                            title='Questions Unanswered by Evidence'
-                            progressPercentage={40}
-                            twBgColor='bg-cyan-400'
+                        <EvidenceAnswered
+                            title='Questions Answered by Evidence'
+                            progressPercentage={100}
+                            twBgColor='bg-emerald-400'
                         />
                     </div>
                 </div>

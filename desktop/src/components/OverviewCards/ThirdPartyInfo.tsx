@@ -25,27 +25,12 @@ export function ThirdPartyInfo({
                     Third Party Information
                 </Heading>
                 <p>
-                    <b>Name</b>: Company, LLC
+                    <b>Name</b>: Google LLC
                 </p>
                 <p>
-                    <b>Service Description</b>: Provide Third Party Risk
-                    Management support to Deloitte Consulting, LLC.
-                </p>
-                <p>
-                    <b>Summary</b>: The Third Party and the AI model provided
-                    matching responses for{' '}
-                    <b>
-                        {/* {llmResponse?.responses.length || 0}/
-                        {questionsData?.length} (
-                        {Math.round(
-                            ((llmResponse?.responses.length || 0) /
-                                questionsData?.length) *
-                                100,
-                        )}
-                        %) */}
-                        N/A
-                    </b>{' '}
-                    of questions uploaded.
+                    <b>Engagement Scope</b>: The third party is providing their
+                    Google Cloud Platform (GCP) which we use to host external
+                    (consumer-facing) and internal cloud-based applications.
                 </p>
             </div>
         </Card>

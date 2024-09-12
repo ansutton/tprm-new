@@ -38,9 +38,9 @@ export function EvidenceAnalysis({
                     twBgColor='bg-cyan-400'
                 />
                 <EvidenceAnalysisItem
-                    title='Scope-Matching Documents'
+                    title='Documents Matching Engagement Scope'
                     llmResponse={llmResponse}
-                    progressPercentage={67}
+                    progressPercentage={100}
                     questionsData={questionsData}
                     twBgColor='bg-emerald-400'
                 />
@@ -65,7 +65,7 @@ function EvidenceAnalysisItem({
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>
             <p className='mb-1 text-2xl font-bold'>
-                {`${Math.round(progressPercentage * 0.01 * 3)}/3`}
+                {`${Math.round(progressPercentage * 0.01 * 1)}/1`}
             </p>
             <ProgressBarBase
                 progressPercentage={progressPercentage}
