@@ -10,6 +10,7 @@ class AppState:
         return {
             "number_of_questions": self.number_of_questions,
             "models_pulled": self.models_pulled,
+            "is_complete": self.is_complete,
             "analyses": self.analyses
         }
 
