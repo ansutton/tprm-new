@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
 import {
-    AnswersAlign,
     ConfidenceScore,
     EvidenceAnalysis,
     EvidenceProvided,
     EvidenceAnswered,
     QuestionsAnalyzed,
+    ResponsesAlign,
     // SecurityDomains,
     Summary,
     ThirdPartyInfo,
@@ -60,7 +60,7 @@ export function Overview({
                     subtitle='Aggregate'
                 /> */}
 
-            <AnswersAlign
+            <ResponsesAlign
                 llmResponse={llmResponse}
                 questionsData={questionsData}
             />

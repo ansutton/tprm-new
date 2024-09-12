@@ -3,17 +3,17 @@ import { Card, ProgressBarBase, Tooltip } from '@/components';
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
-interface AnswersAlignProps {
+interface ResponsesAlignProps {
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
 }
 
-export function AnswersAlign({
+export function ResponsesAlign({
     llmResponse,
     questionsData,
     startIcon = null,
-}: AnswersAlignProps): JSX.Element {
+}: ResponsesAlignProps): JSX.Element {
     return (
         <Card>
             <h4 className='mb-4 text-lg font-bold opacity-80'>
@@ -25,14 +25,14 @@ export function AnswersAlign({
                 </span>
             </h4>
             <div className='space-y-4 text-sm font-bold'>
-                <AnswersAlignItem
+                <ResponsesAlignItem
                     title='Yes'
                     llmResponse={llmResponse}
                     progressPercentage={90}
                     questionsData={questionsData}
                     twBgColor='bg-emerald-400'
                 />
-                <AnswersAlignItem
+                <ResponsesAlignItem
                     title='No'
                     llmResponse={llmResponse}
                     progressPercentage={20}
@@ -44,18 +44,18 @@ export function AnswersAlign({
     );
 }
 
-interface AnswersAlignItemProps extends AnswersAlignProps {
+interface ResponsesAlignItemProps extends ResponsesAlignProps {
     progressPercentage: number;
     title: string;
     twBgColor: string;
 }
 
-function AnswersAlignItem({
+function ResponsesAlignItem({
     questionsData,
     progressPercentage,
     title,
     twBgColor,
-}: AnswersAlignItemProps): JSX.Element {
+}: ResponsesAlignItemProps): JSX.Element {
     return (
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>
