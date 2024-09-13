@@ -234,7 +234,11 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar screen={screen} appLevelTableData={appLevelTableData} />
+            <Topbar
+                llmResponse={llmResponse}
+                screen={screen}
+                appLevelTableData={appLevelTableData}
+            />
 
             {screen !== 'fileUpload' && (
                 <Sidebar

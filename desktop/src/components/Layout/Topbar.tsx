@@ -10,12 +10,13 @@ import {
 import clsx from 'clsx';
 import { ExportTable, MenuItemButton, ModeMenu } from '@/components';
 import { useTheme } from '@/hooks';
-import { Mode, Screen } from '@/types';
+import { LlmResponse, Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
 // TODO: put mode props back as not optional if we bring back this feature.
 interface TopbarProps {
     appLevelTableData: any[];
+    llmResponse: LlmResponse;
     mode?: Mode;
     setMode?: React.Dispatch<React.SetStateAction<Mode>>;
     screen: Screen;
@@ -23,6 +24,7 @@ interface TopbarProps {
 
 export function Topbar({
     appLevelTableData,
+    llmResponse,
     mode,
     setMode,
     screen,
@@ -94,7 +96,9 @@ export function Topbar({
                     </h1>
                 </div>
 
-                {screen === 'detailedAnalysis' && <ExportTable />}
+                {screen === 'detailedAnalysis' && (
+                    <ExportTable llmResponse={llmResponse} />
+                )}
 
                 {/* <ModeMenu mode={mode} setMode={setMode} /> */}
 
