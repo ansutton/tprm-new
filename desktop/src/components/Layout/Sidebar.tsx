@@ -95,7 +95,7 @@ export function Sidebar({
                     onClick={() => {
                         if (
                             confirm(
-                                'Are you sure? This action will end the current process and start over.',
+                                'Are you sure? This action will end the current process and start from the beginning.',
                             )
                         ) {
                             setScreen('fileUpload');
