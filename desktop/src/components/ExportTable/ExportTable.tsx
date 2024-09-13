@@ -93,7 +93,10 @@ export function ExportTable({
         const a = document.createElement('a');
         a.setAttribute('hidden', '');
         a.setAttribute('href', url);
-        a.setAttribute('download', 'data.csv');
+        a.setAttribute(
+            'download',
+            `tprm-accelerator-detailed-analysis-${getTimestamp()}.csv`,
+        );
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
