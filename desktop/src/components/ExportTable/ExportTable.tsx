@@ -12,30 +12,30 @@ export function ExportTable({
     llmResponse,
     questionsData,
 }: ExportTableProps): JSX.Element {
-    const dataExample2 = [
-        {
-            question: 'xyz',
-            tp_response: 'abc',
-            ai_response: 'def',
-            citations: 'ghi',
-            answersAlign: true,
-        },
-        {
-            question: 'xyz',
-            tp_response: 'abc',
-            ai_response: 'def',
-            citations: 'ghi',
-            answersAlign: true,
-        },
-    ];
+    // Function to escape CSV values (handling commas, newlines, double quotes)
+    function escapeCSVValue(value: string | number | boolean): string {
+        const stringValue = String(value); // Ensure all values are treated as strings
+        if (
+            stringValue.includes(',') ||
+            stringValue.includes('\n') ||
+            stringValue.includes('"')
+        ) {
+            return `"${stringValue.replace(/"/g, '""')}"`; // Escape double quotes and wrap in quotes if needed
+        }
+        return stringValue;
+    }
 
-    function convertToCSV(llmResponse?: LlmResponse) {
+    // Convert LlmResponse object to CSV format
+    function convertToCSV(llmResponse: LlmResponse) {
         const csvRows: string[] = [];
-        // Ensure llmResponse and analyses exist before proceeding
-        if (!llmResponse?.analyses) {
+
+        // Check that the analyses field exists in llmResponse
+        if (!llmResponse || !llmResponse.analyses) {
             console.error('llmResponse or analyses are undefined');
             return '';
         }
+
+        // Define CSV headers
         const headersTitles = [
             'Control Question',
             'Third Party Response',
@@ -43,39 +43,50 @@ export function ExportTable({
             'Citation(s)',
             'Responses Align?',
         ];
-        csvRows.push(headersTitles.join(','));
-        // Iterate through analyses if they exist
+        csvRows.push(headersTitles.join(',')); // Add headers to the CSV
+
+        // Iterate through analyses in llmResponse
         Object.keys(llmResponse.analyses).forEach((analysisKey) => {
             const analysis = llmResponse.analyses[analysisKey];
+
+            // Construct a row with proper CSV formatting
             const row = {
-                question: analysis?.question || '',
-                tp_response: analysis?.tp_response || '',
-                ai_response: analysis?.ai_analysis || '',
+                question: escapeCSVValue(analysis?.question || ''),
+                tp_response: escapeCSVValue(analysis?.tp_response || ''),
+                ai_response: escapeCSVValue(analysis?.ai_analysis || ''),
                 citations: analysis?.citations
-                    ? analysis.citations
-                          .map((citation) => `${citation[0]} ${citation[1]}`)
-                          .join('; ')
+                    ? escapeCSVValue(
+                          analysis.citations
+                              .map(
+                                  (citation) => `${citation[0]} ${citation[1]}`,
+                              )
+                              .join('; '),
+                      )
                     : '',
-                answersAlign: analysis?.is_analysis_complete ? 'Yes' : 'No', // Display as Yes/No
+                answersAlign: escapeCSVValue(
+                    analysis?.is_analysis_complete ? 'Yes' : 'No',
+                ),
             };
-            // Add the row to the CSV rows
+
+            // Add the row to CSV
             csvRows.push(Object.values(row).join(','));
         });
-        console.log(
-            "🚀 ~ convertToCSV ~ csvRows.join('\n'):",
-            csvRows.join('\n'),
-        );
-        return csvRows.join('\n');
+
+        return csvRows.join('\n'); // Join rows with newline for CSV
     }
 
+    // Function to trigger the download of the CSV file
     function downloadCSV() {
-        const csvData = convertToCSV(llmResponse); // Use llmResponse passed in as a prop
+        const csvData = convertToCSV(llmResponse); // Get the CSV data
+
         if (!csvData) {
             const errorMessage = 'Data not ready for export';
             console.error(errorMessage);
             alert(errorMessage);
-            return; // Exit if there's no data to download
+            return;
         }
+
+        // Create a Blob from CSV data
         const blob = new Blob([csvData], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
