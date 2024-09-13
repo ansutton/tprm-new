@@ -58,9 +58,10 @@ export function ExportTable({
                     ? escapeCSVValue(
                           analysis.citations
                               .map(
-                                  (citation) => `${citation[0]} ${citation[1]}`,
+                                  (citation) =>
+                                      `Page ${citation[0]}: ...${citation[1]}...`,
                               )
-                              .join('; '),
+                              .join('\n\n'),
                       )
                     : '',
                 answersAlign: escapeCSVValue(
