@@ -94,9 +94,7 @@ export function Topbar({
                     </h1>
                 </div>
 
-                {/* {screen === 'detailedAnalysis' && (
-                    <ExportTable appLevelTableData={appLevelTableData} />
-                )} */}
+                {screen === 'detailedAnalysis' && <ExportTable />}
 
                 {/* <ModeMenu mode={mode} setMode={setMode} /> */}
 
