@@ -96,7 +96,7 @@ export function Topbar({
                     </h1>
                 </div>
 
-                {screen === 'detailedAnalysis' && (
+                {screen === 'detailedAnalysis' && llmResponse?.is_complete && (
                     <ExportTable llmResponse={llmResponse} />
                 )}
 
