@@ -46,6 +46,25 @@ export default function Home(): JSX.Element {
     /**
      * Helper Functions
      */
+    function handleResetApp(): void {
+        if (
+            confirm(
+                'Are you sure? This action will end the current process and start from the beginning.',
+            )
+        ) {
+            setScreen('fileUpload');
+            setQuestionsFile(null);
+            setEvidenceFile(null);
+            setResponsesFile(null);
+            setLlmResponse(null);
+            setExcelData([]);
+            setQuestionsData([]);
+            setAppLevelTableData([]);
+        } else {
+            return;
+        }
+    }
+
     const isFileValid = (file: File | null, fileType: string): file is File =>
         file !== null && file?.type === fileType;
     const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
@@ -234,7 +253,11 @@ export default function Home(): JSX.Element {
      */
     return (
         <div className='w-full dark:text-zinc-50'>
-            <Topbar screen={screen} appLevelTableData={appLevelTableData} />
+            <Topbar
+                llmResponse={llmResponse}
+                screen={screen}
+                appLevelTableData={appLevelTableData}
+            />
 
             {screen !== 'fileUpload' && (
                 <Sidebar
@@ -244,6 +267,7 @@ export default function Home(): JSX.Element {
                     setIsSidebarFullyExpanded={setIsSidebarFullyExpanded}
                     screen={screen}
                     setScreen={setScreen}
+                    handleResetApp={handleResetApp}
                 />
             )}
 

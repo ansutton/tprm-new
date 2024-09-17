@@ -16,6 +16,7 @@ interface SidebarProps {
     setIsSidebarFullyExpanded: React.Dispatch<React.SetStateAction<boolean>>;
     screen: Screen;
     setScreen: React.Dispatch<React.SetStateAction<Screen>>;
+    handleResetApp?: () => void;
 }
 
 export function Sidebar({
@@ -25,6 +26,7 @@ export function Sidebar({
     setIsSidebarFullyExpanded,
     screen,
     setScreen,
+    handleResetApp,
 }: SidebarProps): JSX.Element {
     /**
      * Helper Functions
@@ -92,17 +94,7 @@ export function Sidebar({
                     title='File Upload'
                     additionalButtonClasses={tw``}
                     icon={<ArrowUpCircleIcon className={iconClasses} />}
-                    onClick={() => {
-                        if (
-                            confirm(
-                                'Are you sure? This action will end the current process and start over.',
-                            )
-                        ) {
-                            setScreen('fileUpload');
-                        } else {
-                            return null;
-                        }
-                    }}
+                    onClick={() => handleResetApp && handleResetApp()}
                     isSidebarExpanded={isSidebarExpanded}
                     isSidebarFullyExpanded={isSidebarFullyExpanded}
                     screen={screen}
