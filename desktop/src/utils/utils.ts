@@ -1,4 +1,29 @@
 import { DataItemField, LlmResponse } from '@/types';
+import { sampleData } from '@/data';
+
+/**
+ * Demo Mode Portion of `handleSubmit` in `App.tsx`
+ */
+interface handleSampleDataProps {
+    setLlmResponse: React.Dispatch<React.SetStateAction<any>>;
+}
+export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
+    const analyses = Object.values(sampleData.analyses);
+    let index = 0;
+    const interval = setInterval(() => {
+        if (index < analyses.length) {
+            const updatedAnalyses = { ...sampleData.analyses };
+            updatedAnalyses[`analysis_${index}`] = analyses[index];
+            setLlmResponse((prevResponse) => ({
+                ...prevResponse,
+                analyses: updatedAnalyses,
+            }));
+            index++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 3000);
+}
 
 /**
  * Score

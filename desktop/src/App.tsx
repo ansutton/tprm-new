@@ -16,7 +16,13 @@ import {
     Sidebar,
     Topbar,
 } from '@/components';
-import { countResponsesAlign, poll, submit, tw } from '@/utils';
+import {
+    countResponsesAlign,
+    handleSampleData,
+    poll,
+    submit,
+    tw,
+} from '@/utils';
 import { Mode, Screen } from '@/types';
 
 /**
@@ -134,55 +140,7 @@ export default function Home(): JSX.Element {
             console.log('🚀 ~ handleSubmit ~ mode:', mode);
             switch (mode) {
                 case 'demo':
-                    // const demoPollResponse: PythonAppState = {
-                    //     number_of_questions: questionsArray?.length,
-                    //     questions: questionsArray,
-                    //     responses: [],
-                    // };
-                    setLlmResponse({
-                        number_of_questions: questionsArray?.length,
-                        analyses: {
-                            analysis_0: {
-                                question:
-                                    'What access control procedures are in place?',
-                                tp_response:
-                                    "Google follows a formal process to grant or revoke employee access to Google resources. Access to systems and data is granted only to authorized users. Access requests are reviewed and approved by an authorized second individual prior to being granted and the event is logged. Both user and internal access to customer data are restricted through the use of unique user account IDs and the Google Accounts Bring Your Own Identity (BYOID) system. Access to sensitive systems and applications requires two-factor authentication. Periodic reviews of access lists are implemented to ensure access to customer data is appropriate and authorized. Access to production machines, network devices and support tools is managed via an access group management system. Membership in these groups must be approved by respective group administrators. User group memberships are reviewed on a semiannual basis and any inappropriate access is removed. Access authorization in Google Cloud Platform is enforced at all relevant layers of the system. The granting or modification of access rights is based on the user's job responsibilities or on a need-to-know basis and must be authorized and approved by the user's functional manager or system owners. Access to all corporate and production resources are automatically removed upon submission of a termination request by the manager of any departing employee, or by the appropriate Human Resources manager.",
-                                ai_analysis:
-                                    "The document discusses various access control procedures that are in place to ensure the privacy and security of participants' personal information during a clinical trial. These procedures include:\n\n1. Participant consent: The document emphasizes the importance of obtaining informed consent from participants before collecting any personal information. This involves providing participants with a detailed description of the study, including the purpose, scope, and potential risks involved.\n2. De-identification: To protect participants' privacy, the document recommends de-identifying any personal information collected during the study. This involves removing any identifying information, such as names or addresses, from the data before analysis.\n3. Secure storage: The document highlights the importance of storing all personal information securely and in a manner that prevents unauthorized access. This may involve using encrypted databases or file systems, or storing physical copies of documents in secure locations.\n4. Access controls: The document suggests implementing strict access controls to limit who can view or modify personal information. This may involve using role-based access control (RBAC) or attribute-based access control (ABAC) to ensure that only authorized personnel have access to the data.\n5. Audit trails: To monitor and detect any unauthorized access to personal information, the document recommends maintaining detailed audit trails of all access attempts and successful login events. This can help identify potential security breaches and improve incident response capabilities.\n6. Training: The document emphasizes the importance of providing training to all personnel involved in the study on how to handle personal information securely and ethically. This may involve providing regular updates on privacy and security best practices, as well as conducting refresher training sessions to ensure that personnel are up-to-date on the latest procedures.\n7. Incident response planning: To address any potential security incidents, the document suggests developing an incident response plan that outlines the steps to be taken in the event of a security breach or other incident involving personal information. This may involve establishing a incident response team, conducting regular security audits and risk assessments, and providing training on how to respond to security incidents.\n\nBy following these access control procedures, organizations can help ensure that participants' personal information is protected throughout the clinical trial process.",
-                                tp_confidence_score: 0.5424079298973083,
-                                ai_confidence_score: 0.6465556025505066,
-                            },
-                        },
-                    });
-                    setInterval(() => {
-                        setLlmResponse({
-                            number_of_questions: questionsArray?.length,
-                            analyses: {
-                                analysis_0: {
-                                    question:
-                                        'What access control procedures are in place?',
-                                    tp_response:
-                                        "Google follows a formal process to grant or revoke employee access to Google resources. Access to systems and data is granted only to authorized users. Access requests are reviewed and approved by an authorized second individual prior to being granted and the event is logged. Both user and internal access to customer data are restricted through the use of unique user account IDs and the Google Accounts Bring Your Own Identity (BYOID) system. Access to sensitive systems and applications requires two-factor authentication. Periodic reviews of access lists are implemented to ensure access to customer data is appropriate and authorized. Access to production machines, network devices and support tools is managed via an access group management system. Membership in these groups must be approved by respective group administrators. User group memberships are reviewed on a semiannual basis and any inappropriate access is removed. Access authorization in Google Cloud Platform is enforced at all relevant layers of the system. The granting or modification of access rights is based on the user's job responsibilities or on a need-to-know basis and must be authorized and approved by the user's functional manager or system owners. Access to all corporate and production resources are automatically removed upon submission of a termination request by the manager of any departing employee, or by the appropriate Human Resources manager.",
-                                    ai_analysis:
-                                        "The document discusses various access control procedures that are in place to ensure the privacy and security of participants' personal information during a clinical trial. These procedures include:\n\n1. Participant consent: The document emphasizes the importance of obtaining informed consent from participants before collecting any personal information. This involves providing participants with a detailed description of the study, including the purpose, scope, and potential risks involved.\n2. De-identification: To protect participants' privacy, the document recommends de-identifying any personal information collected during the study. This involves removing any identifying information, such as names or addresses, from the data before analysis.\n3. Secure storage: The document highlights the importance of storing all personal information securely and in a manner that prevents unauthorized access. This may involve using encrypted databases or file systems, or storing physical copies of documents in secure locations.\n4. Access controls: The document suggests implementing strict access controls to limit who can view or modify personal information. This may involve using role-based access control (RBAC) or attribute-based access control (ABAC) to ensure that only authorized personnel have access to the data.\n5. Audit trails: To monitor and detect any unauthorized access to personal information, the document recommends maintaining detailed audit trails of all access attempts and successful login events. This can help identify potential security breaches and improve incident response capabilities.\n6. Training: The document emphasizes the importance of providing training to all personnel involved in the study on how to handle personal information securely and ethically. This may involve providing regular updates on privacy and security best practices, as well as conducting refresher training sessions to ensure that personnel are up-to-date on the latest procedures.\n7. Incident response planning: To address any potential security incidents, the document suggests developing an incident response plan that outlines the steps to be taken in the event of a security breach or other incident involving personal information. This may involve establishing a incident response team, conducting regular security audits and risk assessments, and providing training on how to respond to security incidents.\n\nBy following these access control procedures, organizations can help ensure that participants' personal information is protected throughout the clinical trial process.",
-                                    tp_confidence_score: 0.5424079298973083,
-                                    ai_confidence_score: 0.6465556025505066,
-                                },
-                                analysis_1: {
-                                    question:
-                                        'When was the access control policy last reviewed?',
-                                    tp_response:
-                                        'Our access control policies for Google Cloud Platform are reviewed annually to ensure they align with industry best practices and comply with relevant regulatory requirements. The last review was conducted in accordance with our scheduled policy review cycle, which ensures that we continuously manage and mitigate risks associated with access control. Additionally, we conduct ad-hoc reviews in response to significant changes in the threat landscape or operational changes within our services.',
-                                    ai_analysis:
-                                        'The access control policy was last reviewed on December 12, 2022.',
-                                    tp_confidence_score: 0.5776870250701904,
-                                    ai_confidence_score: 0.5677930116653442,
-                                },
-                            },
-                        });
-                        // console.log('llmResponse: ', llmResponse);
-                    }, 2000);
-                    break;
+                    handleSampleData({ setLlmResponse });
                 case 'llm':
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
