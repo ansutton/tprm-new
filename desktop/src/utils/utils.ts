@@ -1,4 +1,48 @@
 import { DataItemField, LlmResponse } from '@/types';
+import { sampleData } from '@/data';
+
+/**
+ * Demo Mode Portion of `handleSubmit` in `App.tsx`
+ */
+interface handleSampleDataProps {
+    setLlmResponse: React.Dispatch<React.SetStateAction<any>>;
+    setQuestionsData: React.Dispatch<React.SetStateAction<string[]>>;
+}
+export function handleSampleData({
+    setLlmResponse,
+    setQuestionsData,
+}: handleSampleDataProps) {
+    const analyses = Object.values(sampleData.analyses);
+    const questionsArray = analyses.map((analysis) => analysis.question || '');
+    setQuestionsData(questionsArray);
+    // Recursive function to update each analysis with a delay
+    function updateAnalysis(index: number) {
+        if (index < analyses.length) {
+            setLlmResponse((prevResponse: any) => {
+                // Create a new analyses object that includes all previous ones and the new one
+                const updatedAnalyses = {
+                    ...prevResponse?.analyses,
+                    [`analysis_${index}`]: analyses[index], // Add the next analysis
+                };
+                // Return the updated LlmResponse with the new analyses
+                return {
+                    ...prevResponse,
+                    analyses: updatedAnalyses,
+                };
+            });
+            // Recursively call updateAnalysis with a timeout
+            setTimeout(() => updateAnalysis(index + 1), 3000);
+        } else {
+            // Once all analyses are processed, mark is_complete as true
+            setLlmResponse((prevResponse: any) => ({
+                ...prevResponse,
+                is_complete: true,
+            }));
+        }
+    }
+    // Start the recursive update process
+    updateAnalysis(0);
+}
 
 /**
  * Score
