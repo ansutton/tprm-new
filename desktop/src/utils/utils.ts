@@ -27,6 +27,10 @@ export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
             index++;
         } else {
             clearInterval(interval);
+            setLlmResponse((prevResponse) => ({
+                ...prevResponse,
+                is_complete: true, // Mark the process as complete
+            }));
         }
     }, 3000);
 }
