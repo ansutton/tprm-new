@@ -9,8 +9,7 @@ interface handleSampleDataProps {
 }
 export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
     const analyses = Object.values(sampleData.analyses);
-    let index = 0;
-    const interval = setInterval(() => {
+    function updateAnalysis(index: number) {
         if (index < analyses.length) {
             setLlmResponse((prevResponse) => {
                 // Create a new analyses object that includes all previous ones and the new one
@@ -24,15 +23,18 @@ export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
                     analyses: updatedAnalyses,
                 };
             });
-            index++;
+            // Recursively call updateAnalysis
+            setTimeout(() => updateAnalysis(index + 1), 3000);
         } else {
-            clearInterval(interval);
+            // When all analyses are processed, mark as complete
             setLlmResponse((prevResponse) => ({
                 ...prevResponse,
-                is_complete: true, // Mark the process as complete
+                is_complete: true,
             }));
         }
-    }, 3000);
+    }
+    // Start the recursive process
+    updateAnalysis(0);
 }
 
 /**
