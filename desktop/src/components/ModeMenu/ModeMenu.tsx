@@ -2,21 +2,27 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import clsx from 'clsx';
 import { MenuItemButton } from '@/components';
 import { useTheme } from '@/hooks';
-import { Mode } from '@/types';
+import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
 interface ModeMenuProps {
     mode: Mode;
     setMode: React.Dispatch<React.SetStateAction<Mode>>;
+    screen: Screen;
 }
 
-export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
+export function ModeMenu({
+    mode,
+    setMode,
+    screen,
+}: ModeMenuProps): JSX.Element {
     const { theme } = useTheme();
 
     return (
         <div
             className={clsx(
                 tw`rounded-lg p-1 text-sm font-bold`,
+                screen !== 'fileUpload' && tw`cursor-default hover:bg-inherit`,
                 theme === 'light' && tw`hover:bg-zinc-200`,
                 theme === 'dark' && tw`hover:bg-zinc-800`,
             )}
@@ -25,10 +31,12 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
                 <MenuButton
                     className={clsx(
                         tw`flex gap-1 p-1`,
+                        screen !== 'fileUpload' && tw`hover:bg-inherit`,
                         theme === 'light' &&
                             tw`text-zinc-600 hover:bg-zinc-200`,
                         theme === 'dark' && tw`text-zinc-300 hover:bg-zinc-800`,
                     )}
+                    disabled={screen !== 'fileUpload'}
                 >
                     Mode:
                     <span

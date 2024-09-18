@@ -99,7 +99,7 @@ export function Topbar({
                     <ExportTable llmResponse={llmResponse} />
                 )}
 
-                <ModeMenu mode={mode} setMode={setMode} />
+                <ModeMenu mode={mode} setMode={setMode} screen={screen} />
 
                 <ThemeMenu />
             </div>
