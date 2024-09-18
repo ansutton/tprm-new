@@ -141,6 +141,7 @@ export default function Home(): JSX.Element {
             switch (mode) {
                 case 'demo':
                     handleSampleData({ setLlmResponse });
+                    break;
                 case 'llm':
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
