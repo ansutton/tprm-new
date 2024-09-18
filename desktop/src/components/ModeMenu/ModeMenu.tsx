@@ -23,8 +23,12 @@ export function ModeMenu({
             className={clsx(
                 tw`rounded-lg p-1 text-sm font-bold`,
                 screen !== 'fileUpload' && tw`cursor-default hover:bg-inherit`,
-                theme === 'light' && tw`hover:bg-zinc-200`,
-                theme === 'dark' && tw`hover:bg-zinc-800`,
+                screen === 'fileUpload' &&
+                    theme === 'light' &&
+                    tw`hover:bg-zinc-200`,
+                screen === 'fileUpload' &&
+                    theme === 'dark' &&
+                    tw`hover:bg-zinc-800`,
             )}
         >
             <Menu>
@@ -32,9 +36,12 @@ export function ModeMenu({
                     className={clsx(
                         tw`flex gap-1 p-1`,
                         screen !== 'fileUpload' && tw`hover:bg-inherit`,
-                        theme === 'light' &&
+                        screen === 'fileUpload' &&
+                            theme === 'light' &&
                             tw`text-zinc-600 hover:bg-zinc-200`,
-                        theme === 'dark' && tw`text-zinc-300 hover:bg-zinc-800`,
+                        screen === 'fileUpload' &&
+                            theme === 'dark' &&
+                            tw`text-zinc-300 hover:bg-zinc-800`,
                     )}
                     disabled={screen !== 'fileUpload'}
                 >
