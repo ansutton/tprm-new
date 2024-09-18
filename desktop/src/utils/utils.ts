@@ -6,9 +6,16 @@ import { sampleData } from '@/data';
  */
 interface handleSampleDataProps {
     setLlmResponse: React.Dispatch<React.SetStateAction<any>>;
+    setQuestionsData: React.Dispatch<React.SetStateAction<string[]>>;
 }
-export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
+export function handleSampleData({
+    setLlmResponse,
+    setQuestionsData,
+}: handleSampleDataProps) {
     const analyses = Object.values(sampleData.analyses);
+    const questionsArray = analyses.map((analysis) => analysis.question || '');
+    setQuestionsData(questionsArray);
+    // Recursive function to update each analysis with a delay
     function updateAnalysis(index: number) {
         if (index < analyses.length) {
             setLlmResponse((prevResponse) => {
@@ -23,17 +30,17 @@ export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
                     analyses: updatedAnalyses,
                 };
             });
-            // Recursively call updateAnalysis
+            // Recursively call updateAnalysis with a timeout
             setTimeout(() => updateAnalysis(index + 1), 3000);
         } else {
-            // When all analyses are processed, mark as complete
+            // Once all analyses are processed, mark is_complete as true
             setLlmResponse((prevResponse) => ({
                 ...prevResponse,
                 is_complete: true,
             }));
         }
     }
-    // Start the recursive process
+    // Start the recursive update process
     updateAnalysis(0);
 }
 

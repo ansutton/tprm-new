@@ -137,14 +137,14 @@ export default function Home(): JSX.Element {
                 .filter(
                     (question) => question !== '' && question !== 'Questions',
                 );
-            setQuestionsData(questionsArray);
             setScreen('detailedAnalysis');
             console.log('🚀 ~ handleSubmit ~ mode:', mode);
             switch (mode) {
                 case 'demo':
-                    handleSampleData({ setLlmResponse });
+                    handleSampleData({ setLlmResponse, setQuestionsData });
                     break;
                 case 'llm':
+                    setQuestionsData(questionsArray);
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
