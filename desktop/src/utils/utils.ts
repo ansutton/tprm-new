@@ -18,7 +18,7 @@ export function handleSampleData({
     // Recursive function to update each analysis with a delay
     function updateAnalysis(index: number) {
         if (index < analyses.length) {
-            setLlmResponse((prevResponse) => {
+            setLlmResponse((prevResponse: any) => {
                 // Create a new analyses object that includes all previous ones and the new one
                 const updatedAnalyses = {
                     ...prevResponse?.analyses,
@@ -34,7 +34,7 @@ export function handleSampleData({
             setTimeout(() => updateAnalysis(index + 1), 3000);
         } else {
             // Once all analyses are processed, mark is_complete as true
-            setLlmResponse((prevResponse) => ({
+            setLlmResponse((prevResponse: any) => ({
                 ...prevResponse,
                 is_complete: true,
             }));
