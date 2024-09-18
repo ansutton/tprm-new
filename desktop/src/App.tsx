@@ -60,14 +60,7 @@ export default function Home(): JSX.Element {
                 'Are you sure? This action will end the current process and start from the beginning.',
             )
         ) {
-            setScreen('fileUpload');
-            setQuestionsFile(null);
-            setEvidenceFile(null);
-            setResponsesFile(null);
-            setLlmResponse(null);
-            setExcelData([]);
-            setQuestionsData([]);
-            setAppLevelTableData([]);
+            window.location.reload();
         } else {
             return;
         }
