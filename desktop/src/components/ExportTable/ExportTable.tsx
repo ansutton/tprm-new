@@ -65,7 +65,7 @@ export function ExportTable({
                       )
                     : '',
                 answersAlign: escapeCSVValue(
-                    analysis?.is_analysis_complete ? 'Yes' : 'No',
+                    analysis?.answers_align ? 'Yes' : 'No',
                 ),
             };
 
