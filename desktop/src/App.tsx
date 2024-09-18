@@ -118,7 +118,7 @@ export default function Home(): JSX.Element {
             fileReader.readAsDataURL(file);
         });
     }
-    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (questionsFile && evidenceFile && responsesFile) {
             const parsedExcelFile = await parseExcelFile(responsesFile);
@@ -131,7 +131,7 @@ export default function Home(): JSX.Element {
                 );
             setQuestionsData(questionsArray);
             setScreen('detailedAnalysis');
-            console.log('🚀 ~ onSubmit ~ mode:', mode);
+            console.log('🚀 ~ handleSubmit ~ mode:', mode);
             switch (mode) {
                 case 'demo':
                     // const demoPollResponse: PythonAppState = {
@@ -311,7 +311,7 @@ export default function Home(): JSX.Element {
                                 </div>
                                 <form
                                     className='flex flex-col gap-6'
-                                    onSubmit={onSubmit}
+                                    onSubmit={handleSubmit}
                                 >
                                     <p>
                                         Accepts file type: <b>csv</b>
