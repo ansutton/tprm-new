@@ -12,12 +12,18 @@ export function handleSampleData({ setLlmResponse }: handleSampleDataProps) {
     let index = 0;
     const interval = setInterval(() => {
         if (index < analyses.length) {
-            const updatedAnalyses = { ...sampleData.analyses };
-            updatedAnalyses[`analysis_${index}`] = analyses[index];
-            setLlmResponse((prevResponse) => ({
-                ...prevResponse,
-                analyses: updatedAnalyses,
-            }));
+            setLlmResponse((prevResponse) => {
+                // Create a new analyses object that includes all previous ones and the new one
+                const updatedAnalyses = {
+                    ...prevResponse?.analyses,
+                    [`analysis_${index}`]: analyses[index], // Add the next analysis
+                };
+                // Return the updated LlmResponse with the new analyses
+                return {
+                    ...prevResponse,
+                    analyses: updatedAnalyses,
+                };
+            });
             index++;
         } else {
             clearInterval(interval);
