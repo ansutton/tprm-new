@@ -109,7 +109,6 @@ export function ExportTable({
                 tw`w-fit whitespace-nowrap rounded-lg p-2`,
                 tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
                 tw`flex items-center gap-1.5`,
-                tw`focus:outline-none`,
             )}
         >
             <span

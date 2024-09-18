@@ -13,12 +13,11 @@ import { useTheme } from '@/hooks';
 import { LlmResponse, Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
-// TODO: put mode props back as not optional if we bring back this feature.
 interface TopbarProps {
     appLevelTableData: any[];
     llmResponse: LlmResponse;
-    mode?: Mode;
-    setMode?: React.Dispatch<React.SetStateAction<Mode>>;
+    mode: Mode;
+    setMode: React.Dispatch<React.SetStateAction<Mode>>;
     screen: Screen;
 }
 
@@ -100,7 +99,7 @@ export function Topbar({
                     <ExportTable llmResponse={llmResponse} />
                 )}
 
-                {/* <ModeMenu mode={mode} setMode={setMode} /> */}
+                <ModeMenu mode={mode} setMode={setMode} />
 
                 <ThemeMenu />
             </div>
@@ -184,7 +183,6 @@ function ThemeMenu(): JSX.Element {
             <MenuButton
                 className={clsx(
                     tw`rounded-lg p-2`,
-                    tw`focus:outline-none`,
                     theme === 'light' && tw`hover:bg-zinc-200`,
                     theme === 'dark' && tw`hover:bg-zinc-800`,
                 )}

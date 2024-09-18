@@ -255,6 +255,8 @@ export default function Home(): JSX.Element {
         <div className='w-full dark:text-zinc-50'>
             <Topbar
                 llmResponse={llmResponse}
+                mode={mode}
+                setMode={setMode}
                 screen={screen}
                 appLevelTableData={appLevelTableData}
             />

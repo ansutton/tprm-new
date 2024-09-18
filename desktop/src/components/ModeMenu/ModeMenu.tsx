@@ -17,7 +17,6 @@ export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
         <div
             className={clsx(
                 tw`rounded-lg p-1 text-sm font-bold`,
-                tw`focus:outline-none`,
                 theme === 'light' && tw`hover:bg-zinc-200`,
                 theme === 'dark' && tw`hover:bg-zinc-800`,
             )}
