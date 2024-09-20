@@ -391,7 +391,7 @@ export default function Home(): JSX.Element {
                                     <div>
                                         <p className='mb-3 text-sm'>
                                             {llmResponse?.is_complete ? (
-                                                `The third party and the AI model provided the same response for ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
+                                                `The third party responses and AI model response align on ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
                                             ) : (
                                                 <i>Analyzing...</i>
                                             )}
