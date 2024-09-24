@@ -158,7 +158,7 @@
         "analysis_6": {
             "question": "How are emergency changes performed?",
             "tp_response": "Emergency changes are reviewed and approved on a weekly basis by corresponding product owners.",
-            "ai_analysis": "Based on the provided context, emergency changes are performed through an internal escalation tool or manual escalation based on Google-wide and team-specific escalation criteria. The escalation tool configuration files define the escalation time and contacts, and automated escalation is triggered if the tool does not receive an acknowledgement from the notified center locations.",
+            "ai_analysis": "Emergency changes are reviewed and approved on a weekly basis by corresponding product owners. However, I cannot confirm the process regarding how emergency changes are performed.",
             "citations": [
                 [
                     49,
@@ -177,7 +177,7 @@
             "tp_confidence_score": "0.7352305",
             "ai_confidence_score": "0.85723525",
             "similarity_score": "0.69288725",
-            "answers_align": false,
+            "answers_align": true,
             "is_analysis_complete": true
         },
         "analysis_7": {
@@ -233,7 +233,7 @@
         "analysis_9": {
             "question": "When was the incident response procedure tested?",
             "tp_response": "Our incident response procedures for Google Cloud Platform are tested regularly to ensure effectiveness and readiness. The last test was conducted as part of our ongoing security assurance program, which includes quarterly drills and simulations. These tests are designed to evaluate our response capabilities and improve our team's response times and effectiveness in managing and mitigating real-life security incidents.",
-            "ai_analysis": "According to the information provided in the context, the incident response procedure was tested by EY (Ernst & Young) on January 16, 2020. The test results are mentioned as \"Tests Performed by EY\" and the results are \"No deviations noted.\"",
+            "ai_analysis": "Based on the provided context, there is no direct answer to when the incident response procedure was last tested.",
             "citations": [
                 [
                     51,
@@ -252,7 +252,7 @@
             "tp_confidence_score": "0.84709644",
             "ai_confidence_score": "0.73347884",
             "similarity_score": "0.6526602",
-            "answers_align": false,
+            "answers_align": true,
             "is_analysis_complete": true
         },
         "analysis_10": {
