@@ -12,7 +12,7 @@ import {
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { Pages, Tooltip } from '@/components';
+import { DebouncedInput, Pages, Tooltip } from '@/components';
 import {
     DataItem,
     DataItemField,
@@ -90,6 +90,7 @@ const columns = [
                 )}
             </button>
         ),
+        enableColumnFilter: false,
     }),
 
     columnHelper.accessor('questionNumber', {
@@ -350,6 +351,11 @@ export function DetailedAnalysis({
                                               header.column.columnDef.header,
                                               header.getContext(),
                                           )}
+                                    <DebouncedInput
+                                        value=''
+                                        onChange={() => null}
+                                        placeholder='Search...'
+                                    />
                                 </th>
                             ))}
                         </tr>
