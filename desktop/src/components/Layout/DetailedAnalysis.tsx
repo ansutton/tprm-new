@@ -5,6 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
+    getFilteredRowModel,
     Row,
     useReactTable,
 } from '@tanstack/react-table';
@@ -293,6 +294,7 @@ export function DetailedAnalysis({
         columns,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
     });
 
     /**
