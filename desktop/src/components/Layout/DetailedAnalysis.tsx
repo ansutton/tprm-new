@@ -356,12 +356,14 @@ export function DetailedAnalysis({
                                           )}
                                     <DebouncedInput
                                         className={clsx(
-                                            tw`rounded p-1 font-normal`,
-                                            tw`dark:bg-zinc-800 dark:shadow-indigo-900/40`,
+                                            tw`w-full rounded border p-1 font-normal`,
+                                            tw`border-indigo-400 bg-zinc-50`,
+                                            tw`dark:border-indigo-500/50 dark:bg-zinc-900 dark:text-zinc-100`,
                                             header.id === 'expander' &&
                                                 tw`hidden`,
-                                            header.id === 'questionNumber' &&
-                                                tw`w-full`,
+                                            // header.id ===
+                                            //     'questionNumber' &&
+                                            //     tw`w-full`,
                                             // header.id === 'question' &&
                                             //     tw`w-full`,
                                             // header.id ===
@@ -373,8 +375,8 @@ export function DetailedAnalysis({
                                             // header.id ===
                                             //     'citationsPreview' &&
                                             //     tw`w-full`,
-                                            header.id === 'answersAlign' &&
-                                                tw`w-24`,
+                                            // header.id === 'answersAlign' &&
+                                            //     tw`w-full`,
                                         )}
                                         value=''
                                         onChange={() => null}
