@@ -1,6 +1,7 @@
 import { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
+    ColumnFiltersState,
     createColumnHelper,
     flexRender,
     getCoreRowModel,
@@ -178,9 +179,10 @@ export function DetailedAnalysis({
     setAppLevelTableData,
 }: DetailedAnalysisProps): JSX.Element {
     /**
-     * State Hook
+     * State Hooks
      */
     const [data, setData] = useState(handleData());
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
     /**
      * Ref Hook and Export
@@ -290,8 +292,11 @@ export function DetailedAnalysis({
      * React Table Hook
      */
     const table = useReactTable({
-        data,
         columns,
+        data,
+        state: {
+            columnFilters,
+        },
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
