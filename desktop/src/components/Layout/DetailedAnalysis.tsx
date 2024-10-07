@@ -22,11 +22,12 @@ import {
 import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
 function TableHeader({
+    additionalClasses = '',
     headerContent,
     infoContent,
 }: TableHeaderProps): JSX.Element {
     return (
-        <div className='flex items-center gap-1.5'>
+        <div className={clsx(additionalClasses, tw`flex items-center gap-1.5`)}>
             <span>{headerContent}</span>
             {infoContent && <Tooltip>{infoContent}</Tooltip>}
         </div>
@@ -94,7 +95,9 @@ const columns = [
     }),
 
     columnHelper.accessor('questionNumber', {
-        header: () => null,
+        header: () => (
+            <TableHeader headerContent='#' additionalClasses='invisible' />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
@@ -323,7 +326,7 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`p-3 text-left text-sm`,
+                                        tw`space-y-2 p-3 text-left align-bottom text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
                                         header.id === 'expander' && tw`w-5`,
                                         header.id === 'questionNumber' &&
@@ -352,6 +355,27 @@ export function DetailedAnalysis({
                                               header.getContext(),
                                           )}
                                     <DebouncedInput
+                                        className={clsx(
+                                            tw`rounded p-1 font-normal`,
+                                            tw`dark:bg-zinc-800 dark:shadow-indigo-900/40`,
+                                            header.id === 'expander' &&
+                                                tw`hidden`,
+                                            header.id === 'questionNumber' &&
+                                                tw`w-full`,
+                                            // header.id === 'question' &&
+                                            //     tw`w-full`,
+                                            // header.id ===
+                                            //     'tpResponsePreview' &&
+                                            //     tw`w-full`,
+                                            // header.id ===
+                                            //     'aiAnalysisPreview' &&
+                                            //     tw`w-w-full`,
+                                            // header.id ===
+                                            //     'citationsPreview' &&
+                                            //     tw`w-full`,
+                                            header.id === 'answersAlign' &&
+                                                tw`w-24`,
+                                        )}
                                         value=''
                                         onChange={() => null}
                                         placeholder='Search...'

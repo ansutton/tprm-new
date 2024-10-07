@@ -43,6 +43,7 @@ export interface SubmitRequestParams {
     // xlsxFileBuffer: string,
 }
 export interface TableHeaderProps {
+    additionalClasses?: string;
     headerContent: string;
     infoContent?: ReactNode;
 }
