@@ -358,7 +358,7 @@ export function DetailedAnalysis({
                                         className={clsx(
                                             tw`w-full rounded border p-1 font-normal`,
                                             tw`border-indigo-400 bg-zinc-50`,
-                                            tw`dark:border-indigo-500/50 dark:bg-zinc-900 dark:text-zinc-100`,
+                                            tw`dark:border-indigo-400/50 dark:bg-zinc-900 dark:text-zinc-100`,
                                             header.id === 'expander' &&
                                                 tw`hidden`,
                                             // header.id ===
