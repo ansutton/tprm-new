@@ -1,12 +1,14 @@
 import { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
+    Column,
     ColumnFiltersState,
     createColumnHelper,
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
     getFilteredRowModel,
+    Header,
     Row,
     useReactTable,
 } from '@tanstack/react-table';
@@ -301,6 +303,7 @@ export function DetailedAnalysis({
         state: {
             columnFilters,
         },
+        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
@@ -354,33 +357,9 @@ export function DetailedAnalysis({
                                               header.column.columnDef.header,
                                               header.getContext(),
                                           )}
-                                    <DebouncedInput
-                                        className={clsx(
-                                            tw`w-full rounded border p-1 font-normal`,
-                                            tw`border-indigo-400 bg-zinc-50`,
-                                            tw`dark:border-indigo-400/50 dark:bg-zinc-900 dark:text-zinc-100`,
-                                            header.id === 'expander' &&
-                                                tw`hidden`,
-                                            // header.id ===
-                                            //     'questionNumber' &&
-                                            //     tw`w-full`,
-                                            // header.id === 'question' &&
-                                            //     tw`w-full`,
-                                            // header.id ===
-                                            //     'tpResponsePreview' &&
-                                            //     tw`w-full`,
-                                            // header.id ===
-                                            //     'aiAnalysisPreview' &&
-                                            //     tw`w-w-full`,
-                                            // header.id ===
-                                            //     'citationsPreview' &&
-                                            //     tw`w-full`,
-                                            // header.id === 'answersAlign' &&
-                                            //     tw`w-full`,
-                                        )}
-                                        value=''
-                                        onChange={() => null}
-                                        placeholder='Search...'
+                                    <Filter
+                                        column={header.column}
+                                        header={header}
                                     />
                                 </th>
                             ))}
@@ -490,5 +469,46 @@ function ExpandedRow({
                 {content}
             </td>
         </tr>
+    );
+}
+
+function Filter({
+    column,
+    header,
+}: {
+    column: Column<any, unknown>;
+    header: Header<DataItem, unknown>;
+}): JSX.Element {
+    const columnFilterValue = column.getFilterValue();
+
+    return (
+        <DebouncedInput
+            className={clsx(
+                tw`w-full rounded border p-1 font-normal`,
+                tw`border-indigo-400 bg-zinc-50`,
+                tw`dark:border-indigo-400/50 dark:bg-zinc-900 dark:text-zinc-100`,
+                header.id === 'expander' && tw`hidden`,
+                // header.id ===
+                //     'questionNumber' &&
+                //     tw`w-full`,
+                // header.id === 'question' &&
+                //     tw`w-full`,
+                // header.id ===
+                //     'tpResponsePreview' &&
+                //     tw`w-full`,
+                // header.id ===
+                //     'aiAnalysisPreview' &&
+                //     tw`w-w-full`,
+                // header.id ===
+                //     'citationsPreview' &&
+                //     tw`w-full`,
+                // header.id === 'answersAlign' &&
+                //     tw`w-full`,
+            )}
+            onChange={(value) => column.setFilterValue(value)}
+            placeholder='Search...'
+            type='text'
+            value={(columnFilterValue ?? '') as string}
+        />
     );
 }
