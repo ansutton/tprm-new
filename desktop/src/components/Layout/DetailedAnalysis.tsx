@@ -337,18 +337,20 @@ export function DetailedAnalysis({
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
+                                        tw``,
                                         header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
+                                        tw``,
                                         header.id === 'citationsPreview' &&
                                             tw`w-1/6`,
                                         header.id === 'answersAlign' &&
                                             tw`w-1/6`,
                                         // header.id === 'similarityScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                         // header.id === 'aiConfidenceScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                         // header.id === 'tpConfidenceScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -358,6 +360,16 @@ export function DetailedAnalysis({
                                               header.getContext(),
                                           )}
                                     <Filter
+                                        additionalClasses={clsx(
+                                            header.id === 'questionNumber' &&
+                                                tw`hidden`,
+                                            header.id === 'tpResponsePreview' &&
+                                                tw`hidden`,
+                                            header.id === 'aiAnalysisPreview' &&
+                                                tw`hidden`,
+                                            header.id === 'citationsPreview' &&
+                                                tw`hidden`,
+                                        )}
                                         column={header.column}
                                         header={header}
                                     />
@@ -473,9 +485,11 @@ function ExpandedRow({
 }
 
 function Filter({
+    additionalClasses = '',
     column,
     header,
 }: {
+    additionalClasses?: string;
     column: Column<any, unknown>;
     header: Header<DataItem, unknown>;
 }): JSX.Element {
@@ -484,6 +498,7 @@ function Filter({
     return (
         <DebouncedInput
             className={clsx(
+                additionalClasses,
                 tw`w-full rounded border p-1 font-normal`,
                 tw`border-indigo-400 bg-zinc-50`,
                 tw`dark:border-indigo-400/50 dark:bg-zinc-900 dark:text-zinc-100`,
