@@ -1,16 +1,20 @@
 import { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
+    Column,
+    ColumnFiltersState,
     createColumnHelper,
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
+    getFilteredRowModel,
+    Header,
     Row,
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { Pages, Tooltip } from '@/components';
+import { DebouncedInput, Pages, Tooltip } from '@/components';
 import {
     DataItem,
     DataItemField,
@@ -20,11 +24,12 @@ import {
 import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
 function TableHeader({
+    additionalClasses = '',
     headerContent,
     infoContent,
 }: TableHeaderProps): JSX.Element {
     return (
-        <div className='flex items-center gap-1.5'>
+        <div className={clsx(additionalClasses, tw`flex items-center gap-1.5`)}>
             <span>{headerContent}</span>
             {infoContent && <Tooltip>{infoContent}</Tooltip>}
         </div>
@@ -88,10 +93,13 @@ const columns = [
                 )}
             </button>
         ),
+        enableColumnFilter: false,
     }),
 
     columnHelper.accessor('questionNumber', {
-        header: () => null,
+        header: () => (
+            <TableHeader headerContent='#' additionalClasses='invisible' />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
@@ -177,9 +185,10 @@ export function DetailedAnalysis({
     setAppLevelTableData,
 }: DetailedAnalysisProps): JSX.Element {
     /**
-     * State Hook
+     * State Hooks
      */
     const [data, setData] = useState(handleData());
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
     /**
      * Ref Hook and Export
@@ -289,10 +298,15 @@ export function DetailedAnalysis({
      * React Table Hook
      */
     const table = useReactTable({
-        data,
         columns,
+        data,
+        state: {
+            columnFilters,
+        },
+        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
     });
 
     /**
@@ -315,7 +329,7 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`p-3 text-left text-sm`,
+                                        tw`space-y-2 p-3 text-left align-bottom text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
                                         header.id === 'expander' && tw`w-5`,
                                         header.id === 'questionNumber' &&
@@ -323,18 +337,20 @@ export function DetailedAnalysis({
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
+                                        tw``,
                                         header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
+                                        tw``,
                                         header.id === 'citationsPreview' &&
                                             tw`w-1/6`,
                                         header.id === 'answersAlign' &&
                                             tw`w-1/6`,
                                         // header.id === 'similarityScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                         // header.id === 'aiConfidenceScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                         // header.id === 'tpConfidenceScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -343,6 +359,20 @@ export function DetailedAnalysis({
                                               header.column.columnDef.header,
                                               header.getContext(),
                                           )}
+                                    <Filter
+                                        additionalClasses={clsx(
+                                            header.id === 'questionNumber' &&
+                                                tw`hidden`,
+                                            header.id === 'tpResponsePreview' &&
+                                                tw`hidden`,
+                                            header.id === 'aiAnalysisPreview' &&
+                                                tw`hidden`,
+                                            header.id === 'citationsPreview' &&
+                                                tw`hidden`,
+                                        )}
+                                        column={header.column}
+                                        header={header}
+                                    />
                                 </th>
                             ))}
                         </tr>
@@ -451,5 +481,50 @@ function ExpandedRow({
                 {content}
             </td>
         </tr>
+    );
+}
+
+function Filter({
+    additionalClasses = '',
+    column,
+    header,
+}: {
+    additionalClasses?: string;
+    column: Column<any, unknown>;
+    header: Header<DataItem, unknown>;
+}): JSX.Element {
+    const columnFilterValue = column.getFilterValue();
+
+    return (
+        <DebouncedInput
+            className={clsx(
+                additionalClasses,
+                tw`w-full rounded border p-1 font-normal`,
+                tw`border-indigo-400 bg-zinc-50`,
+                tw`dark:border-indigo-400/50 dark:bg-zinc-900 dark:text-zinc-100`,
+                header.id === 'expander' && tw`hidden`,
+                // header.id ===
+                //     'questionNumber' &&
+                //     tw`w-full`,
+                // header.id === 'question' &&
+                //     tw`w-full`,
+                // header.id ===
+                //     'tpResponsePreview' &&
+                //     tw`w-full`,
+                // header.id ===
+                //     'aiAnalysisPreview' &&
+                //     tw`w-w-full`,
+                // header.id ===
+                //     'citationsPreview' &&
+                //     tw`w-full`,
+                // header.id === 'answersAlign' &&
+                //     tw`w-full`,
+            )}
+            debounce={400}
+            onChange={(value) => column.setFilterValue(value)}
+            placeholder='Search...'
+            type='text'
+            value={(columnFilterValue ?? '') as string}
+        />
     );
 }

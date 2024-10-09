@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import {
-    ArrowUpCircleIcon,
+    ArrowLeftCircleIcon,
     ChartBarSquareIcon,
     ChevronLeftIcon,
     DocumentMagnifyingGlassIcon,
@@ -91,9 +91,9 @@ export function Sidebar({
 
             <nav className='mt-6 space-y-2'>
                 <SidebarMenuItem
-                    title='File Upload'
+                    title='File Selection'
                     additionalButtonClasses={tw``}
-                    icon={<ArrowUpCircleIcon className={iconClasses} />}
+                    icon={<ArrowLeftCircleIcon className={iconClasses} />}
                     onClick={() => handleResetApp && handleResetApp()}
                     isSidebarExpanded={isSidebarExpanded}
                     isSidebarFullyExpanded={isSidebarFullyExpanded}

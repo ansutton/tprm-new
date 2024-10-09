@@ -18,6 +18,7 @@ export * from './OverviewCards/ThirdPartyInfo';
 export * from './ui/Button';
 export * from './ui/Card';
 export * from './ui/CircularProgress';
+export * from './ui/DebouncedInput';
 export * from './ui/Heading';
 export * from './ui/MenuItemButton';
 export * from './ui/ProgressBarBase';
