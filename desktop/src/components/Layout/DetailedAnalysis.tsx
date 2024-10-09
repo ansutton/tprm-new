@@ -520,6 +520,7 @@ function Filter({
                 // header.id === 'answersAlign' &&
                 //     tw`w-full`,
             )}
+            debounce={400}
             onChange={(value) => column.setFilterValue(value)}
             placeholder='Search...'
             type='text'
