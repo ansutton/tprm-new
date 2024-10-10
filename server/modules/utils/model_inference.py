@@ -8,7 +8,7 @@ from langchain.chains import RetrievalQA
 
 def generate_model_response(vector_db, question):
     # LLM from Ollama
-    local_model = "llama2"
+    local_model = "llama3.2"
     llm = ChatOllama(model=local_model)
 
     qa_chain = RetrievalQA.from_chain_type(
