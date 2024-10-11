@@ -95,7 +95,8 @@ function ResponsesAlignItem({
                 <p
                     className={clsx(
                         tw`absolute top-0`,
-                        tw`text-lg font-normal italic opacity-55`,
+                        tw`text-lg font-normal italic`,
+                        tw`animate-pulse`,
                         isComplete && tw`invisible`,
                     )}
                 >

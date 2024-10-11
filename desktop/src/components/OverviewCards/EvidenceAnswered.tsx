@@ -60,7 +60,7 @@ export function EvidenceAnswered({
                 </div>
                 <p
                     className={clsx(
-                        tw`text-lg italic opacity-55`,
+                        tw`animate-pulse text-lg italic`,
                         tw`absolute top-0`,
                         isComplete && tw`invisible`,
                     )}
