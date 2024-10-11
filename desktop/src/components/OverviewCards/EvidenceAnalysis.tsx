@@ -31,7 +31,7 @@ export function EvidenceAnalysis({
             </Heading>
             <div className='space-y-4 text-sm font-bold'>
                 <EvidenceAnalysisItem
-                    title='Documents Uploaded'
+                    title='Documents Selected'
                     llmResponse={llmResponse}
                     progressPercentage={100}
                     questionsData={questionsData}
