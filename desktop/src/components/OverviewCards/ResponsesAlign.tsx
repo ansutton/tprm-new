@@ -94,7 +94,8 @@ function ResponsesAlignItem({
                 </div>
                 <p
                     className={clsx(
-                        tw`absolute top-0 text-lg font-normal italic opacity-55`,
+                        tw`absolute top-0`,
+                        tw`text-lg font-normal italic opacity-55`,
                         isComplete && tw`invisible`,
                     )}
                 >
