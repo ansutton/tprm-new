@@ -150,7 +150,7 @@ export function truncate(
     if (field && typeof field !== 'number') {
         return field?.length <= maxLength
             ? field
-            : `${field?.slice(0, maxLength)}...`;
+            : `${field?.slice(0, maxLength)}`;
     }
     return null;
 }

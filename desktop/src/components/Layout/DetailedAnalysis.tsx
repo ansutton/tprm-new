@@ -211,11 +211,11 @@ export function DetailedAnalysis({
             questionsData.map((question, index) => ({
                 questionNumber: index + 1,
                 question: question,
-                tpResponsePreview: truncate(excelData[index + 1][2], 30),
+                tpResponsePreview: truncate(excelData[index + 1][2], 40),
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
-                        30,
+                        40,
                     ),
                 ),
                 citationsPreview: (
@@ -337,10 +337,8 @@ export function DetailedAnalysis({
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
-                                        tw``,
                                         header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
-                                        tw``,
                                         header.id === 'citationsPreview' &&
                                             tw`w-1/6`,
                                         header.id === 'answersAlign' &&
@@ -404,14 +402,49 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiAnalysisPreview') &&
-                                                tw`select-none`,
+                                                    'aiAnalysisPreview') && [
+                                                tw`relative select-none overflow-hidden whitespace-nowrap`,
+                                            ],
                                         )}
                                     >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext(),
-                                        )}
+                                        <div
+                                            className={clsx(
+                                                (cell.column.id ===
+                                                    'tpResponsePreview' ||
+                                                    cell.column.id ===
+                                                        'aiAnalysisPreview') && [
+                                                    tw`absolute inset-0 flex w-full items-center`,
+                                                ],
+                                            )}
+                                        >
+                                            <p>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
+                                                )}
+                                            </p>
+                                        </div>
+                                        <div
+                                            className={clsx(
+                                                (cell.column.id ===
+                                                    'tpResponsePreview' ||
+                                                    cell.column.id ===
+                                                        'aiAnalysisPreview') && [
+                                                    tw`absolute inset-y-0 right-0 w-1/2`,
+                                                    tw`bg-gradient-to-r from-transparent to-90%`,
+                                                    tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
+                                                    row.getIsExpanded()
+                                                        ? [
+                                                              tw`to-zinc-200`,
+                                                              tw`dark:to-zinc-900`,
+                                                          ]
+                                                        : [
+                                                              tw`to-zinc-100 group-hover:to-zinc-200`,
+                                                              tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
+                                                          ],
+                                                ],
+                                            )}
+                                        />
                                     </td>
                                 ))}
                             </tr>
