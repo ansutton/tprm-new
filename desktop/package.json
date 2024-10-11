@@ -26,8 +26,11 @@
         "xlsx": "^0.18.5"
     },
     "devDependencies": {
-        "@types/react": "^18.2.64",
-        "@types/react-dom": "^18.2.21",
+        "@testing-library/dom": "^10.4.0",
+        "@testing-library/react": "^16.0.1",
+        "@testing-library/user-event": "^14.5.2",
+        "@types/react": "^18.3.11",
+        "@types/react-dom": "^18.3.1",
         "@typescript-eslint/eslint-plugin": "^7.1.1",
         "@typescript-eslint/parser": "^7.1.1",
         "@vitejs/plugin-react": "^4.2.1",
