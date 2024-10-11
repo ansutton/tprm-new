@@ -388,7 +388,7 @@ export function DetailedAnalysis({
                                 onClick={() => row.toggleExpanded()}
                                 className={clsx(
                                     tw`group`,
-                                    tw`transition-all duration-200 ease-out`,
+                                    // tw`transition-all duration-200 ease-out`,
                                     tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900`,
                                     row.getIsExpanded() &&
                                         tw`bg-zinc-200 dark:bg-zinc-900`,
