@@ -1,5 +1,4 @@
-// import { defineConfig } from 'vite';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 import path from 'node:path';
 import electron from 'vite-plugin-electron/simple';
 import react from '@vitejs/plugin-react';
@@ -33,5 +32,5 @@ export default defineConfig({
             '@': '/src',
         },
     },
-    test: {},
 });
+
