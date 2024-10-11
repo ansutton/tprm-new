@@ -393,7 +393,9 @@ export default function Home(): JSX.Element {
                                             {llmResponse?.is_complete ? (
                                                 `The third party responses and AI model response align on ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
                                             ) : (
-                                                <i>Analyzing...</i>
+                                                <i className='animate-pulse'>
+                                                    Analyzing...
+                                                </i>
                                             )}
                                         </p>
                                         <DetailedAnalysis

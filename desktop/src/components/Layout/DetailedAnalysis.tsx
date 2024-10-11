@@ -211,11 +211,11 @@ export function DetailedAnalysis({
             questionsData.map((question, index) => ({
                 questionNumber: index + 1,
                 question: question,
-                tpResponsePreview: truncate(excelData[index + 1][2], 30),
+                tpResponsePreview: truncate(excelData[index + 1][2], 40),
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
-                        30,
+                        40,
                     ),
                 ),
                 citationsPreview: (
@@ -329,7 +329,7 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`space-y-2 p-3 text-left align-bottom text-sm`,
+                                        tw`space-y-2 whitespace-nowrap p-3 text-left align-top text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
                                         header.id === 'expander' && tw`w-5`,
                                         header.id === 'questionNumber' &&
@@ -337,10 +337,8 @@ export function DetailedAnalysis({
                                         header.id === 'question' && tw`w-fit`,
                                         header.id === 'tpResponsePreview' &&
                                             tw`w-1/6`,
-                                        tw``,
                                         header.id === 'aiAnalysisPreview' &&
                                             tw`w-1/6`,
-                                        tw``,
                                         header.id === 'citationsPreview' &&
                                             tw`w-1/6`,
                                         header.id === 'answersAlign' &&
@@ -390,7 +388,7 @@ export function DetailedAnalysis({
                                 onClick={() => row.toggleExpanded()}
                                 className={clsx(
                                     tw`group`,
-                                    tw`transition-all duration-200 ease-out`,
+                                    // tw`transition-all duration-200 ease-out`,
                                     tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900`,
                                     row.getIsExpanded() &&
                                         tw`bg-zinc-200 dark:bg-zinc-900`,
@@ -404,14 +402,49 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiAnalysisPreview') &&
-                                                tw`select-none`,
+                                                    'aiAnalysisPreview') && [
+                                                tw`relative select-none overflow-hidden whitespace-nowrap`,
+                                            ],
                                         )}
                                     >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext(),
-                                        )}
+                                        <div
+                                            className={clsx(
+                                                (cell.column.id ===
+                                                    'tpResponsePreview' ||
+                                                    cell.column.id ===
+                                                        'aiAnalysisPreview') && [
+                                                    tw`absolute inset-0 flex w-full items-center p-3`,
+                                                ],
+                                            )}
+                                        >
+                                            <div>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={clsx(
+                                                (cell.column.id ===
+                                                    'tpResponsePreview' ||
+                                                    cell.column.id ===
+                                                        'aiAnalysisPreview') && [
+                                                    tw`absolute inset-y-0 right-0 w-1/2`,
+                                                    tw`bg-gradient-to-r from-transparent to-90%`,
+                                                    tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
+                                                    row.getIsExpanded()
+                                                        ? [
+                                                              tw`to-zinc-200`,
+                                                              tw`dark:to-zinc-900`,
+                                                          ]
+                                                        : [
+                                                              tw`to-zinc-100 group-hover:to-zinc-200`,
+                                                              tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
+                                                          ],
+                                                ],
+                                            )}
+                                        />
                                     </td>
                                 ))}
                             </tr>
