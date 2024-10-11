@@ -417,12 +417,12 @@ export function DetailedAnalysis({
                                                 ],
                                             )}
                                         >
-                                            <p>
+                                            <div>
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext(),
                                                 )}
-                                            </p>
+                                            </div>
                                         </div>
                                         <div
                                             className={clsx(
