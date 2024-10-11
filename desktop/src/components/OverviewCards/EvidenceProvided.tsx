@@ -37,7 +37,7 @@ export function EvidenceProvided({
                 additionalClasses={tw`mb-4 opacity-80`}
                 fontSize='text-lg'
             >
-                Types of Third Party Evidence Uploaded
+                Types of Third Party Evidence Selected
             </Heading>
             <div
                 className={clsx(
