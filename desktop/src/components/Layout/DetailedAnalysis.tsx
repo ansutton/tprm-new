@@ -329,7 +329,7 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`space-y-2 p-3 text-left align-bottom text-sm`,
+                                        tw`space-y-2 whitespace-nowrap p-3 text-left align-top text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
                                         header.id === 'expander' && tw`w-5`,
                                         header.id === 'questionNumber' &&
@@ -413,7 +413,7 @@ export function DetailedAnalysis({
                                                     'tpResponsePreview' ||
                                                     cell.column.id ===
                                                         'aiAnalysisPreview') && [
-                                                    tw`absolute inset-0 flex w-full items-center`,
+                                                    tw`absolute inset-0 flex w-full items-center p-3`,
                                                 ],
                                             )}
                                         >
