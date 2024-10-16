@@ -70,10 +70,13 @@ export default function Home(): JSX.Element {
         file !== null && file?.type === fileType;
     const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
     const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
-    const isResponsesFileValid = isFileValid(
-        responsesFile,
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    );
+    // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
+    const isResponsesFileValid = responsesFile
+        ? isFileValid(
+              responsesFile,
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          )
+        : true;
     const areAllFilesValid: boolean =
         isQuestionsFileValid && isEvidenceFileValid && isResponsesFileValid;
     function onFileChange(
@@ -98,7 +101,8 @@ export default function Home(): JSX.Element {
                     });
                     resolve(jsonData as any[][]);
                 } else {
-                    reject('Error reading file');
+                    return [];
+                    // reject('Error reading file');
                 }
             };
             reader.readAsArrayBuffer(file);
@@ -121,9 +125,12 @@ export default function Home(): JSX.Element {
     }
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (questionsFile && evidenceFile && responsesFile) {
-            const parsedExcelFile = await parseExcelFile(responsesFile);
-            setExcelData(parsedExcelFile);
+        let parsedExcelFile: any[][] = [];
+        if (questionsFile && evidenceFile) {
+            if (responsesFile) {
+                parsedExcelFile = await parseExcelFile(responsesFile);
+                setExcelData(parsedExcelFile);
+            }
             const csvTextFile = await readFileAsText(questionsFile);
             const questionsArray = csvTextFile
                 .split('\r\n')
@@ -142,7 +149,7 @@ export default function Home(): JSX.Element {
                         await readFileAsDataUrl(questionsFile);
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
                     // const xlsxFileBuffer = await readFileAsDataUrl(responsesFile)
-                    submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile }); // xlsxFileBuffer});
+                    submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
                     const interval = setInterval(async () => {
                         const pollResponse = await poll();
                         console.log(

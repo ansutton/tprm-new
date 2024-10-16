@@ -58,12 +58,15 @@ def main():
         
         # Get data from Third Party responses file.
         parsed_excel_file = request_data["parsedExcelFile"]
+        
+        # Check if user included a Third Party responses file.
+        if parsed_excel_file: 
 
-        # Set app state Third Party responses.
-        for i in range(len(parsed_excel_file)):
-            if i > 0: # skip header line
-                if "analysis_%s" % (i - 1) in app_state.analyses:
-                    app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
+            # Set app state Third Party responses.
+            for i in range(len(parsed_excel_file)):
+                if i > 0: # skip header line
+                    if "analysis_%s" % (i - 1) in app_state.analyses:
+                        app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
 
         # Get pdf file buffer and parse it
         pdf_file_buffer = request_data["evidencePdfFileBuffer"]

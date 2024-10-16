@@ -211,7 +211,10 @@ export function DetailedAnalysis({
             questionsData.map((question, index) => ({
                 questionNumber: index + 1,
                 question: question,
-                tpResponsePreview: truncate(excelData[index + 1][2], 40),
+                tpResponsePreview:
+                    excelData.length === 0
+                        ? 'No Third Party Responses selected'
+                        : truncate(excelData[index + 1][2], 40),
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
@@ -250,7 +253,10 @@ export function DetailedAnalysis({
                 //     ),
                 // ),
                 // 'N/A',
-                tpResponseFull: excelData[index + 1][2],
+                tpResponseFull:
+                    excelData.length === 0
+                        ? 'No Third Party Responses selected'
+                        : excelData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                 ),
