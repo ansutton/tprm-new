@@ -3,18 +3,18 @@ import clsx from 'clsx';
 import { tw } from '@/utils';
 
 interface ButtonProps {
-    additionalClasses: string;
+    additionalClasses?: string;
     children: ReactNode;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     startIcon?: JSX.Element | null;
-    variant: 'disabledSolid' | 'outlined' | 'solid' | 'text';
+    variant?: 'disabledSolid' | 'outlined' | 'solid' | 'text';
 }
 
 export function Button({
-    additionalClasses,
+    additionalClasses = '',
     children,
     onClick = () => null,
-    variant,
+    variant = 'solid',
     startIcon = null,
 }: ButtonProps): JSX.Element {
     const variantClasses: Record<string, string> = {
