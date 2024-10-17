@@ -22,11 +22,11 @@ export function ModeMenu({
         <div
             className={clsx(
                 tw`rounded-lg p-1 text-sm font-bold`,
-                screen !== 'fileUpload' && tw`cursor-default hover:bg-inherit`,
-                screen === 'fileUpload' &&
+                screen !== 'fileSelection' && tw`cursor-default hover:bg-inherit`,
+                screen === 'fileSelection' &&
                     theme === 'light' &&
                     tw`hover:bg-zinc-200`,
-                screen === 'fileUpload' &&
+                screen === 'fileSelection' &&
                     theme === 'dark' &&
                     tw`hover:bg-zinc-800`,
             )}
@@ -35,15 +35,15 @@ export function ModeMenu({
                 <MenuButton
                     className={clsx(
                         tw`flex gap-1 p-1`,
-                        screen !== 'fileUpload' && tw`hover:bg-inherit`,
-                        screen === 'fileUpload' &&
+                        screen !== 'fileSelection' && tw`hover:bg-inherit`,
+                        screen === 'fileSelection' &&
                             theme === 'light' &&
                             tw`text-zinc-600 hover:bg-zinc-200`,
-                        screen === 'fileUpload' &&
+                        screen === 'fileSelection' &&
                             theme === 'dark' &&
                             tw`text-zinc-300 hover:bg-zinc-800`,
                     )}
-                    disabled={screen !== 'fileUpload'}
+                    disabled={screen !== 'fileSelection'}
                 >
                     Mode:
                     <span

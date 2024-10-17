@@ -37,7 +37,7 @@ export default function Home(): JSX.Element {
     /**
      * State Hooks
      */
-    const [screen, setScreen] = useState<Screen>('fileUpload');
+    const [screen, setScreen] = useState<Screen>('fileSelection');
     const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
     const [isSidebarFullyExpanded, setIsSidebarFullyExpanded] =
         useState<boolean>(true);
@@ -230,7 +230,7 @@ export default function Home(): JSX.Element {
                 appLevelTableData={appLevelTableData}
             />
 
-            {screen !== 'fileUpload' && (
+            {screen !== 'fileSelection' && (
                 <Sidebar
                     isSidebarExpanded={isSidebarExpanded}
                     setIsSidebarExpanded={setIsSidebarExpanded}
@@ -246,13 +246,13 @@ export default function Home(): JSX.Element {
                 className={clsx(
                     tw`pt-[87px]`,
                     tw`flex-1 transition-all duration-300 ease-in-out`,
-                    screen === 'fileUpload' ? tw`px-16` : null,
-                    screen !== 'fileUpload' && isSidebarExpanded
+                    screen === 'fileSelection' ? tw`px-16` : null,
+                    screen !== 'fileSelection' && isSidebarExpanded
                         ? tw`pl-64`
                         : tw`pl-16`,
                 )}
             >
-                {screen === 'fileUpload' && (
+                {screen === 'fileSelection' && (
                     <Heading level={3}>AI Evidence Reviewer</Heading>
                 )}
                 {screen === 'loading' && (
@@ -260,8 +260,8 @@ export default function Home(): JSX.Element {
                 )}
 
                 <div className='container mx-auto pb-5 pt-5'>
-                    {screen === 'fileUpload' && <FileSelection />}
-                    {screen === 'fileUpload' && (
+                    {screen === 'fileSelection' && <FileSelection />}
+                    {screen === 'fileSelection' && (
                         <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                             <div className='mx-auto flex flex-col gap-6'>
                                 <div className='flex items-center gap-3'>

@@ -98,7 +98,7 @@ export function Sidebar({
                     isSidebarExpanded={isSidebarExpanded}
                     isSidebarFullyExpanded={isSidebarFullyExpanded}
                     screen={screen}
-                    screenAssignment='fileUpload'
+                    screenAssignment='fileSelection'
                 />
 
                 <div className='px-2 py-2'>
