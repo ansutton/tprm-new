@@ -1,5 +1,6 @@
 export * from './ExportTable/ExportTable';
 export * from './Layout/DetailedAnalysis';
+export * from './Layout/FileSelection';
 export * from './Layout/Layout';
 export * from './Layout/Overview';
 export * from './Layout/Pages';

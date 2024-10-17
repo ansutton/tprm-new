@@ -11,6 +11,7 @@ import {
     Button,
     Card,
     DetailedAnalysis,
+    FileSelection,
     Heading,
     Overview,
     Sidebar,
@@ -259,6 +260,7 @@ export default function Home(): JSX.Element {
                 )}
 
                 <div className='container mx-auto pb-5 pt-5'>
+                    {screen === 'fileUpload' && <FileSelection />}
                     {screen === 'fileUpload' && (
                         <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                             <div className='mx-auto flex flex-col gap-6'>
