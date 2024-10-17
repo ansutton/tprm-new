@@ -50,7 +50,7 @@ function SectionSingular({
                     accept={accept}
                     fileInputState={fileInputState}
                     setFileInputState={setFileInputState}
-                    buttonText='Select File'
+                    buttonText={buttonText}
                 />
                 {fileInputState && <div>{fileInputState.name}</div>}
             </div>
