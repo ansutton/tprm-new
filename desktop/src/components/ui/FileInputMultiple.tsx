@@ -1,23 +1,28 @@
 import { useRef } from 'react';
 import { Button } from '@/components';
 
-interface FileInputSingularProps {
+interface FileInputMultipleProps {
     accept?: string;
-    setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
+    setFileInputState: React.Dispatch<React.SetStateAction<File[] | null>>;
     buttonText: string;
 }
 
-export function FileInputSingular({
+export function FileInputMultiple({
     setFileInputState,
     buttonText = 'Select File',
     accept = '',
-}: FileInputSingularProps): JSX.Element {
+}: FileInputMultipleProps): JSX.Element {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
-        if (files?.length === 1) {
-            setFileInputState(files[0]);
+        if (files) {
+            const newFiles = Array.from(files);
+            setFileInputState((prevState) =>
+                Array.isArray(prevState)
+                    ? [...prevState, ...newFiles]
+                    : newFiles,
+            );
         }
     }
 
