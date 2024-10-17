@@ -27,7 +27,7 @@ export function FileSelection(): JSX.Element {
     );
 }
 
-interface SectionProps {
+interface SectionSingularProps {
     accept: string;
     heading: string;
     buttonText: string;
@@ -41,7 +41,7 @@ function SectionSingular({
     buttonText,
     fileInputState,
     setFileInputState,
-}: SectionProps): JSX.Element {
+}: SectionSingularProps): JSX.Element {
     return (
         <>
             <Heading level={4}>{heading}</Heading>
