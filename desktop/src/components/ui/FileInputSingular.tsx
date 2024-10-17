@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Button } from '@/components';
 
 interface FileInputSingularProps {
+    accept?: string;
     fileInputState: File | null;
     setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
     buttonText: string;
@@ -11,7 +12,7 @@ export function FileInputSingular({
     fileInputState,
     setFileInputState,
     buttonText = 'Select File',
-    ...props
+    accept = '',
 }: FileInputSingularProps): JSX.Element {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -26,11 +27,12 @@ export function FileInputSingular({
         <div className='relative'>
             <input
                 type='file'
+                accept={accept}
                 className='absolute h-0 w-0 opacity-0'
                 ref={fileInputRef}
                 onChange={(e) => handleChange(e)}
             />
-            <Button {...props} onClick={() => fileInputRef.current?.click()}>
+            <Button onClick={() => fileInputRef.current?.click()}>
                 {buttonText}
             </Button>
         </div>

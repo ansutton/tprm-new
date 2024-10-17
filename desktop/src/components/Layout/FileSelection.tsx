@@ -1,18 +1,59 @@
 import { useState } from 'react';
-import { FileInputSingular } from '@/components';
+import { Card, FileInputSingular, Heading } from '@/components';
 
 // TODO: extract to three FileInput components, and put them all in here.
 export function FileSelection(): JSX.Element {
+    const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     return (
-        <>
-            <FileInputSingular
+        <Card additionalClasses='mx-auto max-w-2xl space-y-6'>
+            <SectionSingular
+                heading='Blank Question Set'
+                accept='.csv'
+                fileInputState={questionsFile}
+                setFileInputState={setQuestionsFile}
+                buttonText='Select File'
+            />
+
+            <SectionSingular
+                heading='Third Party Responses'
+                accept='.pdf'
                 fileInputState={tpResponsesFile}
                 setFileInputState={setTpResponsesFile}
                 buttonText='Select File'
             />
-            {tpResponsesFile && <div>{tpResponsesFile.name}</div>}
+        </Card>
+    );
+}
+
+interface SectionProps {
+    accept: string;
+    heading: string;
+    buttonText: string;
+    fileInputState: File | null;
+    setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
+}
+
+function SectionSingular({
+    accept,
+    heading,
+    buttonText,
+    fileInputState,
+    setFileInputState,
+}: SectionProps): JSX.Element {
+    return (
+        <>
+            <Heading level={4}>{heading}</Heading>
+            <div className='flex items-center gap-3'>
+                <FileInputSingular
+                    accept={accept}
+                    fileInputState={fileInputState}
+                    setFileInputState={setFileInputState}
+                    buttonText='Select File'
+                />
+                {fileInputState && <div>{fileInputState.name}</div>}
+            </div>
         </>
     );
 }
