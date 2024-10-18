@@ -59,12 +59,14 @@ function SectionSingular({
     return (
         <>
             <Heading level={4}>{heading}</Heading>
-            <div className='flex items-center gap-3'>
-                <FileInputSingular
-                    accept={accept}
-                    setFileInputState={setFileInputState}
-                    buttonText={buttonText}
-                />
+            <div className='flex items-center'>
+                <div className='w-40'>
+                    <FileInputSingular
+                        accept={accept}
+                        setFileInputState={setFileInputState}
+                        buttonText={buttonText}
+                    />
+                </div>
                 {fileInputState && <div>{fileInputState.name}</div>}
             </div>
         </>
@@ -89,16 +91,20 @@ function SectionEvidence({
     return (
         <>
             <Heading level={4}>{heading}</Heading>
-            <div className='flex items-center gap-3'>
-                <FileInputMultiple
-                    accept={accept}
-                    setFileInputState={setFileInputState}
-                    buttonText={buttonText}
-                />
-                {fileInputState &&
-                    fileInputState?.map((file, index) => (
-                        <div key={index}>{file.name}</div>
-                    ))}
+            <div className='flex'>
+                <div className='w-40'>
+                    <FileInputMultiple
+                        accept={accept}
+                        setFileInputState={setFileInputState}
+                        buttonText={buttonText}
+                    />
+                </div>
+                <div className='space-y-2'>
+                    {fileInputState &&
+                        fileInputState?.map((file, index) => (
+                            <div key={index}>{file.name}</div>
+                        ))}
+                </div>
             </div>
         </>
     );
