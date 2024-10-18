@@ -10,7 +10,6 @@ import {
 import { tw } from '@/utils';
 import { EvidenceFiles } from '@/types';
 
-// TODO: extract to three FileInput components, and put them all in here.
 export function FileSelection(): JSX.Element {
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
