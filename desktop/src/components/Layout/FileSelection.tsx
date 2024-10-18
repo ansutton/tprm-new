@@ -15,7 +15,6 @@ import {
     Tooltip,
 } from '@/components';
 import { EvidenceFiles } from '@/types';
-import { tw } from '@/utils';
 
 export function FileSelection(): JSX.Element {
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
