@@ -34,7 +34,7 @@ export function EvidenceAnswered({
                     {title}
                     <span className='relative ml-1.5 inline-flex'>
                         <span className='absolute -top-4'>
-                            <Tooltip twStroke='stroke-2'>{`% of questions analyzed where the AI was able to reference a citation justifying its response`}</Tooltip>
+                            <Tooltip>{`% of questions analyzed where the AI was able to reference a citation justifying its response`}</Tooltip>
                         </span>
                     </span>
                 </h4>

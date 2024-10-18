@@ -11,13 +11,13 @@ import { useTheme } from '@/hooks';
 import { tw } from '@/utils';
 
 interface TooltipProps {
-    twStroke?: string;
     children: ReactNode;
+    icon?: ReactNode;
 }
 
 export function Tooltip({
     children,
-    twStroke = '',
+    icon = <InformationCircleIcon className='size-5 stroke-2' />,
 }: TooltipProps): JSX.Element {
     const { theme } = useTheme();
 
@@ -29,11 +29,7 @@ export function Tooltip({
             onMouseEnter={() => setIsShowing(true)}
             onMouseLeave={() => setIsShowing(false)}
         >
-            <PopoverButton>
-                <InformationCircleIcon
-                    className={clsx(tw`size-5`, tw`${twStroke}`)}
-                />
-            </PopoverButton>
+            <PopoverButton>{icon}</PopoverButton>
             <Transition show={isShowing}>
                 <PopoverPanel
                     transition

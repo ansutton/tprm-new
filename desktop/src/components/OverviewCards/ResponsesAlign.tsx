@@ -25,7 +25,7 @@ export function ResponsesAlign({
                 AI and Third Party Responses Align?
                 <span className='relative ml-1.5 inline-flex'>
                     <span className='absolute -top-4'>
-                        <Tooltip twStroke='stroke-2'>{`Do the third party responses align with the AI generated responses?`}</Tooltip>
+                        <Tooltip>{`Do the third party responses align with the AI generated responses?`}</Tooltip>
                     </span>
                 </span>
             </h4>
