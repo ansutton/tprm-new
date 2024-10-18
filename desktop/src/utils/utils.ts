@@ -88,11 +88,14 @@ export function getTimestamp() {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     return `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
 }
-export function handleAnswersAlign(field: DataItemField): 'Yes' | 'No' | null {
-    if (field !== undefined && field !== null) {
+export function handleAnswersAlign(excelData: any[][], field: DataItemField): 'Yes' | 'No' | 'N/A' | null {
+    if (excelData.length === 0) {
+        return 'N/A';
+    } else if (field !== undefined && field !== null) {
         return field === true ? 'Yes' : 'No';
+    } else{
+        return null;
     }
-    return null;
 }
 export function countQuestionsAnalyzed(llmResponse: LlmResponse): number {
     if (llmResponse?.analyses) {

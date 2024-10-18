@@ -229,7 +229,7 @@ export function DetailedAnalysis({
                     />
                 ),
                 answersAlign: handleSpinner(
-                    handleAnswersAlign(
+                    handleAnswersAlign(excelData,
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.answers_align,
                     ),
