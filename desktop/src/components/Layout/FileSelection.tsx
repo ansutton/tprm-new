@@ -1,15 +1,19 @@
 import { useState } from 'react';
+import { XCircleIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import {
     Card,
     FileInputMultiple,
     FileInputSingular,
     Heading,
 } from '@/components';
+import { tw } from '@/utils';
+import { EvidenceFiles } from '@/types';
 
 // TODO: extract to three FileInput components, and put them all in here.
 export function FileSelection(): JSX.Element {
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
-    const [evidenceFiles, setEvidenceFiles] = useState<File[] | null>(null);
+    const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     return (
@@ -67,7 +71,12 @@ function SectionSingular({
                         buttonText={buttonText}
                     />
                 </div>
-                {fileInputState && <div>{fileInputState.name}</div>}
+                {fileInputState && (
+                    <FileName
+                        fileName={fileInputState.name}
+                        handleDeleteFile={() => setFileInputState(null)}
+                    />
+                )}
             </div>
         </>
     );
@@ -77,8 +86,8 @@ interface SectionEvidenceProps {
     accept: string;
     heading: string;
     buttonText: string;
-    fileInputState: File[] | null;
-    setFileInputState: React.Dispatch<React.SetStateAction<File[] | null>>;
+    fileInputState: EvidenceFiles;
+    setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
 }
 
 function SectionEvidence({
@@ -91,7 +100,12 @@ function SectionEvidence({
     return (
         <>
             <Heading level={4}>{heading}</Heading>
-            <div className='flex'>
+            <div
+                className={clsx(
+                    tw`flex`,
+                    fileInputState?.length === 1 ? tw`items-center` : null,
+                )}
+            >
                 <div className='w-40'>
                     <FileInputMultiple
                         accept={accept}
@@ -102,10 +116,35 @@ function SectionEvidence({
                 <div className='space-y-2'>
                     {fileInputState &&
                         fileInputState?.map((file, index) => (
-                            <div key={index}>{file.name}</div>
+                            <FileName
+                                key={index}
+                                fileName={file?.file.name}
+                                handleDeleteFile={() => null}
+                            />
                         ))}
                 </div>
             </div>
         </>
+    );
+}
+
+interface FileNameProps {
+    handleDeleteFile: () => void;
+    fileName: string | undefined;
+}
+
+function FileName({
+    fileName,
+    handleDeleteFile,
+    ...props
+}: FileNameProps): JSX.Element {
+    return (
+        <div {...props} className='flex items-center space-x-2'>
+            <XCircleIcon
+                onClick={handleDeleteFile}
+                className='size-5 cursor-pointer stroke-pink-500/85 stroke-2 dark:stroke-pink-500'
+            />
+            <span>{fileName}</span>
+        </div>
     );
 }

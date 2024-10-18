@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import { Button } from '@/components';
+import { EvidenceFile, EvidenceFiles } from '@/types';
 
 interface FileInputMultipleProps {
     accept?: string;
-    setFileInputState: React.Dispatch<React.SetStateAction<File[] | null>>;
+    setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
     buttonText: string;
 }
 
@@ -17,11 +18,12 @@ export function FileInputMultiple({
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
         if (files) {
-            const newFiles = Array.from(files);
+            const newFile: EvidenceFile = {
+                file: files[0],
+                evidenceType: 'unspecified',
+            };
             setFileInputState((prevState) =>
-                Array.isArray(prevState)
-                    ? [...prevState, ...newFiles]
-                    : newFiles,
+                Array.isArray(prevState) ? [...prevState, newFile] : [newFile],
             );
         }
     }
