@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XCircleIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
     Card,
@@ -96,6 +96,19 @@ function SectionEvidence({
     fileInputState,
     setFileInputState,
 }: SectionEvidenceProps): JSX.Element {
+    function handleDeleteFile(
+        fileName: string | undefined,
+        setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>,
+    ) {
+        setFileInputState((prevFiles) =>
+            Array.isArray(prevFiles)
+                ? prevFiles?.filter(
+                      (fileObj) => fileObj?.file.name !== fileName,
+                  )
+                : null,
+        );
+    }
+
     return (
         <>
             <Heading level={4}>{heading}</Heading>
@@ -114,11 +127,16 @@ function SectionEvidence({
                 </div>
                 <div className='space-y-2'>
                     {fileInputState &&
-                        fileInputState?.map((file, index) => (
+                        fileInputState?.map((fileObj, index) => (
                             <FileName
                                 key={index}
-                                fileName={file?.file.name}
-                                handleDeleteFile={() => null}
+                                fileName={fileObj?.file.name}
+                                handleDeleteFile={() =>
+                                    handleDeleteFile(
+                                        fileObj?.file.name,
+                                        setFileInputState,
+                                    )
+                                }
                             />
                         ))}
                 </div>
@@ -139,7 +157,7 @@ function FileName({
 }: FileNameProps): JSX.Element {
     return (
         <div {...props} className='flex items-center space-x-2'>
-            <XCircleIcon
+            <XMarkIcon
                 onClick={handleDeleteFile}
                 className='size-5 cursor-pointer stroke-pink-500/85 stroke-2 dark:stroke-pink-500'
             />

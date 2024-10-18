@@ -16,10 +16,10 @@ export function FileInputMultiple({
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const files = e.target.files;
-        if (files) {
+        const file = e.target.files ? e.target.files[0] : null;
+        if (file) {
             const newFile: EvidenceFile = {
-                file: files[0],
+                file: file,
                 evidenceType: 'unspecified',
             };
             setFileInputState((prevState) =>
