@@ -1,5 +1,11 @@
-import { useState } from 'react';
-import { EllipsisHorizontalIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useState, ReactNode } from 'react';
+import {
+    ChartBarSquareIcon,
+    ChatBubbleBottomCenterTextIcon,
+    EllipsisHorizontalIcon,
+    QuestionMarkCircleIcon,
+    XMarkIcon,
+} from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
     Card,
@@ -19,6 +25,14 @@ export function FileSelection(): JSX.Element {
         <Card additionalClasses='mx-auto max-w-2xl space-y-6'>
             <SectionSingular
                 heading='Blank Question Set'
+                startIcon={
+                    <QuestionMarkCircleIcon
+                        className={clsx(
+                            'size-9 stroke-indigo-600 stroke-2',
+                            'dark:stroke-indigo-500',
+                        )}
+                    />
+                }
                 accept='.csv'
                 fileInputState={questionsFile}
                 setFileInputState={setQuestionsFile}
@@ -27,6 +41,14 @@ export function FileSelection(): JSX.Element {
 
             <SectionEvidence
                 heading='Third Party Evidence Provided'
+                startIcon={
+                    <ChartBarSquareIcon
+                        className={clsx(
+                            'size-9 stroke-indigo-600 stroke-2',
+                            'dark:stroke-indigo-500',
+                        )}
+                    />
+                }
                 accept='.pdf'
                 fileInputState={evidenceFiles}
                 setFileInputState={setEvidenceFiles}
@@ -35,6 +57,14 @@ export function FileSelection(): JSX.Element {
 
             <SectionSingular
                 heading='Third Party Responses'
+                startIcon={
+                    <ChatBubbleBottomCenterTextIcon
+                        className={clsx(
+                            'size-9 stroke-indigo-600 stroke-2',
+                            'dark:stroke-indigo-500',
+                        )}
+                    />
+                }
                 accept='.xlsx'
                 fileInputState={tpResponsesFile}
                 setFileInputState={setTpResponsesFile}
@@ -50,6 +80,7 @@ interface SectionSingularProps {
     buttonText: string;
     fileInputState: File | null;
     setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
+    startIcon?: ReactNode;
 }
 
 function SectionSingular({
@@ -58,10 +89,13 @@ function SectionSingular({
     buttonText,
     fileInputState,
     setFileInputState,
+    startIcon,
 }: SectionSingularProps): JSX.Element {
     return (
         <>
-            <Heading level={4}>{heading}</Heading>
+            <Heading level={4} startIcon={startIcon}>
+                {heading}
+            </Heading>
             <div className='flex items-center'>
                 <div className='w-40'>
                     <FileInputSingular
@@ -87,6 +121,7 @@ interface SectionEvidenceProps {
     buttonText: string;
     fileInputState: EvidenceFiles;
     setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
+    startIcon?: ReactNode;
 }
 
 function SectionEvidence({
@@ -95,6 +130,7 @@ function SectionEvidence({
     buttonText,
     fileInputState,
     setFileInputState,
+    startIcon,
 }: SectionEvidenceProps): JSX.Element {
     function handleDeleteFile(
         fileName: string | undefined,
@@ -111,7 +147,9 @@ function SectionEvidence({
 
     return (
         <>
-            <Heading level={4}>{heading}</Heading>
+            <Heading level={4} startIcon={startIcon}>
+                {heading}
+            </Heading>
             <div
                 className={clsx(
                     'flex',

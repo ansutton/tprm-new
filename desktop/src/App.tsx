@@ -270,7 +270,7 @@ export default function Home(): JSX.Element {
                                         startIcon={
                                             <QuestionMarkCircleIcon
                                                 className={clsx(
-                                                    'w-10 stroke-indigo-600 stroke-2',
+                                                    'size-9 stroke-indigo-600 stroke-2',
                                                     'dark:stroke-indigo-500',
                                                 )}
                                             />
@@ -303,7 +303,7 @@ export default function Home(): JSX.Element {
                                         startIcon={
                                             <ChartBarSquareIcon
                                                 className={clsx(
-                                                    'w-10 stroke-indigo-600 stroke-2',
+                                                    'size-9 stroke-indigo-600 stroke-2',
                                                     'dark:stroke-indigo-500',
                                                 )}
                                             />
@@ -332,7 +332,7 @@ export default function Home(): JSX.Element {
                                             startIcon={
                                                 <ChatBubbleBottomCenterTextIcon
                                                     className={clsx(
-                                                        'w-10 stroke-indigo-600 stroke-2',
+                                                        'size-9 stroke-indigo-600 stroke-2',
                                                         'dark:stroke-indigo-500',
                                                     )}
                                                 />
