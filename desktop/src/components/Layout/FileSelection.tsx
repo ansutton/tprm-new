@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { EllipsisHorizontalIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
     Card,
     FileInputMultiple,
     FileInputSingular,
     Heading,
+    Tooltip,
 } from '@/components';
-import { tw } from '@/utils';
 import { EvidenceFiles } from '@/types';
 
 export function FileSelection(): JSX.Element {
@@ -114,8 +114,8 @@ function SectionEvidence({
             <Heading level={4}>{heading}</Heading>
             <div
                 className={clsx(
-                    tw`flex`,
-                    fileInputState?.length === 1 ? tw`items-center` : null,
+                    'flex',
+                    fileInputState?.length === 1 ? 'items-center' : null,
                 )}
             >
                 <div className='w-40'>
@@ -155,13 +155,38 @@ function FileName({
     handleDeleteFile,
     ...props
 }: FileNameProps): JSX.Element {
+    const [isXShowing, setIsXShowing] = useState(false);
+
     return (
-        <div {...props} className='flex items-center space-x-2'>
-            <XMarkIcon
-                onClick={handleDeleteFile}
-                className='size-5 cursor-pointer stroke-pink-500/85 stroke-2 dark:stroke-pink-500'
-            />
-            <span>{fileName}</span>
+        <div
+            {...props}
+            className='group flex items-center space-x-3'
+            onMouseEnter={() => setIsXShowing(true)}
+            onMouseLeave={() => setIsXShowing(false)}
+        >
+            <span className='cursor-default'>{fileName}</span>
+            <div className='relative h-5'>
+                <EllipsisHorizontalIcon
+                    className={clsx(
+                        'absolute size-5 cursor-pointer stroke-2',
+                        'stroke-zinc-500',
+                        'dark:stroke-zinc-300',
+                        'transition-opacity',
+                        isXShowing ? 'opacity-0 duration-200' : 'duration-300',
+                    )}
+                />
+                <XMarkIcon
+                    onClick={handleDeleteFile}
+                    className={clsx(
+                        'absolute size-5 cursor-pointer stroke-2',
+                        'stroke-rose-500/85',
+                        'dark:stroke-rose-400/95',
+                        'transition-opacity',
+                        !isXShowing ? 'opacity-0 duration-200' : 'duration-300',
+                    )}
+                    title='Remove File'
+                />
+            </div>
         </div>
     );
 }
