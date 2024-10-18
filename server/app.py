@@ -88,21 +88,25 @@ def main():
 
         # Loop through app_state.analyses dict and process confidence and similarity scores.
         for key, value in app_state.analyses.items():
-            # Calculate confidence scores for ai_analysis and tp_response.
-            relevant_section = find_relevant_sections(vector_db, value["question"])
-            conf_scores = semantic_similarity(relevant_section, value["ai_analysis"], value["tp_response"])
-            app_state.analyses[key]["tp_confidence_score"] = conf_scores["third_party"]
-            app_state.analyses[key]["ai_confidence_score"] = conf_scores["ai"]
+            if parsed_excel_file:
+                # Calculate confidence scores for ai_analysis and tp_response.
+                relevant_section = find_relevant_sections(vector_db, value["question"])
+                conf_scores = semantic_similarity(relevant_section, value["ai_analysis"], value["tp_response"])
+                app_state.analyses[key]["tp_confidence_score"] = conf_scores["third_party"]
+                app_state.analyses[key]["ai_confidence_score"] = conf_scores["ai"]
 
-            # Calculate similarity score between ai_analysis and tp_response.
-            sim_score = similarity_score.semantic_similarity(value["ai_analysis"], value["tp_response"])
-            app_state.analyses[key]["similarity_score"] = sim_score
+                # Calculate similarity score between ai_analysis and tp_response.
+                sim_score = similarity_score.semantic_similarity(value["ai_analysis"], value["tp_response"])
+                app_state.analyses[key]["similarity_score"] = sim_score
 
-            # Calculate if answers align based on threshold (>= 88%)
-            alignment_threshhold = 88
-            sim_score_float = float(sim_score) # convert from string to float.
-            sim_score_percentage = round(((sim_score_float + 1) / 2) * 100) # convert to cosign percentage.
-            app_state.analyses[key]["answers_align"] = sim_score_percentage >= alignment_threshhold
+                # Calculate if answers align based on threshold (>= 88%)
+                alignment_threshhold = 88
+                sim_score_float = float(sim_score) # convert from string to float.
+                sim_score_percentage = round(((sim_score_float + 1) / 2) * 100) # convert to cosign percentage.
+                app_state.analyses[key]["answers_align"] = sim_score_percentage >= alignment_threshhold
+            else:
+                app_state.analyses[key]["answers_align"] = "N/A"
+
             app_state.analyses[key]["is_analysis_complete"] = True
 
         app_state.is_complete = True
