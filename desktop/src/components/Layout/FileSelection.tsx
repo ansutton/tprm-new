@@ -1,9 +1,9 @@
 import { useState, ReactNode } from 'react';
 import {
-    ChartBarSquareIcon,
-    ChatBubbleBottomCenterTextIcon,
+    DocumentIcon,
+    DocumentMagnifyingGlassIcon,
+    DocumentTextIcon,
     EllipsisHorizontalIcon,
-    QuestionMarkCircleIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
@@ -26,7 +26,7 @@ export function FileSelection(): JSX.Element {
             <SectionSingular
                 heading='Blank Question Set'
                 startIcon={
-                    <QuestionMarkCircleIcon
+                    <DocumentIcon
                         className={clsx(
                             'size-8 stroke-indigo-600 stroke-2',
                             'dark:stroke-indigo-500',
@@ -42,7 +42,7 @@ export function FileSelection(): JSX.Element {
             <SectionEvidence
                 heading='Third Party Evidence Provided'
                 startIcon={
-                    <ChartBarSquareIcon
+                    <DocumentMagnifyingGlassIcon
                         className={clsx(
                             'size-8 stroke-indigo-600 stroke-2',
                             'dark:stroke-indigo-500',
@@ -58,7 +58,7 @@ export function FileSelection(): JSX.Element {
             <SectionSingular
                 heading='Third Party Responses'
                 startIcon={
-                    <ChatBubbleBottomCenterTextIcon
+                    <DocumentTextIcon
                         className={clsx(
                             'size-8 stroke-indigo-600 stroke-2',
                             'dark:stroke-indigo-500',
