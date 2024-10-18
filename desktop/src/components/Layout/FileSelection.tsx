@@ -15,6 +15,7 @@ import {
     Tooltip,
 } from '@/components';
 import { EvidenceFiles } from '@/types';
+import { tw } from '@/utils';
 
 export function FileSelection(): JSX.Element {
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
@@ -229,17 +230,24 @@ function FileName({
                         isXShowing ? 'opacity-0 duration-300' : 'duration-500',
                     )}
                 />
-                <XMarkIcon
-                    onClick={handleDeleteFile}
-                    className={clsx(
-                        'absolute size-5 cursor-pointer stroke-2',
-                        'stroke-rose-500/85',
-                        'dark:stroke-rose-400/95',
-                        'transition-opacity',
-                        !isXShowing ? 'opacity-0 duration-300' : 'duration-500',
-                    )}
-                    title='Remove File'
-                />
+                <Tooltip
+                    icon={
+                        <XMarkIcon
+                            onClick={handleDeleteFile}
+                            className={clsx(
+                                'absolute size-5 cursor-pointer stroke-2',
+                                'stroke-rose-500/85',
+                                'dark:stroke-rose-400/95',
+                                'transition-opacity',
+                                !isXShowing
+                                    ? 'opacity-0 duration-300'
+                                    : 'duration-500',
+                            )}
+                        />
+                    }
+                >
+                    Remove File
+                </Tooltip>
             </div>
         </div>
     );
