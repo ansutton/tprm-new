@@ -28,7 +28,7 @@ export function FileSelection(): JSX.Element {
                 startIcon={
                     <QuestionMarkCircleIcon
                         className={clsx(
-                            'size-9 stroke-indigo-600 stroke-2',
+                            'size-8 stroke-indigo-600 stroke-2',
                             'dark:stroke-indigo-500',
                         )}
                     />
@@ -44,7 +44,7 @@ export function FileSelection(): JSX.Element {
                 startIcon={
                     <ChartBarSquareIcon
                         className={clsx(
-                            'size-9 stroke-indigo-600 stroke-2',
+                            'size-8 stroke-indigo-600 stroke-2',
                             'dark:stroke-indigo-500',
                         )}
                     />
@@ -60,7 +60,7 @@ export function FileSelection(): JSX.Element {
                 startIcon={
                     <ChatBubbleBottomCenterTextIcon
                         className={clsx(
-                            'size-9 stroke-indigo-600 stroke-2',
+                            'size-8 stroke-indigo-600 stroke-2',
                             'dark:stroke-indigo-500',
                         )}
                     />
