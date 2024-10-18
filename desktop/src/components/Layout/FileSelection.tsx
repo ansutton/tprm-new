@@ -91,6 +91,16 @@ function SectionSingular({
     setFileInputState,
     startIcon,
 }: SectionSingularProps): JSX.Element {
+    function handleDeleteFile(
+        setFileInputState: React.Dispatch<React.SetStateAction<File | null>>,
+    ) {
+        if (confirm('Are you sure you would like to remove this file?')) {
+            setFileInputState(null);
+        } else {
+            return;
+        }
+    }
+
     return (
         <>
             <Heading level={4} startIcon={startIcon}>
@@ -107,7 +117,9 @@ function SectionSingular({
                 {fileInputState && (
                     <FileName
                         fileName={fileInputState.name}
-                        handleDeleteFile={() => setFileInputState(null)}
+                        handleDeleteFile={() =>
+                            handleDeleteFile(setFileInputState)
+                        }
                     />
                 )}
             </div>
@@ -136,13 +148,17 @@ function SectionEvidence({
         fileName: string | undefined,
         setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>,
     ) {
-        setFileInputState((prevFiles) =>
-            Array.isArray(prevFiles)
-                ? prevFiles?.filter(
-                      (fileObj) => fileObj?.file.name !== fileName,
-                  )
-                : null,
-        );
+        if (confirm('Are you sure you would like to remove this file?')) {
+            setFileInputState((prevFiles) =>
+                Array.isArray(prevFiles)
+                    ? prevFiles?.filter(
+                          (fileObj) => fileObj?.file.name !== fileName,
+                      )
+                    : null,
+            );
+        } else {
+            return;
+        }
     }
 
     return (
@@ -210,7 +226,7 @@ function FileName({
                         'stroke-zinc-500',
                         'dark:stroke-zinc-300',
                         'transition-opacity',
-                        isXShowing ? 'opacity-0 duration-200' : 'duration-300',
+                        isXShowing ? 'opacity-0 duration-300' : 'duration-500',
                     )}
                 />
                 <XMarkIcon
@@ -220,7 +236,7 @@ function FileName({
                         'stroke-rose-500/85',
                         'dark:stroke-rose-400/95',
                         'transition-opacity',
-                        !isXShowing ? 'opacity-0 duration-200' : 'duration-300',
+                        !isXShowing ? 'opacity-0 duration-300' : 'duration-500',
                     )}
                     title='Remove File'
                 />
