@@ -236,7 +236,7 @@ function FileName({
                             onClick={handleDeleteFile}
                             className={clsx(
                                 'absolute size-5 cursor-pointer stroke-2',
-                                'stroke-rose-500/85',
+                                'stroke-rose-500/75',
                                 'dark:stroke-rose-400/95',
                                 'transition-opacity',
                                 !isXShowing

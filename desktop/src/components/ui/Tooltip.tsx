@@ -37,7 +37,7 @@ export function Tooltip({
                     className={clsx(
                         tw`z-30`,
                         tw`rounded-xl text-xs transition duration-300 ease-in-out data-[closed]:translate-y-1 data-[closed]:opacity-0`,
-                        theme === 'light' && tw`border-indigo-400 bg-zinc-50`,
+                        theme === 'light' && tw`border-indigo-400 bg-zinc-100`,
                         theme === 'dark' &&
                             tw`border-indigo-500 bg-zinc-900 text-zinc-100`,
                         tw`border`,
