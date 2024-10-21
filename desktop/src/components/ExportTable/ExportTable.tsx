@@ -69,11 +69,6 @@ export function ExportTable({
             csvRows.push(Object.values(row).join(','));
         });
 
-        console.log(
-            "🚀 ~ convertToCSV ~ csvRows.join('\n'): ",
-            csvRows.join('\n'),
-        );
-
         return csvRows.join('\n');
     }
 
