@@ -1,5 +1,6 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
+import { tableFootnoteText } from '@/constants';
 import { LlmResponse } from '@/types';
 import { getTimestamp, tw } from '@/utils';
 
@@ -26,7 +27,7 @@ export function ExportTable({
     }
 
     function convertToCSV(llmResponse: LlmResponse) {
-        const csvRows: string[] = [];
+        const csvRows: string[] = [`${tableFootnoteText}\n`];
 
         // Check that the analyses field exists in llmResponse
         if (!llmResponse || !llmResponse.analyses) {
@@ -37,8 +38,8 @@ export function ExportTable({
         const headersTitles = [
             'Control Question',
             'Third Party Response',
-            'AI Response',
-            'Citation(s)',
+            'AI Response*',
+            'Citation(s)*',
             'Responses Align?',
         ];
         csvRows.push(headersTitles.join(','));
@@ -67,6 +68,11 @@ export function ExportTable({
 
             csvRows.push(Object.values(row).join(','));
         });
+
+        console.log(
+            "🚀 ~ convertToCSV ~ csvRows.join('\n'): ",
+            csvRows.join('\n'),
+        );
 
         return csvRows.join('\n');
     }
