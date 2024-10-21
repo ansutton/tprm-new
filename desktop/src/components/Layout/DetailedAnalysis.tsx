@@ -118,7 +118,7 @@ const columns = [
     columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
-                headerContent='AI Response'
+                headerContent='AI Response*'
                 infoContent={`The AI's response to the question`}
             />
         ),
@@ -127,7 +127,7 @@ const columns = [
     columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
-                headerContent='Citation(s)'
+                headerContent='Citation(s)*'
                 infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
             />
         ),
@@ -229,7 +229,8 @@ export function DetailedAnalysis({
                     />
                 ),
                 answersAlign: handleSpinner(
-                    handleAnswersAlign(excelData,
+                    handleAnswersAlign(
+                        excelData,
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.answers_align,
                     ),
