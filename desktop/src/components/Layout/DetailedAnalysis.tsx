@@ -355,9 +355,11 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`space-y-2 whitespace-nowrap p-3 text-left align-top text-sm`,
+                                        tw`space-y-2 whitespace-nowrap p-3 text-left text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
-                                        header.id === 'expander' && tw`w-5`,
+                                        header.id === 'expander'
+                                            ? tw`align-center w-5`
+                                            : tw`align-top`,
                                         header.id === 'questionNumber' &&
                                             tw`w-3`,
                                         header.id === 'question' && tw`w-fit`,
