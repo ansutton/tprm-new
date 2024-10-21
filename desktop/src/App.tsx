@@ -406,7 +406,7 @@ export default function Home(): JSX.Element {
                                                 </i>
                                             )}
                                         </p>
-                                        <p className='mb-2.5 mt-1.5 italic text-zinc-800/90 dark:text-zinc-200/95'>
+                                        <p className='mb-2.5 mt-1.5 italic text-indigo-600 dark:text-indigo-400'>
                                             {tableFootnoteText}
                                         </p>
                                         <DetailedAnalysis
