@@ -365,11 +365,10 @@ function FileName({
         >
             <span className='cursor-default'>{fileName}</span>
             <FileSelectionTooltip
+                poppoverButtonClasses='relative flex h-5 flex-col items-center'
+                onClick={handleDeleteFile}
                 icon={
-                    <button
-                        className='relative flex h-5 flex-col items-center'
-                        onClick={handleDeleteFile}
-                    >
+                    <>
                         <EllipsisHorizontalIcon
                             className={clsx(
                                 'absolute size-5 cursor-pointer stroke-2',
@@ -392,7 +391,7 @@ function FileName({
                                     : 'duration-500',
                             )}
                         />
-                    </button>
+                    </>
                 }
             >
                 Remove File

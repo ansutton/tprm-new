@@ -51,10 +51,17 @@ export function Tooltip({
     );
 }
 
+interface FileSelectionTooltipProps extends TooltipProps {
+    onClick: () => void;
+    poppoverButtonClasses: string;
+}
+
 export function FileSelectionTooltip({
     children,
     icon = <InformationCircleIcon className='size-5 stroke-2' />,
-}: TooltipProps): JSX.Element {
+    onClick,
+    poppoverButtonClasses,
+}: FileSelectionTooltipProps): JSX.Element {
     const { theme } = useTheme();
 
     const [isShowing, setIsShowing] = useState(false);
@@ -65,7 +72,12 @@ export function FileSelectionTooltip({
             onMouseEnter={() => setIsShowing(true)}
             onMouseLeave={() => setIsShowing(false)}
         >
-            <PopoverButton>{icon}</PopoverButton>
+            <PopoverButton
+                className={clsx(poppoverButtonClasses)}
+                onClick={onClick}
+            >
+                {icon}
+            </PopoverButton>
             <Transition show={isShowing}>
                 <PopoverPanel
                     transition
