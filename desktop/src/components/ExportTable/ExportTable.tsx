@@ -5,9 +5,13 @@ import { getTimestamp, tw } from '@/utils';
 
 interface ExportTableProps {
     llmResponse: LlmResponse;
+    questionsData?: string[];
 }
 
-export function ExportTable({ llmResponse }: ExportTableProps): JSX.Element {
+export function ExportTable({
+    llmResponse,
+    questionsData,
+}: ExportTableProps): JSX.Element {
     // Function to escape CSV values (handling commas, newlines, double quotes)
     function escapeCSVValue(value: string | number | boolean): string {
         const stringValue = String(value); // Ensure all values are treated as strings
