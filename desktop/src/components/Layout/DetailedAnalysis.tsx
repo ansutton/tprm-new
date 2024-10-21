@@ -191,14 +191,14 @@ function Asterisk(): JSX.Element {
     return <span className='text-indigo-500/85 dark:text-indigo-400'>*</span>;
 }
 interface DetailedAnalysisProps {
-    excelData: any[][];
+    tpResponsesData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
     setAppLevelTableData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export function DetailedAnalysis({
-    excelData,
+    tpResponsesData,
     llmResponse,
     questionsData,
     setAppLevelTableData,
@@ -231,9 +231,9 @@ export function DetailedAnalysis({
                 questionNumber: index + 1,
                 question: question,
                 tpResponsePreview:
-                    excelData.length === 0
+                    tpResponsesData.length === 0
                         ? 'No Third Party Responses selected'
-                        : truncate(excelData[index + 1][2], 40),
+                        : truncate(tpResponsesData[index + 1][2], 40),
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
@@ -249,7 +249,7 @@ export function DetailedAnalysis({
                 ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
-                        excelData,
+                        tpResponsesData,
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.answers_align,
                     ),
@@ -274,9 +274,9 @@ export function DetailedAnalysis({
                 // ),
                 // 'N/A',
                 tpResponseFull:
-                    excelData.length === 0
+                    tpResponsesData.length === 0
                         ? 'No Third Party Responses selected'
-                        : excelData[index + 1][2],
+                        : tpResponsesData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                 ),

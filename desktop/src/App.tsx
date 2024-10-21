@@ -49,7 +49,7 @@ export default function Home(): JSX.Element {
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
     const [responsesFile, setResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<any>(null);
-    const [excelData, setExcelData] = useState<any[][]>([]);
+    const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
     const [mode, setMode] = useState<Mode>(() => {
         return (localStorage.getItem('appMode') as Mode) ?? 'llm';
@@ -86,7 +86,7 @@ export default function Home(): JSX.Element {
         if (questionsFile && evidenceFile) {
             if (responsesFile) {
                 parsedExcelFile = await parseExcelFile(responsesFile);
-                setExcelData(parsedExcelFile);
+                setTpResponsesData(parsedExcelFile);
             }
             const csvTextFile = await readFileAsText(questionsFile);
             const questionsArray = csvTextFile
@@ -366,7 +366,7 @@ export default function Home(): JSX.Element {
                                             {tableFootnoteText}
                                         </p>
                                         <DetailedAnalysis
-                                            excelData={excelData}
+                                            tpResponsesData={tpResponsesData}
                                             llmResponse={llmResponse}
                                             questionsData={questionsData}
                                             setAppLevelTableData={
@@ -377,7 +377,7 @@ export default function Home(): JSX.Element {
                                 )}
                                 {screen === 'overview' && (
                                     <Overview
-                                        excelData={excelData}
+                                        tpResponsesData={tpResponsesData}
                                         isSidebarExpanded={isSidebarExpanded}
                                         llmResponse={llmResponse}
                                         questionsData={questionsData}

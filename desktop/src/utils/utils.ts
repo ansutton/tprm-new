@@ -100,10 +100,10 @@ export function getTimestamp() {
     return `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
 }
 export function handleAnswersAlign(
-    excelData: any[][],
+    tpResponsesData: any[][],
     field: DataItemField,
 ): 'Yes' | 'No' | 'N/A' | null {
-    if (excelData.length === 0) {
+    if (tpResponsesData.length === 0) {
         return 'N/A';
     } else if (field !== undefined && field !== null) {
         return field === true ? 'Yes' : 'No';
