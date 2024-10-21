@@ -25,11 +25,6 @@ export function FileSelection(): JSX.Element {
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     /**
-     * Helper Functions - Valid
-     *
-     */
-
-    /**
      * Helper Functions - Validation
      */
     const isFileValid = (file: File | null, fileType: string): file is File =>
