@@ -47,7 +47,7 @@ export default function Home(): JSX.Element {
         useState<boolean>(true);
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
-    const [responsesFile, setResponsesFile] = useState<File | null>(null);
+    const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<any>(null);
     const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
@@ -64,14 +64,14 @@ export default function Home(): JSX.Element {
     const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
     const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
     // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
-    const isResponsesFileValid = responsesFile
+    const isTpResponsesFileValid = tpResponsesFile
         ? isFileValid(
-              responsesFile,
+              tpResponsesFile,
               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           )
         : true;
     const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid && isResponsesFileValid;
+        isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
     function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
@@ -84,8 +84,9 @@ export default function Home(): JSX.Element {
         e.preventDefault();
         let parsedExcelFile: any[][] = [];
         if (questionsFile && evidenceFile) {
-            if (responsesFile) {
-                parsedExcelFile = await parseExcelFile(responsesFile);
+            // Handle TP Responses
+            if (tpResponsesFile) {
+                parsedExcelFile = await parseExcelFile(tpResponsesFile);
                 setTpResponsesData(parsedExcelFile);
             }
             const csvTextFile = await readFileAsText(questionsFile);
@@ -105,7 +106,7 @@ export default function Home(): JSX.Element {
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-                    // const xlsxFileBuffer = await readFileAsDataUrl(responsesFile)
+                    // const xlsxFileBuffer = await readFileAsDataUrl(tpResponsesFile)
                     submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
                     const interval = setInterval(async () => {
                         const pollResponse = await poll();
@@ -125,7 +126,7 @@ export default function Home(): JSX.Element {
             setIsSidebarFullyExpanded(true);
             setQuestionsFile(null);
             setEvidenceFile(null);
-            setResponsesFile(null);
+            setTpResponsesFile(null);
         }
     }
 
@@ -155,7 +156,7 @@ export default function Home(): JSX.Element {
         }
     }
     function AlertResponsesFile(): JSX.Element {
-        if (responsesFile && !isResponsesFileValid) {
+        if (tpResponsesFile && !isTpResponsesFileValid) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
                     Please choose file type <b>xlsx</b> before proceeding
@@ -304,7 +305,7 @@ export default function Home(): JSX.Element {
                                         className='file:mr-4 file:cursor-pointer'
                                         id='file'
                                         onChange={(e) =>
-                                            onFileChange(e, setResponsesFile)
+                                            onFileChange(e, setTpResponsesFile)
                                         }
                                         type='file'
                                     />
