@@ -57,7 +57,7 @@ export default function Home(): JSX.Element {
     const [appLevelTableData, setAppLevelTableData] = useState<any[]>([]); // TODO: refactor to global state (currently prop drilling)
 
     /**
-     * Helper Functions
+     * Helper Functions - Validation
      */
     const isFileValid = (file: File | null, fileType: string): file is File =>
         file !== null && file?.type === fileType;
@@ -72,6 +72,10 @@ export default function Home(): JSX.Element {
         : true;
     const areAllFilesValid: boolean =
         isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
+
+    /**
+     * Helper Functions - Misc
+     */
     function onFileChange(
         e: React.ChangeEvent<HTMLInputElement>,
         setState: Dispatch<SetStateAction<File | null>>,
@@ -79,6 +83,13 @@ export default function Home(): JSX.Element {
         if (e.target.files) {
             setState(e.target.files[0]);
         }
+    }
+    function handleResetStates(): void {
+        setIsSidebarExpanded(true);
+        setIsSidebarFullyExpanded(true);
+        setQuestionsFile(null);
+        setEvidenceFile(null);
+        setTpResponsesFile(null);
     }
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -122,11 +133,7 @@ export default function Home(): JSX.Element {
                     }, 10000);
                     break;
             }
-            setIsSidebarExpanded(true);
-            setIsSidebarFullyExpanded(true);
-            setQuestionsFile(null);
-            setEvidenceFile(null);
-            setTpResponsesFile(null);
+            handleResetStates();
         }
     }
 
