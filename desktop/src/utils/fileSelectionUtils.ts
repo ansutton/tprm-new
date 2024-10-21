@@ -31,6 +31,14 @@ export async function readFileAsText(file: File): Promise<string> {
         fileReader.readAsText(file);
     });
 }
+// TODO: revisit base64 encoding; revisit file passing from front end to back end
+export async function readFileAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => resolve(fileReader.result as string);
+        fileReader.readAsDataURL(file);
+    });
+}
 
 /**
  * Validation
