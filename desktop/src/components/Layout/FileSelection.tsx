@@ -8,6 +8,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
+    Button,
     Card,
     FileInputMultiple,
     FileInputSingular,
@@ -78,8 +79,7 @@ export function FileSelection({
         setEvidenceFiles(null);
         setTpResponsesFile(null);
     }
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
+    async function handleSubmit() {
         let parsedExcelFile: any[][] = [];
         if (questionsFile && evidenceFiles) {
             // Handle TP Responses
@@ -215,6 +215,16 @@ export function FileSelection({
                 buttonText='Select File'
             />
             <AlertTpResponsesFile />
+
+            <div className='w-full text-center'>
+                <Button
+                    variant={areAllFilesValid ? 'solid' : 'disabledSolid'}
+                    additionalClasses='mx-auto'
+                    onClick={handleSubmit}
+                >
+                    Analyze
+                </Button>
+            </div>
         </Card>
     );
 }
