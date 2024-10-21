@@ -44,6 +44,45 @@ export function FileSelection(): JSX.Element {
     const areAllFilesValid: boolean =
         isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
 
+    /**
+     * Components
+     */
+    function AlertQuestionsFile(): JSX.Element {
+        if (questionsFile && !isQuestionsFileValid) {
+            return (
+                <p className='text-orange-600 dark:text-orange-500'>
+                    Please choose file type <b>csv</b> before proceeding
+                </p>
+            );
+        } else {
+            return <></>;
+        }
+    }
+    function AlertEvidenceFiles(): JSX.Element {
+        // TODO: validate evidence files
+        // if (evidenceFiles && !isEvidenceFileValid) {
+        if (!isEvidenceFileValid) {
+            return (
+                <p className='text-orange-600 dark:text-orange-500'>
+                    Please choose file type <b>pdf</b> before proceeding
+                </p>
+            );
+        } else {
+            return <></>;
+        }
+    }
+    function AlertTpResponsesFile(): JSX.Element {
+        if (tpResponsesFile && !isTpResponsesFileValid) {
+            return (
+                <p className='text-orange-600 dark:text-orange-500'>
+                    Please choose file type <b>xlsx</b> before proceeding
+                </p>
+            );
+        } else {
+            return <></>;
+        }
+    }
+
     return (
         <Card additionalClasses='mx-auto max-w-2xl space-y-6'>
             <SectionSingular
@@ -61,6 +100,7 @@ export function FileSelection(): JSX.Element {
                 setFileInputState={setQuestionsFile}
                 buttonText='Select File'
             />
+            <AlertQuestionsFile />
 
             <SectionEvidence
                 heading='Third Party Evidence Provided'
@@ -77,6 +117,7 @@ export function FileSelection(): JSX.Element {
                 setFileInputState={setEvidenceFiles}
                 buttonText='Select File(s)'
             />
+            <AlertEvidenceFiles />
 
             <SectionSingular
                 heading='Third Party Responses'
@@ -93,6 +134,7 @@ export function FileSelection(): JSX.Element {
                 setFileInputState={setTpResponsesFile}
                 buttonText='Select File'
             />
+            <AlertTpResponsesFile />
         </Card>
     );
 }
