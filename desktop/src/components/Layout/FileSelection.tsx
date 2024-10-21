@@ -17,9 +17,36 @@ import {
 import { EvidenceFiles } from '@/types';
 
 export function FileSelection(): JSX.Element {
+    /**
+     * State Hooks
+     */
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
+
+    /**
+     * Helper Functions - Valid
+     *
+     */
+
+    /**
+     * Helper Functions - Validation
+     */
+    const isFileValid = (file: File | null, fileType: string): file is File =>
+        file !== null && file?.type === fileType;
+    const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
+    // TODO: validate for multiple evidence files
+    const isEvidenceFileValid = true;
+    // const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
+    // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
+    const isTpResponsesFileValid = tpResponsesFile
+        ? isFileValid(
+              tpResponsesFile,
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          )
+        : true;
+    const areAllFilesValid: boolean =
+        isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
 
     return (
         <Card additionalClasses='mx-auto max-w-2xl space-y-6'>
