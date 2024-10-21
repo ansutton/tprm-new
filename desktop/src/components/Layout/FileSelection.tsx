@@ -286,7 +286,10 @@ function FileName({
             <span className='cursor-default'>{fileName}</span>
             <FileSelectionTooltip
                 icon={
-                    <div className='relative h-5'>
+                    <button
+                        className='relative flex h-5 flex-col items-center'
+                        onClick={handleDeleteFile}
+                    >
                         <EllipsisHorizontalIcon
                             className={clsx(
                                 'absolute size-5 cursor-pointer stroke-2',
@@ -299,7 +302,6 @@ function FileName({
                             )}
                         />
                         <XMarkIcon
-                            onClick={handleDeleteFile}
                             className={clsx(
                                 'size-5 cursor-pointer stroke-2',
                                 'stroke-rose-500/75',
@@ -310,7 +312,7 @@ function FileName({
                                     : 'duration-500',
                             )}
                         />
-                    </div>
+                    </button>
                 }
             >
                 Remove File
