@@ -56,18 +56,6 @@ export default function Home(): JSX.Element {
     /**
      * Helper Functions
      */
-    function handleResetApp(): void {
-        if (
-            confirm(
-                'Are you sure? This action will end the current process and start from the beginning.',
-            )
-        ) {
-            window.location.reload();
-        } else {
-            return;
-        }
-    }
-
     const isFileValid = (file: File | null, fileType: string): file is File =>
         file !== null && file?.type === fileType;
     const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
@@ -239,7 +227,6 @@ export default function Home(): JSX.Element {
                     setIsSidebarFullyExpanded={setIsSidebarFullyExpanded}
                     screen={screen}
                     setScreen={setScreen}
-                    handleResetApp={handleResetApp}
                 />
             )}
 

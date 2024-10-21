@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { Screen } from '@/types';
-import { tw } from '@/utils';
+import { handleResetApp, tw } from '@/utils';
 
 interface SidebarProps {
     isSidebarExpanded: boolean;
@@ -16,7 +16,6 @@ interface SidebarProps {
     setIsSidebarFullyExpanded: React.Dispatch<React.SetStateAction<boolean>>;
     screen: Screen;
     setScreen: React.Dispatch<React.SetStateAction<Screen>>;
-    handleResetApp?: () => void;
 }
 
 export function Sidebar({
@@ -26,7 +25,6 @@ export function Sidebar({
     setIsSidebarFullyExpanded,
     screen,
     setScreen,
-    handleResetApp,
 }: SidebarProps): JSX.Element {
     /**
      * Helper Functions

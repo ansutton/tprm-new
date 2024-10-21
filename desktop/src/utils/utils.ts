@@ -78,6 +78,17 @@ export const tw = (
 /**
  * Misc
  */
+export function handleResetApp(): void {
+    if (
+        confirm(
+            'Are you sure? This action will end the current process and start from the beginning.',
+        )
+    ) {
+        window.location.reload();
+    } else {
+        return;
+    }
+}
 export function getTimestamp() {
     const now = new Date();
     const year = now.getFullYear();
@@ -88,12 +99,15 @@ export function getTimestamp() {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     return `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
 }
-export function handleAnswersAlign(excelData: any[][], field: DataItemField): 'Yes' | 'No' | 'N/A' | null {
+export function handleAnswersAlign(
+    excelData: any[][],
+    field: DataItemField,
+): 'Yes' | 'No' | 'N/A' | null {
     if (excelData.length === 0) {
         return 'N/A';
     } else if (field !== undefined && field !== null) {
         return field === true ? 'Yes' : 'No';
-    } else{
+    } else {
         return null;
     }
 }
