@@ -17,6 +17,7 @@ import {
     Sidebar,
     Topbar,
 } from '@/components';
+import { tableFootnoteText } from '@/constants';
 import {
     countResponsesAlign,
     handleSampleData,
@@ -397,8 +398,8 @@ export default function Home(): JSX.Element {
                         <div className='flex flex-col gap-6'>
                             <div className='flex flex-col gap-4'>
                                 {screen === 'detailedAnalysis' && (
-                                    <div>
-                                        <p className='mb-3 text-sm'>
+                                    <div className='text-sm'>
+                                        <p>
                                             {llmResponse?.is_complete ? (
                                                 `The third party responses and AI model response align on ${countResponsesAlign(llmResponse)?.yesCount}/${questionsData?.length} questions uploaded.`
                                             ) : (
@@ -406,6 +407,9 @@ export default function Home(): JSX.Element {
                                                     Analyzing...
                                                 </i>
                                             )}
+                                        </p>
+                                        <p className='mb-2.5 mt-1.5 italic text-indigo-600 dark:text-indigo-400'>
+                                            {tableFootnoteText}
                                         </p>
                                         <DetailedAnalysis
                                             excelData={excelData}

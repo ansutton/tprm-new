@@ -1,5 +1,6 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
+import { tableFootnoteText } from '@/constants';
 import { LlmResponse } from '@/types';
 import { getTimestamp, tw } from '@/utils';
 
@@ -25,9 +26,8 @@ export function ExportTable({
         return stringValue;
     }
 
-    // Convert LlmResponse object to CSV format
     function convertToCSV(llmResponse: LlmResponse) {
-        const csvRows: string[] = [];
+        const csvRows: string[] = [`${tableFootnoteText}\n`];
 
         // Check that the analyses field exists in llmResponse
         if (!llmResponse || !llmResponse.analyses) {
@@ -35,21 +35,18 @@ export function ExportTable({
             return '';
         }
 
-        // Define CSV headers
         const headersTitles = [
             'Control Question',
             'Third Party Response',
-            'AI Response',
-            'Citation(s)',
+            'AI Response*',
+            'Citation(s)*',
             'Responses Align?',
         ];
-        csvRows.push(headersTitles.join(',')); // Add headers to the CSV
+        csvRows.push(headersTitles.join(','));
 
-        // Iterate through analyses in llmResponse
         Object.keys(llmResponse.analyses).forEach((analysisKey) => {
             const analysis = llmResponse.analyses[analysisKey];
 
-            // Construct a row with proper CSV formatting
             const row = {
                 question: escapeCSVValue(analysis?.question || ''),
                 tp_response: escapeCSVValue(analysis?.tp_response || ''),
@@ -69,16 +66,19 @@ export function ExportTable({
                 ),
             };
 
-            // Add the row to CSV
             csvRows.push(Object.values(row).join(','));
         });
 
-        return csvRows.join('\n'); // Join rows with newline for CSV
+        console.log(
+            "🚀 ~ convertToCSV ~ csvRows.join('\n'): ",
+            csvRows.join('\n'),
+        );
+
+        return csvRows.join('\n');
     }
 
-    // Function to trigger the download of the CSV file
     function downloadCSV() {
-        const csvData = convertToCSV(llmResponse); // Get the CSV data
+        const csvData = convertToCSV(llmResponse);
 
         if (!csvData) {
             const errorMessage = 'Data not ready for export';
@@ -87,7 +87,6 @@ export function ExportTable({
             return;
         }
 
-        // Create a Blob from CSV data
         const blob = new Blob([csvData], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
