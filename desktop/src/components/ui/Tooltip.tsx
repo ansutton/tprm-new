@@ -50,3 +50,38 @@ export function Tooltip({
         </Popover>
     );
 }
+
+export function FileSelectionTooltip({
+    children,
+    icon = <InformationCircleIcon className='size-5 stroke-2' />,
+}: TooltipProps): JSX.Element {
+    const { theme } = useTheme();
+
+    const [isShowing, setIsShowing] = useState(false);
+
+    return (
+        <Popover
+            className='flex'
+            onMouseEnter={() => setIsShowing(true)}
+            onMouseLeave={() => setIsShowing(false)}
+        >
+            <PopoverButton>{icon}</PopoverButton>
+            <Transition show={isShowing}>
+                <PopoverPanel
+                    transition
+                    anchor={{ to: 'right', gap: 20 }}
+                    className={clsx(
+                        tw`z-30 rounded-xl border text-xs`,
+                        tw`w-fit p-2.5 opacity-75`,
+                        tw`transition-all delay-500 duration-200 ease-in data-[closed]:opacity-0`,
+                        theme === 'light' && tw`border-indigo-400 bg-zinc-100`,
+                        theme === 'dark' &&
+                            tw`border-indigo-500 bg-zinc-900 text-zinc-100`,
+                    )}
+                >
+                    {children}
+                </PopoverPanel>
+            </Transition>
+        </Popover>
+    );
+}

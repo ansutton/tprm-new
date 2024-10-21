@@ -12,7 +12,7 @@ import {
     FileInputMultiple,
     FileInputSingular,
     Heading,
-    Tooltip,
+    FileSelectionTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
 import { EvidenceFiles } from '@/types';
@@ -284,22 +284,24 @@ function FileName({
             onMouseLeave={() => setIsXShowing(false)}
         >
             <span className='cursor-default'>{fileName}</span>
-            <div className='relative h-5'>
-                <EllipsisHorizontalIcon
-                    className={clsx(
-                        'absolute size-5 cursor-pointer stroke-2',
-                        'stroke-zinc-500',
-                        'dark:stroke-zinc-300',
-                        'transition-opacity',
-                        isXShowing ? 'opacity-0 duration-300' : 'duration-500',
-                    )}
-                />
-                <Tooltip
-                    icon={
+            <FileSelectionTooltip
+                icon={
+                    <div className='relative h-5'>
+                        <EllipsisHorizontalIcon
+                            className={clsx(
+                                'absolute size-5 cursor-pointer stroke-2',
+                                'stroke-zinc-500',
+                                'dark:stroke-zinc-300',
+                                'transition-opacity',
+                                isXShowing
+                                    ? 'opacity-0 duration-300'
+                                    : 'duration-500',
+                            )}
+                        />
                         <XMarkIcon
                             onClick={handleDeleteFile}
                             className={clsx(
-                                'absolute size-5 cursor-pointer stroke-2',
+                                'size-5 cursor-pointer stroke-2',
                                 'stroke-rose-500/75',
                                 'dark:stroke-rose-400/95',
                                 'transition-opacity',
@@ -308,11 +310,11 @@ function FileName({
                                     : 'duration-500',
                             )}
                         />
-                    }
-                >
-                    Remove File
-                </Tooltip>
-            </div>
+                    </div>
+                }
+            >
+                Remove File
+            </FileSelectionTooltip>
         </div>
     );
 }
