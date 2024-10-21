@@ -23,19 +23,9 @@ import {
 } from '@/types';
 import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
-function TableHeader({
-    additionalClasses = '',
-    headerContent,
-    infoContent,
-}: TableHeaderProps): JSX.Element {
-    return (
-        <div className={clsx(additionalClasses, tw`flex items-center gap-1.5`)}>
-            <span>{headerContent}</span>
-            {infoContent && <Tooltip>{infoContent}</Tooltip>}
-        </div>
-    );
-}
-
+/**
+ * Constants
+ */
 const iconClasses = clsx(
     tw`size-5 stroke-2`,
     tw`stroke-zinc-600 dark:stroke-zinc-400`,
@@ -118,7 +108,12 @@ const columns = [
     columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
-                headerContent='AI Response*'
+                headerContent={
+                    <>
+                        <span>AI Response</span>
+                        <Asterisk />
+                    </>
+                }
                 infoContent={`The AI's response to the question`}
             />
         ),
@@ -127,7 +122,12 @@ const columns = [
     columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
-                headerContent='Citation(s)*'
+                headerContent={
+                    <>
+                        <span>Citation(s)</span>
+                        <Asterisk />
+                    </>
+                }
                 infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
             />
         ),
@@ -171,6 +171,25 @@ const columns = [
     // }),
 ];
 
+/**
+ * Components
+ */
+function TableHeader({
+    additionalClasses = '',
+    headerContent,
+    infoContent,
+}: TableHeaderProps): JSX.Element {
+    return (
+        <div className={clsx(additionalClasses, tw`flex items-center gap-1.5`)}>
+            <span>{headerContent}</span>
+            {infoContent && <Tooltip>{infoContent}</Tooltip>}
+        </div>
+    );
+}
+
+function Asterisk(): JSX.Element {
+    return <span className='text-indigo-500/85 dark:text-indigo-400'>*</span>;
+}
 interface DetailedAnalysisProps {
     excelData: any[][];
     llmResponse: LlmResponse;
@@ -336,9 +355,11 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`space-y-2 whitespace-nowrap p-3 text-left align-top text-sm`,
+                                        tw`space-y-2 whitespace-nowrap p-3 text-left text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
-                                        header.id === 'expander' && tw`w-5`,
+                                        header.id === 'expander'
+                                            ? tw`align-center w-5`
+                                            : tw`align-top`,
                                         header.id === 'questionNumber' &&
                                             tw`w-3`,
                                         header.id === 'question' && tw`w-fit`,
