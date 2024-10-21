@@ -14,6 +14,7 @@ import {
     Heading,
     Tooltip,
 } from '@/components';
+import { confirmDeletionMessage } from '@/constants';
 import { EvidenceFiles } from '@/types';
 
 export function FileSelection(): JSX.Element {
@@ -116,7 +117,7 @@ function SectionSingular({
     function handleDeleteFile(
         setFileInputState: React.Dispatch<React.SetStateAction<File | null>>,
     ) {
-        if (confirm('Are you sure you would like to remove this file?')) {
+        if (confirm(confirmDeletionMessage)) {
             setFileInputState(null);
         } else {
             return;
@@ -170,7 +171,7 @@ function SectionEvidence({
         fileName: string | undefined,
         setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>,
     ) {
-        if (confirm('Are you sure you would like to remove this file?')) {
+        if (confirm(confirmDeletionMessage)) {
             setFileInputState((prevFiles) =>
                 Array.isArray(prevFiles)
                     ? prevFiles?.filter(
