@@ -6,7 +6,6 @@ import {
     QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import * as XLSX from 'xlsx';
 import {
     Button,
     Card,
@@ -223,7 +222,17 @@ export default function Home(): JSX.Element {
                 )}
 
                 <div className='container mx-auto pb-5 pt-5'>
-                    {screen === 'fileSelection' && <FileSelection />}
+                    {screen === 'fileSelection' && (
+                        <FileSelection
+                            setIsSidebarExpanded={setIsSidebarExpanded}
+                            setIsSidebarFullyExpanded={
+                                setIsSidebarFullyExpanded
+                            }
+                            setLlmResponse={setLlmResponse}
+                            mode={mode}
+                            setScreen={setScreen}
+                        />
+                    )}
                     {screen === 'fileSelection' && (
                         <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                             <div className='mx-auto flex flex-col gap-6'>

@@ -1,4 +1,4 @@
-import { useState, ReactNode } from 'react';
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import {
     DocumentIcon,
     DocumentMagnifyingGlassIcon,
@@ -15,15 +15,39 @@ import {
     FileSelectionTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
-import { EvidenceFiles } from '@/types';
+import { EvidenceFiles, Mode, Screen } from '@/types';
+import {
+    handleSampleData,
+    parseExcelFile,
+    poll,
+    readFileAsDataUrl,
+    readFileAsText,
+    submit,
+} from '@/utils';
 
-export function FileSelection(): JSX.Element {
+interface FileSelectionProps {
+    setIsSidebarExpanded: Dispatch<SetStateAction<boolean>>;
+    setIsSidebarFullyExpanded: Dispatch<SetStateAction<boolean>>;
+    setLlmResponse: Dispatch<any>;
+    mode: Mode;
+    setScreen: Dispatch<SetStateAction<Screen>>;
+}
+
+export function FileSelection({
+    setIsSidebarExpanded,
+    setIsSidebarFullyExpanded,
+    setLlmResponse,
+    mode,
+    setScreen,
+}: FileSelectionProps): JSX.Element {
     /**
      * State Hooks
      */
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
+    const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
+    const [questionsData, setQuestionsData] = useState<string[]>([]);
 
     /**
      * Helper Functions - Validation
@@ -43,6 +67,62 @@ export function FileSelection(): JSX.Element {
         : true;
     const areAllFilesValid: boolean =
         isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
+
+    /**
+     * Helper Functions - Misc
+     */
+    function handleResetStates(): void {
+        setIsSidebarExpanded(true);
+        setIsSidebarFullyExpanded(true);
+        setQuestionsFile(null);
+        setEvidenceFiles(null);
+        setTpResponsesFile(null);
+    }
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        let parsedExcelFile: any[][] = [];
+        if (questionsFile && evidenceFiles) {
+            // Handle TP Responses
+            if (tpResponsesFile) {
+                parsedExcelFile = await parseExcelFile(tpResponsesFile);
+                setTpResponsesData(parsedExcelFile);
+            }
+            const csvTextFile = await readFileAsText(questionsFile);
+            const questionsArray = csvTextFile
+                .split('\r\n')
+                .filter(
+                    (question) => question !== '' && question !== 'Questions',
+                );
+            setScreen('detailedAnalysis');
+            console.log('🚀 ~ handleSubmit ~ mode:', mode);
+            switch (mode) {
+                case 'demo':
+                    handleSampleData({ setLlmResponse, setQuestionsData });
+                    break;
+                case 'llm':
+                    setQuestionsData(questionsArray);
+                    const csvFileBuffer =
+                        await readFileAsDataUrl(questionsFile);
+                    const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+                    // const xlsxFileBuffer = await readFileAsDataUrl(tpResponsesFile)
+                    submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
+                    const interval = setInterval(async () => {
+                        const pollResponse = await poll();
+                        console.log(
+                            '🚀 ~ setInterval ~ pollResponse:',
+                            pollResponse,
+                        );
+                        setLlmResponse(pollResponse);
+                        // Clear interval when response is complete
+                        if (pollResponse?.is_complete) {
+                            clearInterval(interval);
+                        }
+                    }, 10000);
+                    break;
+            }
+            handleResetStates();
+        }
+    }
 
     /**
      * Components
