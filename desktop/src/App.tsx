@@ -229,6 +229,8 @@ export default function Home(): JSX.Element {
                                 setIsSidebarFullyExpanded
                             }
                             setLlmResponse={setLlmResponse}
+                            setQuestionsData={setQuestionsData}
+                            setTpResponsesData={setTpResponsesData}
                             mode={mode}
                             setScreen={setScreen}
                         />

@@ -30,6 +30,8 @@ interface FileSelectionProps {
     setIsSidebarExpanded: Dispatch<SetStateAction<boolean>>;
     setIsSidebarFullyExpanded: Dispatch<SetStateAction<boolean>>;
     setLlmResponse: Dispatch<any>;
+    setQuestionsData: Dispatch<SetStateAction<string[]>>;
+    setTpResponsesData: Dispatch<SetStateAction<any>>;
     mode: Mode;
     setScreen: Dispatch<SetStateAction<Screen>>;
 }
@@ -38,6 +40,8 @@ export function FileSelection({
     setIsSidebarExpanded,
     setIsSidebarFullyExpanded,
     setLlmResponse,
+    setQuestionsData,
+    setTpResponsesData,
     mode,
     setScreen,
 }: FileSelectionProps): JSX.Element {
@@ -47,8 +51,6 @@ export function FileSelection({
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
     const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
-    const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
-    const [questionsData, setQuestionsData] = useState<string[]>([]);
 
     /**
      * Helper Functions - Validation
