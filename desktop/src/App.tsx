@@ -326,7 +326,7 @@ export default function Home(): JSX.Element {
                                             }
                                             disabled={!areAllFilesValid}
                                             type='submit'
-                                            value='Submit'
+                                            value='Analyze'
                                         />
                                     </Button>
                                 </form>
