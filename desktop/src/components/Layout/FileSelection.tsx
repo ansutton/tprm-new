@@ -297,6 +297,11 @@ function SectionSingular({
             <Heading level={4} startIcon={startIcon}>
                 {heading}
             </Heading>
+            {accept && (
+                <p>
+                    Accepts file type <b>{accept.slice(1, accept.length)}</b>
+                </p>
+            )}
             <div className='flex items-center'>
                 <div className='w-40'>
                     <FileInputSingular
@@ -357,6 +362,11 @@ function SectionEvidence({
             <Heading level={4} startIcon={startIcon}>
                 {heading}
             </Heading>
+            {accept && (
+                <p>
+                    Accepts files type <b>{accept.slice(1, accept.length)}</b>
+                </p>
+            )}
             <div
                 className={clsx(
                     'flex',
