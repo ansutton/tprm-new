@@ -33,3 +33,10 @@ export type PdfFile = Promise<{
 } | null>;
 
 export type PdfFiles = PdfFile[];
+
+export interface SubmitRequestParams {
+    csvFileBuffer: string;
+    pdfFileBuffer: string;
+    parsedExcelFile: any[][];
+    // xlsxFileBuffer: string,
+}
