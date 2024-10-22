@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 import { sampleData } from '@/data';
-import { LlmResponse } from '@/types';
+import { EvidenceFiles, LlmResponse } from '@/types';
 import { poll } from '@/utils';
 
 /**
@@ -75,6 +75,14 @@ export async function handleSetQuestionsDataState(
 /**
  * Validation
  */
+export function isFileValid(file: File | null, fileType: string): file is File {
+    return file !== null && file?.type === fileType;
+}
+// const isFileValid = (file: File | null, fileType: string): file is File =>
+//     file !== null && file?.type === fileType;
+export function isFilesPopulated(files: File | EvidenceFiles | null): boolean {
+    return files ? true : false;
+}
 
 /**
  * Polling

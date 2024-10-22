@@ -21,6 +21,8 @@ import {
     handlePoll,
     handleSampleData,
     handleSetQuestionsDataState,
+    isFilesPopulated,
+    isFileValid,
     parseExcelFile,
     readFileAsDataUrl,
     submit,
@@ -53,18 +55,8 @@ export function FileSelection({
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     /**
-     * Helper Functions - Validation
+     * Constants - Questions Validation
      */
-    function isFileValid(file: File | null, fileType: string): file is File {
-        return file !== null && file?.type === fileType;
-    }
-    // const isFileValid = (file: File | null, fileType: string): file is File =>
-    //     file !== null && file?.type === fileType;
-    function isFilesPopulated(files: File | EvidenceFiles | null): boolean {
-        return files ? true : false;
-    }
-
-    // Validate Questions
     const isPopulatedQuestionsValid = isFileValid(questionsFile, 'text/csv');
     const isQuestionsPopulatedAndValid =
         isFilesPopulated(questionsFile) && isPopulatedQuestionsValid;
@@ -72,7 +64,9 @@ export function FileSelection({
     const isQuestionsAlertDisplayed =
         isFilesPopulated(questionsFile) && !isPopulatedQuestionsValid;
 
-    // Validate Evidence
+    /**
+     * Constants - Evidence Validation
+     */
     const arePopulatedEvidenceValid =
         evidenceFiles?.every((evidenceFile: EvidenceFile) =>
             isFileValid(
@@ -86,7 +80,9 @@ export function FileSelection({
     const isEvidenceAlertDisplayed =
         isFilesPopulated(evidenceFiles) && !arePopulatedEvidenceValid;
 
-    // Validate TP Responses
+    /**
+     * Constants - TP Responses Validation
+     */
     const isPopulatedTpResponsesValid = isFileValid(
         tpResponsesFile,
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
