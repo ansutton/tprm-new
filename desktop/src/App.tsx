@@ -235,7 +235,7 @@ export default function Home(): JSX.Element {
                             setScreen={setScreen}
                         />
                     )}
-                    {screen === 'fileSelection' && (
+                    {/* screen === 'fileSelection' && (
                         <Card additionalClasses={tw`mx-auto max-w-2xl`}>
                             <div className='mx-auto flex flex-col gap-6'>
                                 <div className='flex items-center gap-3'>
@@ -351,7 +351,7 @@ export default function Home(): JSX.Element {
                                 </form>
                             </div>
                         </Card>
-                    )}
+                    ) */}
 
                     {screen === 'loading' && (
                         <>
