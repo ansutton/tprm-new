@@ -2,34 +2,48 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import clsx from 'clsx';
 import { MenuItemButton } from '@/components';
 import { useTheme } from '@/hooks';
-import { Mode } from '@/types';
+import { Mode, Screen } from '@/types';
 import { tw } from '@/utils';
 
 interface ModeMenuProps {
     mode: Mode;
     setMode: React.Dispatch<React.SetStateAction<Mode>>;
+    screen: Screen;
 }
 
-export function ModeMenu({ mode, setMode }: ModeMenuProps): JSX.Element {
+export function ModeMenu({
+    mode,
+    setMode,
+    screen,
+}: ModeMenuProps): JSX.Element {
     const { theme } = useTheme();
 
     return (
         <div
             className={clsx(
                 tw`rounded-lg p-1 text-sm font-bold`,
-                tw`focus:outline-none`,
-                theme === 'light' && tw`hover:bg-zinc-200`,
-                theme === 'dark' && tw`hover:bg-zinc-800`,
+                screen !== 'fileUpload' && tw`cursor-default hover:bg-inherit`,
+                screen === 'fileUpload' &&
+                    theme === 'light' &&
+                    tw`hover:bg-zinc-200`,
+                screen === 'fileUpload' &&
+                    theme === 'dark' &&
+                    tw`hover:bg-zinc-800`,
             )}
         >
             <Menu>
                 <MenuButton
                     className={clsx(
                         tw`flex gap-1 p-1`,
-                        theme === 'light' &&
+                        screen !== 'fileUpload' && tw`hover:bg-inherit`,
+                        screen === 'fileUpload' &&
+                            theme === 'light' &&
                             tw`text-zinc-600 hover:bg-zinc-200`,
-                        theme === 'dark' && tw`text-zinc-300 hover:bg-zinc-800`,
+                        screen === 'fileUpload' &&
+                            theme === 'dark' &&
+                            tw`text-zinc-300 hover:bg-zinc-800`,
                     )}
+                    disabled={screen !== 'fileUpload'}
                 >
                     Mode:
                     <span

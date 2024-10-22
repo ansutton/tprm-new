@@ -1,4 +1,48 @@
 import { DataItemField, LlmResponse } from '@/types';
+import { sampleData } from '@/data';
+
+/**
+ * Demo Mode Portion of `handleSubmit` in `App.tsx`
+ */
+interface handleSampleDataProps {
+    setLlmResponse: React.Dispatch<React.SetStateAction<any>>;
+    setQuestionsData: React.Dispatch<React.SetStateAction<string[]>>;
+}
+export function handleSampleData({
+    setLlmResponse,
+    setQuestionsData,
+}: handleSampleDataProps) {
+    const analyses = Object.values(sampleData.analyses);
+    const questionsArray = analyses.map((analysis) => analysis.question || '');
+    setQuestionsData(questionsArray);
+    // Recursive function to update each analysis with a delay
+    function updateAnalysis(index: number) {
+        if (index < analyses.length) {
+            setLlmResponse((prevResponse: any) => {
+                // Create a new analyses object that includes all previous ones and the new one
+                const updatedAnalyses = {
+                    ...prevResponse?.analyses,
+                    [`analysis_${index}`]: analyses[index], // Add the next analysis
+                };
+                // Return the updated LlmResponse with the new analyses
+                return {
+                    ...prevResponse,
+                    analyses: updatedAnalyses,
+                };
+            });
+            // Recursively call updateAnalysis with a timeout
+            setTimeout(() => updateAnalysis(index + 1), 3000);
+        } else {
+            // Once all analyses are processed, mark is_complete as true
+            setLlmResponse((prevResponse: any) => ({
+                ...prevResponse,
+                is_complete: true,
+            }));
+        }
+    }
+    // Start the recursive update process
+    updateAnalysis(0);
+}
 
 /**
  * Score
@@ -44,11 +88,14 @@ export function getTimestamp() {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     return `${year}-${month}-${day}-${hours}${minutes}${seconds}`;
 }
-export function handleAnswersAlign(field: DataItemField): 'Yes' | 'No' | null {
-    if (field !== undefined && field !== null) {
+export function handleAnswersAlign(excelData: any[][], field: DataItemField): 'Yes' | 'No' | 'N/A' | null {
+    if (excelData.length === 0) {
+        return 'N/A';
+    } else if (field !== undefined && field !== null) {
         return field === true ? 'Yes' : 'No';
+    } else{
+        return null;
     }
-    return null;
 }
 export function countQuestionsAnalyzed(llmResponse: LlmResponse): number {
     if (llmResponse?.analyses) {
@@ -106,7 +153,7 @@ export function truncate(
     if (field && typeof field !== 'number') {
         return field?.length <= maxLength
             ? field
-            : `${field?.slice(0, maxLength)}...`;
+            : `${field?.slice(0, maxLength)}`;
     }
     return null;
 }

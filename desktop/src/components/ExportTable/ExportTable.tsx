@@ -1,100 +1,113 @@
-import { useState } from 'react';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import * as XLSX from 'xlsx';
+import { tableFootnoteText } from '@/constants';
+import { LlmResponse } from '@/types';
 import { getTimestamp, tw } from '@/utils';
 
 interface ExportTableProps {
-    appLevelTableData: any[];
+    llmResponse: LlmResponse;
+    questionsData?: string[];
 }
 
-// TODO: Only show when table is ready for export.
 export function ExportTable({
-    appLevelTableData,
+    llmResponse,
+    questionsData,
 }: ExportTableProps): JSX.Element {
-    const [worksheetDataState, setWorksheetDataState] = useState<any[]>([]);
+    // Function to escape CSV values (handling commas, newlines, double quotes)
+    function escapeCSVValue(value: string | number | boolean): string {
+        const stringValue = String(value); // Ensure all values are treated as strings
+        if (
+            stringValue.includes(',') ||
+            stringValue.includes('\n') ||
+            stringValue.includes('"')
+        ) {
+            return `"${stringValue.replace(/"/g, '""')}"`; // Escape double quotes and wrap in quotes if needed
+        }
+        return stringValue;
+    }
 
-    function handleExportTable() {
-        const tableHeaderRow = [
-            '#',
+    function convertToCSV(llmResponse: LlmResponse) {
+        const csvRows: string[] = [`${tableFootnoteText}\n`];
+
+        // Check that the analyses field exists in llmResponse
+        if (!llmResponse || !llmResponse.analyses) {
+            console.error('llmResponse or analyses are undefined');
+            return '';
+        }
+
+        const headersTitles = [
             'Control Question',
             'Third Party Response',
-            'AI Response',
-            'Responses Align',
-            'Similarity Score',
-            'AI Confidence Score',
-            'Third Party Confidence Score',
-            'Citation(s)',
-            'Page(s)',
+            'AI Response*',
+            'Citation(s)*',
+            'Responses Align?',
         ];
-        const tableBodyRows = appLevelTableData.map((row) => [
-            // row.questionNumber.toString(),
-            // row.question.toString(),
-            // row.tpResponseFull.toString(),
-            // row.aiAnalysisFull.toString(),
-            // row.answersAlign.toString(),
-            // row.similarityScore.toString(),
-            // row.aiConfidenceScore.toString(),
-            // row.tpConfidenceScore.toString(),
-            // row.citationsFull.toString(),
-            // row.pageNumbers.toString(),
-            row.questionNumber.toString(),
-            row.question,
-            row.tpResponseFull,
-            row.aiAnalysisFull,
-            row.answersAlign,
-            row.similarityScore,
-            row.aiConfidenceScore,
-            row.tpConfidenceScore,
-            row.citationsFull,
-            row.pageNumbers,
-        ]);
-        // const tableRows = [
-        //     [...tableHeaderRow],
-        //     // ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-        //     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
-        // ];
-        const data = [
-            ['Alice', '30', 'New York'],
-            ['Bob', '25', 'London'],
-            ['Charlie', '35', 'Paris'],
-        ];
-        const tableRows = [
-            { name: 'Alice', age: 30, city: 'New York' },
-            { name: 'Bob', age: 25, city: 'London' },
-            { name: 'Charlie', age: 35, city: 'Paris' },
-        ];
+        csvRows.push(headersTitles.join(','));
 
-        //   const exportToExcel = () => {
-        //     const worksheet = XLSX.utils.book_new();
-        //     const ws = XLSX.utils.aoa_to_sheet(data);
-        //     XLSX.utils.book_append_sheet(worksheet, ws, 'Sheet1');
-        //     XLSX.writeFile(worksheet, 'exported-data.xlsx');
-        //   };
-        if (tableRows.length === 0) {
-            console.error('No data available for export.');
+        Object.keys(llmResponse.analyses).forEach((analysisKey) => {
+            const analysis = llmResponse.analyses[analysisKey];
+
+            const row = {
+                question: escapeCSVValue(analysis?.question || ''),
+                tp_response: escapeCSVValue(analysis?.tp_response || ''),
+                ai_response: escapeCSVValue(analysis?.ai_analysis || ''),
+                citations: analysis?.citations
+                    ? escapeCSVValue(
+                          analysis.citations
+                              .map(
+                                  (citation) =>
+                                      `Page ${citation[0]}: ...${citation[1]}...`,
+                              )
+                              .join('\n\n'),
+                      )
+                    : '',
+                answersAlign: escapeCSVValue(
+                    analysis?.answers_align ? 'Yes' : 'No',
+                ),
+            };
+
+            csvRows.push(Object.values(row).join(','));
+        });
+
+        console.log(
+            "🚀 ~ convertToCSV ~ csvRows.join('\n'): ",
+            csvRows.join('\n'),
+        );
+
+        return csvRows.join('\n');
+    }
+
+    function downloadCSV() {
+        const csvData = convertToCSV(llmResponse);
+
+        if (!csvData) {
+            const errorMessage = 'Data not ready for export';
+            console.error(errorMessage);
+            alert(errorMessage);
             return;
         }
-        const worksheetData = [tableRows];
-        setWorksheetDataState(tableRows);
-        console.log('🚀 ~ handleExportTable ~ worksheetData:', worksheetData);
-        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        // Generate filename with timestamp and export
-        const timestamp = getTimestamp();
-        const fullFilename = `tprm-detailed-analysis-${timestamp}.xlsx`;
-        XLSX.writeFile(workbook, fullFilename);
-        console.log('Export button clicked');
+
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute(
+            'download',
+            `tprm-accelerator-detailed-analysis-${getTimestamp()}.csv`,
+        );
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
+
     return (
         <button
-            onClick={handleExportTable}
+            onClick={downloadCSV}
             className={clsx(
                 tw`w-fit whitespace-nowrap rounded-lg p-2`,
                 tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800`,
                 tw`flex items-center gap-1.5`,
-                tw`focus:outline-none`,
             )}
         >
             <span

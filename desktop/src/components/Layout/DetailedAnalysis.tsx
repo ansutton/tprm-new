@@ -1,16 +1,20 @@
 import { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
+    Column,
+    ColumnFiltersState,
     createColumnHelper,
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
+    getFilteredRowModel,
+    Header,
     Row,
     useReactTable,
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { Pages, Tooltip } from '@/components';
+import { DebouncedInput, Pages, Tooltip } from '@/components';
 import {
     DataItem,
     DataItemField,
@@ -19,18 +23,9 @@ import {
 } from '@/types';
 import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
-function TableHeader({
-    headerContent,
-    infoContent,
-}: TableHeaderProps): JSX.Element {
-    return (
-        <div className='flex items-center gap-1.5'>
-            <span>{headerContent}</span>
-            {infoContent && <Tooltip>{infoContent}</Tooltip>}
-        </div>
-    );
-}
-
+/**
+ * Constants
+ */
 const iconClasses = clsx(
     tw`size-5 stroke-2`,
     tw`stroke-zinc-600 dark:stroke-zinc-400`,
@@ -88,10 +83,13 @@ const columns = [
                 )}
             </button>
         ),
+        enableColumnFilter: false,
     }),
 
     columnHelper.accessor('questionNumber', {
-        header: () => null,
+        header: () => (
+            <TableHeader headerContent='#' additionalClasses='invisible' />
+        ),
         cell: ({ getValue }) => getValue(),
     }),
     columnHelper.accessor('question', {
@@ -110,7 +108,12 @@ const columns = [
     columnHelper.accessor('aiAnalysisPreview', {
         header: () => (
             <TableHeader
-                headerContent='AI Response'
+                headerContent={
+                    <>
+                        <span>AI Response</span>
+                        <Asterisk />
+                    </>
+                }
                 infoContent={`The AI's response to the question`}
             />
         ),
@@ -119,7 +122,12 @@ const columns = [
     columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
-                headerContent='Citation(s)'
+                headerContent={
+                    <>
+                        <span>Citation(s)</span>
+                        <Asterisk />
+                    </>
+                }
                 infoContent={`Page #(s) with relevant excerpt(s) from the provided evidence document(s) used to generate the AI's response`}
             />
         ),
@@ -163,6 +171,25 @@ const columns = [
     // }),
 ];
 
+/**
+ * Components
+ */
+function TableHeader({
+    additionalClasses = '',
+    headerContent,
+    infoContent,
+}: TableHeaderProps): JSX.Element {
+    return (
+        <div className={clsx(additionalClasses, tw`flex items-center gap-1.5`)}>
+            <span>{headerContent}</span>
+            {infoContent && <Tooltip>{infoContent}</Tooltip>}
+        </div>
+    );
+}
+
+function Asterisk(): JSX.Element {
+    return <span className='text-indigo-500/85 dark:text-indigo-400'>*</span>;
+}
 interface DetailedAnalysisProps {
     excelData: any[][];
     llmResponse: LlmResponse;
@@ -177,9 +204,10 @@ export function DetailedAnalysis({
     setAppLevelTableData,
 }: DetailedAnalysisProps): JSX.Element {
     /**
-     * State Hook
+     * State Hooks
      */
     const [data, setData] = useState(handleData());
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
     /**
      * Ref Hook and Export
@@ -202,11 +230,14 @@ export function DetailedAnalysis({
             questionsData.map((question, index) => ({
                 questionNumber: index + 1,
                 question: question,
-                tpResponsePreview: truncate(excelData[index + 1][2], 30),
+                tpResponsePreview:
+                    excelData.length === 0
+                        ? 'No Third Party Responses selected'
+                        : truncate(excelData[index + 1][2], 40),
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
-                        30,
+                        40,
                     ),
                 ),
                 citationsPreview: (
@@ -218,6 +249,7 @@ export function DetailedAnalysis({
                 ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
+                        excelData,
                         llmResponse?.analyses[`analysis_${index}`]
                             ?.answers_align,
                     ),
@@ -241,7 +273,10 @@ export function DetailedAnalysis({
                 //     ),
                 // ),
                 // 'N/A',
-                tpResponseFull: excelData[index + 1][2],
+                tpResponseFull:
+                    excelData.length === 0
+                        ? 'No Third Party Responses selected'
+                        : excelData[index + 1][2],
                 aiAnalysisFull: handleSpinner(
                     llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
                 ),
@@ -289,10 +324,15 @@ export function DetailedAnalysis({
      * React Table Hook
      */
     const table = useReactTable({
-        data,
         columns,
+        data,
+        state: {
+            columnFilters,
+        },
+        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
     });
 
     /**
@@ -315,9 +355,11 @@ export function DetailedAnalysis({
                                 <th
                                     key={header.id}
                                     className={clsx(
-                                        tw`p-3 text-left text-sm`,
+                                        tw`space-y-2 whitespace-nowrap p-3 text-left text-sm`,
                                         tw`border-b border-zinc-300 dark:border-zinc-600`,
-                                        header.id === 'expander' && tw`w-5`,
+                                        header.id === 'expander'
+                                            ? tw`align-center w-5`
+                                            : tw`align-top`,
                                         header.id === 'questionNumber' &&
                                             tw`w-3`,
                                         header.id === 'question' && tw`w-fit`,
@@ -330,11 +372,11 @@ export function DetailedAnalysis({
                                         header.id === 'answersAlign' &&
                                             tw`w-1/6`,
                                         // header.id === 'similarityScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                         // header.id === 'aiConfidenceScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                         // header.id === 'tpConfidenceScore' &&
-                                        //     tw`w-1/12`,
+                                        // tw`w-1/12`,
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -343,6 +385,20 @@ export function DetailedAnalysis({
                                               header.column.columnDef.header,
                                               header.getContext(),
                                           )}
+                                    <Filter
+                                        additionalClasses={clsx(
+                                            header.id === 'questionNumber' &&
+                                                tw`hidden`,
+                                            header.id === 'tpResponsePreview' &&
+                                                tw`hidden`,
+                                            header.id === 'aiAnalysisPreview' &&
+                                                tw`hidden`,
+                                            header.id === 'citationsPreview' &&
+                                                tw`hidden`,
+                                        )}
+                                        column={header.column}
+                                        header={header}
+                                    />
                                 </th>
                             ))}
                         </tr>
@@ -360,7 +416,7 @@ export function DetailedAnalysis({
                                 onClick={() => row.toggleExpanded()}
                                 className={clsx(
                                     tw`group`,
-                                    tw`transition-all duration-200 ease-out`,
+                                    // tw`transition-all duration-200 ease-out`,
                                     tw`hover:cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900`,
                                     row.getIsExpanded() &&
                                         tw`bg-zinc-200 dark:bg-zinc-900`,
@@ -374,14 +430,49 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiAnalysisPreview') &&
-                                                tw`select-none`,
+                                                    'aiAnalysisPreview') && [
+                                                tw`relative select-none overflow-hidden whitespace-nowrap`,
+                                            ],
                                         )}
                                     >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext(),
-                                        )}
+                                        <div
+                                            className={clsx(
+                                                (cell.column.id ===
+                                                    'tpResponsePreview' ||
+                                                    cell.column.id ===
+                                                        'aiAnalysisPreview') && [
+                                                    tw`absolute inset-0 flex w-full items-center p-3`,
+                                                ],
+                                            )}
+                                        >
+                                            <div>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={clsx(
+                                                (cell.column.id ===
+                                                    'tpResponsePreview' ||
+                                                    cell.column.id ===
+                                                        'aiAnalysisPreview') && [
+                                                    tw`absolute inset-y-0 right-0 w-1/2`,
+                                                    tw`bg-gradient-to-r from-transparent to-90%`,
+                                                    tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
+                                                    row.getIsExpanded()
+                                                        ? [
+                                                              tw`to-zinc-200`,
+                                                              tw`dark:to-zinc-900`,
+                                                          ]
+                                                        : [
+                                                              tw`to-zinc-100 group-hover:to-zinc-200`,
+                                                              tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
+                                                          ],
+                                                ],
+                                            )}
+                                        />
                                     </td>
                                 ))}
                             </tr>
@@ -451,5 +542,50 @@ function ExpandedRow({
                 {content}
             </td>
         </tr>
+    );
+}
+
+function Filter({
+    additionalClasses = '',
+    column,
+    header,
+}: {
+    additionalClasses?: string;
+    column: Column<any, unknown>;
+    header: Header<DataItem, unknown>;
+}): JSX.Element {
+    const columnFilterValue = column.getFilterValue();
+
+    return (
+        <DebouncedInput
+            className={clsx(
+                additionalClasses,
+                tw`w-full rounded border p-1 font-normal`,
+                tw`border-indigo-400 bg-zinc-50`,
+                tw`dark:border-indigo-400/50 dark:bg-zinc-900 dark:text-zinc-100`,
+                header.id === 'expander' && tw`hidden`,
+                // header.id ===
+                //     'questionNumber' &&
+                //     tw`w-full`,
+                // header.id === 'question' &&
+                //     tw`w-full`,
+                // header.id ===
+                //     'tpResponsePreview' &&
+                //     tw`w-full`,
+                // header.id ===
+                //     'aiAnalysisPreview' &&
+                //     tw`w-w-full`,
+                // header.id ===
+                //     'citationsPreview' &&
+                //     tw`w-full`,
+                // header.id === 'answersAlign' &&
+                //     tw`w-full`,
+            )}
+            debounce={400}
+            onChange={(value) => column.setFilterValue(value)}
+            placeholder='Search...'
+            type='text'
+            value={(columnFilterValue ?? '') as string}
+        />
     );
 }

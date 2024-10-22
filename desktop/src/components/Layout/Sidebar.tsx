@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import {
-    ArrowUpCircleIcon,
+    ArrowLeftCircleIcon,
     ChartBarSquareIcon,
     ChevronLeftIcon,
     DocumentMagnifyingGlassIcon,
@@ -16,6 +16,7 @@ interface SidebarProps {
     setIsSidebarFullyExpanded: React.Dispatch<React.SetStateAction<boolean>>;
     screen: Screen;
     setScreen: React.Dispatch<React.SetStateAction<Screen>>;
+    handleResetApp?: () => void;
 }
 
 export function Sidebar({
@@ -25,6 +26,7 @@ export function Sidebar({
     setIsSidebarFullyExpanded,
     screen,
     setScreen,
+    handleResetApp,
 }: SidebarProps): JSX.Element {
     /**
      * Helper Functions
@@ -89,20 +91,10 @@ export function Sidebar({
 
             <nav className='mt-6 space-y-2'>
                 <SidebarMenuItem
-                    title='File Upload'
+                    title='File Selection'
                     additionalButtonClasses={tw``}
-                    icon={<ArrowUpCircleIcon className={iconClasses} />}
-                    onClick={() => {
-                        if (
-                            confirm(
-                                'Are you sure? This action will end the current process and start over.',
-                            )
-                        ) {
-                            setScreen('fileUpload');
-                        } else {
-                            return null;
-                        }
-                    }}
+                    icon={<ArrowLeftCircleIcon className={iconClasses} />}
+                    onClick={() => handleResetApp && handleResetApp()}
                     isSidebarExpanded={isSidebarExpanded}
                     isSidebarFullyExpanded={isSidebarFullyExpanded}
                     screen={screen}
