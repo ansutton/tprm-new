@@ -19,10 +19,10 @@ import { confirmDeletionMessage } from '@/constants';
 import { EvidenceFiles, Mode, Screen } from '@/types';
 import {
     handleSampleData,
+    handleSetQuestionsDataState,
     parseExcelFile,
     poll,
     readFileAsDataUrl,
-    readFileAsText,
     submit,
 } from '@/utils';
 
@@ -74,24 +74,6 @@ export function FileSelection({
     /**
      * Helper Functions - Submission
      */
-    async function handleSetQuestionsDataState(
-        questionsFile: File | null,
-        setQuestionsData: Dispatch<SetStateAction<string[]>>,
-    ) {
-        if (questionsFile) {
-            const csvTextFile = await readFileAsText(questionsFile);
-            const questionsArray = csvTextFile
-                .split('\r\n')
-                .filter(
-                    (question) => question !== '' && question !== 'Questions',
-                );
-            setQuestionsData(questionsArray);
-        } else {
-            console.log(
-                `No questions file found; questionsData state was not modified.`,
-            );
-        }
-    }
     function handleResetStates(): void {
         setIsSidebarExpanded(true);
         setIsSidebarFullyExpanded(true);
@@ -102,24 +84,26 @@ export function FileSelection({
     async function handleSubmit() {
         setScreen('detailedAnalysis');
 
-        if (questionsFile && evidenceFiles) {
-            // Handle TP Responses
-
             switch (mode) {
                 case 'demo':
                     handleSampleData({ setLlmResponse, setQuestionsData });
                     break;
                 case 'llm':
+                    // Handle Questions
                     handleSetQuestionsDataState(
                         questionsFile,
                         setQuestionsData,
                     );
 
+                    if (questionsFile) {
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
+                    }
 
                     // Handle Evidence
+                    if (evidenceFile) {
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+                    }
 
                     // Handle TP Responses
                     let parsedExcelFile: any[][] = [];
@@ -148,7 +132,6 @@ export function FileSelection({
 
             // Clean up
             handleResetStates();
-        }
     }
 
     /**

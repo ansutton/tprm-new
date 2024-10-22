@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 import { sampleData } from '@/data';
 
@@ -39,6 +40,22 @@ export async function readFileAsDataUrl(file: File): Promise<string> {
         fileReader.onload = () => resolve(fileReader.result as string);
         fileReader.readAsDataURL(file);
     });
+}
+export async function handleSetQuestionsDataState(
+    questionsFile: File | null,
+    setQuestionsData: Dispatch<SetStateAction<string[]>>,
+) {
+    if (questionsFile) {
+        const csvTextFile = await readFileAsText(questionsFile);
+        const questionsArray = csvTextFile
+            .split('\r\n')
+            .filter((question) => question !== '' && question !== 'Questions');
+        setQuestionsData(questionsArray);
+    } else {
+        console.log(
+            `No questions file found; questionsData state was not modified.`,
+        );
+    }
 }
 
 /**
