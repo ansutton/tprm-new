@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 import { sampleData } from '@/data';
+import { LlmResponse } from '@/types';
+import { poll } from '@/utils';
 
 /**
  * File Reading
@@ -73,6 +75,22 @@ export async function handleSetQuestionsDataState(
 /**
  * Validation
  */
+
+/**
+ * Polling
+ */
+export function handlePoll(
+    setLlmResponse: Dispatch<SetStateAction<LlmResponse>>,
+) {
+    const interval = setInterval(async () => {
+        const pollResponse = await poll();
+        console.log('🚀 ~ setInterval ~ pollResponse:', pollResponse);
+        setLlmResponse(pollResponse);
+        if (pollResponse?.is_complete) {
+            clearInterval(interval);
+        }
+    }, 10000);
+}
 
 /**
  * Submission

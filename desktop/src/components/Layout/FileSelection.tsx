@@ -18,10 +18,10 @@ import {
 import { confirmDeletionMessage } from '@/constants';
 import { EvidenceFiles, Mode, PdfFiles, Screen } from '@/types';
 import {
+    handlePoll,
     handleSampleData,
     handleSetQuestionsDataState,
     parseExcelFile,
-    poll,
     readFileAsDataUrl,
     submit,
 } from '@/utils';
@@ -118,17 +118,7 @@ export function FileSelection({
                 submit({ csvFileBuffer, pdfFiles, parsedExcelFile });
 
                 // Poll
-                const interval = setInterval(async () => {
-                    const pollResponse = await poll();
-                    console.log(
-                        '🚀 ~ setInterval ~ pollResponse:',
-                        pollResponse,
-                    );
-                    setLlmResponse(pollResponse);
-                    if (pollResponse?.is_complete) {
-                        clearInterval(interval);
-                    }
-                }, 10000);
+                handlePoll(setLlmResponse);
                 break;
         }
 
