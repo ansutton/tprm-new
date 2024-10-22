@@ -97,10 +97,14 @@ export function FileSelection({
     const isTpResponsesAlertDisplayed =
         isFilesPopulated(tpResponsesFile) && !isPopulatedTpResponsesValid;
 
+    /**
+     * Constants - All Files Submission-ready Validation
+     */
     const areAllFilesSubmissionReady =
         isQuestionsSubmissionReady &&
         areEvidenceSubmissionReady &&
         isTpResponsesSubmissionReady;
+
     /**
      * Helper Functions - Submission
      */
