@@ -16,15 +16,16 @@ export function FileInputMultiple({
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const file = e.target.files ? e.target.files[0] : null;
-        if (file) {
+        const files = e.target.files;
+        if (files && files[0]) {
             const newFile: EvidenceFile = {
-                file: file,
+                file: files[0],
                 evidenceType: 'unspecified',
             };
             setFileInputState((prevState) =>
                 Array.isArray(prevState) ? [...prevState, newFile] : [newFile],
             );
+            e.target.value = '';
         }
     }
 
