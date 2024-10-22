@@ -106,7 +106,6 @@ export function FileSelection({
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-                    // const xlsxFileBuffer = await readFileAsDataUrl(tpResponsesFile)
                     submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
                     const interval = setInterval(async () => {
                         const pollResponse = await poll();
@@ -115,7 +114,6 @@ export function FileSelection({
                             pollResponse,
                         );
                         setLlmResponse(pollResponse);
-                        // Clear interval when response is complete
                         if (pollResponse?.is_complete) {
                             clearInterval(interval);
                         }
