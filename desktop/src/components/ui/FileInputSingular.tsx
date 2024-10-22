@@ -16,8 +16,9 @@ export function FileInputSingular({
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
-        if (files?.length === 1) {
+        if (files && files[0]) {
             setFileInputState(files[0]);
+            e.target.value = '';
         }
     }
 
