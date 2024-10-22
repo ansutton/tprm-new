@@ -3,8 +3,23 @@ import * as XLSX from 'xlsx';
 import { sampleData } from '@/data';
 
 /**
- * File Parsing
+ * File Reading
  */
+export async function readFileAsText(file: File): Promise<string> {
+    return new Promise((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => resolve(fileReader.result as string);
+        fileReader.readAsText(file);
+    });
+}
+// TODO: revisit base64 encoding; revisit file passing from front end to back end
+export async function readFileAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => resolve(fileReader.result as string);
+        fileReader.readAsDataURL(file);
+    });
+}
 export async function parseExcelFile(file: File): Promise<any[][]> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -26,21 +41,10 @@ export async function parseExcelFile(file: File): Promise<any[][]> {
         reader.readAsArrayBuffer(file);
     });
 }
-export async function readFileAsText(file: File): Promise<string> {
-    return new Promise((resolve) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => resolve(fileReader.result as string);
-        fileReader.readAsText(file);
-    });
-}
-// TODO: revisit base64 encoding; revisit file passing from front end to back end
-export async function readFileAsDataUrl(file: File): Promise<string> {
-    return new Promise((resolve) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => resolve(fileReader.result as string);
-        fileReader.readAsDataURL(file);
-    });
-}
+
+/**
+ * Handling Questions
+ */
 export async function handleSetQuestionsDataState(
     questionsFile: File | null,
     setQuestionsData: Dispatch<SetStateAction<string[]>>,
@@ -57,6 +61,14 @@ export async function handleSetQuestionsDataState(
         );
     }
 }
+
+/**
+ * Handling Evidence
+ */
+
+/**
+ * Handling TP Responses
+ */
 
 /**
  * Validation
