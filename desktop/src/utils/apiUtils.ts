@@ -12,7 +12,7 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
     try {
         const data = {
             questionsCsvFileBuffer: params.csvFileBuffer,
-            evidencePdfFileBuffer: params.pdfFileBuffer,
+            evidencePdfFileBuffer: params.pdfFiles,
             parsedExcelFile: params.parsedExcelFile,
             // responsesXlsxFileBuffer: params.xlsxFileBuffer,
         };
