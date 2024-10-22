@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { /* Dispatch, SetStateAction, */ useEffect, useState } from 'react';
 import {
     ArrowPathIcon,
-    ChartBarSquareIcon,
-    ChatBubbleBottomCenterTextIcon,
-    QuestionMarkCircleIcon,
+    // ChartBarSquareIcon,
+    // ChatBubbleBottomCenterTextIcon,
+    // QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
-    Button,
-    Card,
+    // Button,
+    // Card,
     DetailedAnalysis,
     FileSelection,
     Heading,
@@ -18,13 +18,13 @@ import {
 } from '@/components';
 import { tableFootnoteText } from '@/constants';
 import {
-    parseExcelFile,
-    readFileAsText,
-    readFileAsDataUrl,
+    // parseExcelFile,
+    // readFileAsText,
+    // readFileAsDataUrl,
     countResponsesAlign,
-    handleSampleData,
-    poll,
-    submit,
+    // handleSampleData,
+    // poll,
+    // submit,
     tw,
 } from '@/utils';
 import { Mode, Screen } from '@/types';
@@ -44,9 +44,9 @@ export default function Home(): JSX.Element {
     const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
     const [isSidebarFullyExpanded, setIsSidebarFullyExpanded] =
         useState<boolean>(true);
-    const [questionsFile, setQuestionsFile] = useState<File | null>(null);
-    const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
-    const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
+    // const [questionsFile, setQuestionsFile] = useState<File | null>(null);
+    // const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
+    // const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
     const [llmResponse, setLlmResponse] = useState<any>(null);
     const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
@@ -58,120 +58,120 @@ export default function Home(): JSX.Element {
     /**
      * Helper Functions - Validation
      */
-    const isFileValid = (file: File | null, fileType: string): file is File =>
-        file !== null && file?.type === fileType;
-    const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
-    const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
-    // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
-    const isTpResponsesFileValid = tpResponsesFile
-        ? isFileValid(
-              tpResponsesFile,
-              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          )
-        : true;
-    const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
+    // const isFileValid = (file: File | null, fileType: string): file is File =>
+    //     file !== null && file?.type === fileType;
+    // const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
+    // const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
+    // // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
+    // const isTpResponsesFileValid = tpResponsesFile
+    //     ? isFileValid(
+    //           tpResponsesFile,
+    //           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    //       )
+    //     : true;
+    // const areAllFilesValid: boolean =
+    //     isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
 
     /**
      * Helper Functions - Misc
      */
-    function onFileChange(
-        e: React.ChangeEvent<HTMLInputElement>,
-        setState: Dispatch<SetStateAction<File | null>>,
-    ) {
-        if (e.target.files) {
-            setState(e.target.files[0]);
-        }
-    }
-    function handleResetStates(): void {
-        setIsSidebarExpanded(true);
-        setIsSidebarFullyExpanded(true);
-        setQuestionsFile(null);
-        setEvidenceFile(null);
-        setTpResponsesFile(null);
-    }
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        let parsedExcelFile: any[][] = [];
-        if (questionsFile && evidenceFile) {
-            // Handle TP Responses
-            if (tpResponsesFile) {
-                parsedExcelFile = await parseExcelFile(tpResponsesFile);
-                setTpResponsesData(parsedExcelFile);
-            }
-            const csvTextFile = await readFileAsText(questionsFile);
-            const questionsArray = csvTextFile
-                .split('\r\n')
-                .filter(
-                    (question) => question !== '' && question !== 'Questions',
-                );
-            setScreen('detailedAnalysis');
-            console.log('🚀 ~ handleSubmit ~ mode:', mode);
-            switch (mode) {
-                case 'demo':
-                    handleSampleData({ setLlmResponse, setQuestionsData });
-                    break;
-                case 'llm':
-                    setQuestionsData(questionsArray);
-                    const csvFileBuffer =
-                        await readFileAsDataUrl(questionsFile);
-                    const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
-                    // const xlsxFileBuffer = await readFileAsDataUrl(tpResponsesFile)
-                    submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
-                    const interval = setInterval(async () => {
-                        const pollResponse = await poll();
-                        console.log(
-                            '🚀 ~ setInterval ~ pollResponse:',
-                            pollResponse,
-                        );
-                        setLlmResponse(pollResponse);
-                        // Clear interval when response is complete
-                        if (pollResponse?.is_complete) {
-                            clearInterval(interval);
-                        }
-                    }, 10000);
-                    break;
-            }
-            handleResetStates();
-        }
-    }
+    // function onFileChange(
+    //     e: React.ChangeEvent<HTMLInputElement>,
+    //     setState: Dispatch<SetStateAction<File | null>>,
+    // ) {
+    //     if (e.target.files) {
+    //         setState(e.target.files[0]);
+    //     }
+    // }
+    // function handleResetStates(): void {
+    //     setIsSidebarExpanded(true);
+    //     setIsSidebarFullyExpanded(true);
+    //     setQuestionsFile(null);
+    //     setEvidenceFile(null);
+    //     setTpResponsesFile(null);
+    // }
+    // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+    //     let parsedExcelFile: any[][] = [];
+    //     if (questionsFile && evidenceFile) {
+    //         // Handle TP Responses
+    //         if (tpResponsesFile) {
+    //             parsedExcelFile = await parseExcelFile(tpResponsesFile);
+    //             setTpResponsesData(parsedExcelFile);
+    //         }
+    //         const csvTextFile = await readFileAsText(questionsFile);
+    //         const questionsArray = csvTextFile
+    //             .split('\r\n')
+    //             .filter(
+    //                 (question) => question !== '' && question !== 'Questions',
+    //             );
+    //         setScreen('detailedAnalysis');
+    //         console.log('🚀 ~ handleSubmit ~ mode:', mode);
+    //         switch (mode) {
+    //             case 'demo':
+    //                 handleSampleData({ setLlmResponse, setQuestionsData });
+    //                 break;
+    //             case 'llm':
+    //                 setQuestionsData(questionsArray);
+    //                 const csvFileBuffer =
+    //                     await readFileAsDataUrl(questionsFile);
+    //                 const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+    //                 // const xlsxFileBuffer = await readFileAsDataUrl(tpResponsesFile)
+    //                 submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
+    //                 const interval = setInterval(async () => {
+    //                     const pollResponse = await poll();
+    //                     console.log(
+    //                         '🚀 ~ setInterval ~ pollResponse:',
+    //                         pollResponse,
+    //                     );
+    //                     setLlmResponse(pollResponse);
+    //                     // Clear interval when response is complete
+    //                     if (pollResponse?.is_complete) {
+    //                         clearInterval(interval);
+    //                     }
+    //                 }, 10000);
+    //                 break;
+    //         }
+    //         handleResetStates();
+    //     }
+    // }
 
     /**
      * Components
      */
-    function AlertQuestionsFile(): JSX.Element {
-        if (questionsFile && !isQuestionsFileValid) {
-            return (
-                <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>csv</b> before proceeding
-                </p>
-            );
-        } else {
-            return <></>;
-        }
-    }
-    function AlertEvidenceFile(): JSX.Element {
-        if (evidenceFile && !isEvidenceFileValid) {
-            return (
-                <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>pdf</b> before proceeding
-                </p>
-            );
-        } else {
-            return <></>;
-        }
-    }
-    function AlertResponsesFile(): JSX.Element {
-        if (tpResponsesFile && !isTpResponsesFileValid) {
-            return (
-                <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>xlsx</b> before proceeding
-                </p>
-            );
-        } else {
-            return <></>;
-        }
-    }
+    // function AlertQuestionsFile(): JSX.Element {
+    //     if (questionsFile && !isQuestionsFileValid) {
+    //         return (
+    //             <p className='text-orange-600 dark:text-orange-500'>
+    //                 Please choose file type <b>csv</b> before proceeding
+    //             </p>
+    //         );
+    //     } else {
+    //         return <></>;
+    //     }
+    // }
+    // function AlertEvidenceFile(): JSX.Element {
+    //     if (evidenceFile && !isEvidenceFileValid) {
+    //         return (
+    //             <p className='text-orange-600 dark:text-orange-500'>
+    //                 Please choose file type <b>pdf</b> before proceeding
+    //             </p>
+    //         );
+    //     } else {
+    //         return <></>;
+    //     }
+    // }
+    // function AlertResponsesFile(): JSX.Element {
+    //     if (tpResponsesFile && !isTpResponsesFileValid) {
+    //         return (
+    //             <p className='text-orange-600 dark:text-orange-500'>
+    //                 Please choose file type <b>xlsx</b> before proceeding
+    //             </p>
+    //         );
+    //     } else {
+    //         return <></>;
+    //     }
+    // }
 
     /**
      * Effect Hook
