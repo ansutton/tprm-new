@@ -91,15 +91,15 @@ export function FileSelection({
             case 'llm':
                 // Handle Questions
                 handleSetQuestionsDataState(questionsFile, setQuestionsData);
-
+                let csvFileBuffer: string = '';
                 if (questionsFile) {
-                    const csvFileBuffer =
-                        await readFileAsDataUrl(questionsFile);
+                    csvFileBuffer = await readFileAsDataUrl(questionsFile);
                 }
 
                 // Handle Evidence
+                let pdfFileBuffer: string = '';
                 if (evidenceFile) {
-                    const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+                    pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
                 }
 
                 // Handle TP Responses
