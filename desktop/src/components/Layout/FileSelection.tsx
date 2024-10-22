@@ -74,6 +74,24 @@ export function FileSelection({
     /**
      * Helper Functions - Submission
      */
+    async function handleSetQuestionsDataState(
+        questionsFile: File | null,
+        setQuestionsData: Dispatch<SetStateAction<string[]>>,
+    ) {
+        if (questionsFile) {
+            const csvTextFile = await readFileAsText(questionsFile);
+            const questionsArray = csvTextFile
+                .split('\r\n')
+                .filter(
+                    (question) => question !== '' && question !== 'Questions',
+                );
+            setQuestionsData(questionsArray);
+        } else {
+            console.log(
+                `No questions file found; questionsData state was not modified.`,
+            );
+        }
+    }
     function handleResetStates(): void {
         setIsSidebarExpanded(true);
         setIsSidebarFullyExpanded(true);
@@ -92,15 +110,11 @@ export function FileSelection({
                     handleSampleData({ setLlmResponse, setQuestionsData });
                     break;
                 case 'llm':
-                    // Handle Questions
-                    const csvTextFile = await readFileAsText(questionsFile);
-                    const questionsArray = csvTextFile
-                        .split('\r\n')
-                        .filter(
-                            (question) =>
-                                question !== '' && question !== 'Questions',
-                        );
-                    setQuestionsData(questionsArray);
+                    handleSetQuestionsDataState(
+                        questionsFile,
+                        setQuestionsData,
+                    );
+
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
 
