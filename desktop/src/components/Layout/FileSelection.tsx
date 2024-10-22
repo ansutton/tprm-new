@@ -16,7 +16,7 @@ import {
     FileSelectionTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
-import { EvidenceFiles, Mode, PdfFiles, Screen } from '@/types';
+import { EvidenceFile, EvidenceFiles, Mode, PdfFiles, Screen } from '@/types';
 import {
     handlePoll,
     handleSampleData,
@@ -55,22 +55,56 @@ export function FileSelection({
     /**
      * Helper Functions - Validation
      */
-    const isFileValid = (file: File | null, fileType: string): file is File =>
-        file !== null && file?.type === fileType;
-    const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
-    // TODO: validate for multiple evidence files
-    const isEvidenceFileValid = true;
-    // const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
-    // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
-    const isTpResponsesFileValid = tpResponsesFile
-        ? isFileValid(
-              tpResponsesFile,
-              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          )
-        : true;
-    const areAllFilesValid: boolean =
-        isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
+    function isFileValid(file: File | null, fileType: string): file is File {
+        return file !== null && file?.type === fileType;
+    }
+    // const isFileValid = (file: File | null, fileType: string): file is File =>
+    //     file !== null && file?.type === fileType;
+    function isFilesPopulated(files: File | EvidenceFiles | null): boolean {
+        return files ? true : false;
+    }
 
+    // Validate Questions
+    const isPopulatedQuestionsValid = isFileValid(questionsFile, 'text/csv');
+    const isQuestionsPopulatedAndValid =
+        isFilesPopulated(questionsFile) && isPopulatedQuestionsValid;
+    const isQuestionsSubmissionReady = isQuestionsPopulatedAndValid;
+    const isQuestionsAlertDisplayed =
+        isFilesPopulated(questionsFile) && !isPopulatedQuestionsValid;
+
+    // Validate Evidence
+    const arePopulatedEvidenceValid =
+        evidenceFiles?.every((evidenceFile: EvidenceFile) =>
+            isFileValid(
+                evidenceFile ? evidenceFile?.file : null,
+                'application/pdf',
+            ),
+        ) ?? false;
+    const areEvidencePopulatedAndValid =
+        isFilesPopulated(evidenceFiles) && arePopulatedEvidenceValid;
+    const areEvidenceSubmissionReady = areEvidencePopulatedAndValid;
+    const isEvidenceAlertDisplayed =
+        isFilesPopulated(evidenceFiles) && !arePopulatedEvidenceValid;
+
+    // Validate TP Responses
+    const isPopulatedTpResponsesValid = isFileValid(
+        tpResponsesFile,
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    const isTpResponsesPopulatedAndValid =
+        isFilesPopulated(tpResponsesFile) && isPopulatedTpResponsesValid;
+    const isTpResponsesSubmissionReady: boolean = isFilesPopulated(
+        tpResponsesFile,
+    )
+        ? isPopulatedTpResponsesValid
+        : true;
+    const isTpResponsesAlertDisplayed =
+        isFilesPopulated(tpResponsesFile) && !isPopulatedTpResponsesValid;
+
+    const areAllFilesSubmissionReady =
+        isQuestionsSubmissionReady &&
+        areEvidenceSubmissionReady &&
+        isTpResponsesSubmissionReady;
     /**
      * Helper Functions - Submission
      */
@@ -130,7 +164,7 @@ export function FileSelection({
      * Components
      */
     function AlertQuestionsFile(): JSX.Element {
-        if (questionsFile && !isQuestionsFileValid) {
+        if (isQuestionsAlertDisplayed) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
                     Please choose file type <b>csv</b> before proceeding
@@ -141,9 +175,7 @@ export function FileSelection({
         }
     }
     function AlertEvidenceFiles(): JSX.Element {
-        // TODO: validate evidence files
-        // if (evidenceFiles && !isEvidenceFileValid) {
-        if (!isEvidenceFileValid) {
+        if (isEvidenceAlertDisplayed) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
                     Please choose file type <b>pdf</b> before proceeding
@@ -154,7 +186,7 @@ export function FileSelection({
         }
     }
     function AlertTpResponsesFile(): JSX.Element {
-        if (tpResponsesFile && !isTpResponsesFileValid) {
+        if (isTpResponsesAlertDisplayed) {
             return (
                 <p className='text-orange-600 dark:text-orange-500'>
                     Please choose file type <b>xlsx</b> before proceeding
@@ -220,7 +252,9 @@ export function FileSelection({
 
             <div className='w-full text-center'>
                 <Button
-                    variant={areAllFilesValid ? 'solid' : 'disabledSolid'}
+                    variant={
+                        areAllFilesSubmissionReady ? 'solid' : 'disabledSolid'
+                    }
                     additionalClasses='mx-auto'
                     onClick={handleSubmit}
                 >
