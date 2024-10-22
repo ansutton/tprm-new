@@ -84,54 +84,51 @@ export function FileSelection({
     async function handleSubmit() {
         setScreen('detailedAnalysis');
 
-            switch (mode) {
-                case 'demo':
-                    handleSampleData({ setLlmResponse, setQuestionsData });
-                    break;
-                case 'llm':
-                    // Handle Questions
-                    handleSetQuestionsDataState(
-                        questionsFile,
-                        setQuestionsData,
-                    );
+        switch (mode) {
+            case 'demo':
+                handleSampleData({ setLlmResponse, setQuestionsData });
+                break;
+            case 'llm':
+                // Handle Questions
+                handleSetQuestionsDataState(questionsFile, setQuestionsData);
 
-                    if (questionsFile) {
+                if (questionsFile) {
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
-                    }
+                }
 
-                    // Handle Evidence
-                    if (evidenceFile) {
+                // Handle Evidence
+                if (evidenceFile) {
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+                }
+
+                // Handle TP Responses
+                let parsedExcelFile: any[][] = [];
+                if (tpResponsesFile) {
+                    parsedExcelFile = await parseExcelFile(tpResponsesFile);
+                    setTpResponsesData(parsedExcelFile);
+                }
+
+                // Submit
+                submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
+
+                // Poll
+                const interval = setInterval(async () => {
+                    const pollResponse = await poll();
+                    console.log(
+                        '🚀 ~ setInterval ~ pollResponse:',
+                        pollResponse,
+                    );
+                    setLlmResponse(pollResponse);
+                    if (pollResponse?.is_complete) {
+                        clearInterval(interval);
                     }
+                }, 10000);
+                break;
+        }
 
-                    // Handle TP Responses
-                    let parsedExcelFile: any[][] = [];
-                    if (tpResponsesFile) {
-                        parsedExcelFile = await parseExcelFile(tpResponsesFile);
-                        setTpResponsesData(parsedExcelFile);
-                    }
-
-                    // Submit
-                    submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
-
-                    // Poll
-                    const interval = setInterval(async () => {
-                        const pollResponse = await poll();
-                        console.log(
-                            '🚀 ~ setInterval ~ pollResponse:',
-                            pollResponse,
-                        );
-                        setLlmResponse(pollResponse);
-                        if (pollResponse?.is_complete) {
-                            clearInterval(interval);
-                        }
-                    }, 10000);
-                    break;
-            }
-
-            // Clean up
-            handleResetStates();
+        // Clean up
+        handleResetStates();
     }
 
     /**
