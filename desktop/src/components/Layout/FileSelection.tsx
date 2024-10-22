@@ -87,8 +87,8 @@ export function FileSelection({
         tpResponsesFile,
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
-    const isTpResponsesPopulatedAndValid =
-        isFilesPopulated(tpResponsesFile) && isPopulatedTpResponsesValid;
+    // const isTpResponsesPopulatedAndValid =
+    //     isFilesPopulated(tpResponsesFile) && isPopulatedTpResponsesValid;
     const isTpResponsesSubmissionReady: boolean = isFilesPopulated(
         tpResponsesFile,
     )
