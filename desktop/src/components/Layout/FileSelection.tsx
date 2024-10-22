@@ -16,7 +16,7 @@ import {
     FileSelectionTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
-import { EvidenceFiles, Mode, Screen } from '@/types';
+import { EvidenceFiles, Mode, PdfFiles, Screen } from '@/types';
 import {
     handleSampleData,
     handleSetQuestionsDataState,
@@ -97,9 +97,14 @@ export function FileSelection({
                 }
 
                 // Handle Evidence
-                let pdfFileBuffer: string = '';
-                if (evidenceFile) {
-                    pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+                let pdfFiles: PdfFiles = [];
+                if (evidenceFiles) {
+                    pdfFiles = evidenceFiles.map(async (evidenceFile) => ({
+                        pdfFileBuffer: evidenceFile
+                            ? await readFileAsDataUrl(evidenceFile.file)
+                            : null,
+                        evidenceType: evidenceFile?.evidenceType,
+                    }));
                 }
 
                 // Handle TP Responses
@@ -110,7 +115,7 @@ export function FileSelection({
                 }
 
                 // Submit
-                submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
+                submit({ csvFileBuffer, pdfFiles, parsedExcelFile });
 
                 // Poll
                 const interval = setInterval(async () => {
