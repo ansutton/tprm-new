@@ -72,7 +72,7 @@ export function FileSelection({
         isQuestionsFileValid && isEvidenceFileValid && isTpResponsesFileValid;
 
     /**
-     * Helper Functions - Misc
+     * Helper Functions - Submission
      */
     function handleResetStates(): void {
         setIsSidebarExpanded(true);
@@ -82,31 +82,42 @@ export function FileSelection({
         setTpResponsesFile(null);
     }
     async function handleSubmit() {
-        let parsedExcelFile: any[][] = [];
+        setScreen('detailedAnalysis');
+
         if (questionsFile && evidenceFiles) {
             // Handle TP Responses
-            if (tpResponsesFile) {
-                parsedExcelFile = await parseExcelFile(tpResponsesFile);
-                setTpResponsesData(parsedExcelFile);
-            }
-            const csvTextFile = await readFileAsText(questionsFile);
-            const questionsArray = csvTextFile
-                .split('\r\n')
-                .filter(
-                    (question) => question !== '' && question !== 'Questions',
-                );
-            setScreen('detailedAnalysis');
-            console.log('🚀 ~ handleSubmit ~ mode:', mode);
+
             switch (mode) {
                 case 'demo':
                     handleSampleData({ setLlmResponse, setQuestionsData });
                     break;
                 case 'llm':
+                    // Handle Questions
+                    const csvTextFile = await readFileAsText(questionsFile);
+                    const questionsArray = csvTextFile
+                        .split('\r\n')
+                        .filter(
+                            (question) =>
+                                question !== '' && question !== 'Questions',
+                        );
                     setQuestionsData(questionsArray);
                     const csvFileBuffer =
                         await readFileAsDataUrl(questionsFile);
+
+                    // Handle Evidence
                     const pdfFileBuffer = await readFileAsDataUrl(evidenceFile);
+
+                    // Handle TP Responses
+                    let parsedExcelFile: any[][] = [];
+                    if (tpResponsesFile) {
+                        parsedExcelFile = await parseExcelFile(tpResponsesFile);
+                        setTpResponsesData(parsedExcelFile);
+                    }
+
+                    // Submit
                     submit({ csvFileBuffer, pdfFileBuffer, parsedExcelFile });
+
+                    // Poll
                     const interval = setInterval(async () => {
                         const pollResponse = await poll();
                         console.log(
@@ -120,6 +131,8 @@ export function FileSelection({
                     }, 10000);
                     break;
             }
+
+            // Clean up
             handleResetStates();
         }
     }

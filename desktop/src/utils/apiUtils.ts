@@ -16,6 +16,7 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
             parsedExcelFile: params.parsedExcelFile,
             // responsesXlsxFileBuffer: params.xlsxFileBuffer,
         };
+        console.log('🚀 ~ submit ~ data:', data);
         const response = await fetch(
             `${localPythonServerConnectionString}/submit`,
             {
