@@ -236,14 +236,17 @@ export function FileSelection({
     );
 }
 
-interface SectionSingularProps {
+interface SectionProps {
     accept: Accept;
     heading: string;
     buttonText: string;
-    fileInputState: File | null;
-    setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
     startIcon?: ReactNode;
     isAlertDisplayed: boolean;
+}
+
+interface SectionSingularProps extends SectionProps {
+    fileInputState: File | null;
+    setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
 function SectionSingular({
@@ -295,14 +298,9 @@ function SectionSingular({
     );
 }
 
-interface SectionEvidenceProps {
-    accept: Accept;
-    heading: string;
-    buttonText: string;
+interface SectionEvidenceProps extends SectionProps {
     fileInputState: EvidenceFiles;
     setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
-    startIcon?: ReactNode;
-    isAlertDisplayed: boolean;
 }
 
 function SectionEvidence({
@@ -363,7 +361,10 @@ function SectionEvidence({
                                     )
                                 }
                             />
-                            <EvidenceSelect />
+                            <EvidenceSelect
+                                fileInputState={fileInputState}
+                                setFileInputState={setFileInputState}
+                            />
                         </div>
                     ))}
             </div>
@@ -376,6 +377,21 @@ function SectionEvidence({
     );
 }
 
+interface EvidenceSelectProps {
+    fileInputState: EvidenceFiles;
+    setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
+}
+
+function EvidenceSelect({
+    fileInputState,
+    setFileInputState,
+}: EvidenceSelectProps): JSX.Element {
+    return (
+        <select className='rounded bg-fuchsia-600'>
+            <option className=''>option1</option>
+        </select>
+    );
+}
 interface FileProps {
     handleDeleteFile: () => void;
     fileName: string | undefined;
@@ -453,12 +469,4 @@ function Alert({
     } else {
         return <></>;
     }
-}
-
-function EvidenceSelect(): JSX.Element {
-    return (
-        <>
-            <>EvidenceSelect</>
-        </>
-    );
 }
