@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 import { sampleData } from '@/data';
-import { EvidenceFiles, LlmResponse } from '@/types';
+import { Accept, EvidenceFiles, LlmResponse } from '@/types';
 import { poll } from '@/utils';
 
 /**
@@ -141,4 +141,11 @@ export function handleSampleData({
     }
     // Start the recursive update process
     updateAnalysis(0);
+}
+
+/**
+ * Misc
+ */
+export function removeDot(accept: Accept) {
+    return accept.slice(1, accept.length);
 }

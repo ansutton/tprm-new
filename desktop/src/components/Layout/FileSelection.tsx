@@ -16,7 +16,14 @@ import {
     FileSelectionTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
-import { EvidenceFile, EvidenceFiles, Mode, PdfFiles, Screen } from '@/types';
+import {
+    Accept,
+    EvidenceFile,
+    EvidenceFiles,
+    Mode,
+    PdfFiles,
+    Screen,
+} from '@/types';
 import {
     handlePoll,
     handleSampleData,
@@ -25,6 +32,7 @@ import {
     isFileValid,
     parseExcelFile,
     readFileAsDataUrl,
+    removeDot,
     submit,
 } from '@/utils';
 
@@ -160,43 +168,6 @@ export function FileSelection({
         handleResetStates();
     }
 
-    /**
-     * Components
-     */
-    function AlertQuestionsFile(): JSX.Element {
-        if (isQuestionsAlertDisplayed) {
-            return (
-                <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>csv</b> before proceeding
-                </p>
-            );
-        } else {
-            return <></>;
-        }
-    }
-    function AlertEvidenceFiles(): JSX.Element {
-        if (isEvidenceAlertDisplayed) {
-            return (
-                <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>pdf</b> before proceeding
-                </p>
-            );
-        } else {
-            return <></>;
-        }
-    }
-    function AlertTpResponsesFile(): JSX.Element {
-        if (isTpResponsesAlertDisplayed) {
-            return (
-                <p className='text-orange-600 dark:text-orange-500'>
-                    Please choose file type <b>xlsx</b> before proceeding
-                </p>
-            );
-        } else {
-            return <></>;
-        }
-    }
-
     return (
         <Card additionalClasses='mx-auto max-w-2xl space-y-6'>
             <SectionSingular
@@ -213,8 +184,8 @@ export function FileSelection({
                 fileInputState={questionsFile}
                 setFileInputState={setQuestionsFile}
                 buttonText='Select File'
+                isAlertDisplayed={isQuestionsAlertDisplayed}
             />
-            <AlertQuestionsFile />
 
             <SectionEvidence
                 heading='Third Party Evidence Provided'
@@ -230,8 +201,8 @@ export function FileSelection({
                 fileInputState={evidenceFiles}
                 setFileInputState={setEvidenceFiles}
                 buttonText='Select File(s)'
+                isAlertDisplayed={isEvidenceAlertDisplayed}
             />
-            <AlertEvidenceFiles />
 
             <SectionSingular
                 heading='Third Party Responses'
@@ -247,8 +218,8 @@ export function FileSelection({
                 fileInputState={tpResponsesFile}
                 setFileInputState={setTpResponsesFile}
                 buttonText='Select File'
+                isAlertDisplayed={isTpResponsesAlertDisplayed}
             />
-            <AlertTpResponsesFile />
 
             <div className='w-full text-center'>
                 <Button
@@ -266,12 +237,13 @@ export function FileSelection({
 }
 
 interface SectionSingularProps {
-    accept: string;
+    accept: Accept;
     heading: string;
     buttonText: string;
     fileInputState: File | null;
     setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
     startIcon?: ReactNode;
+    isAlertDisplayed: boolean;
 }
 
 function SectionSingular({
@@ -281,6 +253,7 @@ function SectionSingular({
     fileInputState,
     setFileInputState,
     startIcon,
+    isAlertDisplayed,
 }: SectionSingularProps): JSX.Element {
     function handleDeleteFile(
         setFileInputState: React.Dispatch<React.SetStateAction<File | null>>,
@@ -297,11 +270,9 @@ function SectionSingular({
             <Heading level={4} startIcon={startIcon}>
                 {heading}
             </Heading>
-            {accept && (
-                <p>
-                    Accepts file type <b>{accept.slice(1, accept.length)}</b>
-                </p>
-            )}
+            <p>
+                Accepts file type <b>{removeDot(accept)}</b>
+            </p>
             <div className='flex items-center'>
                 <div className='w-40'>
                     <FileInputSingular
@@ -319,17 +290,19 @@ function SectionSingular({
                     />
                 )}
             </div>
+            <Alert accept={accept} isDisplayed={isAlertDisplayed} />
         </>
     );
 }
 
 interface SectionEvidenceProps {
-    accept: string;
+    accept: Accept;
     heading: string;
     buttonText: string;
     fileInputState: EvidenceFiles;
     setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
     startIcon?: ReactNode;
+    isAlertDisplayed: boolean;
 }
 
 function SectionEvidence({
@@ -339,6 +312,7 @@ function SectionEvidence({
     fileInputState,
     setFileInputState,
     startIcon,
+    isAlertDisplayed,
 }: SectionEvidenceProps): JSX.Element {
     function handleDeleteFile(
         fileName: string | undefined,
@@ -362,11 +336,9 @@ function SectionEvidence({
             <Heading level={4} startIcon={startIcon}>
                 {heading}
             </Heading>
-            {accept && (
-                <p>
-                    Accepts files type <b>{accept.slice(1, accept.length)}</b>
-                </p>
-            )}
+            <p>
+                Accepts files type <b>{removeDot(accept)}</b>
+            </p>
             <div
                 className={clsx(
                     'flex',
@@ -396,6 +368,7 @@ function SectionEvidence({
                         ))}
                 </div>
             </div>
+            <Alert accept={accept} isDisplayed={isAlertDisplayed} />
         </>
     );
 }
@@ -454,4 +427,21 @@ function FileName({
             </FileSelectionTooltip>
         </div>
     );
+}
+
+interface AlertProps {
+    isDisplayed: boolean;
+    accept: Accept;
+}
+function Alert({ isDisplayed, accept }: AlertProps): JSX.Element {
+    if (isDisplayed) {
+        return (
+            <p className='text-orange-600 dark:text-orange-500'>
+                Please choose file type <b>{removeDot(accept)}</b> before
+                proceeding
+            </p>
+        );
+    } else {
+        return <></>;
+    }
 }

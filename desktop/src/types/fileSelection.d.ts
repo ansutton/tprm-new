@@ -10,6 +10,7 @@ export interface SubmitRequestParams {
 /**
  * Types
  */
+export type Accept = '.csv' | '.pdf' | '.xlsx';
 export type EvidenceType =
     | 'soc'
     | 'pen'
