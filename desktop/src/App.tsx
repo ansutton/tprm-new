@@ -183,7 +183,7 @@ export default function Home(): JSX.Element {
      * Return Statement
      */
     return (
-        <div className='w-full dark:text-zinc-50'>
+        <div className='w-full selection:bg-pink-500/90 selection:text-white dark:text-zinc-50'>
             <Topbar
                 llmResponse={llmResponse}
                 mode={mode}
