@@ -438,6 +438,7 @@ interface AlertProps {
     accept: Accept;
     customMessage?: string;
 }
+
 function Alert({
     isDisplayed,
     accept,
