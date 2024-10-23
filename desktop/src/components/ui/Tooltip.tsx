@@ -81,15 +81,13 @@ export function FileSelectionTooltip({
             <Transition show={isShowing}>
                 <PopoverPanel
                     transition
-                    anchor={{ to: 'top', gap: 24 }}
+                    anchor={{ to: 'right start', gap: 24 }}
                     className={clsx(
-                        tw`rounded-xl border text-xs`,
+                        tw`rounded-lg text-xs`,
                         tw`w-fit p-2.5`,
                         tw`transition delay-700 duration-300 ease-in data-[closed]:opacity-0`,
-                        theme === 'light' &&
-                            tw`border-indigo-400 bg-zinc-100 opacity-95`,
-                        theme === 'dark' &&
-                            tw`border-indigo-500 bg-zinc-900 text-zinc-100 opacity-75`,
+                        theme === 'light' && tw`bg-zinc-200 text-black`,
+                        theme === 'dark' && tw`bg-zinc-900 text-zinc-100`,
                     )}
                 >
                     {children}
