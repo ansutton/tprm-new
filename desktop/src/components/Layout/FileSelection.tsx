@@ -356,25 +356,28 @@ function SectionEvidence({
                     buttonText={buttonText}
                 />
 
-                {fileInputState &&
-                    fileInputState?.map((fileObj, index) => (
-                        <div key={index} className='flex w-full gap-4'>
-                            <File
-                                fileName={fileObj?.file.name}
-                                handleDeleteFile={() =>
-                                    handleDeleteFile(
-                                        fileObj?.file.name,
-                                        setFileInputState,
-                                    )
-                                }
-                            />
-                            <EvidenceSelect
-                                evidenceIndex={index}
-                                fileInputState={fileInputState}
-                                setFileInputState={setFileInputState}
-                            />
-                        </div>
-                    ))}
+                {fileInputState && (
+                    <div className='flex w-full flex-col space-y-4'>
+                        {fileInputState?.map((fileObj, index) => (
+                            <div key={index} className='flex gap-4'>
+                                <File
+                                    fileName={fileObj?.file.name}
+                                    handleDeleteFile={() =>
+                                        handleDeleteFile(
+                                            fileObj?.file.name,
+                                            setFileInputState,
+                                        )
+                                    }
+                                />
+                                <EvidenceSelect
+                                    evidenceIndex={index}
+                                    fileInputState={fileInputState}
+                                    setFileInputState={setFileInputState}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <Alert
                 accept={accept}
@@ -429,7 +432,6 @@ function EvidenceSelect({
             onChange={handleEvidenceTypeChange}
         >
             <option
-                disabled
                 value=''
                 className='bg-zinc-100 text-zinc-300/80 dark:bg-zinc-700'
             >
