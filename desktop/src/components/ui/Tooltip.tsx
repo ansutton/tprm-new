@@ -85,7 +85,7 @@ export function FileSelectionTooltip({
                     className={clsx(
                         tw`rounded-xl border text-xs`,
                         tw`w-fit p-2.5 opacity-75`,
-                        tw`transition delay-500 duration-200 ease-in data-[closed]:opacity-0`,
+                        tw`transition delay-700 duration-300 ease-in data-[closed]:opacity-0`,
                         theme === 'light' && tw`border-indigo-400 bg-zinc-100`,
                         theme === 'dark' &&
                             tw`border-indigo-500 bg-zinc-900 text-zinc-100`,
