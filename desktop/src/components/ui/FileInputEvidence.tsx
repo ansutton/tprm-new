@@ -2,17 +2,17 @@ import { useRef } from 'react';
 import { Button } from '@/components';
 import { EvidenceFile, EvidenceFiles } from '@/types';
 
-interface FileInputMultipleProps {
+interface FileInputEvidenceProps {
     accept?: string;
     setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
     buttonText: string;
 }
 
-export function FileInputMultiple({
+export function FileInputEvidence({
     setFileInputState,
     buttonText = 'Select File',
     accept = '',
-}: FileInputMultipleProps): JSX.Element {
+}: FileInputEvidenceProps): JSX.Element {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

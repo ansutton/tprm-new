@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import {
     Button,
     Card,
-    FileInputMultiple,
+    FileInputEvidence,
     FileInputSingular,
     Heading,
     FileSelectionTooltip,
@@ -374,7 +374,7 @@ function SectionEvidence({
                 )}
             >
                 <div className='w-40'>
-                    <FileInputMultiple
+                    <FileInputEvidence
                         accept={accept}
                         setFileInputState={setFileInputState}
                         buttonText={buttonText}
