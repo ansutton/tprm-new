@@ -368,7 +368,11 @@ function SectionEvidence({
                         ))}
                 </div>
             </div>
-            <Alert accept={accept} isDisplayed={isAlertDisplayed} />
+            <Alert
+                accept={accept}
+                isDisplayed={isAlertDisplayed}
+                customMessage='for all files'
+            />
         </>
     );
 }
@@ -432,13 +436,18 @@ function FileName({
 interface AlertProps {
     isDisplayed: boolean;
     accept: Accept;
+    customMessage?: string;
 }
-function Alert({ isDisplayed, accept }: AlertProps): JSX.Element {
+function Alert({
+    isDisplayed,
+    accept,
+    customMessage = '',
+}: AlertProps): JSX.Element {
     if (isDisplayed) {
         return (
             <p className='text-orange-600 dark:text-orange-500'>
-                Please choose file type <b>{removeDot(accept)}</b> before
-                proceeding
+                Please choose file type <b>{removeDot(accept)}</b>{' '}
+                {customMessage} before proceeding
             </p>
         );
     } else {
