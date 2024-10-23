@@ -169,7 +169,7 @@ export function FileSelection({
     }
 
     return (
-        <Card additionalClasses='mx-auto max-w-2xl space-y-6'>
+        <Card additionalClasses='mx-auto space-y-6'>
             <SectionSingular
                 heading='Blank Question Set'
                 startIcon={
