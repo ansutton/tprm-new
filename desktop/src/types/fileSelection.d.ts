@@ -41,5 +41,4 @@ export type PdfFile = Promise<{
     pdfFileBuffer: string | null;
     evidenceType: EvidenceType;
 } | null>;
-
 export type PdfFiles = PdfFile[];
