@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Button } from '@/components';
-import { EvidenceFile, EvidenceFiles } from '@/types';
+import { EvidenceFile, EvidenceFiles, EvidenceType } from '@/types';
 
 interface FileInputEvidenceProps {
     accept?: string;
@@ -20,7 +20,7 @@ export function FileInputEvidence({
         if (files && files[0]) {
             const newFile: EvidenceFile = {
                 file: files[0],
-                evidenceType: 'unspecified',
+                evidenceType: EvidenceType.Unspecified,
             };
             setFileInputState((prevState) => {
                 const isDuplicate = prevState?.some(
