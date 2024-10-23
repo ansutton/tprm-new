@@ -282,7 +282,7 @@ function SectionSingular({
                     />
                 </div>
                 {fileInputState && (
-                    <FileName
+                    <File
                         fileName={fileInputState.name}
                         handleDeleteFile={() =>
                             handleDeleteFile(setFileInputState)
@@ -341,22 +341,20 @@ function SectionEvidence({
             </p>
             <div
                 className={clsx(
-                    'flex',
+                    'flex space-x-4',
                     fileInputState?.length === 1 ? 'items-center' : null,
                 )}
             >
-                <div className='w-40'>
-                    <FileInputEvidence
-                        accept={accept}
-                        setFileInputState={setFileInputState}
-                        buttonText={buttonText}
-                    />
-                </div>
-                <div className='space-y-2'>
-                    {fileInputState &&
-                        fileInputState?.map((fileObj, index) => (
-                            <FileName
-                                key={index}
+                <FileInputEvidence
+                    accept={accept}
+                    setFileInputState={setFileInputState}
+                    buttonText={buttonText}
+                />
+
+                {fileInputState &&
+                    fileInputState?.map((fileObj, index) => (
+                        <div key={index} className='flex w-full gap-4'>
+                            <File
                                 fileName={fileObj?.file.name}
                                 handleDeleteFile={() =>
                                     handleDeleteFile(
@@ -365,8 +363,9 @@ function SectionEvidence({
                                     )
                                 }
                             />
-                        ))}
-                </div>
+                            <EvidenceSelect />
+                        </div>
+                    ))}
             </div>
             <Alert
                 accept={accept}
@@ -377,22 +376,22 @@ function SectionEvidence({
     );
 }
 
-interface FileNameProps {
+interface FileProps {
     handleDeleteFile: () => void;
     fileName: string | undefined;
 }
 
-function FileName({
+function File({
     fileName,
     handleDeleteFile,
     ...props
-}: FileNameProps): JSX.Element {
+}: FileProps): JSX.Element {
     const [isXShowing, setIsXShowing] = useState(false);
 
     return (
         <div
             {...props}
-            className='group flex items-center space-x-3'
+            className='group flex w-1/2 items-center space-x-3'
             onMouseEnter={() => setIsXShowing(true)}
             onMouseLeave={() => setIsXShowing(false)}
         >
@@ -454,4 +453,12 @@ function Alert({
     } else {
         return <></>;
     }
+}
+
+function EvidenceSelect(): JSX.Element {
+    return (
+        <>
+            <>EvidenceSelect</>
+        </>
+    );
 }

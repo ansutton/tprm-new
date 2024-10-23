@@ -53,7 +53,10 @@ export function FileInputEvidence({
                 ref={fileInputRef}
                 onChange={(e) => handleChange(e)}
             />
-            <Button onClick={() => fileInputRef.current?.click()}>
+            <Button
+                onClick={() => fileInputRef.current?.click()}
+                additionalClasses='whitespace-nowrap'
+            >
                 {buttonText}
             </Button>
         </div>
