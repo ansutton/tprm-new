@@ -62,7 +62,6 @@ export default function Home(): JSX.Element {
     //     file !== null && file?.type === fileType;
     // const isQuestionsFileValid = isFileValid(questionsFile, 'text/csv');
     // const isEvidenceFileValid = isFileValid(evidenceFile, 'application/pdf');
-    // // TODO: validate for cases of no responses file, and if there is one, check if it's valid.
     // const isTpResponsesFileValid = tpResponsesFile
     //     ? isFileValid(
     //           tpResponsesFile,
