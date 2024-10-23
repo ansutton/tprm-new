@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { Button } from '@/components';
 import { EvidenceFile, EvidenceFiles, EvidenceType } from '@/types';
 
@@ -15,7 +15,7 @@ export function FileInputEvidence({
 }: FileInputEvidenceProps): JSX.Element {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
         if (files && files[0]) {
             const newFile: EvidenceFile = {

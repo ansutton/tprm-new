@@ -1,4 +1,10 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import {
+    ChangeEvent,
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    useState,
+} from 'react';
 import {
     DocumentIcon,
     DocumentMagnifyingGlassIcon,
@@ -20,6 +26,7 @@ import {
     Accept,
     EvidenceFile,
     EvidenceFiles,
+    EvidenceType,
     Mode,
     PdfFiles,
     Screen,
@@ -246,7 +253,7 @@ interface SectionProps {
 
 interface SectionSingularProps extends SectionProps {
     fileInputState: File | null;
-    setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
+    setFileInputState: Dispatch<SetStateAction<File | null>>;
 }
 
 function SectionSingular({
@@ -259,7 +266,7 @@ function SectionSingular({
     isAlertDisplayed,
 }: SectionSingularProps): JSX.Element {
     function handleDeleteFile(
-        setFileInputState: React.Dispatch<React.SetStateAction<File | null>>,
+        setFileInputState: Dispatch<SetStateAction<File | null>>,
     ) {
         if (confirm(confirmDeletionMessage)) {
             setFileInputState(null);
@@ -300,7 +307,7 @@ function SectionSingular({
 
 interface SectionEvidenceProps extends SectionProps {
     fileInputState: EvidenceFiles;
-    setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
+    setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>;
 }
 
 function SectionEvidence({
@@ -314,12 +321,12 @@ function SectionEvidence({
 }: SectionEvidenceProps): JSX.Element {
     function handleDeleteFile(
         fileName: string | undefined,
-        setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>,
+        setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>,
     ) {
         if (confirm(confirmDeletionMessage)) {
-            setFileInputState((prevFiles) =>
-                Array.isArray(prevFiles)
-                    ? prevFiles?.filter(
+            setFileInputState((prevState) =>
+                Array.isArray(prevState)
+                    ? prevState?.filter(
                           (fileObj) => fileObj?.file.name !== fileName,
                       )
                     : null,
@@ -362,6 +369,7 @@ function SectionEvidence({
                                 }
                             />
                             <EvidenceSelect
+                                evidenceIndex={index}
                                 fileInputState={fileInputState}
                                 setFileInputState={setFileInputState}
                             />
@@ -378,17 +386,67 @@ function SectionEvidence({
 }
 
 interface EvidenceSelectProps {
+    evidenceIndex: number;
     fileInputState: EvidenceFiles;
-    setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
+    setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>;
 }
 
 function EvidenceSelect({
-    fileInputState,
+    evidenceIndex,
     setFileInputState,
 }: EvidenceSelectProps): JSX.Element {
+    function updateFileInputState(
+        prevState: EvidenceFiles,
+        evidenceIndex: number,
+        newEvidenceType: EvidenceType,
+    ): EvidenceFiles {
+        if (!prevState) return prevState;
+
+        return prevState.map((fileObj, index) => {
+            if (fileObj === null) return fileObj;
+
+            return index === evidenceIndex
+                ? { ...fileObj, evidenceType: newEvidenceType }
+                : fileObj;
+        });
+    }
+
+    function handleEvidenceTypeChange(e: ChangeEvent<HTMLSelectElement>) {
+        const newEvidenceType = e.target.value as EvidenceType;
+
+        setFileInputState((prevState) =>
+            updateFileInputState(prevState, evidenceIndex, newEvidenceType),
+        );
+    }
+
     return (
-        <select className='rounded bg-fuchsia-600'>
-            <option className=''>option1</option>
+        <select
+            className={clsx(
+                'w-1/2 rounded-lg border p-1',
+                'border-indigo-400 bg-zinc-100',
+                'dark:border-indigo-400/50 dark:bg-zinc-700/70 dark:text-white',
+            )}
+            onChange={handleEvidenceTypeChange}
+        >
+            <option
+                disabled
+                value=''
+                className='bg-zinc-100 text-zinc-300/80 dark:bg-zinc-700'
+            >
+                Select document type
+            </option>
+            {Object.values(EvidenceType).map((type) => (
+                <option
+                    key={type}
+                    value={type}
+                    className={clsx(
+                        'bg-zinc-100 hover:bg-pink-500/90 dark:bg-zinc-700',
+                        // type === 'Unspecified' && 'hidden',
+                    )}
+                >
+                    {type}
+                </option>
+            ))}
         </select>
     );
 }
