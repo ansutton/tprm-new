@@ -22,9 +22,24 @@ export function FileInputMultiple({
                 file: files[0],
                 evidenceType: 'unspecified',
             };
-            setFileInputState((prevState) =>
-                Array.isArray(prevState) ? [...prevState, newFile] : [newFile],
-            );
+            setFileInputState((prevState) => {
+                const isDuplicate = prevState?.some(
+                    (evidenceFile) =>
+                        evidenceFile?.file.name === newFile?.file.name,
+                );
+
+                if (isDuplicate) {
+                    confirm(
+                        'A file with this name has already been included. Please choose a file with a different name.',
+                    );
+                    return prevState;
+                } else {
+                    return Array.isArray(prevState)
+                        ? [...prevState, newFile]
+                        : [newFile];
+                }
+            });
+
             e.target.value = '';
         }
     }
