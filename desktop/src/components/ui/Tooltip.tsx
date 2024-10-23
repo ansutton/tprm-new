@@ -84,11 +84,12 @@ export function FileSelectionTooltip({
                     anchor={{ to: 'top', gap: 24 }}
                     className={clsx(
                         tw`rounded-xl border text-xs`,
-                        tw`w-fit p-2.5 opacity-75`,
+                        tw`w-fit p-2.5`,
                         tw`transition delay-700 duration-300 ease-in data-[closed]:opacity-0`,
-                        theme === 'light' && tw`border-indigo-400 bg-zinc-100`,
+                        theme === 'light' &&
+                            tw`border-indigo-400 bg-zinc-100 opacity-95`,
                         theme === 'dark' &&
-                            tw`border-indigo-500 bg-zinc-900 text-zinc-100`,
+                            tw`border-indigo-500 bg-zinc-900 text-zinc-100 opacity-75`,
                     )}
                 >
                     {children}
