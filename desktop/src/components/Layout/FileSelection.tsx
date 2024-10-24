@@ -1,20 +1,10 @@
-import {
-    ChangeEvent,
-    Dispatch,
-    ReactNode,
-    SetStateAction,
-    useState,
-} from 'react';
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import {
     Combobox,
     ComboboxButton,
     ComboboxInput,
     ComboboxOption,
     ComboboxOptions,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
 } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import {
@@ -32,7 +22,6 @@ import {
     FileInputEvidence,
     FileInputSingular,
     FileSelectionTooltip,
-    MenuItemButton,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
 import { useTheme } from '@/hooks';
@@ -360,7 +349,7 @@ function SectionEvidence({
             </p>
             <div
                 className={clsx(
-                    'flex space-x-4',
+                    'flex space-x-6',
                     fileInputState?.length === 1 ? 'items-center' : null,
                 )}
             >
@@ -476,11 +465,10 @@ function EvidenceSelect({
             <div className='relative w-1/2'>
                 <ComboboxInput
                     className={clsx(
-                        'w-full rounded-lg border-none py-1.5 pl-3 pr-8 text-sm/6',
-                        'dark:bg-zinc-700',
-                        'rounded ring-[0.5px]',
-                        'bg-zinc-100 ring-indigo-400',
-                        'dark:bg-zinc-700/75 dark:text-zinc-100 dark:ring-indigo-400/50',
+                        'w-full rounded-lg border-none py-1.5 pl-3 pr-8 text-sm/6 ring-[0.5px]',
+                        'dark:text-zinc-100',
+                        'ring-indigo-400 dark:ring-indigo-400/50',
+                        'bg-zinc-100 dark:bg-zinc-700/75',
                         'focus:outline-none data-[focus]:ring-[1.5px] data-[focus]:ring-pink-400',
                     )}
                     displayValue={(type: EvidenceType) => type}
@@ -501,7 +489,9 @@ function EvidenceSelect({
                 anchor='bottom'
                 transition
                 className={clsx(
-                    'w-[var(--input-width)] rounded-xl border border-white/5 bg-white/5 p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
+                    'mt-1.5 w-[var(--input-width)] rounded-lg border p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
+                    'border-zinc-300/70',
+                    'bg-zinc-100',
                     'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
                 )}
             >
@@ -509,10 +499,28 @@ function EvidenceSelect({
                     <ComboboxOption
                         key={type}
                         value={type}
-                        className='group flex cursor-default select-none items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10'
+                        className={clsx(
+                            'group flex select-none items-center gap-2 rounded-lg px-1 py-1.5',
+                            theme === 'light' && 'data-[focus]:bg-zinc-200/50',
+                            theme === 'dark' && 'data-[focus]:bg-zinc-500/10',
+                        )}
                     >
-                        <CheckIcon className='invisible size-4 fill-white group-data-[selected]:visible' />
-                        <div className='text-sm/6 text-white'>{type}</div>
+                        <CheckIcon
+                            className={clsx(
+                                'invisible size-4 group-data-[selected]:visible',
+                                theme === 'light' && 'fill-indigo-500',
+                                theme === 'dark' && 'fill-pink-400',
+                            )}
+                        />
+                        <span
+                            className={clsx(
+                                'text-sm/6',
+                                theme === 'light' && 'text-black',
+                                theme === 'dark' && 'text-white',
+                            )}
+                        >
+                            {type}
+                        </span>
                     </ComboboxOption>
                 ))}
             </ComboboxOptions>
