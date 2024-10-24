@@ -489,9 +489,9 @@ function EvidenceSelect({
                 <ComboboxButton className='group absolute inset-y-0 right-0 px-2.5'>
                     <ChevronDownIcon
                         className={clsx(
-                            'size-5 fill-black',
+                            'size-5 fill-indigo-600',
                             'group-data-[hover]:fill-pink-500',
-                            'dark:fill-zinc-50 dark:group-data-[hover]:fill-pink-400',
+                            'dark:fill-indigo-400 dark:group-data-[hover]:fill-pink-400',
                         )}
                     />
                 </ComboboxButton>
