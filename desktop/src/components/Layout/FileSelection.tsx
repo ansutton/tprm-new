@@ -360,7 +360,11 @@ function SectionEvidence({
                 />
 
                 {fileInputState && (
-                    <div className='flex w-full flex-col space-y-4'>
+                    <div className='flex w-full flex-col space-y-3'>
+                        <div className='flex w-full font-bold'>
+                            <span className='w-1/2'>File Name</span>
+                            <span className='w-1/2'>Evidence Type</span>
+                        </div>
                         {fileInputState?.map((fileObj, index) => (
                             <div key={index} className='flex gap-4'>
                                 <File
