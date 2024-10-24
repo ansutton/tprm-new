@@ -22,26 +22,26 @@ export function ModeMenu({
         <div
             className={clsx(
                 tw`rounded-lg p-1 text-sm font-bold`,
-                screen !== 'fileSelection' && tw`cursor-default hover:bg-inherit`,
-                screen === 'fileSelection' &&
-                    theme === 'light' &&
-                    tw`hover:bg-zinc-200`,
-                screen === 'fileSelection' &&
-                    theme === 'dark' &&
-                    tw`hover:bg-zinc-800`,
+                screen === 'fileSelection'
+                    ? [
+                          theme === 'light' && tw`hover:bg-zinc-200`,
+                          theme === 'dark' && tw`hover:bg-zinc-800`,
+                      ]
+                    : tw`cursor-default hover:bg-inherit`,
             )}
         >
             <Menu>
                 <MenuButton
                     className={clsx(
                         tw`flex gap-1 p-1`,
-                        screen !== 'fileSelection' && tw`hover:bg-inherit`,
-                        screen === 'fileSelection' &&
-                            theme === 'light' &&
-                            tw`text-zinc-600 hover:bg-zinc-200`,
-                        screen === 'fileSelection' &&
-                            theme === 'dark' &&
-                            tw`text-zinc-300 hover:bg-zinc-800`,
+                        screen === 'fileSelection'
+                            ? [
+                                  theme === 'light' &&
+                                      tw`text-zinc-600 hover:bg-zinc-200`,
+                                  theme === 'dark' &&
+                                      tw`text-zinc-300 hover:bg-zinc-800`,
+                              ]
+                            : tw`hover:bg-inherit`,
                     )}
                     disabled={screen !== 'fileSelection'}
                 >
@@ -81,12 +81,10 @@ export function ModeMenu({
                     <MenuItem>
                         <MenuItemButton
                             additionalClasses={clsx(
-                                mode === 'demo' &&
-                                    theme === 'light' &&
-                                    tw`text-indigo-600`,
-                                mode === 'demo' &&
-                                    theme === 'dark' &&
-                                    tw`text-indigo-400`,
+                                mode === 'demo' && [
+                                    theme === 'light' && tw`text-indigo-600`,
+                                    theme === 'dark' && tw`text-indigo-400`,
+                                ],
                             )}
                             onClick={() => setMode('demo')}
                         >
@@ -96,12 +94,10 @@ export function ModeMenu({
                     <MenuItem>
                         <MenuItemButton
                             additionalClasses={clsx(
-                                mode === 'llm' &&
-                                    theme === 'light' &&
-                                    tw`text-indigo-600`,
-                                mode === 'llm' &&
-                                    theme === 'dark' &&
-                                    tw`text-indigo-400`,
+                                mode === 'llm' && [
+                                    theme === 'light' && tw`text-indigo-600`,
+                                    theme === 'dark' && tw`text-indigo-400`,
+                                ],
                             )}
                             onClick={() => setMode('llm')}
                         >
