@@ -361,7 +361,7 @@ function SectionEvidence({
 
                 {fileInputState && (
                     <div className='flex w-full flex-col space-y-3'>
-                        <div className='flex w-full font-bold'>
+                        <div className='flex w-full space-x-4 font-bold'>
                             <span className='w-1/2'>File Name</span>
                             <span className='w-1/2'>Evidence Type</span>
                         </div>
@@ -449,9 +449,8 @@ function EvidenceSelect({
             <Menu>
                 <MenuButton
                     className={clsx(
-                        'rounded-lg p-2',
-                        theme === 'light' && 'hover:bg-zinc-200',
-                        theme === 'dark' && 'hover:bg-zinc-800',
+                        'w-1/2 rounded-lg p-2 text-left shadow-lg ring-1 ring-zinc-800/10',
+                        'bg-zinc-200 dark:bg-purple-500',
                     )}
                 >
                     {selectedType}
@@ -461,7 +460,7 @@ function EvidenceSelect({
                     transition
                     anchor='bottom end'
                     className={clsx(
-                        'mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
+                        'mt-4 flex w-fit flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
                         theme === 'light' &&
                             'stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10',
                         theme === 'dark' &&
@@ -471,10 +470,10 @@ function EvidenceSelect({
                     {Object.values(EvidenceType).map((type) => (
                         <MenuItem key={type}>
                             <MenuItemButton
-                                additionalClasses={
+                                additionalClasses={clsx(
                                     theme === 'light' &&
-                                    'stroke-indigo-600 text-indigo-600'
-                                }
+                                        'stroke-indigo-600 text-indigo-600',
+                                )}
                                 onClick={() => handleEvidenceTypeChange(type)}
                             >
                                 {type}
