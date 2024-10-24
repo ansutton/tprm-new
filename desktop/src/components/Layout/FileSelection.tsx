@@ -5,7 +5,18 @@ import {
     SetStateAction,
     useState,
 } from 'react';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import {
+    Combobox,
+    ComboboxButton,
+    ComboboxInput,
+    ComboboxOption,
+    ComboboxOptions,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+} from '@headlessui/react';
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import {
     DocumentIcon,
     DocumentMagnifyingGlassIcon,
@@ -406,82 +417,247 @@ function EvidenceSelect({
     fileInputState,
     setFileInputState,
 }: EvidenceSelectProps): JSX.Element {
+    /**
+     * Custom Hooks
+     */
     const { theme } = useTheme();
 
+    /**
+     * State Hooks
+     */
     const [selectedType, setSelectedType] = useState<EvidenceType>(
         EvidenceType.Unspecified,
     );
+    const [query, setQuery] = useState<string>('');
 
+    /**
+     * Constants
+     */
+    const evidenceTypes: EvidenceType[] = Object.values(EvidenceType);
+    const filteredTypes =
+        query === ''
+            ? evidenceTypes
+            : evidenceTypes.filter((value) => {
+                  return value.toLowerCase().includes(query.toLowerCase());
+              });
+    /**
+     * Helper Functions
+     */
     function updateFileInputState(
         prevState: EvidenceFiles,
         evidenceIndex: number,
         newEvidenceType: EvidenceType,
     ): EvidenceFiles {
         if (!prevState) return prevState;
-
         return prevState.map((fileObj, index) => {
             if (fileObj === null) return fileObj;
-
             return index === evidenceIndex
                 ? { ...fileObj, evidenceType: newEvidenceType }
                 : fileObj;
         });
     }
-
-    function handleEvidenceTypeChange0(e: ChangeEvent<HTMLSelectElement>) {
-        const newEvidenceType = e.target.value as EvidenceType;
-
-        setFileInputState((prevState) =>
-            updateFileInputState(prevState, evidenceIndex, newEvidenceType),
-        );
-    }
-
     function handleEvidenceTypeChange(newType: EvidenceType) {
         setSelectedType(newType);
-
         setFileInputState((prevState) =>
             updateFileInputState(prevState, evidenceIndex, newType),
         );
     }
 
+    // Headless UI Example
+    //
+    type Person = { id: number; name: string };
+    type People = Person[];
+    const people: People = [
+        { id: 1, name: 'Tom Cook' },
+        { id: 2, name: 'Wade Cooper' },
+        { id: 3, name: 'Tanya Fox' },
+        { id: 4, name: 'Arlene Mccoy' },
+        { id: 5, name: 'Devon Webb' },
+    ];
+
+    const [queryExample, setQueryExample] = useState('');
+    const [selectedExample, setSelectedExample] = useState(people[1]);
+
+    const filteredPeople =
+        query === ''
+            ? people
+            : people.filter((person) => {
+                  return person.name
+                      .toLowerCase()
+                      .includes(queryExample.toLowerCase());
+              });
+
+    /**
+     * Return Statement
+     */
     return (
         <>
-            <Menu>
-                <MenuButton
-                    className={clsx(
-                        'w-1/2 rounded-lg p-2 text-left shadow-lg ring-1 ring-zinc-800/10',
-                        'bg-zinc-200 dark:bg-purple-500',
-                    )}
+            {/* Headless UI Example */}
+            <div className='mx-auto h-screen w-52 pt-20'>
+                <Combobox
+                    value={selectedExample}
+                    onChange={(value: Person) => setSelectedExample(value)}
+                    onClose={() => setQuery('')}
                 >
-                    {selectedType}
-                </MenuButton>
+                    <div className='relative'>
+                        <ComboboxInput
+                            className={clsx(
+                                'w-full rounded-lg border-none bg-white/5 py-1.5 pl-3 pr-8 text-sm/6 text-white',
+                                'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
+                            )}
+                            displayValue={(person: Person) => person?.name}
+                            onChange={(event) => setQuery(event.target.value)}
+                        />
+                        <ComboboxButton className='group absolute inset-y-0 right-0 px-2.5'>
+                            <ChevronDownIcon className='size-4 fill-white/60 group-data-[hover]:fill-white' />
+                        </ComboboxButton>
+                    </div>
 
-                <MenuItems
-                    transition
-                    anchor='bottom end'
-                    className={clsx(
-                        'mt-4 flex w-fit flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
-                        theme === 'light' &&
-                            'stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10',
-                        theme === 'dark' &&
-                            'bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0',
-                    )}
+                    <ComboboxOptions
+                        anchor='bottom'
+                        transition
+                        className={clsx(
+                            'w-[var(--input-width)] rounded-xl border border-white/5 bg-white/5 p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
+                            'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
+                        )}
+                    >
+                        {filteredPeople.map((person) => (
+                            <ComboboxOption
+                                key={person.id}
+                                value={person}
+                                className='group flex cursor-default select-none items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10'
+                            >
+                                <CheckIcon className='invisible size-4 fill-white group-data-[selected]:visible' />
+                                <div className='text-sm/6 text-white'>
+                                    {person.name}
+                                </div>
+                            </ComboboxOption>
+                        ))}
+                    </ComboboxOptions>
+                </Combobox>
+            </div>
+
+            {/* Starting from Headless UI Example */}
+            <div className=''>
+                <Combobox
+                    value={selectedType}
+                    onChange={(value) =>
+                        setSelectedType(value ?? EvidenceType.Unspecified)
+                    }
+                    onClose={() => setQuery('')}
                 >
-                    {Object.values(EvidenceType).map((type) => (
-                        <MenuItem key={type}>
-                            <MenuItemButton
-                                additionalClasses={clsx(
-                                    theme === 'light' &&
-                                        'stroke-indigo-600 text-indigo-600',
-                                )}
-                                onClick={() => handleEvidenceTypeChange(type)}
+                    <div className='relative'>
+                        <ComboboxInput
+                            className={clsx(
+                                'w-full rounded-lg border-none bg-white/5 py-1.5 pl-3 pr-8 text-sm/6 text-white',
+                                'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
+                            )}
+                            displayValue={(type: EvidenceType) => type}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                        <ComboboxButton className='group absolute inset-y-0 right-0 px-2.5'>
+                            <ChevronDownIcon className='size-4 fill-white/60 group-data-[hover]:fill-white' />
+                        </ComboboxButton>
+                    </div>
+
+                    <ComboboxOptions
+                        anchor='bottom'
+                        transition
+                        className={clsx(
+                            'w-[var(--input-width)] rounded-xl border border-white/5 bg-white/5 p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
+                            'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
+                        )}
+                    >
+                        {filteredTypes.map((type) => (
+                            <ComboboxOption
+                                key={type}
+                                value={type}
+                                className='group flex cursor-default select-none items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10'
+                            >
+                                <CheckIcon className='invisible size-4 fill-white group-data-[selected]:visible' />
+                                <div className='text-sm/6 text-white'>
+                                    {type}
+                                </div>
+                            </ComboboxOption>
+                        ))}
+                    </ComboboxOptions>
+                </Combobox>
+            </div>
+
+            <div className='hidden'>
+                <Combobox
+                    value={selectedType}
+                    onChange={(value) =>
+                        setSelectedType(value ?? EvidenceType.Unspecified)
+                    }
+                    onClose={() => setQuery(null)}
+                >
+                    <div className='relative'>
+                        <ComboboxInput
+                            aria-label='Evidence Type'
+                            displayValue={(type: EvidenceType) => type}
+                            onChange={(e) => setQuery(e.target.value)}
+                            className='text-black'
+                        />
+                        <ComboboxButton>
+                            <ChevronDownIcon className='size-4' />
+                        </ComboboxButton>
+                    </div>
+
+                    <ComboboxOptions anchor='bottom' className=''>
+                        {filteredTypes?.map((type) => (
+                            <ComboboxOption
+                                key={type}
+                                value={type}
+                                className=''
                             >
                                 {type}
-                            </MenuItemButton>
-                        </MenuItem>
-                    ))}
-                </MenuItems>
-            </Menu>
+                            </ComboboxOption>
+                        ))}
+                    </ComboboxOptions>
+                </Combobox>
+            </div>
+
+            <div className='hidden'>
+                <Menu>
+                    <MenuButton
+                        className={clsx(
+                            'w-1/2 rounded-lg p-2 text-left shadow-lg ring-1 ring-zinc-800/10',
+                            'bg-zinc-200 dark:bg-purple-500',
+                        )}
+                    >
+                        {selectedType}
+                    </MenuButton>
+
+                    <MenuItems
+                        transition
+                        anchor='bottom end'
+                        className={clsx(
+                            'mt-4 flex w-fit flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
+                            theme === 'light' &&
+                                'stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10',
+                            theme === 'dark' &&
+                                'bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0',
+                        )}
+                    >
+                        {Object.values(EvidenceType).map((type) => (
+                            <MenuItem key={type}>
+                                <MenuItemButton
+                                    additionalClasses={clsx(
+                                        theme === 'light' &&
+                                            'stroke-indigo-600 text-indigo-600',
+                                    )}
+                                    onClick={() =>
+                                        handleEvidenceTypeChange(type)
+                                    }
+                                >
+                                    {type}
+                                </MenuItemButton>
+                            </MenuItem>
+                        ))}
+                    </MenuItems>
+                </Menu>
+            </div>
 
             {/* <select
                 className={clsx(
