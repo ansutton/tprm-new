@@ -57,6 +57,7 @@ export async function handleSetQuestionsDataState(
             .split('\r\n')
             .filter((question) => question !== '' && question !== 'Questions');
         setQuestionsData(questionsArray);
+        console.log('set questions state');
     } else {
         console.log(
             `No questions file found; questionsData state was not modified.`,
@@ -104,16 +105,24 @@ export function handlePoll(
  * Submission
  */
 interface handleSampleDataProps {
-    setLlmResponse: React.Dispatch<React.SetStateAction<any>>;
-    setQuestionsData: React.Dispatch<React.SetStateAction<string[]>>;
+    setLlmResponse: Dispatch<SetStateAction<any>>;
+    setQuestionsData: Dispatch<SetStateAction<string[]>>;
+    setTpResponsesData: Dispatch<SetStateAction<any[][]>>;
 }
 export function handleSampleData({
     setLlmResponse,
     setQuestionsData,
+    setTpResponsesData,
 }: handleSampleDataProps) {
     const analyses = Object.values(sampleData.analyses);
     const questionsArray = analyses.map((analysis) => analysis.question || '');
+    let tpResponsesArray: any[][] = [['', '', 'Response', '']];
+    for (let i = 0; i < analyses.length; i++) {
+        tpResponsesArray.push(['', '', analyses[i].tp_response || '', '']);
+    }
+    // Setting questions and TP Responses from sample data and not from questions selected
     setQuestionsData(questionsArray);
+    setTpResponsesData(tpResponsesArray);
     // Recursive function to update each analysis with a delay
     function updateAnalysis(index: number) {
         if (index < analyses.length) {

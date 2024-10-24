@@ -51,7 +51,7 @@ interface FileSelectionProps {
     setIsSidebarFullyExpanded: Dispatch<SetStateAction<boolean>>;
     setLlmResponse: Dispatch<any>;
     setQuestionsData: Dispatch<SetStateAction<string[]>>;
-    setTpResponsesData: Dispatch<SetStateAction<any>>;
+    setTpResponsesData: Dispatch<SetStateAction<any[][]>>;
     mode: Mode;
     setScreen: Dispatch<SetStateAction<Screen>>;
 }
@@ -138,7 +138,11 @@ export function FileSelection({
 
         switch (mode) {
             case 'demo':
-                handleSampleData({ setLlmResponse, setQuestionsData });
+                handleSampleData({
+                    setLlmResponse,
+                    setQuestionsData,
+                    setTpResponsesData,
+                });
                 break;
             case 'llm':
                 // Handle Questions
