@@ -543,10 +543,10 @@ function EvidenceSelect({
                     value={selectedType}
                     onChange={(value) =>
                         handleEvidenceTypeChange(
-                            value ?? EvidenceType.Unspecified,
+                            value || EvidenceType.Unspecified,
                         )
                     }
-                    onClose={() => setQuery('')}
+                    // onClose={() => setQuery(selectedType)}
                 >
                     <div className='relative'>
                         <ComboboxInput
