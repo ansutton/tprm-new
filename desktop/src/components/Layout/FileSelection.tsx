@@ -478,16 +478,22 @@ function EvidenceSelect({
                     className={clsx(
                         'w-full rounded-lg border-none py-1.5 pl-3 pr-8 text-sm/6',
                         'dark:bg-zinc-700',
-                        'focus:outline-none data-[focus]:ring-[1.5px] data-[focus]:ring-pink-400',
                         'rounded ring-[0.5px]',
                         'bg-zinc-100 ring-indigo-400',
                         'dark:bg-zinc-700/75 dark:text-zinc-100 dark:ring-indigo-400/50',
+                        'focus:outline-none data-[focus]:ring-[1.5px] data-[focus]:ring-pink-400',
                     )}
                     displayValue={(type: EvidenceType) => type}
                     onChange={(e) => setQuery(e.target.value)}
                 />
                 <ComboboxButton className='group absolute inset-y-0 right-0 px-2.5'>
-                    <ChevronDownIcon className='size-4 fill-black group-data-[hover]:fill-indigo-600 dark:fill-zinc-50 dark:group-data-[hover]:fill-indigo-400' />
+                    <ChevronDownIcon
+                        className={clsx(
+                            'size-5 fill-black',
+                            'group-data-[hover]:fill-pink-500',
+                            'dark:fill-zinc-50 dark:group-data-[hover]:fill-pink-400',
+                        )}
+                    />
                 </ComboboxButton>
             </div>
 
