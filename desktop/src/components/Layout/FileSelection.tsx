@@ -44,7 +44,6 @@ import {
     readFileAsDataUrl,
     removeDot,
     submit,
-    tw,
 } from '@/utils';
 
 interface FileSelectionProps {
@@ -450,9 +449,9 @@ function EvidenceSelect({
             <Menu>
                 <MenuButton
                     className={clsx(
-                        tw`rounded-lg p-2`,
-                        theme === 'light' && tw`hover:bg-zinc-200`,
-                        theme === 'dark' && tw`hover:bg-zinc-800`,
+                        'rounded-lg p-2',
+                        theme === 'light' && 'hover:bg-zinc-200',
+                        theme === 'dark' && 'hover:bg-zinc-800',
                     )}
                 >
                     {selectedType}
@@ -462,11 +461,11 @@ function EvidenceSelect({
                     transition
                     anchor='bottom end'
                     className={clsx(
-                        tw`mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg`,
+                        'mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
                         theme === 'light' &&
-                            tw`stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10`,
+                            'stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10',
                         theme === 'dark' &&
-                            tw`bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0`,
+                            'bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0',
                     )}
                 >
                     {Object.values(EvidenceType).map((type) => (
@@ -474,7 +473,7 @@ function EvidenceSelect({
                             <MenuItemButton
                                 additionalClasses={
                                     theme === 'light' &&
-                                    tw`stroke-indigo-600 text-indigo-600`
+                                    'stroke-indigo-600 text-indigo-600'
                                 }
                                 onClick={() => handleEvidenceTypeChange(type)}
                             >
