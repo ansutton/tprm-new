@@ -10,7 +10,7 @@ export interface SubmitRequestParams {
 /**
  * Types
  */
-export type Accept = '.csv' | '.pdf' | '.xlsx';
+export type Accept = '.csv' | '.pdf' | '.xlsx' | '';
 export enum EvidenceType {
     SOC2TypeII = 'SOC 2 Type II Audit Report',
     PenetrationTest = 'Penetration Test Report',

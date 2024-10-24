@@ -1,9 +1,9 @@
 import { ChangeEvent, useRef } from 'react';
 import { Button } from '@/components';
-import { EvidenceFile, EvidenceFiles, EvidenceType } from '@/types';
+import { Accept, EvidenceFile, EvidenceFiles, EvidenceType } from '@/types';
 
 interface FileInputEvidenceProps {
-    accept?: string;
+    accept?: Accept;
     setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
     buttonText: string;
 }

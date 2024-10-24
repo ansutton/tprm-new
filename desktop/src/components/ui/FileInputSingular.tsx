@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { Button } from '@/components';
+import { Accept } from '@/types';
 
 interface FileInputSingularProps {
-    accept?: string;
+    accept?: Accept;
     setFileInputState: React.Dispatch<React.SetStateAction<File | null>>;
     buttonText: string;
 }
