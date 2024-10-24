@@ -490,8 +490,8 @@ function EvidenceSelect({
                 transition
                 className={clsx(
                     'mt-1.5 w-[var(--input-width)] rounded-lg border p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
-                    'border-zinc-300/70',
-                    'bg-zinc-100',
+                    theme === 'light' && 'border-zinc-300/70 bg-zinc-100',
+                    theme === 'dark' && 'border-zinc-700 bg-zinc-900',
                     'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
                 )}
             >
@@ -502,14 +502,14 @@ function EvidenceSelect({
                         className={clsx(
                             'group flex select-none items-center gap-2 rounded-lg px-1 py-1.5',
                             theme === 'light' && 'data-[focus]:bg-zinc-200/50',
-                            theme === 'dark' && 'data-[focus]:bg-zinc-500/10',
+                            theme === 'dark' && 'data-[focus]:bg-zinc-800',
                         )}
                     >
                         <CheckIcon
                             className={clsx(
-                                'invisible size-4 group-data-[selected]:visible',
+                                'invisible size-4 stroke-2 group-data-[selected]:visible',
                                 theme === 'light' && 'fill-indigo-500',
-                                theme === 'dark' && 'fill-pink-400',
+                                theme === 'dark' && 'fill-indigo-400',
                             )}
                         />
                         <span
