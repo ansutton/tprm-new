@@ -5,6 +5,7 @@ import {
     SetStateAction,
     useState,
 } from 'react';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
     DocumentIcon,
     DocumentMagnifyingGlassIcon,
@@ -20,8 +21,10 @@ import {
     FileInputEvidence,
     FileInputSingular,
     FileSelectionTooltip,
+    MenuItemButton,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
+import { useTheme } from '@/hooks';
 import {
     Accept,
     EvidenceFile,
@@ -396,8 +399,15 @@ interface EvidenceSelectProps {
 
 function EvidenceSelect({
     evidenceIndex,
+    fileInputState,
     setFileInputState,
 }: EvidenceSelectProps): JSX.Element {
+    const { theme } = useTheme();
+
+    const [selectedType, setSelectedType] = useState<EvidenceType>(
+        EvidenceType.Unspecified,
+    );
+
     function updateFileInputState(
         prevState: EvidenceFiles,
         evidenceIndex: number,
@@ -414,7 +424,7 @@ function EvidenceSelect({
         });
     }
 
-    function handleEvidenceTypeChange(e: ChangeEvent<HTMLSelectElement>) {
+    function handleEvidenceTypeChange0(e: ChangeEvent<HTMLSelectElement>) {
         const newEvidenceType = e.target.value as EvidenceType;
 
         setFileInputState((prevState) =>
@@ -422,34 +432,60 @@ function EvidenceSelect({
         );
     }
 
+    function handleEvidenceTypeChange(newType: EvidenceType) {
+        setSelectedType(newType);
+
+        setFileInputState((prevState) =>
+            updateFileInputState(prevState, evidenceIndex, newType),
+        );
+    }
+
     return (
-        <select
-            className={clsx(
-                'w-1/2 rounded-lg border p-1',
-                'border-indigo-400 bg-zinc-100',
-                'dark:border-indigo-400/50 dark:bg-zinc-700/70 dark:text-white',
-            )}
-            onChange={handleEvidenceTypeChange}
-        >
-            <option
-                value=''
-                className='bg-zinc-100 text-zinc-300/80 dark:bg-zinc-700'
+        <>
+            <Menu>
+                <MenuButton>{selectedType}</MenuButton>
+
+                <MenuItems>
+                    {Object.values(EvidenceType).map((type) => (
+                        <MenuItem key={type}>
+                            <MenuItemButton
+                                onClick={() => handleEvidenceTypeChange(type)}
+                            >
+                                {type}
+                            </MenuItemButton>
+                        </MenuItem>
+                    ))}
+                </MenuItems>
+            </Menu>
+
+            {/* <select
+                className={clsx(
+                    'w-1/2 rounded-lg border p-1',
+                    'border-indigo-400 bg-zinc-100',
+                    'dark:border-indigo-400/50 dark:bg-zinc-700/70 dark:text-white',
+                )}
+                onChange={handleEvidenceTypeChange0}
             >
-                Select document type
-            </option>
-            {Object.values(EvidenceType).map((type) => (
                 <option
-                    key={type}
-                    value={type}
-                    className={clsx(
-                        'bg-zinc-100 hover:bg-pink-500/90 dark:bg-zinc-700',
-                        // type === 'Unspecified' && 'hidden',
-                    )}
+                    value=''
+                    className='bg-zinc-100 text-zinc-300/80 dark:bg-zinc-700'
                 >
-                    {type}
+                    Select document type
                 </option>
-            ))}
-        </select>
+                {Object.values(EvidenceType).map((type) => (
+                    <option
+                        key={type}
+                        value={type}
+                        className={clsx(
+                            'bg-zinc-100 hover:bg-pink-500/90 dark:bg-zinc-700',
+                            // type === 'Unspecified' && 'hidden',
+                        )}
+                    >
+                        {type}
+                    </option>
+                ))}
+            </select> */}
+        </>
     );
 }
 interface FileProps {
