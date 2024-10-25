@@ -68,16 +68,20 @@ def main():
                     if "analysis_%s" % (i - 1) in app_state.analyses:
                         app_state.analyses["analysis_%s" % (i - 1)]["tp_response"] = parsed_excel_file[i][2]
 
-        # Get pdf file buffer and parse it
-        pdf_file_buffer = request_data["evidencePdfFileBuffer"]
-        pdf_file_content = parse_pdf_file_buffer(pdf_file_buffer)
+        # Get pdf files buffer and parse them
+        pdf_files_data = request_data["pdfFiles"]
+        pdf_files_content = []
+        for i in range(len(pdf_files_data)):
+            # TODO: Do something with evidence doc types here.
+            print(pdf_files_data[i]["evidenceType"])
+            pdf_files_content.append(parse_pdf_file_buffer(pdf_files_data[i]["pdfFileBuffer"]))
 
         # Pull latest models, update if already pulled.
         init_ollama_models()
         app_state.models_pulled = True
 
         # Create Ollama Embeddings and database vectors based on the pdf.
-        vector_db = create_vector_store(pdf_file_content)
+        vector_db = create_vector_store(pdf_files_content)
 
         # Loop through each question and add responses, citations, and pages to app state.
         for i in range(len(questions)):

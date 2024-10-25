@@ -12,7 +12,7 @@ import os
 # Custom modules.
 from modules.globals.app_state import app_state # type: ignore
 
-def create_vector_store(pdf_file, from_file_path=False):
+def create_vector_store(pdf_files, from_file_path=False):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=100,
@@ -20,11 +20,7 @@ def create_vector_store(pdf_file, from_file_path=False):
         is_separator_regex=False,
     )
 
-    if from_file_path:
-        data = _get_page_contents_from_pdf_file_path(pdf_file)
-    else:
-        data = _get_page_contents_from_pdf_in_memory(pdf_file)
-
+    data = get_page_contents_from_multiple_pdfs(pdf_files, from_file_path)
 
     documents = text_splitter.split_documents(data)
 
@@ -76,3 +72,17 @@ def _get_page_contents_from_pdf_file_path(pdf_file_path):
     pdf_loader = PyPDFLoader(pdf_file_path)
     raw_documents= pdf_loader.load()
     return raw_documents
+
+
+def get_page_contents_from_multiple_pdfs(pdf_files, from_file_path=False):
+    all_documents = []
+    
+    for pdf_file in pdf_files:
+        if from_file_path:
+            documents = _get_page_contents_from_pdf_file_path(pdf_file)
+        else:
+            documents = _get_page_contents_from_pdf_in_memory(pdf_file)
+        
+        all_documents.extend(documents)
+    
+    return all_documents

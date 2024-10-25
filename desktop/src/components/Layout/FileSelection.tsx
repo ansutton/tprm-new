@@ -31,6 +31,7 @@ import {
     EvidenceFiles,
     EvidenceType,
     Mode,
+    PdfFile,
     PdfFiles,
     Screen,
 } from '@/types';
@@ -152,15 +153,25 @@ export function FileSelection({
                     csvFileBuffer = await readFileAsDataUrl(questionsFile);
                 }
 
-                // Handle Evidence
-                let pdfFiles: PdfFiles = [];
+                // Handle Evidence documents
+                const pdfFiles: PdfFiles = [];
                 if (evidenceFiles) {
-                    pdfFiles = evidenceFiles.map(async (evidenceFile) => ({
-                        pdfFileBuffer: evidenceFile
-                            ? await readFileAsDataUrl(evidenceFile.file)
-                            : null,
-                        evidenceType: evidenceFile?.evidenceType,
-                    }));
+                    for await (const evidenceDoc of evidenceFiles) {
+                        const pdfFile: PdfFile = {
+                            pdfFileBuffer: null,
+                            evidenceType: undefined
+                        }
+
+                        if (evidenceDoc?.file) {
+                            pdfFile.pdfFileBuffer = await readFileAsDataUrl(evidenceDoc.file);
+                        }
+
+                        if (evidenceDoc?.evidenceType) {
+                            pdfFile.evidenceType = evidenceDoc.evidenceType
+                        }
+
+                        pdfFiles.push(pdfFile)
+                    }
                 }
 
                 // Handle TP Responses

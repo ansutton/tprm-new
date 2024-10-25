@@ -36,8 +36,8 @@ export type EvidenceFile = {
     evidenceType: EvidenceType;
 } | null;
 export type EvidenceFiles = EvidenceFile[] | null;
-export type PdfFile = Promise<{
+export interface PdfFile {
     pdfFileBuffer: string | null;
     evidenceType: EvidenceType | undefined;
-} | null>;
+};
 export type PdfFiles = PdfFile[];
