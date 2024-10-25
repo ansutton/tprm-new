@@ -51,7 +51,7 @@ export function Tooltip({
     );
 }
 
-interface EvidenceFilenameTooltipProps extends TooltipProps {
+interface TooltipEvidenceFilenameProps extends TooltipProps {
     anchorTo?:
         | 'top'
         | 'right'
@@ -71,7 +71,7 @@ interface EvidenceFilenameTooltipProps extends TooltipProps {
     poppoverButtonClasses?: string;
 }
 
-export function EvidenceFilenameTooltip({
+export function TooltipEvidenceFilename({
     children,
     anchorTo = 'top',
     anchorGap = 22,
@@ -79,7 +79,7 @@ export function EvidenceFilenameTooltip({
         <InformationCircleIcon className='size-5 stroke-2' />
     ),
     poppoverButtonClasses = '',
-}: EvidenceFilenameTooltipProps): JSX.Element {
+}: TooltipEvidenceFilenameProps): JSX.Element {
     const { theme } = useTheme();
 
     const [isShowing, setIsShowing] = useState(false);
@@ -112,16 +112,16 @@ export function EvidenceFilenameTooltip({
     );
 }
 
-interface EvidenceDeletionTooltipProps extends EvidenceFilenameTooltipProps {
+interface TooltipEvidenceDeletionProps extends TooltipEvidenceFilenameProps {
     onClick: () => void;
 }
 
-export function EvidenceDeletionTooltip({
+export function TooltipEvidenceDeletion({
     children,
     icon = null,
     onClick,
     poppoverButtonClasses = '',
-}: EvidenceDeletionTooltipProps): JSX.Element {
+}: TooltipEvidenceDeletionProps): JSX.Element {
     const { theme } = useTheme();
 
     const [isShowing, setIsShowing] = useState(false);
