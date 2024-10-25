@@ -556,102 +556,55 @@ function File({
     const [isXShowing, setIsXShowing] = useState(false);
 
     return (
-        <>
-            {/* filename */}
-            {/* fade */}
-            {/* ... */}
+        <div
+            className='relative flex w-1/2 items-center'
+            {...props}
+            onMouseEnter={() => setIsXShowing(true)}
+            onMouseLeave={() => setIsXShowing(false)}
+        >
+            <FileSelectionTooltip
+                poppoverButtonClasses='relative flex h-5 flex-col items-center'
+                onClick={handleDeleteFile}
+                icon={
+                    <>
+                        <EllipsisHorizontalIcon
+                            className={clsx(
+                                'absolute size-5 cursor-pointer stroke-2',
+                                'stroke-zinc-500',
+                                'dark:stroke-zinc-300',
+                                'transition-opacity',
+                                isXShowing
+                                    ? 'opacity-0 duration-300'
+                                    : 'duration-500',
+                            )}
+                        />
+                        <XMarkIcon
+                            className={clsx(
+                                'size-5 cursor-pointer stroke-2',
+                                'stroke-rose-500/75',
+                                'dark:stroke-rose-400/95',
+                                'transition-opacity',
+                                !isXShowing
+                                    ? 'opacity-0 duration-300'
+                                    : 'duration-500',
+                            )}
+                        />
+                    </>
+                }
+            >
+                Remove File
+            </FileSelectionTooltip>
 
+            <span className='ml-1.5 cursor-default whitespace-nowrap'>
+                {fileName}
+            </span>
             <div
-                className='relative flex w-1/2 items-center'
-                {...props}
-                onMouseEnter={() => setIsXShowing(true)}
-                onMouseLeave={() => setIsXShowing(false)}
-            >
-                <FileSelectionTooltip
-                    poppoverButtonClasses='relative flex h-5 flex-col items-center'
-                    onClick={handleDeleteFile}
-                    icon={
-                        <>
-                            <EllipsisHorizontalIcon
-                                className={clsx(
-                                    'absolute size-5 cursor-pointer stroke-2',
-                                    'stroke-zinc-500',
-                                    'dark:stroke-zinc-300',
-                                    'transition-opacity',
-                                    isXShowing
-                                        ? 'opacity-0 duration-300'
-                                        : 'duration-500',
-                                )}
-                            />
-                            <XMarkIcon
-                                className={clsx(
-                                    'size-5 cursor-pointer stroke-2',
-                                    'stroke-rose-500/75',
-                                    'dark:stroke-rose-400/95',
-                                    'transition-opacity',
-                                    !isXShowing
-                                        ? 'opacity-0 duration-300'
-                                        : 'duration-500',
-                                )}
-                            />
-                        </>
-                    }
-                >
-                    Remove File
-                </FileSelectionTooltip>
-
-                <span className='ml-1.5 cursor-default whitespace-nowrap'>
-                    {fileName}
-                </span>
-                <div
-                    className={clsx(
-                        'absolute right-0 ml-auto h-full w-20',
-                        'bg-gradient-to-r from-transparent via-zinc-800/95 to-zinc-800',
-                    )}
-                />
-            </div>
-
-            {/* <div
-                {...props}
-                className='group flex w-1/2 items-center space-x-3'
-                onMouseEnter={() => setIsXShowing(true)}
-                onMouseLeave={() => setIsXShowing(false)}
-            >
-                <span className='cursor-default'>{fileName}</span>
-                <FileSelectionTooltip
-                    poppoverButtonClasses='relative flex h-5 flex-col items-center'
-                    onClick={handleDeleteFile}
-                    icon={
-                        <>
-                            <EllipsisHorizontalIcon
-                                className={clsx(
-                                    'absolute size-5 cursor-pointer stroke-2',
-                                    'stroke-zinc-500',
-                                    'dark:stroke-zinc-300',
-                                    'transition-opacity',
-                                    isXShowing
-                                        ? 'opacity-0 duration-300'
-                                        : 'duration-500',
-                                )}
-                            />
-                            <XMarkIcon
-                                className={clsx(
-                                    'size-5 cursor-pointer stroke-2',
-                                    'stroke-rose-500/75',
-                                    'dark:stroke-rose-400/95',
-                                    'transition-opacity',
-                                    !isXShowing
-                                        ? 'opacity-0 duration-300'
-                                        : 'duration-500',
-                                )}
-                            />
-                        </>
-                    }
-                >
-                    Remove File
-                </FileSelectionTooltip>
-            </div> */}
-        </>
+                className={clsx(
+                    'absolute right-0 ml-auto h-full w-20',
+                    'bg-gradient-to-r from-transparent via-zinc-800/95 to-zinc-800',
+                )}
+            />
+        </div>
     );
 }
 
