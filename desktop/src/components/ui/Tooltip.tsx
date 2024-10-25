@@ -81,7 +81,7 @@ export function FileSelectionTooltip({
             <Transition show={isShowing}>
                 <PopoverPanel
                     transition
-                    anchor={{ to: 'right start', gap: 24 }}
+                    anchor={{ to: 'left', gap: 24 }}
                     className={clsx(
                         tw`rounded-lg text-xs`,
                         tw`w-fit p-2.5`,

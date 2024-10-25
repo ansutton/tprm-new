@@ -159,18 +159,20 @@ export function FileSelection({
                     for await (const evidenceDoc of evidenceFiles) {
                         const pdfFile: PdfFile = {
                             pdfFileBuffer: null,
-                            evidenceType: undefined
-                        }
+                            evidenceType: undefined,
+                        };
 
                         if (evidenceDoc?.file) {
-                            pdfFile.pdfFileBuffer = await readFileAsDataUrl(evidenceDoc.file);
+                            pdfFile.pdfFileBuffer = await readFileAsDataUrl(
+                                evidenceDoc.file,
+                            );
                         }
 
                         if (evidenceDoc?.evidenceType) {
-                            pdfFile.evidenceType = evidenceDoc.evidenceType
+                            pdfFile.evidenceType = evidenceDoc.evidenceType;
                         }
 
-                        pdfFiles.push(pdfFile)
+                        pdfFiles.push(pdfFile);
                     }
                 }
 
@@ -376,12 +378,12 @@ function SectionEvidence({
 
                 {fileInputState && (
                     <div className='flex w-full flex-col space-y-3'>
-                        <div className='flex w-full space-x-4 font-bold'>
+                        <div className='flex w-full font-bold'>
                             <span className='w-1/2'>File Name</span>
                             <span className='w-1/2'>Evidence Type</span>
                         </div>
                         {fileInputState?.map((fileObj, index) => (
-                            <div key={index} className='flex gap-4'>
+                            <div key={index} className='flex'>
                                 <File
                                     fileName={fileObj?.file.name}
                                     handleDeleteFile={() =>
@@ -476,8 +478,7 @@ function EvidenceSelect({
             }
             onClose={() => setQuery('')}
         >
-            {/* Starting from Headless UI Example */}
-            <div className='relative w-1/2'>
+            <div className='relative flex w-1/2 bg-zinc-50 dark:bg-zinc-800'>
                 <ComboboxInput
                     className={clsx(
                         'w-full rounded-lg border-none py-1.5 pl-3 pr-8 text-sm/6 ring-[0.5px]',
@@ -555,46 +556,102 @@ function File({
     const [isXShowing, setIsXShowing] = useState(false);
 
     return (
-        <div
-            {...props}
-            className='group flex w-1/2 items-center space-x-3'
-            onMouseEnter={() => setIsXShowing(true)}
-            onMouseLeave={() => setIsXShowing(false)}
-        >
-            <span className='cursor-default'>{fileName}</span>
-            <FileSelectionTooltip
-                poppoverButtonClasses='relative flex h-5 flex-col items-center'
-                onClick={handleDeleteFile}
-                icon={
-                    <>
-                        <EllipsisHorizontalIcon
-                            className={clsx(
-                                'absolute size-5 cursor-pointer stroke-2',
-                                'stroke-zinc-500',
-                                'dark:stroke-zinc-300',
-                                'transition-opacity',
-                                isXShowing
-                                    ? 'opacity-0 duration-300'
-                                    : 'duration-500',
-                            )}
-                        />
-                        <XMarkIcon
-                            className={clsx(
-                                'size-5 cursor-pointer stroke-2',
-                                'stroke-rose-500/75',
-                                'dark:stroke-rose-400/95',
-                                'transition-opacity',
-                                !isXShowing
-                                    ? 'opacity-0 duration-300'
-                                    : 'duration-500',
-                            )}
-                        />
-                    </>
-                }
+        <>
+            {/* filename */}
+            {/* fade */}
+            {/* ... */}
+
+            <div
+                className='relative flex w-1/2 items-center'
+                {...props}
+                onMouseEnter={() => setIsXShowing(true)}
+                onMouseLeave={() => setIsXShowing(false)}
             >
-                Remove File
-            </FileSelectionTooltip>
-        </div>
+                <FileSelectionTooltip
+                    poppoverButtonClasses='relative flex h-5 flex-col items-center'
+                    onClick={handleDeleteFile}
+                    icon={
+                        <>
+                            <EllipsisHorizontalIcon
+                                className={clsx(
+                                    'absolute size-5 cursor-pointer stroke-2',
+                                    'stroke-zinc-500',
+                                    'dark:stroke-zinc-300',
+                                    'transition-opacity',
+                                    isXShowing
+                                        ? 'opacity-0 duration-300'
+                                        : 'duration-500',
+                                )}
+                            />
+                            <XMarkIcon
+                                className={clsx(
+                                    'size-5 cursor-pointer stroke-2',
+                                    'stroke-rose-500/75',
+                                    'dark:stroke-rose-400/95',
+                                    'transition-opacity',
+                                    !isXShowing
+                                        ? 'opacity-0 duration-300'
+                                        : 'duration-500',
+                                )}
+                            />
+                        </>
+                    }
+                >
+                    Remove File
+                </FileSelectionTooltip>
+
+                <span className='ml-1.5 cursor-default whitespace-nowrap'>
+                    {fileName}
+                </span>
+                <div
+                    className={clsx(
+                        'absolute right-0 ml-auto h-full w-20',
+                        'bg-gradient-to-r from-transparent via-zinc-800/95 to-zinc-800',
+                    )}
+                />
+            </div>
+
+            {/* <div
+                {...props}
+                className='group flex w-1/2 items-center space-x-3'
+                onMouseEnter={() => setIsXShowing(true)}
+                onMouseLeave={() => setIsXShowing(false)}
+            >
+                <span className='cursor-default'>{fileName}</span>
+                <FileSelectionTooltip
+                    poppoverButtonClasses='relative flex h-5 flex-col items-center'
+                    onClick={handleDeleteFile}
+                    icon={
+                        <>
+                            <EllipsisHorizontalIcon
+                                className={clsx(
+                                    'absolute size-5 cursor-pointer stroke-2',
+                                    'stroke-zinc-500',
+                                    'dark:stroke-zinc-300',
+                                    'transition-opacity',
+                                    isXShowing
+                                        ? 'opacity-0 duration-300'
+                                        : 'duration-500',
+                                )}
+                            />
+                            <XMarkIcon
+                                className={clsx(
+                                    'size-5 cursor-pointer stroke-2',
+                                    'stroke-rose-500/75',
+                                    'dark:stroke-rose-400/95',
+                                    'transition-opacity',
+                                    !isXShowing
+                                        ? 'opacity-0 duration-300'
+                                        : 'duration-500',
+                                )}
+                            />
+                        </>
+                    }
+                >
+                    Remove File
+                </FileSelectionTooltip>
+            </div> */}
+        </>
     );
 }
 
