@@ -21,7 +21,7 @@ import {
     Heading,
     FileInputEvidence,
     FileInputSingular,
-    FileSelectionTooltip,
+    EvidenceDeletionTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
 import { useTheme } from '@/hooks';
@@ -562,7 +562,7 @@ function File({
             onMouseEnter={() => setIsXShowing(true)}
             onMouseLeave={() => setIsXShowing(false)}
         >
-            <FileSelectionTooltip
+            <EvidenceDeletionTooltip
                 poppoverButtonClasses='relative flex h-5 flex-col items-center'
                 onClick={handleDeleteFile}
                 icon={
@@ -593,7 +593,7 @@ function File({
                 }
             >
                 Remove File
-            </FileSelectionTooltip>
+            </EvidenceDeletionTooltip>
 
             <span className='ml-1.5 cursor-default whitespace-nowrap'>
                 {fileName}

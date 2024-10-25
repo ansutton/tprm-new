@@ -51,17 +51,17 @@ export function Tooltip({
     );
 }
 
-interface FileSelectionTooltipProps extends TooltipProps {
+interface EvidenceDeletionTooltipProps extends TooltipProps {
     onClick: () => void;
     poppoverButtonClasses: string;
 }
 
-export function FileSelectionTooltip({
+export function EvidenceDeletionTooltip({
     children,
     icon = <InformationCircleIcon className='size-5 stroke-2' />,
     onClick,
     poppoverButtonClasses,
-}: FileSelectionTooltipProps): JSX.Element {
+}: EvidenceDeletionTooltipProps): JSX.Element {
     const { theme } = useTheme();
 
     const [isShowing, setIsShowing] = useState(false);
