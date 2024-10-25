@@ -479,10 +479,10 @@ function EvidenceSelect({
             }
             onClose={() => setQuery('')}
         >
-            <div className='relative flex w-1/2 bg-zinc-50 dark:bg-zinc-800'>
+            <div className='relative flex w-1/2 bg-zinc-50 text-sm dark:bg-zinc-800'>
                 <ComboboxInput
                     className={clsx(
-                        'w-full rounded-lg border-none py-1.5 pl-3 pr-8 text-sm/6 ring-[0.5px]',
+                        'w-full rounded-lg border-none py-1.5 pl-3 pr-8 ring-[0.5px]',
                         'dark:text-zinc-100',
                         'ring-indigo-400 dark:ring-indigo-400/50',
                         'bg-zinc-100 dark:bg-zinc-700/75',
@@ -598,8 +598,9 @@ function File({
 
             <TooltipEvidenceFilename
                 anchorTo='left'
+                anchorGap={24}
                 poppoverButtonChildren={
-                    <span className='ml-1.5 cursor-default whitespace-nowrap'>
+                    <span className='ml-1.5 cursor-default whitespace-nowrap text-sm'>
                         {fileName}
                     </span>
                 }
