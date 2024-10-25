@@ -557,8 +557,8 @@ function File({
 
     return (
         <div
-            className='relative flex w-1/2 items-center'
             {...props}
+            className='relative flex w-1/2 items-center'
             onMouseEnter={() => setIsXShowing(true)}
             onMouseLeave={() => setIsXShowing(false)}
         >
