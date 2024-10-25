@@ -19,7 +19,7 @@ export function EvidenceAnalysis({
 }: EvidenceAnalysisProps): JSX.Element {
     return (
         <Card
-            width={clsx(isOverviewWide ? tw`w-64` : tw`w-full`)}
+            twWidth={clsx(isOverviewWide ? tw`w-64` : tw`w-full`)}
             additionalClasses={tw`min-w-64`}
         >
             <Heading

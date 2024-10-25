@@ -38,11 +38,7 @@ export function CircularProgress({
                     {startIcon}
                     <div className='mb-4 flex w-full items-center gap-1.5 font-bold opacity-80'>
                         <h4 className={clsx(titleFontSize)}>{title}</h4>
-                        {tooltipContent && (
-                            <Tooltip twStroke='stroke-2'>
-                                {tooltipContent}
-                            </Tooltip>
-                        )}
+                        {tooltipContent && <Tooltip>{tooltipContent}</Tooltip>}
                     </div>
                 </div>
                 {subtitle && (

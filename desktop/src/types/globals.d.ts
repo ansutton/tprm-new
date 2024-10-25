@@ -36,12 +36,6 @@ export interface LlmResponse {
     models_pulled: boolean;
     number_of_questions: number;
 }
-export interface SubmitRequestParams {
-    csvFileBuffer: string;
-    pdfFileBuffer: string;
-    parsedExcelFile: any[][];
-    // xlsxFileBuffer: string,
-}
 export interface TableHeaderProps {
     additionalClasses?: string;
     headerContent: ReactNode;
@@ -77,4 +71,8 @@ export type DataItemField =
     | undefined;
 export type Mode = 'demo' | 'llm';
 export type ModeAction = { type: 'set_demo' } | { type: 'set_llm' };
-export type Screen = 'fileUpload' | 'loading' | 'detailedAnalysis' | 'overview';
+export type Screen =
+    | 'fileSelection'
+    | 'loading'
+    | 'detailedAnalysis'
+    | 'overview';

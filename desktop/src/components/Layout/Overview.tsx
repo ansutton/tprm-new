@@ -14,14 +14,14 @@ import {
 import { LlmResponse } from '@/types';
 import { tw } from '@/utils';
 interface OverviewProps {
-    excelData: any[][];
+    tpResponsesData: any[][];
     isSidebarExpanded: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
 }
 
 export function Overview({
-    excelData,
+    tpResponsesData,
     llmResponse,
     isSidebarExpanded,
     questionsData,

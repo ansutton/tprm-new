@@ -12,10 +12,10 @@ export async function submit(params: SubmitRequestParams): Promise<void> {
     try {
         const data = {
             questionsCsvFileBuffer: params.csvFileBuffer,
-            evidencePdfFileBuffer: params.pdfFileBuffer,
+            pdfFiles: params.pdfFiles,
             parsedExcelFile: params.parsedExcelFile,
-            // responsesXlsxFileBuffer: params.xlsxFileBuffer,
         };
+        console.log('🚀 ~ submit ~ data:', data);
         const response = await fetch(
             `${localPythonServerConnectionString}/submit`,
             {

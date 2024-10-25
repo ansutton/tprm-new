@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { MenuItemButton } from '@/components';
 import { useTheme } from '@/hooks';
 import { Mode, Screen } from '@/types';
-import { tw } from '@/utils';
 
 interface ModeMenuProps {
     mode: Mode;
@@ -21,47 +20,47 @@ export function ModeMenu({
     return (
         <div
             className={clsx(
-                tw`rounded-lg p-1 text-sm font-bold`,
-                screen !== 'fileUpload' && tw`cursor-default hover:bg-inherit`,
-                screen === 'fileUpload' &&
-                    theme === 'light' &&
-                    tw`hover:bg-zinc-200`,
-                screen === 'fileUpload' &&
-                    theme === 'dark' &&
-                    tw`hover:bg-zinc-800`,
+                'rounded-lg p-1 text-sm font-bold',
+                screen === 'fileSelection'
+                    ? [
+                          theme === 'light' && 'hover:bg-zinc-200',
+                          theme === 'dark' && 'hover:bg-zinc-800',
+                      ]
+                    : 'cursor-default hover:bg-inherit',
             )}
         >
             <Menu>
                 <MenuButton
                     className={clsx(
-                        tw`flex gap-1 p-1`,
-                        screen !== 'fileUpload' && tw`hover:bg-inherit`,
-                        screen === 'fileUpload' &&
-                            theme === 'light' &&
-                            tw`text-zinc-600 hover:bg-zinc-200`,
-                        screen === 'fileUpload' &&
-                            theme === 'dark' &&
-                            tw`text-zinc-300 hover:bg-zinc-800`,
+                        'flex gap-1 p-1',
+                        screen === 'fileSelection'
+                            ? [
+                                  theme === 'light' &&
+                                      'text-zinc-600 hover:bg-zinc-200',
+                                  theme === 'dark' &&
+                                      'text-zinc-300 hover:bg-zinc-800',
+                              ]
+                            : 'hover:bg-inherit',
                     )}
-                    disabled={screen !== 'fileUpload'}
+                    disabled={screen !== 'fileSelection'}
                 >
                     Mode:
                     <span
                         className={clsx(
-                            theme === 'light' && tw`text-indigo-600`,
-                            theme === 'dark' && tw`text-indigo-400`,
-                            tw`relative`,
+                            theme === 'light' && 'text-indigo-600',
+                            theme === 'dark' && 'text-indigo-400',
+                            'relative',
                         )}
                     >
                         <span
                             className={clsx(
-                                tw`absolute`,
-                                mode === 'demo' && tw`invisible`,
+                                'absolute',
+                                mode === 'demo' && 'invisible',
                             )}
                         >
                             LLM
                         </span>
-                        <span className={clsx(mode === 'llm' && tw`invisible`)}>
+                        <span className={clsx(mode === 'llm' && 'invisible')}>
                             Demo
                         </span>
                     </span>
@@ -70,23 +69,21 @@ export function ModeMenu({
                 <MenuItems
                     anchor='bottom'
                     className={clsx(
-                        tw`mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg`,
+                        'mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
                         theme === 'light' &&
-                            tw`bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10`,
+                            'bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10',
                         theme === 'dark' &&
-                            tw`bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0`,
+                            'bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0',
                     )}
                     transition
                 >
                     <MenuItem>
                         <MenuItemButton
                             additionalClasses={clsx(
-                                mode === 'demo' &&
-                                    theme === 'light' &&
-                                    tw`text-indigo-600`,
-                                mode === 'demo' &&
-                                    theme === 'dark' &&
-                                    tw`text-indigo-400`,
+                                mode === 'demo' && [
+                                    theme === 'light' && 'text-indigo-600',
+                                    theme === 'dark' && 'text-indigo-400',
+                                ],
                             )}
                             onClick={() => setMode('demo')}
                         >
@@ -96,12 +93,10 @@ export function ModeMenu({
                     <MenuItem>
                         <MenuItemButton
                             additionalClasses={clsx(
-                                mode === 'llm' &&
-                                    theme === 'light' &&
-                                    tw`text-indigo-600`,
-                                mode === 'llm' &&
-                                    theme === 'dark' &&
-                                    tw`text-indigo-400`,
+                                mode === 'llm' && [
+                                    theme === 'light' && 'text-indigo-600',
+                                    theme === 'dark' && 'text-indigo-400',
+                                ],
                             )}
                             onClick={() => setMode('llm')}
                         >
