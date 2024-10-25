@@ -22,6 +22,7 @@ import {
     FileInputEvidence,
     FileInputSingular,
     EvidenceDeletionTooltip,
+    EvidenceFilenameTooltip,
 } from '@/components';
 import { confirmDeletionMessage } from '@/constants';
 import { useTheme } from '@/hooks';
@@ -595,9 +596,16 @@ function File({
                 Remove File
             </EvidenceDeletionTooltip>
 
-            <span className='ml-1.5 cursor-default whitespace-nowrap'>
+            <EvidenceFilenameTooltip
+                anchorTo='left'
+                poppoverButtonChildren={
+                    <span className='ml-1.5 cursor-default whitespace-nowrap'>
+                        {fileName}
+                    </span>
+                }
+            >
                 {fileName}
-            </span>
+            </EvidenceFilenameTooltip>
             <div
                 className={clsx(
                     'absolute right-0 ml-auto h-full w-20',

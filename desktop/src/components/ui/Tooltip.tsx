@@ -51,16 +51,76 @@ export function Tooltip({
     );
 }
 
-interface EvidenceDeletionTooltipProps extends TooltipProps {
+interface EvidenceFilenameTooltipProps extends TooltipProps {
+    anchorTo?:
+        | 'top'
+        | 'right'
+        | 'bottom'
+        | 'left'
+        | 'top end'
+        | 'top start'
+        | 'right end'
+        | 'right start'
+        | 'bottom end'
+        | 'bottom start'
+        | 'left end'
+        | 'left start'
+        | undefined; // copied from Headless UI type defs
+    anchorGap?: number;
+    poppoverButtonChildren?: ReactNode;
+    poppoverButtonClasses?: string;
+}
+
+export function EvidenceFilenameTooltip({
+    children,
+    anchorTo = 'top',
+    anchorGap = 22,
+    poppoverButtonChildren = (
+        <InformationCircleIcon className='size-5 stroke-2' />
+    ),
+    poppoverButtonClasses = '',
+}: EvidenceFilenameTooltipProps): JSX.Element {
+    const { theme } = useTheme();
+
+    const [isShowing, setIsShowing] = useState(false);
+
+    return (
+        <Popover
+            className='flex'
+            onMouseEnter={() => setIsShowing(true)}
+            onMouseLeave={() => setIsShowing(false)}
+        >
+            <PopoverButton className={clsx(poppoverButtonClasses)}>
+                {poppoverButtonChildren}
+            </PopoverButton>
+            <Transition show={isShowing}>
+                <PopoverPanel
+                    transition
+                    anchor={{ to: anchorTo, gap: anchorGap }}
+                    className={clsx(
+                        tw`rounded-lg text-xs`,
+                        tw`w-fit p-2.5`,
+                        tw`transition delay-700 duration-300 ease-in data-[closed]:opacity-0`,
+                        theme === 'light' && tw`bg-zinc-200 text-black`,
+                        theme === 'dark' && tw`bg-zinc-900 text-zinc-100`,
+                    )}
+                >
+                    {children}
+                </PopoverPanel>
+            </Transition>
+        </Popover>
+    );
+}
+
+interface EvidenceDeletionTooltipProps extends EvidenceFilenameTooltipProps {
     onClick: () => void;
-    poppoverButtonClasses: string;
 }
 
 export function EvidenceDeletionTooltip({
     children,
-    icon = <InformationCircleIcon className='size-5 stroke-2' />,
+    icon = null,
     onClick,
-    poppoverButtonClasses,
+    poppoverButtonClasses = '',
 }: EvidenceDeletionTooltipProps): JSX.Element {
     const { theme } = useTheme();
 
