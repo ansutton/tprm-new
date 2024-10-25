@@ -609,7 +609,9 @@ function File({
             <div
                 className={clsx(
                     'absolute right-0 ml-auto h-full w-20',
-                    'bg-gradient-to-r from-transparent via-zinc-800/95 to-zinc-800',
+                    'bg-gradient-to-r from-transparent',
+                    'via-zinc-50/95 to-zinc-50',
+                    'dark:via-zinc-800/95 dark:to-zinc-800',
                 )}
             />
         </div>
