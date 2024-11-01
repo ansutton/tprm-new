@@ -25,12 +25,12 @@ export function ThirdPartyInfo({
                     Third Party Information
                 </Heading>
                 <p>
-                    <b>Name</b>: Google LLC
+                    <b>Name</b>: Company LLC
                 </p>
                 <p>
                     <b>Engagement Scope</b>: The third party is providing their
-                    Google Cloud Platform (GCP) which we use to host external
-                    (consumer-facing) and internal cloud-based applications.
+                    platform, which we use to host external (consumer-facing)
+                    and internal applications.
                 </p>
             </div>
         </Card>
