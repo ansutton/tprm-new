@@ -346,7 +346,7 @@ function SectionEvidence({
     ) {
         if (confirm(confirmDeletionMessage)) {
             setFileInputState((prevState) =>
-                Array.isArray(prevState)
+                Array.isArray(prevState) && prevState.length > 0
                     ? prevState?.filter(
                           (fileObj) => fileObj?.file.name !== fileName,
                       )
@@ -377,7 +377,7 @@ function SectionEvidence({
                     buttonText={buttonText}
                 />
 
-                {fileInputState && (
+                {fileInputState && fileInputState?.length > 0 && (
                     <div className='flex w-full flex-col space-y-3'>
                         <div className='flex w-full font-bold'>
                             <span className='w-1/2'>File Name</span>
@@ -641,3 +641,4 @@ function Alert({
         return <></>;
     }
 }
+
