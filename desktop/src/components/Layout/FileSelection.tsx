@@ -131,13 +131,6 @@ export function FileSelection({
     /**
      * Helper Functions - Submission
      */
-    function handleResetStates(): void {
-        setIsSidebarExpanded(true);
-        setIsSidebarFullyExpanded(true);
-        setQuestionsFile(null);
-        setEvidenceFiles(null);
-        setTpResponsesFile(null);
-    }
     async function handleSubmit() {
         setScreen('detailedAnalysis');
 
@@ -194,9 +187,6 @@ export function FileSelection({
                 handlePoll(setLlmResponse);
                 break;
         }
-
-        // Clean up
-        handleResetStates();
     }
 
     return (

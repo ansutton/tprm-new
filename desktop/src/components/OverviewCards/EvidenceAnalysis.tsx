@@ -36,7 +36,6 @@ export function EvidenceAnalysis({
                     evidenceFiles={evidenceFiles}
                     title='Documents Selected'
                     llmResponse={llmResponse}
-                    progressPercentage={100}
                     questionsData={questionsData}
                     twBgColor='bg-cyan-400'
                 />
@@ -44,7 +43,6 @@ export function EvidenceAnalysis({
                     evidenceFiles={evidenceFiles}
                     title='Documents Matching Engagement Scope'
                     llmResponse={llmResponse}
-                    progressPercentage={100}
                     questionsData={questionsData}
                     twBgColor='bg-emerald-400'
                 />
@@ -54,7 +52,6 @@ export function EvidenceAnalysis({
 }
 
 interface EvidenceAnalysisItemProps extends EvidenceAnalysisProps {
-    progressPercentage: number;
     title: string;
     twBgColor: string;
 }
@@ -62,20 +59,19 @@ interface EvidenceAnalysisItemProps extends EvidenceAnalysisProps {
 function EvidenceAnalysisItem({
     evidenceFiles,
     questionsData,
-    progressPercentage,
     title,
     twBgColor,
 }: EvidenceAnalysisItemProps): JSX.Element {
+    const evidenceFilesCount: number = evidenceFiles?.length ?? 0;
+    // Math.round(evidenceFilesCount * 0.01)}/1
+
     return (
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>
             <p className='mb-1 text-2xl font-bold'>
-                {`${Math.round(progressPercentage * 0.01)}/1`}
+                {evidenceFilesCount}/{evidenceFilesCount}
             </p>
-            <ProgressBarBase
-                progressPercentage={progressPercentage}
-                twBgColor={twBgColor}
-            />
+            <ProgressBarBase progressPercentage={100} twBgColor={twBgColor} />
         </div>
     );
 }
