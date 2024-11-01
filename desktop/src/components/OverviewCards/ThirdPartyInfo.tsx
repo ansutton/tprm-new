@@ -25,14 +25,14 @@ export function ThirdPartyInfo({
                     Third Party Information
                 </Heading>
                 <p>
-                    <b>Name</b>: Company LLC
+                    <b>Name</b>: ABC Inc.
                 </p>
                 <p>
-                    <b>Engagement Scope</b>: The third party is providing their
-                    platform, which we use to host external (consumer-facing)
-                    and internal applications.
+                    <b>Engagement Scope</b>
+                    {`: ABC is a large Software as a Service (SaaS) company based in California, US, specializing in data protection and management. ABC provides a "Fast Backup" solution to deliver high performance, secure backup, long-term retention, and automated compliance of Parent Company's data.`}
                 </p>
             </div>
         </Card>
     );
 }
+
