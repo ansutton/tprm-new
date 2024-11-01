@@ -1,14 +1,7 @@
-import { /* Dispatch, SetStateAction, */ useEffect, useState } from 'react';
-import {
-    ArrowPathIcon,
-    // ChartBarSquareIcon,
-    // ChatBubbleBottomCenterTextIcon,
-    // QuestionMarkCircleIcon,
-} from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import {
-    // Button,
-    // Card,
     DetailedAnalysis,
     FileSelection,
     Heading,
@@ -17,24 +10,8 @@ import {
     Topbar,
 } from '@/components';
 import { tableFootnoteText } from '@/constants';
-import {
-    // parseExcelFile,
-    // readFileAsText,
-    // readFileAsDataUrl,
-    countResponsesAlign,
-    // handleSampleData,
-    // poll,
-    // submit,
-    tw,
-} from '@/utils';
+import { countResponsesAlign, tw } from '@/utils';
 import { Mode, Screen } from '@/types';
-
-/**
- * Configuration and Constants
- */
-// dotenv.config();
-// const mode = process.env...;
-// const mode: Mode = 'llm';
 
 export default function Home(): JSX.Element {
     /**
