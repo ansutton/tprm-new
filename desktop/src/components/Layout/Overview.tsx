@@ -81,7 +81,10 @@ export function Overview({
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
-                        <EvidenceProvided isOverviewWide={isOverviewWide} />
+                        <EvidenceProvided
+                            evidenceFiles={evidenceFiles}
+                            isOverviewWide={isOverviewWide}
+                        />
                         <QuestionsAnalyzed
                             llmResponse={llmResponse}
                             questionsData={questionsData}
@@ -111,7 +114,10 @@ export function Overview({
                     </div>
 
                     <div className='space-y-4'>
-                        <EvidenceProvided isOverviewWide={isOverviewWide} />
+                        <EvidenceProvided
+                            evidenceFiles={evidenceFiles}
+                            isOverviewWide={isOverviewWide}
+                        />
                         <EvidenceAnswered
                             llmResponse={llmResponse}
                             questionsData={questionsData}

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 import { Card, Heading, ProgressBarBase } from '@/components';
-import { EvidenceFiles, EvidenceType, LlmResponse } from '@/types';
+import { EvidenceFiles, LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
 interface EvidenceAnalysisProps {

@@ -31,6 +31,26 @@ export enum EvidenceType {
     Other = 'Other',
     Unspecified = 'Unspecified',
 }
+export const EvidenceColors = [
+    [EvidenceType.SOC2TypeII, ''],
+    [EvidenceType.PenetrationTest, ''],
+    [EvidenceType.VulnerabilityScan, ''],
+    [EvidenceType.PrivacyPolicy, ''],
+    [EvidenceType.SecurityPolicyGeneral, ''],
+    [EvidenceType.AccessControlPolicy, ''],
+    [EvidenceType.PasswordManagement, ''],
+    [EvidenceType.BusinessContinuity, ''],
+    [EvidenceType.IncidentManagement, ''],
+    [EvidenceType.EncryptionPolicy, ''],
+    [EvidenceType.DataRetention, ''],
+    [EvidenceType.ThirdPartyRiskManagement, ''],
+    [EvidenceType.VulnerabilityManagement, ''],
+    [EvidenceType.ISO27001Certificate, ''],
+    [EvidenceType.ISO27001StatementOfApplicability, ''],
+    [EvidenceType.SDLCDocumentation, ''],
+    [EvidenceType.Other, ''],
+    [EvidenceType.Unspecified, ''],
+];
 export type EvidenceFile = {
     file: File;
     evidenceType: EvidenceType;
@@ -39,5 +59,6 @@ export type EvidenceFiles = EvidenceFile[] | null;
 export interface PdfFile {
     pdfFileBuffer: string | null;
     evidenceType: EvidenceType | undefined;
-};
+}
 export type PdfFiles = PdfFile[];
+

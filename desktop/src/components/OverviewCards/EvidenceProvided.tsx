@@ -2,33 +2,45 @@ import clsx from 'clsx';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { Card, Heading } from '@/components';
 import { tw } from '@/utils';
+import { EvidenceFile, EvidenceFiles, EvidenceColors } from '@/types';
 
+type EvidenceColorAndCount = {
+    color: string;
+    count: number;
+};
 interface EvidenceProvidedProps {
+    evidenceFiles: EvidenceFiles;
     isOverviewWide: boolean;
 }
 
 export function EvidenceProvided({
+    evidenceFiles,
     isOverviewWide,
 }: EvidenceProvidedProps): JSX.Element {
-    const data = [
-        {
-            title: 'SOC 2 Type 2 Reports',
-            pathColor: 'hsl(188, 86%, 53%)', // cyan-400
-            count: 1,
-        },
-        {
-            title: 'Policies',
-            pathColor: 'hsl(43, 96%, 56%)', // amber-400
-            count: 0,
-        },
-        {
-            title: 'Others',
-            pathColor: 'hsl(351, 95%, 71%)', // rose-400
-            count: 0,
-        },
-    ];
+    function getColorAndCount(
+        evidenceFile: EvidenceFile,
+    ): EvidenceColorAndCount {
+        let color = '';
+        let count = 0;
 
-    const totalCount = data.reduce((acc, item) => acc + item.count, 0);
+        for (let i = 0; i < EvidenceColors.length; i++) {
+            if (EvidenceColors[i][0] === evidenceFile?.evidenceType) {
+                color = EvidenceColors[i][1];
+                count++;
+            }
+        }
+        return { color, count };
+    }
+
+    const evidenceProvidedData = evidenceFiles?.map(
+        (evidenceFile: EvidenceFile) => ({
+            title: evidenceFile!.evidenceType,
+            color: getColorAndCount(evidenceFile).color,
+            count: getColorAndCount(evidenceFile).count,
+        }),
+    );
+
+    const totalCount = evidenceFiles!.length;
 
     return (
         <Card>
@@ -45,7 +57,7 @@ export function EvidenceProvided({
                     // isOverviewWide ? tw`` : tw`flex-col`,
                 )}
             >
-                {data.map(({ title, pathColor, count }, index) => (
+                {evidenceProvidedData!.map(({ title, color, count }, index) => (
                     <div key={index}>
                         <p className='mb-3 text-center font-bold opacity-80'>
                             {title}
@@ -57,7 +69,9 @@ export function EvidenceProvided({
                                 minValue={0}
                                 maxValue={totalCount}
                                 text={`${count.toString()}`}
-                                styles={buildStyles({ pathColor: pathColor })}
+                                styles={buildStyles({
+                                    pathColor: color,
+                                })}
                             />
                         </div>
                     </div>
@@ -66,3 +80,4 @@ export function EvidenceProvided({
         </Card>
     );
 }
+
