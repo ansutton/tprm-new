@@ -11,7 +11,7 @@ import {
 } from '@/components';
 import { tableFootnoteText } from '@/constants';
 import { countResponsesAlign, tw } from '@/utils';
-import { Mode, Screen } from '@/types';
+import { EvidenceFiles, Mode, Screen } from '@/types';
 
 export default function Home(): JSX.Element {
     /**
@@ -21,6 +21,7 @@ export default function Home(): JSX.Element {
     const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
     const [isSidebarFullyExpanded, setIsSidebarFullyExpanded] =
         useState<boolean>(true);
+    const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [llmResponse, setLlmResponse] = useState<any>(null);
     const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
@@ -80,6 +81,8 @@ export default function Home(): JSX.Element {
                 <div className='container mx-auto pb-5 pt-5'>
                     {screen === 'fileSelection' && (
                         <FileSelection
+                            evidenceFiles={evidenceFiles}
+                            setEvidenceFiles={setEvidenceFiles}
                             setIsSidebarExpanded={setIsSidebarExpanded}
                             setIsSidebarFullyExpanded={
                                 setIsSidebarFullyExpanded
@@ -135,6 +138,7 @@ export default function Home(): JSX.Element {
                                 )}
                                 {screen === 'overview' && (
                                     <Overview
+                                        evidenceFiles={evidenceFiles}
                                         tpResponsesData={tpResponsesData}
                                         isSidebarExpanded={isSidebarExpanded}
                                         llmResponse={llmResponse}

@@ -49,6 +49,8 @@ import {
 } from '@/utils';
 
 interface FileSelectionProps {
+    evidenceFiles: EvidenceFiles;
+    setEvidenceFiles: Dispatch<SetStateAction<EvidenceFiles>>;
     setIsSidebarExpanded: Dispatch<SetStateAction<boolean>>;
     setIsSidebarFullyExpanded: Dispatch<SetStateAction<boolean>>;
     setLlmResponse: Dispatch<any>;
@@ -59,6 +61,8 @@ interface FileSelectionProps {
 }
 
 export function FileSelection({
+    evidenceFiles,
+    setEvidenceFiles,
     setIsSidebarExpanded,
     setIsSidebarFullyExpanded,
     setLlmResponse,
@@ -71,7 +75,6 @@ export function FileSelection({
      * State Hooks
      */
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
-    const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     /**

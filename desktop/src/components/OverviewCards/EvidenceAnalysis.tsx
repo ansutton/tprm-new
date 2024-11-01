@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 import { Card, Heading, ProgressBarBase } from '@/components';
-import { LlmResponse } from '@/types';
+import { EvidenceFiles, EvidenceType, LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
 interface EvidenceAnalysisProps {
+    evidenceFiles: EvidenceFiles;
     isOverviewWide?: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
@@ -12,6 +13,7 @@ interface EvidenceAnalysisProps {
 }
 
 export function EvidenceAnalysis({
+    evidenceFiles,
     isOverviewWide,
     llmResponse,
     questionsData,
@@ -31,6 +33,7 @@ export function EvidenceAnalysis({
             </Heading>
             <div className='space-y-4 text-sm font-bold'>
                 <EvidenceAnalysisItem
+                    evidenceFiles={evidenceFiles}
                     title='Documents Selected'
                     llmResponse={llmResponse}
                     progressPercentage={100}
@@ -38,6 +41,7 @@ export function EvidenceAnalysis({
                     twBgColor='bg-cyan-400'
                 />
                 <EvidenceAnalysisItem
+                    evidenceFiles={evidenceFiles}
                     title='Documents Matching Engagement Scope'
                     llmResponse={llmResponse}
                     progressPercentage={100}
@@ -56,6 +60,7 @@ interface EvidenceAnalysisItemProps extends EvidenceAnalysisProps {
 }
 
 function EvidenceAnalysisItem({
+    evidenceFiles,
     questionsData,
     progressPercentage,
     title,
