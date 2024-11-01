@@ -29,7 +29,7 @@ export function ThirdPartyInfo({
                 </p>
                 <p>
                     <b>Engagement Scope</b>
-                    {`: ABC is a large Software as a Service (SaaS) company based in California, US, specializing in data protection and management. ABC provides a "Fast Backup" solution to deliver high performance, secure backup, long-term retention, and automated compliance of Parent Company's data.`}
+                    {`: ABC is a large Software as a Service (SaaS) company based in California, US, specializing in data protection and management. ABC provides a "Fast Backup" solution for Parent Company's data.`}
                 </p>
             </div>
         </Card>
