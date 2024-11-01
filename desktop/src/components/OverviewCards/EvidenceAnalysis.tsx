@@ -49,7 +49,7 @@ export function EvidenceAnalysis({
     );
 }
 
-interface EvidenceAnalysisItemsProps extends EvidenceAnalysisProps {
+interface EvidenceAnalysisItemProps extends EvidenceAnalysisProps {
     progressPercentage: number;
     title: string;
     twBgColor: string;
@@ -60,7 +60,7 @@ function EvidenceAnalysisItem({
     progressPercentage,
     title,
     twBgColor,
-}: EvidenceAnalysisItemsProps): JSX.Element {
+}: EvidenceAnalysisItemProps): JSX.Element {
     return (
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>
@@ -74,3 +74,4 @@ function EvidenceAnalysisItem({
         </div>
     );
 }
+
