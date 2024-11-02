@@ -18,30 +18,35 @@ export function EvidenceProvided({
     evidenceFiles,
     isOverviewWide,
 }: EvidenceProvidedProps): JSX.Element {
-    function getEvidenceData(evidenceFile: EvidenceFile): EvidenceData {
-        let title = '';
-        let color = '';
-        let count = 0;
+    const totalCount = evidenceFiles!.length;
 
+    function getColor(evidenceFile: EvidenceFile): string {
         for (let i = 0; i < EvidenceColors.length; i++) {
             if (EvidenceColors[i][0] === evidenceFile?.evidenceType) {
-                if (count < 1) title = evidenceFile?.evidenceType;
-                color = EvidenceColors[i][1];
-                count++;
+                return EvidenceColors[i][1];
             }
         }
-        return { title, color, count };
+        return '';
     }
 
-    const evidenceProvidedData = evidenceFiles?.map(
-        (evidenceFile: EvidenceFile) => ({
-            title: getEvidenceData(evidenceFile).title,
-            color: getEvidenceData(evidenceFile).color,
-            count: getEvidenceData(evidenceFile).count,
-        }),
+    const uniqueEvidence = evidenceFiles?.reduce(
+        (acc, evidence: EvidenceFile) => {
+            const found = acc.find(
+                (item) => item.title === evidence!.evidenceType,
+            );
+            if (found) {
+                found.count++;
+            } else {
+                acc.push({
+                    title: evidence!.evidenceType,
+                    color: getColor(evidence),
+                    count: 1,
+                });
+            }
+            return acc;
+        },
+        [] as EvidenceData[],
     );
-
-    const totalCount = evidenceFiles!.length;
 
     return (
         <Card>
@@ -58,7 +63,7 @@ export function EvidenceProvided({
                     // isOverviewWide ? tw`` : tw`flex-col`,
                 )}
             >
-                {evidenceProvidedData!.map(({ title, color, count }, index) => (
+                {uniqueEvidence?.map(({ title, color, count }, index) => (
                     <div key={index}>
                         <p className='mb-3 text-center font-bold opacity-80'>
                             {title}
