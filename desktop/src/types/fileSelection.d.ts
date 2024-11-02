@@ -32,24 +32,24 @@ export enum EvidenceType {
     Unspecified = 'Unspecified',
 }
 export const EvidenceColors = [
-    [EvidenceType.SOC2TypeII, ''],
-    [EvidenceType.PenetrationTest, ''],
-    [EvidenceType.VulnerabilityScan, ''],
-    [EvidenceType.PrivacyPolicy, ''],
-    [EvidenceType.SecurityPolicyGeneral, ''],
-    [EvidenceType.AccessControlPolicy, ''],
-    [EvidenceType.PasswordManagement, ''],
-    [EvidenceType.BusinessContinuity, ''],
-    [EvidenceType.IncidentManagement, ''],
-    [EvidenceType.EncryptionPolicy, ''],
-    [EvidenceType.DataRetention, ''],
-    [EvidenceType.ThirdPartyRiskManagement, ''],
-    [EvidenceType.VulnerabilityManagement, ''],
-    [EvidenceType.ISO27001Certificate, ''],
-    [EvidenceType.ISO27001StatementOfApplicability, ''],
-    [EvidenceType.SDLCDocumentation, ''],
-    [EvidenceType.Other, ''],
-    [EvidenceType.Unspecified, ''],
+    [EvidenceType.SOC2TypeII, '#22d3ee'],
+    [EvidenceType.PenetrationTest, '#60a5fa'],
+    [EvidenceType.VulnerabilityScan, '#a78bfa'],
+    [EvidenceType.PrivacyPolicy, '#e879f9'],
+    [EvidenceType.SecurityPolicyGeneral, '#fb923d'],
+    [EvidenceType.AccessControlPolicy, '#facc15'],
+    [EvidenceType.PasswordManagement, '#34d399'],
+    [EvidenceType.BusinessContinuity, '#22d3ee'],
+    [EvidenceType.IncidentManagement, '#60a5fa'],
+    [EvidenceType.EncryptionPolicy, '#a78bfa'],
+    [EvidenceType.DataRetention, '#e879f9'],
+    [EvidenceType.ThirdPartyRiskManagement, '#fb923d'],
+    [EvidenceType.VulnerabilityManagement, '#facc15'],
+    [EvidenceType.ISO27001Certificate, '#34d399'],
+    [EvidenceType.ISO27001StatementOfApplicability, '#22d3ee'],
+    [EvidenceType.SDLCDocumentation, '#60a5fa'],
+    [EvidenceType.Other, '#a78bfa'],
+    [EvidenceType.Unspecified, '#e879f9'],
 ];
 export type EvidenceFile = {
     file: File;
@@ -61,4 +61,7 @@ export interface PdfFile {
     evidenceType: EvidenceType | undefined;
 }
 export type PdfFiles = PdfFile[];
+
+// 'hsl(43, 96%, 56%)'], // amber-400
+// 'hsl(351, 95%, 71%)'], // rose-400
 

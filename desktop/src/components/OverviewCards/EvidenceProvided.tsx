@@ -17,6 +17,24 @@ export function EvidenceProvided({
     evidenceFiles,
     isOverviewWide,
 }: EvidenceProvidedProps): JSX.Element {
+    const data = [
+        {
+            title: 'SOC 2 Type 2 Reports',
+            pathColor: 'hsl(188, 86%, 53%)', // cyan-400
+            count: 1,
+        },
+        {
+            title: 'Policies',
+            pathColor: 'hsl(43, 96%, 56%)', // amber-400
+            count: 0,
+        },
+        {
+            title: 'Others',
+            pathColor: 'hsl(351, 95%, 71%)', // rose-400
+            count: 0,
+        },
+    ];
+
     function getColorAndCount(
         evidenceFile: EvidenceFile,
     ): EvidenceColorAndCount {
@@ -53,7 +71,7 @@ export function EvidenceProvided({
             </Heading>
             <div
                 className={clsx(
-                    tw`flex justify-around gap-4`,
+                    tw`flex flex-wrap justify-around gap-4`,
                     // isOverviewWide ? tw`` : tw`flex-col`,
                 )}
             >
