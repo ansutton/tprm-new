@@ -4,7 +4,8 @@ import { Card, Heading } from '@/components';
 import { tw } from '@/utils';
 import { EvidenceFile, EvidenceFiles, EvidenceColors } from '@/types';
 
-type EvidenceColorAndCount = {
+type EvidenceData = {
+    title: string;
     color: string;
     count: number;
 };
@@ -17,44 +18,26 @@ export function EvidenceProvided({
     evidenceFiles,
     isOverviewWide,
 }: EvidenceProvidedProps): JSX.Element {
-    const data = [
-        {
-            title: 'SOC 2 Type 2 Reports',
-            pathColor: 'hsl(188, 86%, 53%)', // cyan-400
-            count: 1,
-        },
-        {
-            title: 'Policies',
-            pathColor: 'hsl(43, 96%, 56%)', // amber-400
-            count: 0,
-        },
-        {
-            title: 'Others',
-            pathColor: 'hsl(351, 95%, 71%)', // rose-400
-            count: 0,
-        },
-    ];
-
-    function getColorAndCount(
-        evidenceFile: EvidenceFile,
-    ): EvidenceColorAndCount {
+    function getEvidenceData(evidenceFile: EvidenceFile): EvidenceData {
+        let title = '';
         let color = '';
         let count = 0;
 
         for (let i = 0; i < EvidenceColors.length; i++) {
             if (EvidenceColors[i][0] === evidenceFile?.evidenceType) {
+                if (count < 1) title = evidenceFile?.evidenceType;
                 color = EvidenceColors[i][1];
                 count++;
             }
         }
-        return { color, count };
+        return { title, color, count };
     }
 
     const evidenceProvidedData = evidenceFiles?.map(
         (evidenceFile: EvidenceFile) => ({
-            title: evidenceFile!.evidenceType,
-            color: getColorAndCount(evidenceFile).color,
-            count: getColorAndCount(evidenceFile).count,
+            title: getEvidenceData(evidenceFile).title,
+            color: getEvidenceData(evidenceFile).color,
+            count: getEvidenceData(evidenceFile).count,
         }),
     );
 
