@@ -27,7 +27,7 @@ def generate_model_response(vector_db, question):
         citations = []
         for doc in source_documents:
             source = doc.metadata['source']
-            pages.append((source, ' ',doc.metadata['page_number']))
+            pages.append((source, ' ', doc.metadata['page_number'], doc.metadata['evidence_doc_type']))
             citations.append((source, doc.metadata['page_number'], doc.page_content))  # Include source in the citation
         return {
             "response": response,

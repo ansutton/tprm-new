@@ -12,7 +12,7 @@ import os
 # Custom modules.
 from modules.globals.app_state import app_state # type: ignore
 
-def create_vector_store(pdf_files, pdf_file_names,from_file_path=False):
+def create_vector_store(pdf_files, pdf_file_names,evidence_doc_types,from_file_path=False):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=100,
@@ -20,7 +20,7 @@ def create_vector_store(pdf_files, pdf_file_names,from_file_path=False):
         is_separator_regex=False,
     )
 
-    data = get_page_contents_from_multiple_pdfs(pdf_files, pdf_file_names,from_file_path)
+    data = get_page_contents_from_multiple_pdfs(pdf_files, pdf_file_names,from_file_path, evidence_doc_types)
 
     documents = text_splitter.split_documents(data)
 
@@ -55,7 +55,7 @@ def create_vector_store(pdf_files, pdf_file_names,from_file_path=False):
     
     return vector_store
 
-def _get_page_contents_from_pdf_in_memory(pdf_bytes, pdf_file_names, index):
+def _get_page_contents_from_pdf_in_memory(pdf_bytes, pdf_file_names, index, evidence_doc_types):
     # Write bytes to a temporary file
     with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_pdf_file:
         temp_pdf_file.write(pdf_bytes)
@@ -75,7 +75,8 @@ def _get_page_contents_from_pdf_in_memory(pdf_bytes, pdf_file_names, index):
             "title": doc.metadata.get("title", "Unknown Title"),
             "author": doc.metadata.get("author", "Unknown Author"),
             "source": pdf_file_names[index],  # Use the corresponding file name
-            "page_number": page_number + 1
+            "page_number": page_number + 1,
+            "evidence_doc_type": evidence_doc_types[index]
         }
         documents_with_metadata.append(Document(page_content=doc.page_content, metadata=metadata))
     
@@ -88,14 +89,14 @@ def _get_page_contents_from_pdf_file_path(pdf_file_path):
     return raw_documents
 
 
-def get_page_contents_from_multiple_pdfs(pdf_files, pdf_file_names, from_file_path=False):
+def get_page_contents_from_multiple_pdfs(pdf_files, pdf_file_names, evidence_doc_types, from_file_path=False):
     all_documents = []
     
     for index, pdf_file in enumerate(pdf_files):
         if from_file_path:
             documents = _get_page_contents_from_pdf_file_path(pdf_file)
         else:
-            documents = _get_page_contents_from_pdf_in_memory(pdf_file, pdf_file_names, index)  # Pass index
+            documents = _get_page_contents_from_pdf_in_memory(pdf_file, pdf_file_names,index, evidence_doc_types)  # Pass index
         
         all_documents.extend(documents)
     
