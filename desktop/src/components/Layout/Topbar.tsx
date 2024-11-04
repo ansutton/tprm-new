@@ -202,11 +202,11 @@ function ThemeMenu(): JSX.Element {
                 transition
                 anchor='bottom end'
                 className={clsx(
-                    tw`mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg`,
+                    tw`mt-6 flex w-36 flex-col rounded-lg border py-1 text-sm font-bold shadow-lg`,
                     theme === 'light' &&
-                        tw`stroke-700 bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10`,
+                        tw`stroke-700 border-zinc-900/10 bg-zinc-100 text-zinc-700`,
                     theme === 'dark' &&
-                        tw`bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0`,
+                        tw`border-zinc-600/80 bg-zinc-800 stroke-zinc-300 text-zinc-300`,
                 )}
             >
                 <MenuItem>

@@ -503,6 +503,7 @@ function EvidenceSelect({
                     theme === 'light' && 'border-zinc-300/70 bg-zinc-100',
                     theme === 'dark' && 'border-zinc-700 bg-zinc-900',
                     'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
+                    'z-20',
                 )}
             >
                 {filteredTypes.map((type) => (
