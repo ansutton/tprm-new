@@ -16,10 +16,10 @@ export interface ProgressBarBaseProps {
 export interface Analysis {
     question?: string;
     tp_response?: string;
+    is_analysis_complete?: boolean;
     ai_analysis?: string;
     citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
     pages?: number[]; // Expecting an array of numbers
-    is_analysis_complete?: boolean;
     [key: string]:
         | string
         | number
@@ -29,12 +29,12 @@ export interface Analysis {
         | number[]; // Catch-all for other keys
 }
 export interface LlmResponse {
-    models_pulled: boolean;
-    number_of_questions: number;
+    analyses: Record<string, Analysis>;
     embeddings_count: number;
     embeddings_total: number;
-    analyses: Record<string, Analysis>;
     is_complete: boolean;
+    models_pulled: boolean;
+    number_of_questions: number;
 }
 export interface TableHeaderProps {
     additionalClasses?: string;
@@ -76,4 +76,3 @@ export type Screen =
     | 'loading'
     | 'detailedAnalysis'
     | 'overview';
-
