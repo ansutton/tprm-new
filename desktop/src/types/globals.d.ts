@@ -52,7 +52,6 @@ export type DataItem = {
     questionNumber: number;
     question: string;
     tpResponsePreview: DataItemField;
-    evidenceDoc: DataItemField;
     aiAnalysisPreview: DataItemField;
     citationsPreview: DataItemField;
     answersAlign: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
