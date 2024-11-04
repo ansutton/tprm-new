@@ -75,7 +75,8 @@ def main():
         for i in range(len(pdf_files_data)):
             # TODO: Do something with evidence doc types here.
             print(pdf_files_data[i]["evidenceType"])
-            print(pdf_files_data[i]["filename"])
+            # print(pdf_files_data[i]["filename"])
+            pdf_file_names.append(pdf_files_data[i]["filename"])
             pdf_files_content.append(parse_pdf_file_buffer(pdf_files_data[i]["pdfFileBuffer"]))
 
         # Pull latest models, update if already pulled.
