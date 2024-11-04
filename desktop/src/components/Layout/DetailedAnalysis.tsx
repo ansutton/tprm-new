@@ -119,14 +119,6 @@ const columns = [
         ),
         cell: ({ getValue }) => getValue(),
     }),
-    columnHelper.accessor('evidenceDoc', {
-        header: () => (
-            <TableHeader
-                headerContent='Evidence Document'
-                infoContent={`The evidence document referenced in the AI response`}
-            />
-        ),
-    }),
     columnHelper.accessor('citationsPreview', {
         header: () => (
             <TableHeader
@@ -242,7 +234,6 @@ export function DetailedAnalysis({
                     tpResponsesData.length === 0
                         ? 'No Third Party Responses selected'
                         : truncate(tpResponsesData[index + 1][2], 40),
-                evidenceDoc: '',
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
@@ -598,4 +589,3 @@ function Filter({
         />
     );
 }
-

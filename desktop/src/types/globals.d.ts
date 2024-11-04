@@ -16,8 +16,8 @@ export interface ProgressBarBaseProps {
 export interface Analysis {
     question?: string;
     tp_response?: string;
-    ai_analysis?: string;
     evidence_doc?: string;
+    ai_analysis?: string;
     citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
     pages?: number[]; // Expecting an array of numbers
     is_analysis_complete?: boolean;
@@ -52,8 +52,8 @@ export type DataItem = {
     questionNumber: number;
     question: string;
     tpResponsePreview: DataItemField;
-    aiAnalysisPreview: DataItemField;
     evidenceDoc: DataItemField;
+    aiAnalysisPreview: DataItemField;
     citationsPreview: DataItemField;
     answersAlign: DataItemField; // Yes/No (Yes if sim score >=88%, else No)
     // similarityScore: DataItemField;
@@ -78,4 +78,3 @@ export type Screen =
     | 'loading'
     | 'detailedAnalysis'
     | 'overview';
-

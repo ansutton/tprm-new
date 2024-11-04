@@ -21,8 +21,8 @@ class AppState:
 class AnalysisData:
     question = ""
     tp_response = ""
-    ai_analysis = ""
     evidence_doc = ""
+    ai_analysis = ""
     citations = ""
     pages = ""
     tp_confidence_score = 0
