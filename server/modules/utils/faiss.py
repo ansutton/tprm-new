@@ -65,7 +65,19 @@ def _get_page_contents_from_pdf_in_memory(pdf_bytes):
     raw_documents= pdf_loader.load()
     # Delete temporary file
     os.remove(temp_pdf_file_path)
-    return raw_documents
+
+        # Extract metadata
+    documents_with_metadata = []
+    for page_number, doc in enumerate(raw_documents):
+        metadata = {
+            "title": doc.metadata.get("title", "Unknown Title"),
+            "author": doc.metadata.get("author", "Unknown Author"),
+            "source": temp_pdf_file_path,
+            "page_number": page_number + 1
+        }
+        documents_with_metadata.append(Document(page_content=doc.page_content, metadata=metadata))
+    
+    return documents_with_metadata
 
 
 def _get_page_contents_from_pdf_file_path(pdf_file_path):

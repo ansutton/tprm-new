@@ -23,16 +23,15 @@ def generate_model_response(vector_db, question):
         response = result['result']
 
         source_documents = result['source_documents']
-        pages = set()
+        pages = []
         citations = []
         for doc in source_documents:
-            # Subtract 1 from the page number to correct the offset
-            pages.add(doc.metadata['page'] - 1)
-            citations.append((doc.metadata['page'] - 1, doc.page_content))
-
+            source = doc.metadata['source']
+            pages.append((source,doc.metadata['page_number']))
+            citations.append((source, doc.metadata['page_number'], doc.page_content))  # Include source in the citation
         return {
             "response": response,
-            "pages": list(pages),
+            "pages": pages,
             "citations": citations
         }
 
