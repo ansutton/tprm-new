@@ -16,7 +16,6 @@ export interface ProgressBarBaseProps {
 export interface Analysis {
     question?: string;
     tp_response?: string;
-    evidence_doc?: string;
     ai_analysis?: string;
     citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
     pages?: number[]; // Expecting an array of numbers
@@ -77,3 +76,4 @@ export type Screen =
     | 'loading'
     | 'detailedAnalysis'
     | 'overview';
+
