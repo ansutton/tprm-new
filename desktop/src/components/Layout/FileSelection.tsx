@@ -496,7 +496,7 @@ function EvidenceSelect({
             </div>
 
             <ComboboxOptions
-                anchor='bottom'
+                anchor={{ to: 'bottom', padding: '1rem' }}
                 transition
                 className={clsx(
                     'mt-1.5 w-[var(--input-width)] rounded-lg border p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
