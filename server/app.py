@@ -71,9 +71,11 @@ def main():
         # Get pdf files buffer and parse them
         pdf_files_data = request_data["pdfFiles"]
         pdf_files_content = []
+        pdf_file_names = []
         for i in range(len(pdf_files_data)):
             # TODO: Do something with evidence doc types here.
             print(pdf_files_data[i]["evidenceType"])
+            print(pdf_files_data[i]["filename"])
             pdf_files_content.append(parse_pdf_file_buffer(pdf_files_data[i]["pdfFileBuffer"]))
 
         # Pull latest models, update if already pulled.
@@ -81,7 +83,7 @@ def main():
         app_state.models_pulled = True
 
         # Create Ollama Embeddings and database vectors based on the pdf.
-        vector_db = create_vector_store(pdf_files_content)
+        vector_db = create_vector_store(pdf_files_content, pdf_file_names)
 
         # Loop through each question and add responses, citations, and pages to app state.
         for i in range(len(questions)):
@@ -142,6 +144,7 @@ test_faiss_index = None
 # Load document test endpoint.
 @app.route("/load_document", methods=["POST"])
 def load_document():
+    
     global test_faiss_index
     try:
         request_data = request.json
