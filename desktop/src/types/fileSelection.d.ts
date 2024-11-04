@@ -61,7 +61,3 @@ export interface PdfFile {
     evidenceType: EvidenceType | undefined;
 }
 export type PdfFiles = PdfFile[];
-
-// 'hsl(43, 96%, 56%)'], // amber-400
-// 'hsl(351, 95%, 71%)'], // rose-400
-
