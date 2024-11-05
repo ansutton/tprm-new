@@ -249,7 +249,7 @@ export function DetailedAnalysis({
                                 ]?.pages?.map((page, j) => (
                                     <Fragment key={j}>
                                         <span className='select-none whitespace-nowrap'>
-                                            {page}
+                                            {`${page[0]} Page ${page[2]}`}
                                         </span>
                                         {j + 1 !==
                                             llmResponse?.analyses[
