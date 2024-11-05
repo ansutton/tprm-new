@@ -88,12 +88,11 @@ def main():
         # Create Ollama Embeddings and database vectors based on the pdf.
         vector_db = create_vector_store(pdf_files_content, pdf_file_names, evidence_doc_types)
 
-        # Loop through each question and add responses, citations, and pages to app state.
+        # Loop through each question and add responses and citations to app state.
         for i in range(len(questions)):
             response_dict = generate_model_response(vector_db, questions[i])
             app_state.analyses["analysis_%s" % i]["ai_analysis"] = response_dict["response"]
             app_state.analyses["analysis_%s" % i]["citations"] = response_dict["citations"]
-            app_state.analyses["analysis_%s" % i]["pages"] = response_dict["pages"]
 
         # Loop through app_state.analyses dict and process confidence and similarity scores.
         for key, value in app_state.analyses.items():
