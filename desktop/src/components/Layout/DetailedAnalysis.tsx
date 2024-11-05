@@ -250,7 +250,7 @@ export function DetailedAnalysis({
                                 ]?.citations?.map((citation, index) => (
                                     <Fragment key={index}>
                                         <span className='select-none whitespace-nowrap'>
-                                            {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
+                                            {`${citation[0]} Page ${citation[1]}`}
                                         </span>
                                         {/* {index + 1 !==
                                             llmResponse?.analyses[
