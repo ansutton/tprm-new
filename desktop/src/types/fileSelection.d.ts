@@ -33,14 +33,14 @@ export enum EvidenceType {
 }
 export const EvidenceColors = [
     [EvidenceType.SOC2TypeII, '#22d3ee'],
-    [EvidenceType.PenetrationTest, '#60a5fa'],
+    [EvidenceType.PenetrationTest, '#e879f9'], // #60a5fa
     [EvidenceType.VulnerabilityScan, '#a78bfa'],
     [EvidenceType.PrivacyPolicy, '#e879f9'],
     [EvidenceType.SecurityPolicyGeneral, '#fb923d'],
-    [EvidenceType.AccessControlPolicy, '#facc15'],
+    [EvidenceType.AccessControlPolicy, '#34d399'], // #facc15
     [EvidenceType.PasswordManagement, '#34d399'],
     [EvidenceType.BusinessContinuity, '#22d3ee'],
-    [EvidenceType.IncidentManagement, '#60a5fa'],
+    [EvidenceType.IncidentManagement, '#22d3ee'], // #60a5fa
     [EvidenceType.EncryptionPolicy, '#a78bfa'],
     [EvidenceType.DataRetention, '#e879f9'],
     [EvidenceType.ThirdPartyRiskManagement, '#fb923d'],
@@ -62,3 +62,4 @@ export interface PdfFile {
     filename: string | null;
 }
 export type PdfFiles = PdfFile[];
+
