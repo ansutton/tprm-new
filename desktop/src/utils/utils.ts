@@ -127,3 +127,12 @@ export function truncate(
     }
     return null;
 }
+export function fadeOverlayStyling(additionalStyling?: any) {
+    return [
+        tw`absolute inset-y-0 right-0 w-1/2`,
+        tw`bg-gradient-to-r from-transparent to-90%`,
+        tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
+        additionalStyling,
+    ];
+}
+

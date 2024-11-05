@@ -14,14 +14,20 @@ import {
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { DebouncedInput, Pages, Tooltip } from '@/components';
+import { DebouncedInput, PagesFull, PagesPreview, Tooltip } from '@/components';
 import {
     DataItem,
     DataItemField,
     LlmResponse,
     TableHeaderProps,
 } from '@/types';
-import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
+import {
+    displayScore,
+    fadeOverlayStyling,
+    handleAnswersAlign,
+    truncate,
+    tw,
+} from '@/utils';
 
 /**
  * Constants
@@ -241,7 +247,11 @@ export function DetailedAnalysis({
                     ),
                 ),
                 citationsPreview: (
-                    <Pages index={index} llmResponse={llmResponse} prefix='' />
+                    <PagesPreview
+                        index={index}
+                        llmResponse={llmResponse}
+                        prefix=''
+                    />
                 ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
@@ -289,7 +299,9 @@ export function DetailedAnalysis({
                         )}
                     </div>
                 ),
-                pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
+                pageNumbers: (
+                    <PagesFull index={index} llmResponse={llmResponse} />
+                ),
             }));
     }
     /**
@@ -450,20 +462,18 @@ export function DetailedAnalysis({
                                                 (cell.column.id ===
                                                     'tpResponsePreview' ||
                                                     cell.column.id ===
-                                                        'aiAnalysisPreview') && [
-                                                    tw`absolute inset-y-0 right-0 w-1/2`,
-                                                    tw`bg-gradient-to-r from-transparent to-90%`,
-                                                    tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
-                                                    row.getIsExpanded()
-                                                        ? [
-                                                              tw`to-zinc-200`,
-                                                              tw`dark:to-zinc-900`,
-                                                          ]
-                                                        : [
-                                                              tw`to-zinc-100 group-hover:to-zinc-200`,
-                                                              tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
-                                                          ],
-                                                ],
+                                                        'aiAnalysisPreview') &&
+                                                    fadeOverlayStyling(
+                                                        row.getIsExpanded()
+                                                            ? [
+                                                                  tw`to-zinc-200`,
+                                                                  tw`dark:to-zinc-900`,
+                                                              ]
+                                                            : [
+                                                                  tw`to-zinc-100 group-hover:to-zinc-200`,
+                                                                  tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
+                                                              ],
+                                                    ),
                                             )}
                                         />
                                     </td>
