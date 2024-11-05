@@ -31,7 +31,7 @@ export function PagesPreview({
                                 </p>
                             ),
                         )}
-                    </div>{' '}
+                    </div>
                     <div
                         className={clsx([
                             tw`absolute inset-y-0 right-0 w-1/2`,
@@ -98,4 +98,3 @@ export function PagesFull({
                                 {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
                             </div>
                         ))} */
-
