@@ -23,7 +23,8 @@ export function Pages({
                             (page, j) => (
                                 <p key={j} className='flex'>
                                     <span className='select-none whitespace-nowrap'>
-                                        {page}
+                                        {`${page[0]} (${page[3]}) Page ${page[2]}
+                                        `}
                                     </span>
                                     {j + 1 !==
                                         llmResponse?.analyses[
