@@ -306,11 +306,11 @@ export function DetailedAnalysis({
                             llmResponse?.analyses[
                                 `analysis_${index}`
                             ]?.citations?.map((citation, index) => (
-                                <div key={index} className='flex gap-4'>
+                                <div key={index} className='space-y-4'>
                                     <p className='whitespace-nowrap'>
-                                        Page {citation[1]}:{' '}
+                                        {`${citation[0]} Page ${citation[1]}: `}
                                     </p>
-                                    ...{citation[2]}...
+                                    <p>...{citation[2]}...</p>
                                 </div>
                             )),
                         )}
