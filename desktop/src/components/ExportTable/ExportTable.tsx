@@ -68,7 +68,7 @@ export function ExportTable({
                           analysis.citations
                               .map(
                                   (citation) =>
-                                      `Page ${citation[0]}: ...${handleCitationText(citation[2])}...`,
+                                      `${citation[0]} (${citation[3]}) Page ${citation[1]}: ...${handleCitationText(citation[2])}...`,
                               )
                               .join('\n\n'),
                       )
