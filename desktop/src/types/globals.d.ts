@@ -18,7 +18,7 @@ export interface Analysis {
     tp_response?: string;
     is_analysis_complete?: boolean;
     ai_analysis?: string;
-    citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
+    citations?: any[]; // Expecting an array of tuples [number, string]
     pages?: any[]; // Expecting an array of numbers
     [key: string]:
         | string

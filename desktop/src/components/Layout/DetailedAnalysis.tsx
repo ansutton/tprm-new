@@ -313,7 +313,7 @@ export function DetailedAnalysis({
                                 `analysis_${index}`
                             ]?.citations?.map((citation, index) => (
                                 <div key={index} className='flex gap-4'>
-                                    ...{citation}...
+                                    ...{citation[2]}...
                                 </div>
                             )),
                         )}
