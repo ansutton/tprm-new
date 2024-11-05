@@ -242,23 +242,24 @@ export function DetailedAnalysis({
                 ),
                 citationsPreview: (
                     <>
-                        {llmResponse?.analyses[`analysis_${index}`]?.pages ? (
+                        {llmResponse?.analyses[`analysis_${index}`]
+                            ?.citations ? (
                             <>
                                 {llmResponse?.analyses[
                                     `analysis_${index}`
-                                ]?.pages?.map((page, j) => (
-                                    <Fragment key={j}>
+                                ]?.citations?.map((citation, index) => (
+                                    <Fragment key={index}>
                                         <span className='select-none whitespace-nowrap'>
-                                            {`${page[0]} Page ${page[2]}`}
+                                            {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
                                         </span>
-                                        {j + 1 !==
+                                        {/* {index + 1 !==
                                             llmResponse?.analyses[
                                                 `analysis_${index}`
                                             ]?.pages?.length &&
                                             (llmResponse?.analyses[
                                                 `analysis_${index}`
                                             ]?.pages?.length ?? 0) > 1 &&
-                                            ', '}
+                                            ', '} */}
                                     </Fragment>
                                 ))}
                             </>
@@ -306,12 +307,12 @@ export function DetailedAnalysis({
                             llmResponse?.analyses[
                                 `analysis_${index}`
                             ]?.citations?.map((citation, index) => (
-                                <div key={index} className='space-y-4'>
-                                    <p className='whitespace-nowrap'>
-                                        {`${citation[0]} Page ${citation[1]}: `}
+                                <Fragment key={index}>
+                                    <p>
+                                        {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
                                     </p>
                                     <p>...{citation[2]}...</p>
-                                </div>
+                                </Fragment>
                             )),
                         )}
                     </div>
