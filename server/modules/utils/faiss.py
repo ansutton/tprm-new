@@ -20,7 +20,7 @@ def create_vector_store(pdf_files, pdf_file_names,evidence_doc_types,from_file_p
         is_separator_regex=False,
     )
 
-    data = get_page_contents_from_multiple_pdfs(pdf_files, pdf_file_names,from_file_path, evidence_doc_types)
+    data = get_page_contents_from_multiple_pdfs(pdf_files, pdf_file_names, evidence_doc_types, from_file_path)
 
     documents = text_splitter.split_documents(data)
 
