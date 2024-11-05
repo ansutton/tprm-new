@@ -23,7 +23,6 @@ class AnalysisData:
     ai_analysis = ""
     tp_response = ""
     citations = ""
-    pages = ""
     tp_confidence_score = 0
     ai_confidence_score = 0
     similarity_score = 0
