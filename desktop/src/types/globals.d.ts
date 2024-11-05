@@ -60,7 +60,7 @@ export type DataItem = {
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
     citationsFull: DataItemField; // array of tuples (tuple shape: [number, string])
-    pageNumbers: DataItemField; // array of numbers
+    // pageNumbers: DataItemField; // array of numbers
 };
 export type DataItemField =
     | ReactNode

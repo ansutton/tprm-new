@@ -316,7 +316,7 @@ export function DetailedAnalysis({
                         )}
                     </div>
                 ),
-                pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
+                // pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
             }));
     }
     /**
@@ -519,11 +519,11 @@ export function DetailedAnalysis({
                                         row={row}
                                         title={`Citation(s)`}
                                     />
-                                    <ExpandedRow
+                                    {/* <ExpandedRow
                                         content={row.original.pageNumbers}
                                         row={row}
                                         title={'Page(s)'}
-                                    />
+                                    /> */}
                                 </>
                             )}
                         </Fragment>

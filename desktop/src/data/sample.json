@@ -12,16 +12,19 @@
             "citations": [
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     2,
                     "target\nplatform\nfor\nall\nusers:\n●\nhttps://abcinc.com\n●\nhttps://cdn.abcinc.com\n3.\nExecutive\nSummary\nThe\ntargets\nwere\nsecure\nagainst\nmany\ncommon\nvulnerabilities\nand\npresented\na\nmature\ndefense-in-depth\nsecurity\nposture.\nThis\nis\nthe\nthird\niteration\nof\npenetration\ntesting,\nwhich\nhas\nhelped\nto\nimprove\nthat\nposture.\nABC\nInc.\ndemonstrated\na\nwillingness\nand\nculture\nto\ndevelop\nand\ndeploy\ntheir\nsolutions\nwith\na\nfocus\non\nsecurity .\nABC\nInc.\nremained\nin\ncontact\nthroughout\nthe\nengagement\nand\nprovided\nall\nadditional\ninformation\nthat\nwas\nrequested.\nThis\ncollaboration\nenabled\nthe\nconsultant\nto\ndeliver\nthe\nhighest\nquality\nassessment\npossible\nwithin\nthe\navailable\ntime.\nKey\nFindings\n●\nVulnerabilities\nin\nOutdated\nSoftware\nDetected\n(Low\nRisk):\nOne\noutdated\nJavaScript\nlibrary\nwas\nlocated\ncontaining\na\nknown\nCross\nSite\nScripting\n(XSS)\nvulnerability .\nABC\nInc.\ndid\nnot\nuse\nthe\nvulnerable\nfunctionality ,\nso\nit\nwas\nnot\nvulnerable\nto\nthat\nXSS.\n●\nAccount\nEnumeration\n(Low\nRisk):\nA\nnew\ninstance\nwas\nreported\nin\nthe"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     4,
                     "consultant\nlowered\nthe\nrisk\ncategory\nto\nlow.\nFuture\ndevelopment\nof\nthe\nsite\nmay\naccidentally\nallow\nexploitation.\n5.1.4\nRecommendation\nApply\nthe\nlatest\nsecurity\nupdates\nto\nthe\naffected\nsoftware\nas\nmade\navailable\nfrom\nthe\nvendor's\nsite.\nIntegrate\nchecks\nthat\nprevent\nfuture\ndeployment\nof\nvulnerable\ndependencies.\nInvestigate\nhow\nan\noutdated\ndependency\nhad\nnot\nbeen\ndetected\nprior\nto\nthis\npenetration\ntest.\nThere\nmay\nbe\na\ngap\nin\nprocesses\nwhich\ncould\nallow\nhigher\nrisk\ndeviations\nin\nthe\nfuture.\n5.2\nAccount\nEnumeration\n5.2.1\nBackground\nAccount\nEnumeration\nallows\nan\nattacker\nto\ndetermine\nuser\naccount\ndetails\n(such\nas\nusername\nor\nemail\naddress)\ndue\nto\ninformation\nreturned\nby\nan\napplication.\nOftentimes,\nit\nis\nthe\ndiscrepancy\nbetween\nresponses\nfrom\napplications\nsuch\nas\non\nForgotten\nPassword\npages\nthat\nallow\nattackers\nto\ndetermine\nthe\nvalidity\nof\nuser\ndetails.\nExamples\nof\nthe\ntypes\nof\naccount\nenumeration\nmethods\nare\nas\nfollows:\n●\nResponse\ndiscrepancy\n●\nURL\nredirection\n●\nForced\nbrowsing\nWhatever\nthe"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     1,
                     "Penetration\nTesting\nReport\nABC\nInc.\nTable\nof\nContents\n1.\nDocument\nRevision\nHistory\n2.\nIntroduction\n3.\nExecutive\nSummary\n4.\nRecommended\nActions\n5.\nTechnical\nFindings\n●\n5.1\nVulnerabilities\nin\nOutdated\nSoftware\nDetected\n●\n5.2\nAccount\nEnumeration\n●\n5.3\nServer\nSide\nRequest\nForgery\n(SSRF)\n6.\nAdditional\nInformation\n●\n6.1\nWHOIS\nDatabase\n●\n6.2\nDNS\nReconnaissance\n●\n6.3\nPort\nScan\nResults\n●\n6.4\nSSL/TLS\nAssessment\nAppendix\nA.\nTesting\nNotes\n●\nA1.\nSource\nCode\nAnalysis\n●\nA2.\nDependency\nChecking\n●\nA3.\nGitHub\nRepository\nSecrets\nHunting\n●\nA4.\nBug\nHunting\nin\nPem\nDecoder\n[Not\nVulnerable]\n●\nA5.\nAutomated\nApplication\nScanning\nChallenges\n1.\nDocument\nRevision\nHistory\nName\nDate\nVersion\nComment\nJohn\nDoe\n01/11/2023\n0.1\nInitial\nDocument\nJane\nSmith\n02/11/2023\n0.2\nQA\nby\nsenior\nconsultant\nJohn\nDoe\n03/11/2023\n1.0\nFinal\nDraft\n2.\nIntroduction\nABC\nInc.\nengaged\nPentest\nLimited\nto\nundertake\na\npenetration\ntesting\nproject\nto\ngain\nindependent\nassurance\nthat\ntheir\nsecurity\ncontrols\nare\nin\nline\nwith\nindustry\nbest\npractices.\nThe"
                 ]
@@ -59,16 +62,19 @@
             "citations": [
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     4,
                     "consultant\nlowered\nthe\nrisk\ncategory\nto\nlow.\nFuture\ndevelopment\nof\nthe\nsite\nmay\naccidentally\nallow\nexploitation.\n5.1.4\nRecommendation\nApply\nthe\nlatest\nsecurity\nupdates\nto\nthe\naffected\nsoftware\nas\nmade\navailable\nfrom\nthe\nvendor's\nsite.\nIntegrate\nchecks\nthat\nprevent\nfuture\ndeployment\nof\nvulnerable\ndependencies.\nInvestigate\nhow\nan\noutdated\ndependency\nhad\nnot\nbeen\ndetected\nprior\nto\nthis\npenetration\ntest.\nThere\nmay\nbe\na\ngap\nin\nprocesses\nwhich\ncould\nallow\nhigher\nrisk\ndeviations\nin\nthe\nfuture.\n5.2\nAccount\nEnumeration\n5.2.1\nBackground\nAccount\nEnumeration\nallows\nan\nattacker\nto\ndetermine\nuser\naccount\ndetails\n(such\nas\nusername\nor\nemail\naddress)\ndue\nto\ninformation\nreturned\nby\nan\napplication.\nOftentimes,\nit\nis\nthe\ndiscrepancy\nbetween\nresponses\nfrom\napplications\nsuch\nas\non\nForgotten\nPassword\npages\nthat\nallow\nattackers\nto\ndetermine\nthe\nvalidity\nof\nuser\ndetails.\nExamples\nof\nthe\ntypes\nof\naccount\nenumeration\nmethods\nare\nas\nfollows:\n●\nResponse\ndiscrepancy\n●\nURL\nredirection\n●\nForced\nbrowsing\nWhatever\nthe"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     2,
                     "target\nplatform\nfor\nall\nusers:\n●\nhttps://abcinc.com\n●\nhttps://cdn.abcinc.com\n3.\nExecutive\nSummary\nThe\ntargets\nwere\nsecure\nagainst\nmany\ncommon\nvulnerabilities\nand\npresented\na\nmature\ndefense-in-depth\nsecurity\nposture.\nThis\nis\nthe\nthird\niteration\nof\npenetration\ntesting,\nwhich\nhas\nhelped\nto\nimprove\nthat\nposture.\nABC\nInc.\ndemonstrated\na\nwillingness\nand\nculture\nto\ndevelop\nand\ndeploy\ntheir\nsolutions\nwith\na\nfocus\non\nsecurity .\nABC\nInc.\nremained\nin\ncontact\nthroughout\nthe\nengagement\nand\nprovided\nall\nadditional\ninformation\nthat\nwas\nrequested.\nThis\ncollaboration\nenabled\nthe\nconsultant\nto\ndeliver\nthe\nhighest\nquality\nassessment\npossible\nwithin\nthe\navailable\ntime.\nKey\nFindings\n●\nVulnerabilities\nin\nOutdated\nSoftware\nDetected\n(Low\nRisk):\nOne\noutdated\nJavaScript\nlibrary\nwas\nlocated\ncontaining\na\nknown\nCross\nSite\nScripting\n(XSS)\nvulnerability .\nABC\nInc.\ndid\nnot\nuse\nthe\nvulnerable\nfunctionality ,\nso\nit\nwas\nnot\nvulnerable\nto\nthat\nXSS.\n●\nAccount\nEnumeration\n(Low\nRisk):\nA\nnew\ninstance\nwas\nreported\nin\nthe"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     1,
                     "Penetration\nTesting\nReport\nABC\nInc.\nTable\nof\nContents\n1.\nDocument\nRevision\nHistory\n2.\nIntroduction\n3.\nExecutive\nSummary\n4.\nRecommended\nActions\n5.\nTechnical\nFindings\n●\n5.1\nVulnerabilities\nin\nOutdated\nSoftware\nDetected\n●\n5.2\nAccount\nEnumeration\n●\n5.3\nServer\nSide\nRequest\nForgery\n(SSRF)\n6.\nAdditional\nInformation\n●\n6.1\nWHOIS\nDatabase\n●\n6.2\nDNS\nReconnaissance\n●\n6.3\nPort\nScan\nResults\n●\n6.4\nSSL/TLS\nAssessment\nAppendix\nA.\nTesting\nNotes\n●\nA1.\nSource\nCode\nAnalysis\n●\nA2.\nDependency\nChecking\n●\nA3.\nGitHub\nRepository\nSecrets\nHunting\n●\nA4.\nBug\nHunting\nin\nPem\nDecoder\n[Not\nVulnerable]\n●\nA5.\nAutomated\nApplication\nScanning\nChallenges\n1.\nDocument\nRevision\nHistory\nName\nDate\nVersion\nComment\nJohn\nDoe\n01/11/2023\n0.1\nInitial\nDocument\nJane\nSmith\n02/11/2023\n0.2\nQA\nby\nsenior\nconsultant\nJohn\nDoe\n03/11/2023\n1.0\nFinal\nDraft\n2.\nIntroduction\nABC\nInc.\nengaged\nPentest\nLimited\nto\nundertake\na\npenetration\ntesting\nproject\nto\ngain\nindependent\nassurance\nthat\ntheir\nsecurity\ncontrols\nare\nin\nline\nwith\nindustry\nbest\npractices.\nThe"
                 ]
@@ -106,16 +112,19 @@
             "citations": [
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     4,
                     "consultant\nlowered\nthe\nrisk\ncategory\nto\nlow.\nFuture\ndevelopment\nof\nthe\nsite\nmay\naccidentally\nallow\nexploitation.\n5.1.4\nRecommendation\nApply\nthe\nlatest\nsecurity\nupdates\nto\nthe\naffected\nsoftware\nas\nmade\navailable\nfrom\nthe\nvendor's\nsite.\nIntegrate\nchecks\nthat\nprevent\nfuture\ndeployment\nof\nvulnerable\ndependencies.\nInvestigate\nhow\nan\noutdated\ndependency\nhad\nnot\nbeen\ndetected\nprior\nto\nthis\npenetration\ntest.\nThere\nmay\nbe\na\ngap\nin\nprocesses\nwhich\ncould\nallow\nhigher\nrisk\ndeviations\nin\nthe\nfuture.\n5.2\nAccount\nEnumeration\n5.2.1\nBackground\nAccount\nEnumeration\nallows\nan\nattacker\nto\ndetermine\nuser\naccount\ndetails\n(such\nas\nusername\nor\nemail\naddress)\ndue\nto\ninformation\nreturned\nby\nan\napplication.\nOftentimes,\nit\nis\nthe\ndiscrepancy\nbetween\nresponses\nfrom\napplications\nsuch\nas\non\nForgotten\nPassword\npages\nthat\nallow\nattackers\nto\ndetermine\nthe\nvalidity\nof\nuser\ndetails.\nExamples\nof\nthe\ntypes\nof\naccount\nenumeration\nmethods\nare\nas\nfollows:\n●\nResponse\ndiscrepancy\n●\nURL\nredirection\n●\nForced\nbrowsing\nWhatever\nthe"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     1,
                     "Penetration\nTesting\nReport\nABC\nInc.\nTable\nof\nContents\n1.\nDocument\nRevision\nHistory\n2.\nIntroduction\n3.\nExecutive\nSummary\n4.\nRecommended\nActions\n5.\nTechnical\nFindings\n●\n5.1\nVulnerabilities\nin\nOutdated\nSoftware\nDetected\n●\n5.2\nAccount\nEnumeration\n●\n5.3\nServer\nSide\nRequest\nForgery\n(SSRF)\n6.\nAdditional\nInformation\n●\n6.1\nWHOIS\nDatabase\n●\n6.2\nDNS\nReconnaissance\n●\n6.3\nPort\nScan\nResults\n●\n6.4\nSSL/TLS\nAssessment\nAppendix\nA.\nTesting\nNotes\n●\nA1.\nSource\nCode\nAnalysis\n●\nA2.\nDependency\nChecking\n●\nA3.\nGitHub\nRepository\nSecrets\nHunting\n●\nA4.\nBug\nHunting\nin\nPem\nDecoder\n[Not\nVulnerable]\n●\nA5.\nAutomated\nApplication\nScanning\nChallenges\n1.\nDocument\nRevision\nHistory\nName\nDate\nVersion\nComment\nJohn\nDoe\n01/11/2023\n0.1\nInitial\nDocument\nJane\nSmith\n02/11/2023\n0.2\nQA\nby\nsenior\nconsultant\nJohn\nDoe\n03/11/2023\n1.0\nFinal\nDraft\n2.\nIntroduction\nABC\nInc.\nengaged\nPentest\nLimited\nto\nundertake\na\npenetration\ntesting\nproject\nto\ngain\nindependent\nassurance\nthat\ntheir\nsecurity\ncontrols\nare\nin\nline\nwith\nindustry\nbest\npractices.\nThe"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     2,
                     "target\nplatform\nfor\nall\nusers:\n●\nhttps://abcinc.com\n●\nhttps://cdn.abcinc.com\n3.\nExecutive\nSummary\nThe\ntargets\nwere\nsecure\nagainst\nmany\ncommon\nvulnerabilities\nand\npresented\na\nmature\ndefense-in-depth\nsecurity\nposture.\nThis\nis\nthe\nthird\niteration\nof\npenetration\ntesting,\nwhich\nhas\nhelped\nto\nimprove\nthat\nposture.\nABC\nInc.\ndemonstrated\na\nwillingness\nand\nculture\nto\ndevelop\nand\ndeploy\ntheir\nsolutions\nwith\na\nfocus\non\nsecurity .\nABC\nInc.\nremained\nin\ncontact\nthroughout\nthe\nengagement\nand\nprovided\nall\nadditional\ninformation\nthat\nwas\nrequested.\nThis\ncollaboration\nenabled\nthe\nconsultant\nto\ndeliver\nthe\nhighest\nquality\nassessment\npossible\nwithin\nthe\navailable\ntime.\nKey\nFindings\n●\nVulnerabilities\nin\nOutdated\nSoftware\nDetected\n(Low\nRisk):\nOne\noutdated\nJavaScript\nlibrary\nwas\nlocated\ncontaining\na\nknown\nCross\nSite\nScripting\n(XSS)\nvulnerability .\nABC\nInc.\ndid\nnot\nuse\nthe\nvulnerable\nfunctionality ,\nso\nit\nwas\nnot\nvulnerable\nto\nthat\nXSS.\n●\nAccount\nEnumeration\n(Low\nRisk):\nA\nnew\ninstance\nwas\nreported\nin\nthe"
                 ]
@@ -153,16 +162,19 @@
             "citations": [
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     2,
                     "should\nmaintain\nsecurity\ngroups\nwhere\npossible.\n2.6\nAccess\nAdministration\n●\nOnce\nan\naccess\nrequest\nis\napproved\nby\nthe\nGatekeeper ,\na\nrecord\nof\nthe\ndecision\nwill\nbe\nmaintained\nto\nallow\nan\naudit\ntrail.\n●\nThe\nGatekeeper\nwill\nprovide\naccess\nto\nthe\nuser\nand\ninform\nthem\nvia\nan\nappropriate\nmethod,\nkeeping\nthe\nusername\nseparate\nfrom\nthe\npassword.\n●\nWhere\nsystems\nallow ,\na\ntemporary\npassword\nwill\nbe\nused,\nand\nthe\nuser\nwill\nbe\nrequired\nto\nchange\ntheir\npassword\nat\nfirst\nlogin.\n2.7\nAccess\nReview\n●\nAccess\nto\nsystems\nwill\nbe\nreviewed\nregularly\nto\nensure\nusers\nare\nstill\nauthorized\nand\nthat\ntheir\nprivilege\nlevels\nare\nstill\nappropriate.\n●\nGatekeepers\nare\nresponsible\nfor\nreviewing\ntheir\nsystems\nand\nmay\nneed\nto\nrefer\nto\ndepartment\nmanagers\nfor\nconfirmation\nof\nuser\nrequirements.\n2.8\nAccess\nRemoval\n●\nIn\ncases\nof\ndisciplinary\naction\nor\nduring\nan\nemployee's\nprobation\nperiod,\naccess\nshould\nbe\nremoved\nimmediately .\n●\nWhere\na\nnotice\nperiod\nis\nagreed,\nor\nthe\nuser\nis\nchanging\njob\nfunctions\nwithin\nthe\ncompany ,"
                 ],
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     2,
                     "2.3\nPhysical\nSecurity\n●\nEnsure\nthe\nmain\ndoor\nis\nclosed\nand\nsecure;\ndo\nnot\nleave\nit\najar.\n●\nAll\nvisitors\nand\nthird\nparties\nmust\nreport\nto\nreception\nand\nsign\nin.\n●\nChallenge\nany\nstrangers\non-site\nwho\ndo\nnot\nappear\nto\nbe\naccompanied.\n2.4\nAccess\nRequests\n●\nAccess\nrequests,\nincluding\nnew\nuser\naccounts,\nshould\nbe\nsubmitted\nto\nthe\nIT\nSupport\nCompany\nby\nemail.\n●\nThe\njob\nfunctions\ndescribed\nby\nthe\ndepartment\nmanager\nshould\nbe\nreviewed\nto\nensure\nthat\nthe\nrequested\naccess\nis\nrelevant\nand\nacceptable.\n●\nFor\nIT\nsystems,\nincluding\nActive\nDirectory ,\na\nprofile\nwith\nprivileges\nmay\nbe\ncopied\nfrom\na\ncolleague\nwith\nthe\nsame\njob\nfunctions.\n2.5\nAccess\nAuthorization\n●\nThe\nmanaging\ndirector\nhas\noverall\ngovernance\nof\naccess\ncontrol\nwithin\nthe\ncompany\nand\nmay\ngrant\nor\nrevoke\naccess\nfor\nlegitimate\nbusiness\nreasons.\n●\nDepartment\nmanagers\nare\nresponsible\nfor\ndetermining\nthe\naccess\nlevels\nrequired\nby\ntheir\nstaff\nand\nshould\nmaintain\nsecurity\ngroups\nwhere\npossible.\n2.6\nAccess\nAdministration\n●\nOnce\nan\naccess\nrequest"
                 ],
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     3,
                     "must\nbe\nchanged\nupon\nfirst\nlogin.\n2.11.3\nPassword\nProtection\n●\nPasswords\nmust\nnot\nbe\nshared\nwith\nanyone,\nincluding\nsupervisors\nand\nIT\nstaff.\n●\nPasswords\nmust\nnot\nbe\nwritten\ndown\nor\nstored\nin\nan\nunsecured\nmanner .\n●\nUsers\nmust\nimmediately\nreport\nany\nsuspected\ncompromise\nof\ntheir\npassword\nto\nIT\nSupport.\n2.12\nDecommissioning\nEquipment\n●\nWhen\ndecommissioning\nequipment,\nABC.inc\nfollows\na\nsecure\nprocess\nto\nensure\ndata\nprotection\nand\ncompliance.\nThe\nIT\nSupport\nCompany\nis\nresponsible\nfor\nsecurely\nwiping\nall\ndata\nfrom\nthe\nequipment.\nOnce\ndata\nis\nsecurely\nerased,\nthe\nequipment\nis\neither\nrepurposed\nwithin\nthe\ncompany ,\ndonated,\nor\ndisposed\nof\nfollowing\nenvironmental\nregulations\nand\ncompany\npolicies.\nDocumentation\nof\nthe\ndecommissioning\nprocess\nis\nmaintained\nfor\naudit\npurposes.\n3.0\nRelated\nPolicies\n●\nClassification\nand\nHandling\nPolicy\n4.0\nSystem\nGatekeepers\nThe\norganization\nuses\nseveral\nsystems\nto\nstore\ndata,\nadministered\nby\ndifferent\npeople.\nThe\ntable\nbelow\nshows\nthe\ngatekeepers\nof\nthose"
                 ]
@@ -200,16 +212,19 @@
             "citations": [
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     2,
                     "should\nmaintain\nsecurity\ngroups\nwhere\npossible.\n2.6\nAccess\nAdministration\n●\nOnce\nan\naccess\nrequest\nis\napproved\nby\nthe\nGatekeeper ,\na\nrecord\nof\nthe\ndecision\nwill\nbe\nmaintained\nto\nallow\nan\naudit\ntrail.\n●\nThe\nGatekeeper\nwill\nprovide\naccess\nto\nthe\nuser\nand\ninform\nthem\nvia\nan\nappropriate\nmethod,\nkeeping\nthe\nusername\nseparate\nfrom\nthe\npassword.\n●\nWhere\nsystems\nallow ,\na\ntemporary\npassword\nwill\nbe\nused,\nand\nthe\nuser\nwill\nbe\nrequired\nto\nchange\ntheir\npassword\nat\nfirst\nlogin.\n2.7\nAccess\nReview\n●\nAccess\nto\nsystems\nwill\nbe\nreviewed\nregularly\nto\nensure\nusers\nare\nstill\nauthorized\nand\nthat\ntheir\nprivilege\nlevels\nare\nstill\nappropriate.\n●\nGatekeepers\nare\nresponsible\nfor\nreviewing\ntheir\nsystems\nand\nmay\nneed\nto\nrefer\nto\ndepartment\nmanagers\nfor\nconfirmation\nof\nuser\nrequirements.\n2.8\nAccess\nRemoval\n●\nIn\ncases\nof\ndisciplinary\naction\nor\nduring\nan\nemployee's\nprobation\nperiod,\naccess\nshould\nbe\nremoved\nimmediately .\n●\nWhere\na\nnotice\nperiod\nis\nagreed,\nor\nthe\nuser\nis\nchanging\njob\nfunctions\nwithin\nthe\ncompany ,"
                 ],
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     1,
                     "Access\nControl\nPolicy\nABC\nInc.\nVersion\nControl\n●\nOwner:\nABC.inc\n●\nVersion:\n0.1\n●\nEdited\nBy:\n[Your\nName]\n●\nDate:\n[Current\nDate]\n●\nComments:\nFirst\nDraft\n●\nDistribution:\nHeld\nBy\n[Department/Individual]\n●\nFormat:\nDigital\n/\nPhysical\n●\nLocation:\n[Specify\nLocation]\n●\nStatus:\nWorking\nDraft\n●\nApproved\nBy:\n[Approver's\nName]\n●\nDate\nof\nApproval:\nAugust\n20,\n2024\n●\nPublication\nClassification:\nConfidential\n1.0\nOverview\nThis\nAccess\nControl\npolicy\ndefines\nthe\nrules,\nrights,\nand\nrestrictions\napplied\nto\nusers\nfor\nboth\nlogical\nand\nphysical\naccess\nto\nthe\norganization's\nassets.\n1.1\nPrinciples\n●\nNeed\nto\nKnow:\nAccess\nis\ngranted\nonly\nto\nthe\ninformation\nnecessary\nto\nperform\nspecific\ntasks\nor\nroles.\n●\nNeed\nto\nUse:\nAccess\nis\ngranted\nonly\nto\nthe\ninformation\nprocessing\nfacilities\n(IT\nequipment,\napplications,\nprocedures,\nrooms)\nnecessary\nto\nperform\nspecific\ntasks\nor\nroles.\n2.0\nPolicy\n2.1\nSecurity\nof\nSystems\nTo\nmaintain\nthe\nconfidentiality ,\nintegrity ,\nand\navailability\nof\ninformation\nassets,\nABC.inc\nuses\nseveral"
                 ],
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     3,
                     "must\nbe\nchanged\nupon\nfirst\nlogin.\n2.11.3\nPassword\nProtection\n●\nPasswords\nmust\nnot\nbe\nshared\nwith\nanyone,\nincluding\nsupervisors\nand\nIT\nstaff.\n●\nPasswords\nmust\nnot\nbe\nwritten\ndown\nor\nstored\nin\nan\nunsecured\nmanner .\n●\nUsers\nmust\nimmediately\nreport\nany\nsuspected\ncompromise\nof\ntheir\npassword\nto\nIT\nSupport.\n2.12\nDecommissioning\nEquipment\n●\nWhen\ndecommissioning\nequipment,\nABC.inc\nfollows\na\nsecure\nprocess\nto\nensure\ndata\nprotection\nand\ncompliance.\nThe\nIT\nSupport\nCompany\nis\nresponsible\nfor\nsecurely\nwiping\nall\ndata\nfrom\nthe\nequipment.\nOnce\ndata\nis\nsecurely\nerased,\nthe\nequipment\nis\neither\nrepurposed\nwithin\nthe\ncompany ,\ndonated,\nor\ndisposed\nof\nfollowing\nenvironmental\nregulations\nand\ncompany\npolicies.\nDocumentation\nof\nthe\ndecommissioning\nprocess\nis\nmaintained\nfor\naudit\npurposes.\n3.0\nRelated\nPolicies\n●\nClassification\nand\nHandling\nPolicy\n4.0\nSystem\nGatekeepers\nThe\norganization\nuses\nseveral\nsystems\nto\nstore\ndata,\nadministered\nby\ndifferent\npeople.\nThe\ntable\nbelow\nshows\nthe\ngatekeepers\nof\nthose"
                 ]
@@ -247,16 +262,19 @@
             "citations": [
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     3,
                     "must\nbe\nchanged\nupon\nfirst\nlogin.\n2.11.3\nPassword\nProtection\n●\nPasswords\nmust\nnot\nbe\nshared\nwith\nanyone,\nincluding\nsupervisors\nand\nIT\nstaff.\n●\nPasswords\nmust\nnot\nbe\nwritten\ndown\nor\nstored\nin\nan\nunsecured\nmanner .\n●\nUsers\nmust\nimmediately\nreport\nany\nsuspected\ncompromise\nof\ntheir\npassword\nto\nIT\nSupport.\n2.12\nDecommissioning\nEquipment\n●\nWhen\ndecommissioning\nequipment,\nABC.inc\nfollows\na\nsecure\nprocess\nto\nensure\ndata\nprotection\nand\ncompliance.\nThe\nIT\nSupport\nCompany\nis\nresponsible\nfor\nsecurely\nwiping\nall\ndata\nfrom\nthe\nequipment.\nOnce\ndata\nis\nsecurely\nerased,\nthe\nequipment\nis\neither\nrepurposed\nwithin\nthe\ncompany ,\ndonated,\nor\ndisposed\nof\nfollowing\nenvironmental\nregulations\nand\ncompany\npolicies.\nDocumentation\nof\nthe\ndecommissioning\nprocess\nis\nmaintained\nfor\naudit\npurposes.\n3.0\nRelated\nPolicies\n●\nClassification\nand\nHandling\nPolicy\n4.0\nSystem\nGatekeepers\nThe\norganization\nuses\nseveral\nsystems\nto\nstore\ndata,\nadministered\nby\ndifferent\npeople.\nThe\ntable\nbelow\nshows\nthe\ngatekeepers\nof\nthose"
                 ],
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     3,
                     "●\nThe\nuse\nof\nprivileged\naccounts\nwill\nbe\nlimited,\nand\nuniquely\nidentifiable\nusernames\nwill\nbe\nused\nto\ntrace\nall\nactivity\nback\nto\na\nsingle\nindividual.\n2.10\nLogging\n&\nMonitoring\n●\nUser\nactivity\nis\nlogged\nand\nmay\nbe\nmonitored\nfor\nerror\ndetection\nand\nother\npurposes.\n2.11\nPassword\nManagement\nTo\nensure\nthe\nsecurity\nof\nuser\naccounts\nand\nthe\noverall\nsystem,\nthe\nfollowing\npassword\nmanagement\nstandards\nmust\nbe\nadhered\nto:\n2.11.1\nPassword\nCreation\n●\nPasswords\nmust\nbe\nat\nleast\n12\ncharacters\nlong.\n●\nPasswords\nmust\ninclude\na\ncombination\nof\nuppercase\nletters,\nlowercase\nletters,\nnumbers,\nand\nspecial\ncharacters.\n●\nPasswords\nshould\nnot\ninclude\neasily\nguessable\ninformation\nsuch\nas\nuser\nnames,\nbirth\ndates,\nor\ncommon\nwords.\n2.11.2\nPassword\nChange\n●\nUsers\nare\nrequired\nto\nchange\ntheir\npasswords\nevery\n90\ndays.\n●\nUsers\nmust\nnot\nreuse\nany\nof\ntheir\nlast\nfive\npasswords.\n●\nTemporary\npasswords\nissued\nby\nthe\nsystem\nmust\nbe\nchanged\nupon\nfirst\nlogin.\n2.11.3\nPassword\nProtection\n●\nPasswords\nmust\nnot\nbe\nshared\nwith"
                 ],
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     2,
                     "should\nmaintain\nsecurity\ngroups\nwhere\npossible.\n2.6\nAccess\nAdministration\n●\nOnce\nan\naccess\nrequest\nis\napproved\nby\nthe\nGatekeeper ,\na\nrecord\nof\nthe\ndecision\nwill\nbe\nmaintained\nto\nallow\nan\naudit\ntrail.\n●\nThe\nGatekeeper\nwill\nprovide\naccess\nto\nthe\nuser\nand\ninform\nthem\nvia\nan\nappropriate\nmethod,\nkeeping\nthe\nusername\nseparate\nfrom\nthe\npassword.\n●\nWhere\nsystems\nallow ,\na\ntemporary\npassword\nwill\nbe\nused,\nand\nthe\nuser\nwill\nbe\nrequired\nto\nchange\ntheir\npassword\nat\nfirst\nlogin.\n2.7\nAccess\nReview\n●\nAccess\nto\nsystems\nwill\nbe\nreviewed\nregularly\nto\nensure\nusers\nare\nstill\nauthorized\nand\nthat\ntheir\nprivilege\nlevels\nare\nstill\nappropriate.\n●\nGatekeepers\nare\nresponsible\nfor\nreviewing\ntheir\nsystems\nand\nmay\nneed\nto\nrefer\nto\ndepartment\nmanagers\nfor\nconfirmation\nof\nuser\nrequirements.\n2.8\nAccess\nRemoval\n●\nIn\ncases\nof\ndisciplinary\naction\nor\nduring\nan\nemployee's\nprobation\nperiod,\naccess\nshould\nbe\nremoved\nimmediately .\n●\nWhere\na\nnotice\nperiod\nis\nagreed,\nor\nthe\nuser\nis\nchanging\njob\nfunctions\nwithin\nthe\ncompany ,"
                 ]
@@ -294,16 +312,19 @@
             "citations": [
                 [
                     "ABC Inc Access Control Policy Oct 2024.pdf",
+                    "Access Control Policy",
                     3,
                     "must\nbe\nchanged\nupon\nfirst\nlogin.\n2.11.3\nPassword\nProtection\n●\nPasswords\nmust\nnot\nbe\nshared\nwith\nanyone,\nincluding\nsupervisors\nand\nIT\nstaff.\n●\nPasswords\nmust\nnot\nbe\nwritten\ndown\nor\nstored\nin\nan\nunsecured\nmanner .\n●\nUsers\nmust\nimmediately\nreport\nany\nsuspected\ncompromise\nof\ntheir\npassword\nto\nIT\nSupport.\n2.12\nDecommissioning\nEquipment\n●\nWhen\ndecommissioning\nequipment,\nABC.inc\nfollows\na\nsecure\nprocess\nto\nensure\ndata\nprotection\nand\ncompliance.\nThe\nIT\nSupport\nCompany\nis\nresponsible\nfor\nsecurely\nwiping\nall\ndata\nfrom\nthe\nequipment.\nOnce\ndata\nis\nsecurely\nerased,\nthe\nequipment\nis\neither\nrepurposed\nwithin\nthe\ncompany ,\ndonated,\nor\ndisposed\nof\nfollowing\nenvironmental\nregulations\nand\ncompany\npolicies.\nDocumentation\nof\nthe\ndecommissioning\nprocess\nis\nmaintained\nfor\naudit\npurposes.\n3.0\nRelated\nPolicies\n●\nClassification\nand\nHandling\nPolicy\n4.0\nSystem\nGatekeepers\nThe\norganization\nuses\nseveral\nsystems\nto\nstore\ndata,\nadministered\nby\ndifferent\npeople.\nThe\ntable\nbelow\nshows\nthe\ngatekeepers\nof\nthose"
                 ],
                 [
                     "ABC Inc Pentest Report Oct 2024.pdf",
+                    "SOC 2 Type II Audit Report",
                     4,
                     "consultant\nlowered\nthe\nrisk\ncategory\nto\nlow.\nFuture\ndevelopment\nof\nthe\nsite\nmay\naccidentally\nallow\nexploitation.\n5.1.4\nRecommendation\nApply\nthe\nlatest\nsecurity\nupdates\nto\nthe\naffected\nsoftware\nas\nmade\navailable\nfrom\nthe\nvendor's\nsite.\nIntegrate\nchecks\nthat\nprevent\nfuture\ndeployment\nof\nvulnerable\ndependencies.\nInvestigate\nhow\nan\noutdated\ndependency\nhad\nnot\nbeen\ndetected\nprior\nto\nthis\npenetration\ntest.\nThere\nmay\nbe\na\ngap\nin\nprocesses\nwhich\ncould\nallow\nhigher\nrisk\ndeviations\nin\nthe\nfuture.\n5.2\nAccount\nEnumeration\n5.2.1\nBackground\nAccount\nEnumeration\nallows\nan\nattacker\nto\ndetermine\nuser\naccount\ndetails\n(such\nas\nusername\nor\nemail\naddress)\ndue\nto\ninformation\nreturned\nby\nan\napplication.\nOftentimes,\nit\nis\nthe\ndiscrepancy\nbetween\nresponses\nfrom\napplications\nsuch\nas\non\nForgotten\nPassword\npages\nthat\nallow\nattackers\nto\ndetermine\nthe\nvalidity\nof\nuser\ndetails.\nExamples\nof\nthe\ntypes\nof\naccount\nenumeration\nmethods\nare\nas\nfollows:\n●\nResponse\ndiscrepancy\n●\nURL\nredirection\n●\nForced\nbrowsing\nWhatever\nthe"
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "the\nincident.\n●\nData\nCollection:\nGather\nall\nrelevant\ndata\nand\nevidence\nrelated\nto\nthe\nincident.\n●\nAnalysis:\nUse\ntechniques\nsuch\nas\nthe\n\"5\nWhys\"\nor\nFishbone\nDiagram\nto\nanalyze\nthe\ndata\nand\nidentify\nthe\nroot\ncause.\n●\nCorrective\nActions:\nDevelop\nand\nimplement\ncorrective\nactions\nto\naddress\nthe\nroot\ncause.\n●\nDocumentation:\nDocument\nthe\nfindings\nand\nactions\ntaken.\n●\nReview:\nReview\nthe\nincident\nand\nthe\nresponse\nto\nensure\nthat\nthe\ncorrective\nactions\nare\neffective.\n5.\nIncident\nHandling\n5.1\nDisciplinary\nProcess\n●\nABC\nInc.\nshall\nfollow\nthe\ndisciplinary\nprocess\nensuring\nthat\nsanctions\nare\nfairly\napplied\nto\nemployees\nfollowing\nviolations\nof\nthe\ninformation\nsecurity\npolicies\nonce\na\nbreach\nis\nverified.\nThis\nincludes\nconsideration\nof\nmultiple\nfactors\nand\nmaintaining\na\nrecord\nof\nthe\nperson\ninvolved\nand\nthe\noutcome.\n5.2\nPrevention\nof\nMisuse\nof\nInformation\n●\nABC\nInc.\nshall\nprevent\nthe\nmisuse\nof\nassets\nby\nensuring\nthat\nmanagement\napproval\nfor\nthe\nuse\nof\ninformation\nassets\nis\ntaken\nand\nappropriate\naction"
                 ]
@@ -388,16 +409,19 @@
             "citations": [
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "ensuring\nthat\nmanagement\napproval\nfor\nthe\nuse\nof\ninformation\nassets\nis\ntaken\nand\nappropriate\naction\nis\ntaken\nwhen\nunauthorized\nactivity\noccurs.\n5.3\nIncident\nResponse\nTesting\n●\nABC\nInc.\nshall\ntest\nand/or\nexercise\nits\nincident\nresponse\ncapability\nregularly .\nTesting\nexercises\nshall\nbe\nplanned,\ncoordinated,\nexecuted,\nand\ndocumented\nperiodically ,\nat\nleast\nannually ,\nusing\nreviews,\nanalyses,\nand\nsimulations\nto\ndetermine\nincident\nresponse\neffectiveness.\n●\nTesting\nshall\ninclude\npersonnel\nassociated\nwith\nthe\nincident\nhandling\nteam\nto\nensure\nthat\nthey\nunderstand\ncurrent\nthreats\nand\nrisks,\nas\nwell\nas\ntheir\nresponsibilities\nin\nsupporting\nthe\nincident\nhandling\nteam."
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     1,
                     "commitment,\ncoordination\namong\norganizational\nentities,\nand\ncompliance\nrequirements\nfor\nABC\nInc.'s\nincident\nmanagement\nprogram.\nAny\nevent\nthat\nadversely\naffects\nor\nhas\nthe\npotential\nto\nadversely\naffect\nthe\nConfidentiality ,\nAvailability ,\nor\nIntegrity\nof\nABC\nInc.'s\nIS\nand\nQuality\nof\nIT\nServices\nis\nto\nbe\nconsidered\nan\nIncident.\nThis\npolicy\napplies\nto\nall\npersonnel,\nsystems,\nprocesses,\nand\ncontrols\nat\nABC\nInc.\n4.\nPolicy\n4.1\nSecurity\nIncidents\nReporting\n●\nAll\nincidents\nshall\nbe\nreported\nto\nthe\nCentral\nSupport\nDesk\n(CSD)\nover\nthe\nphone\nor\nusing\na\nself-service\ntool\nby\nchoosing\nSecurity\nIncident\nfrom\nthe\nincident\ntype\ndrop-down.\n●\nSecurity\nIncidents\nreporting\nshall\nhappen\nimmediately .\nUnder\nno\ncircumstances\nshall\nan\nemployee\ndelay\nreporting\nan\nincident.\n●\nIrrespective\nof\nthe\ntime\nof\nday\n(or\nnight),\nall\nknown\ndetails\nof\nthe\nincident\nshall\nbe\nprovided\nover\nthe\nphone.\n●\nOnce\nthe\nIncident\nis\nreported,\nthe\nCSD\nshall\ntake\nthe\nsecurity\nincident\ndetails\nas\nper\nthe\nformat\navailable\nwith\nthem\nand"
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     3,
                     "RISK\nCOMMITTEE\nmember\nmay\ndisclose\npartial\nor\nfull\ndetails\nof\nthe\nIncident\nto\nother\nemployees\nor\ncontractors\nif\nrequired\nfor\nthe\npurpose\nof\ninvestigating\nthe\nIncident\nor\nfor\ninformation\npurposes.\n●\nOnce\nthe\nIncident\ninvestigation\nhas\nbeen\ncompleted,\nthe\nIncident\ndetails\nand\nthe\ncountermeasures\nshall\nbe\npresented\nto\nthe\nRISK\nCOMMITTEE\nby\nthe\nIRM\nTeam.\n7.\nReview\nand\nUpdates\n●\nThis\npolicy\nshall\nbe\nreviewed\nannually\nand\nupdated\nas\nnecessary\nto\nensure\nits\ncontinued\nrelevance\nand\neffectiveness."
                 ]
@@ -435,16 +459,19 @@
             "citations": [
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "ensuring\nthat\nmanagement\napproval\nfor\nthe\nuse\nof\ninformation\nassets\nis\ntaken\nand\nappropriate\naction\nis\ntaken\nwhen\nunauthorized\nactivity\noccurs.\n5.3\nIncident\nResponse\nTesting\n●\nABC\nInc.\nshall\ntest\nand/or\nexercise\nits\nincident\nresponse\ncapability\nregularly .\nTesting\nexercises\nshall\nbe\nplanned,\ncoordinated,\nexecuted,\nand\ndocumented\nperiodically ,\nat\nleast\nannually ,\nusing\nreviews,\nanalyses,\nand\nsimulations\nto\ndetermine\nincident\nresponse\neffectiveness.\n●\nTesting\nshall\ninclude\npersonnel\nassociated\nwith\nthe\nincident\nhandling\nteam\nto\nensure\nthat\nthey\nunderstand\ncurrent\nthreats\nand\nrisks,\nas\nwell\nas\ntheir\nresponsibilities\nin\nsupporting\nthe\nincident\nhandling\nteam."
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "●\nIT\nServices\nIncidents\nshall\nbe\nreported\nto\nthe\nCSD\nover\nthe\nphone\nor\nby\nusing\na\nself-service\ntool\nby\nall\nuser\ndepartments.\n●\nProcedures\nshall\nbe\nadopted\nto\nmanage\nthe\nimpact\nof\nservice\nincidents,\ndefining\nthe\nrecording,\nprioritization,\nbusiness\nimpact,\nclassification,\nupdating,\nescalation,\nresolution,\nand\nformal\nclosure\nof\nall\nservice\nincidents.\n●\nUsers\nshall\nbe\nkept\ninformed\nof\nthe\nprogress\nof\ntheir\nreported\nincident\nand\nalerted\nin\nadvance\nif\ntheir\nservice\nlevels\ncannot\nbe\nmet,\nand\nan\naction\nagreed\nupon.\n●\nMajor\nincidents\n(Service\nOutages)\nshall\nbe\nclassified\nand\nmanaged\nas\nper\nthe\nProblem\nManagement\nProcess\nand\nProcedure.\n4.3\nRoot\nCause\nAnalysis\nProcedures\nfor\nRoot\nCause\nAnalysis\nABC\nInc.\nhas\nestablished\nprocedures\nto\nperform\nroot\ncause\nanalysis\nfor\nincidents\nto\nidentify\nunderlying\nissues\nand\nimplement\ncorrective\nactions.\nThe\nsteps\ninclude:\n●\nIdentification:\nClearly\nidentify\nand\ndocument\nthe\nincident.\n●\nData\nCollection:\nGather\nall\nrelevant\ndata\nand\nevidence\nrelated\nto\nthe\nincident."
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "the\nincident.\n●\nData\nCollection:\nGather\nall\nrelevant\ndata\nand\nevidence\nrelated\nto\nthe\nincident.\n●\nAnalysis:\nUse\ntechniques\nsuch\nas\nthe\n\"5\nWhys\"\nor\nFishbone\nDiagram\nto\nanalyze\nthe\ndata\nand\nidentify\nthe\nroot\ncause.\n●\nCorrective\nActions:\nDevelop\nand\nimplement\ncorrective\nactions\nto\naddress\nthe\nroot\ncause.\n●\nDocumentation:\nDocument\nthe\nfindings\nand\nactions\ntaken.\n●\nReview:\nReview\nthe\nincident\nand\nthe\nresponse\nto\nensure\nthat\nthe\ncorrective\nactions\nare\neffective.\n5.\nIncident\nHandling\n5.1\nDisciplinary\nProcess\n●\nABC\nInc.\nshall\nfollow\nthe\ndisciplinary\nprocess\nensuring\nthat\nsanctions\nare\nfairly\napplied\nto\nemployees\nfollowing\nviolations\nof\nthe\ninformation\nsecurity\npolicies\nonce\na\nbreach\nis\nverified.\nThis\nincludes\nconsideration\nof\nmultiple\nfactors\nand\nmaintaining\na\nrecord\nof\nthe\nperson\ninvolved\nand\nthe\noutcome.\n5.2\nPrevention\nof\nMisuse\nof\nInformation\n●\nABC\nInc.\nshall\nprevent\nthe\nmisuse\nof\nassets\nby\nensuring\nthat\nmanagement\napproval\nfor\nthe\nuse\nof\ninformation\nassets\nis\ntaken\nand\nappropriate\naction"
                 ]
@@ -482,16 +509,19 @@
             "citations": [
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "●\nIT\nServices\nIncidents\nshall\nbe\nreported\nto\nthe\nCSD\nover\nthe\nphone\nor\nby\nusing\na\nself-service\ntool\nby\nall\nuser\ndepartments.\n●\nProcedures\nshall\nbe\nadopted\nto\nmanage\nthe\nimpact\nof\nservice\nincidents,\ndefining\nthe\nrecording,\nprioritization,\nbusiness\nimpact,\nclassification,\nupdating,\nescalation,\nresolution,\nand\nformal\nclosure\nof\nall\nservice\nincidents.\n●\nUsers\nshall\nbe\nkept\ninformed\nof\nthe\nprogress\nof\ntheir\nreported\nincident\nand\nalerted\nin\nadvance\nif\ntheir\nservice\nlevels\ncannot\nbe\nmet,\nand\nan\naction\nagreed\nupon.\n●\nMajor\nincidents\n(Service\nOutages)\nshall\nbe\nclassified\nand\nmanaged\nas\nper\nthe\nProblem\nManagement\nProcess\nand\nProcedure.\n4.3\nRoot\nCause\nAnalysis\nProcedures\nfor\nRoot\nCause\nAnalysis\nABC\nInc.\nhas\nestablished\nprocedures\nto\nperform\nroot\ncause\nanalysis\nfor\nincidents\nto\nidentify\nunderlying\nissues\nand\nimplement\ncorrective\nactions.\nThe\nsteps\ninclude:\n●\nIdentification:\nClearly\nidentify\nand\ndocument\nthe\nincident.\n●\nData\nCollection:\nGather\nall\nrelevant\ndata\nand\nevidence\nrelated\nto\nthe\nincident."
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     2,
                     "the\nincident.\n●\nData\nCollection:\nGather\nall\nrelevant\ndata\nand\nevidence\nrelated\nto\nthe\nincident.\n●\nAnalysis:\nUse\ntechniques\nsuch\nas\nthe\n\"5\nWhys\"\nor\nFishbone\nDiagram\nto\nanalyze\nthe\ndata\nand\nidentify\nthe\nroot\ncause.\n●\nCorrective\nActions:\nDevelop\nand\nimplement\ncorrective\nactions\nto\naddress\nthe\nroot\ncause.\n●\nDocumentation:\nDocument\nthe\nfindings\nand\nactions\ntaken.\n●\nReview:\nReview\nthe\nincident\nand\nthe\nresponse\nto\nensure\nthat\nthe\ncorrective\nactions\nare\neffective.\n5.\nIncident\nHandling\n5.1\nDisciplinary\nProcess\n●\nABC\nInc.\nshall\nfollow\nthe\ndisciplinary\nprocess\nensuring\nthat\nsanctions\nare\nfairly\napplied\nto\nemployees\nfollowing\nviolations\nof\nthe\ninformation\nsecurity\npolicies\nonce\na\nbreach\nis\nverified.\nThis\nincludes\nconsideration\nof\nmultiple\nfactors\nand\nmaintaining\na\nrecord\nof\nthe\nperson\ninvolved\nand\nthe\noutcome.\n5.2\nPrevention\nof\nMisuse\nof\nInformation\n●\nABC\nInc.\nshall\nprevent\nthe\nmisuse\nof\nassets\nby\nensuring\nthat\nmanagement\napproval\nfor\nthe\nuse\nof\ninformation\nassets\nis\ntaken\nand\nappropriate\naction"
                 ],
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     3,
                     "5.4\nLearning\nfrom\nIncidents\n●\nThe\ninformation\ngained\nfrom\nthe\nevaluation\nof\ninformation\nsecurity\nincidents\nshall\nbe\nused\nto\nidentify\nrecurring\nor\nhigh-impact\nincidents\nand\nupdate\nthe\nincident\nresponse\nand\nrecovery\nstrategy .\n●\nABC\nInc.\nshall\nimplement\nan\nincident\nhandling\ncapability\nfor\nsecurity\nincidents\nthat\naddresses\nreferences\nto\na\nvulnerability\nmanagement\nprogram\nto\nmanage\nthe\nincidents.\n●\nABC\nInc.\nshall\ncoordinate\nincident\nhandling\nactivities\nwith\ncontingency\nplanning\nactivities.\n6.\nConfidentiality\nand\nCommunication\n●\nStrict\nconfidentiality\nis\nof\nutmost\nimportance\nwhile\nreporting\nan\nIncident.\nAll\nIncidents\nautomatically\nfall\nunder\nthe\ncategory\nof\nABC\nInc.\nConfidential.\n●\nThe\nemployee\nand\nthe\nLine\nManager\nshall\nnot\ndiscuss\nthe\nIncident\nwith\nanyone\nelse\nother\nthan\nthe\nIRM\nTeam\nor\nthe\nRISK\nCOMMITTEE\nmember\nuntil\nthe\nIncident\nhas\nbeen\ndeclared\nABC\nInc.\nPublic.\n●\nThe\nIRM\nTeam\nand\nthe\nRISK\nCOMMITTEE\nmember\nmay\ndisclose\npartial\nor\nfull\ndetails\nof\nthe\nIncident\nto\nother\nemployees\nor"
                 ]
@@ -499,6 +529,7 @@
             "pages": [
                 [
                     "ABC Inc Incident Mgmt Policy Oct 2024.pdf",
+                    "Incident Management Policy",
                     " ",
                     2,
                     "Incident Management Policy"
