@@ -241,11 +241,7 @@ export function DetailedAnalysis({
                     ),
                 ),
                 citationsPreview: (
-                    <Pages
-                        index={index}
-                        llmResponse={llmResponse}
-                        prefix='Page(s):'
-                    />
+                    <Pages index={index} llmResponse={llmResponse} prefix='' />
                 ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
@@ -287,10 +283,7 @@ export function DetailedAnalysis({
                                 `analysis_${index}`
                             ]?.citations?.map((citation, index) => (
                                 <div key={index} className='flex gap-4'>
-                                    <span className='whitespace-nowrap'>
-                                        Page {citation[0]}:
-                                    </span>
-                                    <span>...{citation[1]}...</span>
+                                    ...{citation}...
                                 </div>
                             )),
                         )}
@@ -589,3 +582,4 @@ function Filter({
         />
     );
 }
+

@@ -15,12 +15,14 @@ export function Pages({
     return (
         <>
             {llmResponse?.analyses[`analysis_${index}`]?.pages ? (
-                <div className='flex gap-2'>
+                <div className='flex w-10 gap-2'>
                     {prefix}
                     {llmResponse?.analyses[`analysis_${index}`]?.pages?.map(
                         (pageNumber, j) => (
                             <p key={j} className='flex'>
-                                <span>{pageNumber}</span>
+                                <span className='select-none whitespace-nowrap'>
+                                    {pageNumber}
+                                </span>
                                 {j + 1 !==
                                     llmResponse?.analyses[`analysis_${index}`]
                                         ?.pages?.length &&
@@ -43,3 +45,4 @@ export function Pages({
                                 {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
                             </div>
                         ))} */
+
