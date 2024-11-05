@@ -14,7 +14,7 @@ import {
 } from '@tanstack/react-table';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
-import { DebouncedInput, PagesFull, PagesPreview, Tooltip } from '@/components';
+import { DebouncedInput, Pages, Tooltip } from '@/components';
 import {
     DataItem,
     DataItemField,
@@ -247,11 +247,31 @@ export function DetailedAnalysis({
                     ),
                 ),
                 citationsPreview: (
-                    <PagesPreview
-                        index={index}
-                        llmResponse={llmResponse}
-                        prefix=''
-                    />
+                    <>
+                        {llmResponse?.analyses[`analysis_${index}`]?.pages ? (
+                            <>
+                                {llmResponse?.analyses[
+                                    `analysis_${index}`
+                                ]?.pages?.map((page, j) => (
+                                    <Fragment key={j}>
+                                        <span className='select-none whitespace-nowrap'>
+                                            {page}
+                                        </span>
+                                        {j + 1 !==
+                                            llmResponse?.analyses[
+                                                `analysis_${index}`
+                                            ]?.pages?.length &&
+                                            (llmResponse?.analyses[
+                                                `analysis_${index}`
+                                            ]?.pages?.length ?? 0) > 1 &&
+                                            ', '}
+                                    </Fragment>
+                                ))}
+                            </>
+                        ) : (
+                            <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                        )}
+                    </>
                 ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
@@ -299,9 +319,7 @@ export function DetailedAnalysis({
                         )}
                     </div>
                 ),
-                pageNumbers: (
-                    <PagesFull index={index} llmResponse={llmResponse} />
-                ),
+                pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
             }));
     }
     /**
@@ -435,7 +453,9 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiAnalysisPreview') && [
+                                                    'aiAnalysisPreview' ||
+                                                cell.column.id ===
+                                                    'citationsPreview') && [
                                                 tw`relative select-none overflow-hidden whitespace-nowrap`,
                                             ],
                                         )}
@@ -445,7 +465,9 @@ export function DetailedAnalysis({
                                                 (cell.column.id ===
                                                     'tpResponsePreview' ||
                                                     cell.column.id ===
-                                                        'aiAnalysisPreview') && [
+                                                        'aiAnalysisPreview' ||
+                                                    cell.column.id ===
+                                                        'citationsPreview') && [
                                                     tw`absolute inset-0 flex w-full items-center p-3`,
                                                 ],
                                             )}
@@ -462,7 +484,9 @@ export function DetailedAnalysis({
                                                 (cell.column.id ===
                                                     'tpResponsePreview' ||
                                                     cell.column.id ===
-                                                        'aiAnalysisPreview') &&
+                                                        'aiAnalysisPreview' ||
+                                                    cell.column.id ===
+                                                        'citationsPreview') &&
                                                     fadeOverlayStyling(
                                                         row.getIsExpanded()
                                                             ? [
