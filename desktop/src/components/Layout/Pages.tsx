@@ -1,10 +1,8 @@
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { LlmResponse } from '@/types';
-import { fadeOverlayStyling, tw } from '@/utils';
 
 interface PagesProps {
-    fadeOverlayStyling?: () => any[];
     index: number;
     llmResponse: LlmResponse;
     prefix?: string;

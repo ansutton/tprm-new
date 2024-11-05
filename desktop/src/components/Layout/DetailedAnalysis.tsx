@@ -21,13 +21,7 @@ import {
     LlmResponse,
     TableHeaderProps,
 } from '@/types';
-import {
-    displayScore,
-    fadeOverlayStyling,
-    handleAnswersAlign,
-    truncate,
-    tw,
-} from '@/utils';
+import { displayScore, handleAnswersAlign, truncate, tw } from '@/utils';
 
 /**
  * Constants
@@ -486,18 +480,20 @@ export function DetailedAnalysis({
                                                     cell.column.id ===
                                                         'aiAnalysisPreview' ||
                                                     cell.column.id ===
-                                                        'citationsPreview') &&
-                                                    fadeOverlayStyling(
-                                                        row.getIsExpanded()
-                                                            ? [
-                                                                  tw`to-zinc-200`,
-                                                                  tw`dark:to-zinc-900`,
-                                                              ]
-                                                            : [
-                                                                  tw`to-zinc-100 group-hover:to-zinc-200`,
-                                                                  tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
-                                                              ],
-                                                    ),
+                                                        'citationsPreview') && [
+                                                    tw`absolute inset-y-0 right-0 w-1/2`,
+                                                    tw`bg-gradient-to-r from-transparent to-90%`,
+                                                    tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
+                                                    row.getIsExpanded()
+                                                        ? [
+                                                              tw`to-zinc-200`,
+                                                              tw`dark:to-zinc-900`,
+                                                          ]
+                                                        : [
+                                                              tw`to-zinc-100 group-hover:to-zinc-200`,
+                                                              tw`dark:to-zinc-950 dark:group-hover:to-zinc-900`,
+                                                          ],
+                                                ],
                                             )}
                                         />
                                     </td>
