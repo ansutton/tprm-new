@@ -49,6 +49,8 @@ import {
 } from '@/utils';
 
 interface FileSelectionProps {
+    evidenceFiles: EvidenceFiles;
+    setEvidenceFiles: Dispatch<SetStateAction<EvidenceFiles>>;
     setIsSidebarExpanded: Dispatch<SetStateAction<boolean>>;
     setIsSidebarFullyExpanded: Dispatch<SetStateAction<boolean>>;
     setLlmResponse: Dispatch<any>;
@@ -59,6 +61,8 @@ interface FileSelectionProps {
 }
 
 export function FileSelection({
+    evidenceFiles,
+    setEvidenceFiles,
     setIsSidebarExpanded,
     setIsSidebarFullyExpanded,
     setLlmResponse,
@@ -71,7 +75,6 @@ export function FileSelection({
      * State Hooks
      */
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
-    const [evidenceFiles, setEvidenceFiles] = useState<EvidenceFiles>(null);
     const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     /**
@@ -128,13 +131,6 @@ export function FileSelection({
     /**
      * Helper Functions - Submission
      */
-    function handleResetStates(): void {
-        setIsSidebarExpanded(true);
-        setIsSidebarFullyExpanded(true);
-        setQuestionsFile(null);
-        setEvidenceFiles(null);
-        setTpResponsesFile(null);
-    }
     async function handleSubmit() {
         setScreen('detailedAnalysis');
 
@@ -161,12 +157,14 @@ export function FileSelection({
                         const pdfFile: PdfFile = {
                             pdfFileBuffer: null,
                             evidenceType: undefined,
+                            filename: null,
                         };
 
                         if (evidenceDoc?.file) {
                             pdfFile.pdfFileBuffer = await readFileAsDataUrl(
                                 evidenceDoc.file,
                             );
+                            pdfFile.filename = evidenceDoc.file.name;
                         }
 
                         if (evidenceDoc?.evidenceType) {
@@ -191,9 +189,6 @@ export function FileSelection({
                 handlePoll(setLlmResponse);
                 break;
         }
-
-        // Clean up
-        handleResetStates();
     }
 
     return (
@@ -346,7 +341,7 @@ function SectionEvidence({
     ) {
         if (confirm(confirmDeletionMessage)) {
             setFileInputState((prevState) =>
-                Array.isArray(prevState)
+                Array.isArray(prevState) && prevState.length > 0
                     ? prevState?.filter(
                           (fileObj) => fileObj?.file.name !== fileName,
                       )
@@ -377,7 +372,7 @@ function SectionEvidence({
                     buttonText={buttonText}
                 />
 
-                {fileInputState && (
+                {fileInputState && fileInputState?.length > 0 && (
                     <div className='flex w-full flex-col space-y-3'>
                         <div className='flex w-full font-bold'>
                             <span className='w-1/2'>File Name</span>
@@ -503,13 +498,14 @@ function EvidenceSelect({
             </div>
 
             <ComboboxOptions
-                anchor='bottom'
+                anchor={{ to: 'bottom', padding: '1rem' }}
                 transition
                 className={clsx(
                     'mt-1.5 w-[var(--input-width)] rounded-lg border p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
                     theme === 'light' && 'border-zinc-300/70 bg-zinc-100',
                     theme === 'dark' && 'border-zinc-700 bg-zinc-900',
                     'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0',
+                    'z-20',
                 )}
             >
                 {filteredTypes.map((type) => (

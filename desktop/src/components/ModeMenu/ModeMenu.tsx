@@ -69,11 +69,11 @@ export function ModeMenu({
                 <MenuItems
                     anchor='bottom'
                     className={clsx(
-                        'mt-6 flex w-36 flex-col rounded-lg py-1 text-sm font-bold shadow-lg',
+                        'mt-6 flex w-36 flex-col rounded-lg border py-1 text-sm font-bold shadow-lg',
                         theme === 'light' &&
-                            'bg-zinc-100 text-zinc-700 ring-1 ring-zinc-900/10',
+                            'border-zinc-900/10 bg-zinc-100 text-zinc-700',
                         theme === 'dark' &&
-                            'bg-zinc-800 stroke-zinc-300 text-zinc-300 ring-0',
+                            'border-zinc-600/80 bg-zinc-800 stroke-zinc-300 text-zinc-300',
                     )}
                     transition
                 >

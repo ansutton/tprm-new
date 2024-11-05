@@ -241,11 +241,32 @@ export function DetailedAnalysis({
                     ),
                 ),
                 citationsPreview: (
-                    <Pages
-                        index={index}
-                        llmResponse={llmResponse}
-                        prefix='Page(s):'
-                    />
+                    <>
+                        {llmResponse?.analyses[`analysis_${index}`]
+                            ?.citations ? (
+                            <>
+                                {llmResponse?.analyses[
+                                    `analysis_${index}`
+                                ]?.citations?.map((citation, index) => (
+                                    <Fragment key={index}>
+                                        <span className='select-none whitespace-nowrap'>
+                                            {`${citation[0]} Page ${citation[1]}`}
+                                        </span>
+                                        {/* {index + 1 !==
+                                            llmResponse?.analyses[
+                                                `analysis_${index}`
+                                            ]?.pages?.length &&
+                                            (llmResponse?.analyses[
+                                                `analysis_${index}`
+                                            ]?.pages?.length ?? 0) > 1 &&
+                                            ', '} */}
+                                    </Fragment>
+                                ))}
+                            </>
+                        ) : (
+                            <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
+                        )}
+                    </>
                 ),
                 answersAlign: handleSpinner(
                     handleAnswersAlign(
@@ -286,17 +307,17 @@ export function DetailedAnalysis({
                             llmResponse?.analyses[
                                 `analysis_${index}`
                             ]?.citations?.map((citation, index) => (
-                                <div key={index} className='flex gap-4'>
-                                    <span className='whitespace-nowrap'>
-                                        Page {citation[0]}:
-                                    </span>
-                                    <span>...{citation[1]}...</span>
-                                </div>
+                                <Fragment key={index}>
+                                    <p>
+                                        {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
+                                    </p>
+                                    <p>"...{citation[2]}..."</p>
+                                </Fragment>
                             )),
                         )}
                     </div>
                 ),
-                pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
+                // pageNumbers: <Pages index={index} llmResponse={llmResponse} />,
             }));
     }
     /**
@@ -430,7 +451,9 @@ export function DetailedAnalysis({
                                             (cell.column.id ===
                                                 'tpResponsePreview' ||
                                                 cell.column.id ===
-                                                    'aiAnalysisPreview') && [
+                                                    'aiAnalysisPreview' ||
+                                                cell.column.id ===
+                                                    'citationsPreview') && [
                                                 tw`relative select-none overflow-hidden whitespace-nowrap`,
                                             ],
                                         )}
@@ -440,7 +463,9 @@ export function DetailedAnalysis({
                                                 (cell.column.id ===
                                                     'tpResponsePreview' ||
                                                     cell.column.id ===
-                                                        'aiAnalysisPreview') && [
+                                                        'aiAnalysisPreview' ||
+                                                    cell.column.id ===
+                                                        'citationsPreview') && [
                                                     tw`absolute inset-0 flex w-full items-center p-3`,
                                                 ],
                                             )}
@@ -457,7 +482,9 @@ export function DetailedAnalysis({
                                                 (cell.column.id ===
                                                     'tpResponsePreview' ||
                                                     cell.column.id ===
-                                                        'aiAnalysisPreview') && [
+                                                        'aiAnalysisPreview' ||
+                                                    cell.column.id ===
+                                                        'citationsPreview') && [
                                                     tw`absolute inset-y-0 right-0 w-1/2`,
                                                     tw`bg-gradient-to-r from-transparent to-90%`,
                                                     tw`group-hover:transition-all group-hover:duration-200 group-hover:ease-out`,
@@ -493,11 +520,11 @@ export function DetailedAnalysis({
                                         row={row}
                                         title={`Citation(s)`}
                                     />
-                                    <ExpandedRow
+                                    {/* <ExpandedRow
                                         content={row.original.pageNumbers}
                                         row={row}
                                         title={'Page(s)'}
-                                    />
+                                    /> */}
                                 </>
                             )}
                         </Fragment>
@@ -589,3 +616,4 @@ function Filter({
         />
     );
 }
+

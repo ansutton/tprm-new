@@ -26,6 +26,18 @@ export function ExportTable({
         return stringValue;
     }
 
+    function handleCitationText(value: string | number | boolean): string {
+        const stringValue = String(value); // Ensure all values are treated as strings
+        if (
+            stringValue.includes(',') ||
+            stringValue.includes('\n') ||
+            stringValue.includes('"')
+        ) {
+            return `"${stringValue.replace(/"/g, '""').replace(/\n/g, ' ')}"`; // Escape double quotes and wrap in quotes if needed
+        }
+        return stringValue;
+    }
+
     function convertToCSV(llmResponse: LlmResponse) {
         const csvRows: string[] = [`${tableFootnoteText}\n`];
 
@@ -56,7 +68,7 @@ export function ExportTable({
                           analysis.citations
                               .map(
                                   (citation) =>
-                                      `Page ${citation[0]}: ...${citation[1]}...`,
+                                      `${citation[0]} (${citation[3]}) Page ${citation[1]}: ...${handleCitationText(citation[2])}...`,
                               )
                               .join('\n\n'),
                       )
@@ -125,3 +137,4 @@ export function ExportTable({
         </button>
     );
 }
+

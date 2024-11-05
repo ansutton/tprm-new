@@ -18,8 +18,8 @@ export interface Analysis {
     tp_response?: string;
     is_analysis_complete?: boolean;
     ai_analysis?: string;
-    citations?: Array<[number, string]>; // Expecting an array of tuples [number, string]
-    pages?: number[]; // Expecting an array of numbers
+    citations?: any[]; // Expecting an array of tuples [number, string]
+    pages?: any[]; // Expecting an array of numbers
     [key: string]:
         | string
         | number
@@ -60,7 +60,7 @@ export type DataItem = {
     tpResponseFull: DataItemField;
     aiAnalysisFull: DataItemField;
     citationsFull: DataItemField; // array of tuples (tuple shape: [number, string])
-    pageNumbers: DataItemField; // array of numbers
+    // pageNumbers: DataItemField; // array of numbers
 };
 export type DataItemField =
     | ReactNode
@@ -76,3 +76,4 @@ export type Screen =
     | 'loading'
     | 'detailedAnalysis'
     | 'overview';
+

@@ -25,14 +25,14 @@ export function ThirdPartyInfo({
                     Third Party Information
                 </Heading>
                 <p>
-                    <b>Name</b>: Google LLC
+                    <b>Name</b>: ABC Inc.
                 </p>
                 <p>
-                    <b>Engagement Scope</b>: The third party is providing their
-                    Google Cloud Platform (GCP) which we use to host external
-                    (consumer-facing) and internal cloud-based applications.
+                    <b>Engagement Scope</b>
+                    {`: ABC is a large Software as a Service (SaaS) company based in California, US, specializing in data protection and management. ABC provides a "Fast Backup" solution for Parent Company's data.`}
                 </p>
             </div>
         </Card>
     );
 }
+

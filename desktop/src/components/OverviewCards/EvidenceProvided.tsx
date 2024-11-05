@@ -2,33 +2,51 @@ import clsx from 'clsx';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { Card, Heading } from '@/components';
 import { tw } from '@/utils';
+import { EvidenceFile, EvidenceFiles, EvidenceColors } from '@/types';
 
+type EvidenceData = {
+    title: string;
+    color: string;
+    count: number;
+};
 interface EvidenceProvidedProps {
+    evidenceFiles: EvidenceFiles;
     isOverviewWide: boolean;
 }
 
 export function EvidenceProvided({
+    evidenceFiles,
     isOverviewWide,
 }: EvidenceProvidedProps): JSX.Element {
-    const data = [
-        {
-            title: 'SOC 2 Type 2 Reports',
-            pathColor: 'hsl(188, 86%, 53%)', // cyan-400
-            count: 1,
-        },
-        {
-            title: 'Policies',
-            pathColor: 'hsl(43, 96%, 56%)', // amber-400
-            count: 0,
-        },
-        {
-            title: 'Others',
-            pathColor: 'hsl(351, 95%, 71%)', // rose-400
-            count: 0,
-        },
-    ];
+    const totalCount = evidenceFiles!.length;
 
-    const totalCount = data.reduce((acc, item) => acc + item.count, 0);
+    function getColor(evidenceFile: EvidenceFile): string {
+        for (let i = 0; i < EvidenceColors.length; i++) {
+            if (EvidenceColors[i][0] === evidenceFile?.evidenceType) {
+                return EvidenceColors[i][1];
+            }
+        }
+        return '';
+    }
+
+    const uniqueEvidence = evidenceFiles?.reduce(
+        (acc, evidence: EvidenceFile) => {
+            const found = acc.find(
+                (item) => item.title === evidence!.evidenceType,
+            );
+            if (found) {
+                found.count++;
+            } else {
+                acc.push({
+                    title: evidence!.evidenceType,
+                    color: getColor(evidence),
+                    count: 1,
+                });
+            }
+            return acc;
+        },
+        [] as EvidenceData[],
+    );
 
     return (
         <Card>
@@ -41,11 +59,11 @@ export function EvidenceProvided({
             </Heading>
             <div
                 className={clsx(
-                    tw`flex justify-around gap-4`,
+                    tw`flex flex-wrap justify-around gap-4`,
                     // isOverviewWide ? tw`` : tw`flex-col`,
                 )}
             >
-                {data.map(({ title, pathColor, count }, index) => (
+                {uniqueEvidence?.map(({ title, color, count }, index) => (
                     <div key={index}>
                         <p className='mb-3 text-center font-bold opacity-80'>
                             {title}
@@ -57,7 +75,9 @@ export function EvidenceProvided({
                                 minValue={0}
                                 maxValue={totalCount}
                                 text={`${count.toString()}`}
-                                styles={buildStyles({ pathColor: pathColor })}
+                                styles={buildStyles({
+                                    pathColor: color,
+                                })}
                             />
                         </div>
                     </div>

@@ -35,7 +35,7 @@ export function Tooltip({
                     anchor={{ to: 'top', gap: 22 }}
                     className={clsx(
                         'z-30',
-                        'rounded-xl text-xs transition duration-300 ease-in-out data-[closed]:translate-y-1 data-[closed]:opacity-0',
+                        'rounded-xl text-xs transition delay-200 duration-300 ease-in-out data-[closed]:translate-y-1 data-[closed]:opacity-0',
                         theme === 'light' && 'border-indigo-400 bg-zinc-100',
                         theme === 'dark' &&
                             'border-indigo-500 bg-zinc-900 text-zinc-100',
@@ -155,3 +155,4 @@ export function TooltipEvidenceDeletion({
         </Popover>
     );
 }
+
