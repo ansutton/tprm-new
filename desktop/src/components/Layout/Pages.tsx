@@ -1,5 +1,4 @@
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
 import { LlmResponse } from '@/types';
 
 interface PagesProps {
@@ -51,4 +50,3 @@ export function Pages({
                                 {(j + 1) !== [4, 2].length && (([4, 2]?.length ?? 0) > 1) && ', '}
                             </div>
                         ))} */
-
