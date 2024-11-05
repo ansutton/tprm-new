@@ -157,12 +157,14 @@ export function FileSelection({
                         const pdfFile: PdfFile = {
                             pdfFileBuffer: null,
                             evidenceType: undefined,
+                            filename: null,
                         };
 
                         if (evidenceDoc?.file) {
                             pdfFile.pdfFileBuffer = await readFileAsDataUrl(
                                 evidenceDoc.file,
                             );
+                            pdfFile.filename = evidenceDoc.file.name;
                         }
 
                         if (evidenceDoc?.evidenceType) {

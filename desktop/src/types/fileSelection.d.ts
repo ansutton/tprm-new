@@ -59,5 +59,6 @@ export type EvidenceFiles = EvidenceFile[] | null;
 export interface PdfFile {
     pdfFileBuffer: string | null;
     evidenceType: EvidenceType | undefined;
+    filename: string | null;
 }
 export type PdfFiles = PdfFile[];
