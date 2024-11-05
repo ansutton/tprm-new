@@ -311,7 +311,7 @@ export function DetailedAnalysis({
                                     <p>
                                         {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
                                     </p>
-                                    <p>...{citation[2]}...</p>
+                                    <p>"...{citation[2]}..."</p>
                                 </Fragment>
                             )),
                         )}
