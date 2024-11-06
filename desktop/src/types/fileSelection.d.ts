@@ -33,11 +33,11 @@ export enum EvidenceType {
 }
 export const EvidenceColors = [
     [EvidenceType.SOC2TypeII, '#22d3ee'],
-    [EvidenceType.PenetrationTest, '#e879f9'], // #60a5fa
+    [EvidenceType.PenetrationTest, '#34d399'], // #60a5fa
     [EvidenceType.VulnerabilityScan, '#a78bfa'],
     [EvidenceType.PrivacyPolicy, '#e879f9'],
     [EvidenceType.SecurityPolicyGeneral, '#fb923d'],
-    [EvidenceType.AccessControlPolicy, '#34d399'], // #facc15
+    [EvidenceType.AccessControlPolicy, '#22d3ee'], // #facc15
     [EvidenceType.PasswordManagement, '#34d399'],
     [EvidenceType.BusinessContinuity, '#22d3ee'],
     [EvidenceType.IncidentManagement, '#22d3ee'], // #60a5fa
