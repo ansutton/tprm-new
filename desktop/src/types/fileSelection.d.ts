@@ -31,6 +31,26 @@ export enum EvidenceType {
     Other = 'Other',
     Unspecified = 'Unspecified',
 }
+export const EvidenceColors = [
+    [EvidenceType.SOC2TypeII, '#22d3ee'],
+    [EvidenceType.PenetrationTest, '#34d399'], // #60a5fa
+    [EvidenceType.VulnerabilityScan, '#a78bfa'],
+    [EvidenceType.PrivacyPolicy, '#e879f9'],
+    [EvidenceType.SecurityPolicyGeneral, '#fb923d'],
+    [EvidenceType.AccessControlPolicy, '#22d3ee'], // #facc15
+    [EvidenceType.PasswordManagement, '#34d399'],
+    [EvidenceType.BusinessContinuity, '#22d3ee'],
+    [EvidenceType.IncidentManagement, '#22d3ee'], // #60a5fa
+    [EvidenceType.EncryptionPolicy, '#a78bfa'],
+    [EvidenceType.DataRetention, '#e879f9'],
+    [EvidenceType.ThirdPartyRiskManagement, '#fb923d'],
+    [EvidenceType.VulnerabilityManagement, '#facc15'],
+    [EvidenceType.ISO27001Certificate, '#34d399'],
+    [EvidenceType.ISO27001StatementOfApplicability, '#22d3ee'],
+    [EvidenceType.SDLCDocumentation, '#60a5fa'],
+    [EvidenceType.Other, '#a78bfa'],
+    [EvidenceType.Unspecified, '#e879f9'],
+];
 export type EvidenceFile = {
     file: File;
     evidenceType: EvidenceType;
@@ -39,5 +59,7 @@ export type EvidenceFiles = EvidenceFile[] | null;
 export interface PdfFile {
     pdfFileBuffer: string | null;
     evidenceType: EvidenceType | undefined;
-};
+    filename: string | null;
+}
 export type PdfFiles = PdfFile[];
+

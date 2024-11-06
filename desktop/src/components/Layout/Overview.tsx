@@ -11,9 +11,10 @@ import {
     Summary,
     ThirdPartyInfo,
 } from '@/components';
-import { LlmResponse } from '@/types';
+import { EvidenceFiles, LlmResponse } from '@/types';
 import { tw } from '@/utils';
 interface OverviewProps {
+    evidenceFiles: EvidenceFiles;
     tpResponsesData: any[][];
     isSidebarExpanded: boolean;
     llmResponse: LlmResponse;
@@ -21,6 +22,7 @@ interface OverviewProps {
 }
 
 export function Overview({
+    evidenceFiles,
     tpResponsesData,
     llmResponse,
     isSidebarExpanded,
@@ -74,11 +76,15 @@ export function Overview({
                 <div className='space-y-4'>
                     <div className='flex gap-4'>
                         <EvidenceAnalysis
+                            evidenceFiles={evidenceFiles}
                             isOverviewWide={isOverviewWide}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
                         />
-                        <EvidenceProvided isOverviewWide={isOverviewWide} />
+                        <EvidenceProvided
+                            evidenceFiles={evidenceFiles}
+                            isOverviewWide={isOverviewWide}
+                        />
                         <QuestionsAnalyzed
                             llmResponse={llmResponse}
                             questionsData={questionsData}
@@ -96,6 +102,7 @@ export function Overview({
                 <div className='space-y-4'>
                     <div className='flex gap-4'>
                         <EvidenceAnalysis
+                            evidenceFiles={evidenceFiles}
                             isOverviewWide={isOverviewWide}
                             llmResponse={llmResponse}
                             questionsData={questionsData}
@@ -107,7 +114,10 @@ export function Overview({
                     </div>
 
                     <div className='space-y-4'>
-                        <EvidenceProvided isOverviewWide={isOverviewWide} />
+                        <EvidenceProvided
+                            evidenceFiles={evidenceFiles}
+                            isOverviewWide={isOverviewWide}
+                        />
                         <EvidenceAnswered
                             llmResponse={llmResponse}
                             questionsData={questionsData}
@@ -121,3 +131,4 @@ export function Overview({
         </div>
     );
 }
+

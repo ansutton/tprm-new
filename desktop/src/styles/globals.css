@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    @font-face {
+        font-family: 'Noto Sans';
+        src: url('/fonts/NotoSans-VariableFont_wdth,wght.ttf');
+    }
     .app-background-light {
         background: radial-gradient(
             #818cf8 0.5%,
@@ -87,3 +91,4 @@
         stroke: transparent;
     }
 }
+

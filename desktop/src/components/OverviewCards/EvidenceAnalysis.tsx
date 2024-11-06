@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 import { Card, Heading, ProgressBarBase } from '@/components';
-import { LlmResponse } from '@/types';
+import { EvidenceFiles, LlmResponse } from '@/types';
 import { tw } from '@/utils';
 
 interface EvidenceAnalysisProps {
+    evidenceFiles: EvidenceFiles;
     isOverviewWide?: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
@@ -12,6 +13,7 @@ interface EvidenceAnalysisProps {
 }
 
 export function EvidenceAnalysis({
+    evidenceFiles,
     isOverviewWide,
     llmResponse,
     questionsData,
@@ -31,16 +33,16 @@ export function EvidenceAnalysis({
             </Heading>
             <div className='space-y-4 text-sm font-bold'>
                 <EvidenceAnalysisItem
+                    evidenceFiles={evidenceFiles}
                     title='Documents Selected'
                     llmResponse={llmResponse}
-                    progressPercentage={100}
                     questionsData={questionsData}
                     twBgColor='bg-cyan-400'
                 />
                 <EvidenceAnalysisItem
+                    evidenceFiles={evidenceFiles}
                     title='Documents Matching Engagement Scope'
                     llmResponse={llmResponse}
-                    progressPercentage={100}
                     questionsData={questionsData}
                     twBgColor='bg-emerald-400'
                 />
@@ -49,28 +51,28 @@ export function EvidenceAnalysis({
     );
 }
 
-interface EvidenceAnalysisItemsProps extends EvidenceAnalysisProps {
-    progressPercentage: number;
+interface EvidenceAnalysisItemProps extends EvidenceAnalysisProps {
     title: string;
     twBgColor: string;
 }
 
 function EvidenceAnalysisItem({
+    evidenceFiles,
     questionsData,
-    progressPercentage,
     title,
     twBgColor,
-}: EvidenceAnalysisItemsProps): JSX.Element {
+}: EvidenceAnalysisItemProps): JSX.Element {
+    const evidenceFilesCount: number = evidenceFiles?.length ?? 0;
+    // Math.round(evidenceFilesCount * 0.01)}/1
+
     return (
         <div className=''>
             <p className='mb-2 text-base opacity-80'>{title}</p>
             <p className='mb-1 text-2xl font-bold'>
-                {`${Math.round(progressPercentage * 0.01)}/1`}
+                {evidenceFilesCount}/{evidenceFilesCount}
             </p>
-            <ProgressBarBase
-                progressPercentage={progressPercentage}
-                twBgColor={twBgColor}
-            />
+            <ProgressBarBase progressPercentage={100} twBgColor={twBgColor} />
         </div>
     );
 }
+
