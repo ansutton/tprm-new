@@ -65,6 +65,7 @@ export function Overview({
             <ResponsesAlign
                 llmResponse={llmResponse}
                 questionsData={questionsData}
+                tpResponsesData={tpResponsesData}
             />
 
             {/* <SecurityDomains
