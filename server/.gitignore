@@ -6,6 +6,7 @@ __pycache__
 
 # Ignore compiled Python files.
 *.pyc
+.python-version
 
 # Ignore mypy cached files.
 .mypy_cache/
