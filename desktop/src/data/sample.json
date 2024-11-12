@@ -31,7 +31,8 @@
                 [
                     "ABC_Pentest.pdf",
                     2,
-                    "2.1 Scope & Duration This assessment included the following phases of work: ● Phase 1: Web application and API assessment of the ABC Inc. application. ● Duration: 5 days effort (including reporting). Work commenced on 25/10/2023 and concluded on 29/10/2023. 2.2 Scenarios Included ● Black box assessment: Simulating the threat of an Internet-based attacker with no knowledge of the platform. ● Rogue user: Simulating the threat of an authenticated user with access to both free and paid tier accounts. ● White box assessment: Source code, code repositories, and access to ABC Inc. staff were provided to find defense-in-depth recommendations."
+                    "2.1 Scope & Duration This assessment included the following phases of work: ● Phase 1: Web application and API assessment of the ABC Inc. application. ● Duration: 5 days effort (including reporting). Work commenced on 25/10/2023 and concluded on 29/10/2023. 2.2 Scenarios Included ● Black box assessment: Simulating the threat of an Internet-based attacker with no knowledge of the platform. ● Rogue user: Simulating the threat of an authenticated user with access to both free and paid tier accounts. ● White box assessment: Source code, code repositories, and access to ABC Inc. staff were provided to find defense-in-depth recommendations.",
+                    "Penetration Test Report"
                 ]
             ],
             "tp_confidence_score": "0.8652325",
