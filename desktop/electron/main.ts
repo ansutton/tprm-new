@@ -100,24 +100,24 @@ app.whenReady().then(() => {
     // Don't kick off child processes if isDevMode = false.
     if (!isDevMode) {
         // Spawn ollama.exe model framework server on start up.
-        const ollamaChild = cp.spawn(
+        const ollamaChild = cp.execFile(
             `${__dirname}/${process.env.OLLAMA_SERVER_PATH}`,
             ['serve'],
         );
 
-        // Set up ollama child process stdout "info" logs.
-        ollamaChild.stdout.setEncoding('utf8');
-        ollamaChild.stdout.on('data', function (data) {
-            console.log('stdout: ' + data);
-            AppLogger.instance.writeInfo(data.toString());
-        });
+        // // Set up ollama child process stdout "info" logs.
+        // ollamaChild.stdout.setEncoding('utf8');
+        // ollamaChild.stdout.on('data', function (data) {
+        //     console.log('stdout: ' + data);
+        //     AppLogger.instance.writeInfo(data.toString());
+        // });
 
-        // Set up ollama child process stderr "error" logs.
-        ollamaChild.stderr.setEncoding('utf8');
-        ollamaChild.stderr.on('data', function (data) {
-            console.log('stderr: ' + data);
-            AppLogger.instance.writeError(data.toString());
-        });
+        // // Set up ollama child process stderr "error" logs.
+        // ollamaChild.stderr.setEncoding('utf8');
+        // ollamaChild.stderr.on('data', function (data) {
+        //     console.log('stderr: ' + data);
+        //     AppLogger.instance.writeError(data.toString());
+        // });
 
         // Spawn app.exe Python Flask server on start up.
         const appChild = cp.spawn(
@@ -145,3 +145,4 @@ app.whenReady().then(() => {
 process.on('exit', function () {
     cp.exec('taskkill /F /T /PID ' + process.pid);
 });
+
