@@ -21,28 +21,31 @@ export function ModeMenu({
         <div
             className={clsx(
                 'rounded-lg p-1 text-sm font-bold',
-                screen === 'fileSelection'
-                    ? [
-                          theme === 'light' && 'hover:bg-zinc-200',
-                          theme === 'dark' && 'hover:bg-zinc-800',
-                      ]
-                    : 'cursor-default hover:bg-inherit',
+                // screen === 'fileSelection'
+                //     ? [
+                //           theme === 'light' && 'hover:bg-zinc-200',
+                //           theme === 'dark' && 'hover:bg-zinc-800',
+                //       ]
+                //     : 'cursor-default hover:bg-inherit',
+                'cursor-default hover:bg-inherit',
             )}
         >
             <Menu>
                 <MenuButton
                     className={clsx(
                         'flex gap-1 p-1',
-                        screen === 'fileSelection'
-                            ? [
-                                  theme === 'light' &&
-                                      'text-zinc-600 hover:bg-zinc-200',
-                                  theme === 'dark' &&
-                                      'text-zinc-300 hover:bg-zinc-800',
-                              ]
-                            : 'hover:bg-inherit',
+                        // screen === 'fileSelection'
+                        //     ? [
+                        //           theme === 'light' &&
+                        //               'text-zinc-600 hover:bg-zinc-200',
+                        //           theme === 'dark' &&
+                        //               'text-zinc-300 hover:bg-zinc-800',
+                        //       ]
+                        //     : 'hover:bg-inherit',
+                        'hover:bg-inherit',
                     )}
-                    disabled={screen !== 'fileSelection'}
+                    // disabled={screen !== 'fileSelection'}
+                    disabled
                 >
                     Mode:
                     <span
@@ -108,3 +111,4 @@ export function ModeMenu({
         </div>
     );
 }
+
