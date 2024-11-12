@@ -25,9 +25,10 @@ export default function Home(): JSX.Element {
     const [llmResponse, setLlmResponse] = useState<any>(null);
     const [tpResponsesData, setTpResponsesData] = useState<any[][]>([]);
     const [questionsData, setQuestionsData] = useState<string[]>([]);
-    const [mode, setMode] = useState<Mode>(() => {
-        return (localStorage.getItem('app-mode') as Mode) ?? 'llm';
-    });
+    // const [mode, setMode] = useState<Mode>(() => {
+    //     return (localStorage.getItem('app-mode') as Mode) ?? 'llm';
+    // });
+    const [mode, setMode] = useState<Mode>('demo');
     const [appLevelTableData, setAppLevelTableData] = useState<any[]>([]); // TODO: refactor to global state (currently prop drilling)
 
     /**
@@ -153,3 +154,4 @@ export default function Home(): JSX.Element {
         </div>
     );
 }
+
