@@ -245,14 +245,17 @@ export function DetailedAnalysis({
                         {llmResponse?.analyses[`analysis_${index}`]
                             ?.citations ? (
                             <>
-                                {llmResponse?.analyses[
-                                    `analysis_${index}`
-                                ]?.citations?.map((citation, index) => (
-                                    <Fragment key={index}>
-                                        <span className='select-none whitespace-nowrap'>
-                                            {`${citation[0]} Page ${citation[1]}`}
-                                        </span>
-                                        {/* {index + 1 !==
+                                {llmResponse?.analyses[`analysis_${index}`]
+                                    ?.citations?.length === 0
+                                    ? 'Not found.'
+                                    : llmResponse?.analyses[
+                                          `analysis_${index}`
+                                      ]?.citations?.map((citation, index) => (
+                                          <Fragment key={index}>
+                                              <span className='select-none whitespace-nowrap'>
+                                                  {`${citation[0]} Page ${citation[1]}`}
+                                              </span>
+                                              {/* {index + 1 !==
                                             llmResponse?.analyses[
                                                 `analysis_${index}`
                                             ]?.pages?.length &&
@@ -260,8 +263,8 @@ export function DetailedAnalysis({
                                                 `analysis_${index}`
                                             ]?.pages?.length ?? 0) > 1 &&
                                             ', '} */}
-                                    </Fragment>
-                                ))}
+                                          </Fragment>
+                                      ))}
                             </>
                         ) : (
                             <ArrowPathIcon className='size-5 animate-spin stroke-2 text-indigo-800 dark:text-indigo-500' />
@@ -304,16 +307,19 @@ export function DetailedAnalysis({
                 citationsFull: (
                     <div className='space-y-4'>
                         {handleSpinner(
-                            llmResponse?.analyses[
-                                `analysis_${index}`
-                            ]?.citations?.map((citation, index) => (
-                                <Fragment key={index}>
-                                    <p>
-                                        {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
-                                    </p>
-                                    <p>"...{citation[2]}..."</p>
-                                </Fragment>
-                            )),
+                            llmResponse?.analyses[`analysis_${index}`]
+                                ?.citations?.length === 0
+                                ? 'Not found.'
+                                : llmResponse?.analyses[
+                                      `analysis_${index}`
+                                  ]?.citations?.map((citation, index) => (
+                                      <Fragment key={index}>
+                                          <p>
+                                              {`${citation[0]} (${citation[3]}) Page ${citation[1]}`}
+                                          </p>
+                                          <p>"...{citation[2]}..."</p>
+                                      </Fragment>
+                                  )),
                         )}
                     </div>
                 ),
