@@ -168,7 +168,7 @@
         "analysis_8": {
             "question": "When was the incident management policy last reviewed?",
             "tp_response": "Our incident management policy for ABC Inc. is reviewed on an annual basis. This policy was last reviewed in January 2024.",
-            "ai_analysis": "The policy was last reviewed in January 2024.",
+            "ai_analysis": "According to the provided context, the incident management policy is reviewed at least annually but a specific date was not provided.",
             "citations": [
                 [
                     "ABC_IncPol.pdf",
@@ -180,7 +180,7 @@
             "tp_confidence_score": "0.83020943",
             "ai_confidence_score": "0.7347128",
             "similarity_score": "0.7880248",
-            "answers_align": true,
+            "answers_align": false,
             "is_analysis_complete": true
         },
         "analysis_9": {
