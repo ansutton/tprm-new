@@ -281,7 +281,7 @@
         "analysis_14": {
             "question": "What is done to ensure that periodic penetration tests are performed for the infrastructure, devices, and end-points?",
             "tp_response": "At ABC Inc., ensuring that periodic penetration tests are performed for the infrastructure, devices, and end-points involves establishing a comprehensive security policy that mandates regular testing as part of the overall cybersecurity strategy. Certified third-party security firms or in-house security experts conduct these tests, generating detailed reports that highlight vulnerabilities and provide actionable recommendations for remediation. The IT and security teams review the findings, implement necessary security measures, and maintain a schedule for periodic re-testing to ensure continuous protection against emerging threats.",
-            "ai_analysis": "I don't know the specific background checks that are performed during the hiring process. The provided text does not mention any detailed background check procedures, but it does discuss access administration and account enumeration, which may be related to security protocols. However, I do not have information on the specific background checks that are typically performed during an employee's hiring process.",
+            "ai_analysis": "Not found.",
             "citations": [],
             "tp_confidence_score": "0.79778314",
             "ai_confidence_score": "0.70698166",
