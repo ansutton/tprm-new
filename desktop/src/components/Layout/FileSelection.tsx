@@ -225,6 +225,7 @@ export function FileSelection({
                 setFileInputState={setEvidenceFiles}
                 buttonText='Select File(s)'
                 isAlertDisplayed={isEvidenceAlertDisplayed}
+                mode={mode}
             />
 
             <SectionSingular
@@ -324,6 +325,7 @@ function SectionSingular({
 interface SectionEvidenceProps extends SectionProps {
     fileInputState: EvidenceFiles;
     setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>;
+    mode: Mode;
 }
 
 function SectionEvidence({
@@ -334,6 +336,7 @@ function SectionEvidence({
     setFileInputState,
     startIcon,
     isAlertDisplayed,
+    mode,
 }: SectionEvidenceProps): JSX.Element {
     function handleDeleteFile(
         fileName: string | undefined,
@@ -368,8 +371,10 @@ function SectionEvidence({
             >
                 <FileInputEvidence
                     accept={accept}
-                    setFileInputState={setFileInputState}
                     buttonText={buttonText}
+                    fileInputState={fileInputState}
+                    setFileInputState={setFileInputState}
+                    mode={mode}
                 />
 
                 {fileInputState && fileInputState?.length > 0 && (
@@ -391,6 +396,7 @@ function SectionEvidence({
                                 />
                                 <EvidenceSelect
                                     evidenceIndex={index}
+                                    fileInputState={fileInputState}
                                     setFileInputState={setFileInputState}
                                 />
                             </div>
@@ -409,11 +415,13 @@ function SectionEvidence({
 
 interface EvidenceSelectProps {
     evidenceIndex: number;
+    fileInputState: EvidenceFiles;
     setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>;
 }
 
 function EvidenceSelect({
     evidenceIndex,
+    fileInputState,
     setFileInputState,
 }: EvidenceSelectProps): JSX.Element {
     /**
@@ -425,7 +433,10 @@ function EvidenceSelect({
      * State Hooks
      */
     const [selectedType, setSelectedType] = useState<EvidenceType>(
-        EvidenceType.Unspecified,
+        fileInputState
+            ? (fileInputState[evidenceIndex]?.evidenceType ??
+                  EvidenceType.Unspecified)
+            : EvidenceType.Unspecified,
     );
     const [query, setQuery] = useState<string>('');
 
@@ -637,3 +648,4 @@ function Alert({
         return <></>;
     }
 }
+
