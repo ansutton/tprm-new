@@ -432,17 +432,15 @@ function EvidenceSelect({
     /**
      * State Hooks
      */
-    const [selectedType, setSelectedType] = useState<EvidenceType>(
-        fileInputState
-            ? (fileInputState[evidenceIndex]?.evidenceType ??
-                  EvidenceType.Unspecified)
-            : EvidenceType.Unspecified,
-    );
     const [query, setQuery] = useState<string>('');
 
     /**
      * Constants
      */
+    const evidenceType = fileInputState
+        ? (fileInputState[evidenceIndex]?.evidenceType ??
+          EvidenceType.Unspecified)
+        : EvidenceType.Unspecified;
     const evidenceTypes: EvidenceType[] = Object.values(EvidenceType);
     const filteredTypes =
         query === ''
@@ -468,7 +466,6 @@ function EvidenceSelect({
         });
     }
     function handleEvidenceTypeChange(newType: EvidenceType) {
-        setSelectedType(newType);
         setFileInputState((prevState) =>
             updateFileInputState(prevState, evidenceIndex, newType),
         );
@@ -479,7 +476,7 @@ function EvidenceSelect({
      */
     return (
         <Combobox
-            value={selectedType}
+            value={evidenceType}
             onChange={(value) =>
                 handleEvidenceTypeChange(value || EvidenceType.Unspecified)
             }
