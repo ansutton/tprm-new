@@ -225,6 +225,7 @@ export function FileSelection({
                 setFileInputState={setEvidenceFiles}
                 buttonText='Select File(s)'
                 isAlertDisplayed={isEvidenceAlertDisplayed}
+                mode={mode}
             />
 
             <SectionSingular
@@ -324,6 +325,7 @@ function SectionSingular({
 interface SectionEvidenceProps extends SectionProps {
     fileInputState: EvidenceFiles;
     setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>;
+    mode: Mode;
 }
 
 function SectionEvidence({
@@ -334,6 +336,7 @@ function SectionEvidence({
     setFileInputState,
     startIcon,
     isAlertDisplayed,
+    mode,
 }: SectionEvidenceProps): JSX.Element {
     function handleDeleteFile(
         fileName: string | undefined,
@@ -392,6 +395,7 @@ function SectionEvidence({
                                 <EvidenceSelect
                                     evidenceIndex={index}
                                     setFileInputState={setFileInputState}
+                                    mode={mode}
                                 />
                             </div>
                         ))}
@@ -410,11 +414,13 @@ function SectionEvidence({
 interface EvidenceSelectProps {
     evidenceIndex: number;
     setFileInputState: Dispatch<SetStateAction<EvidenceFiles>>;
+    mode: Mode;
 }
 
 function EvidenceSelect({
     evidenceIndex,
     setFileInputState,
+    mode,
 }: EvidenceSelectProps): JSX.Element {
     /**
      * Custom Hooks
@@ -424,8 +430,11 @@ function EvidenceSelect({
     /**
      * State Hooks
      */
+    // const [selectedType, setSelectedType] = useState<EvidenceType>(
+    //     EvidenceType.Unspecified,
+    // );
     const [selectedType, setSelectedType] = useState<EvidenceType>(
-        EvidenceType.Unspecified,
+        initialSelectedType(),
     );
     const [query, setQuery] = useState<string>('');
 
@@ -443,6 +452,24 @@ function EvidenceSelect({
     /**
      * Helper Functions
      */
+    function initialSelectedType(): EvidenceType {
+        if (mode === 'demo') {
+            switch (evidenceIndex) {
+                case 0:
+                    return EvidenceType.AccessControlPolicy;
+                    break;
+                case 1:
+                    return EvidenceType.IncidentManagement;
+                    break;
+                case 2:
+                    return EvidenceType.PenetrationTest;
+                default:
+                    return EvidenceType.Unspecified;
+                    break;
+            }
+        }
+        return EvidenceType.Unspecified;
+    }
     function updateFileInputState(
         prevState: EvidenceFiles,
         evidenceIndex: number,
@@ -637,3 +664,4 @@ function Alert({
         return <></>;
     }
 }
+
