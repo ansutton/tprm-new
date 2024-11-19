@@ -22,7 +22,6 @@ export function FileInputEvidence({
     const evidenceFileIndex = fileInputState ? fileInputState?.length : 0;
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
-        console.log(`fileInputState.length: ${fileInputState?.length}`);
         const files = e.target.files;
         if (files && files[0]) {
             const newFile: EvidenceFile = {
