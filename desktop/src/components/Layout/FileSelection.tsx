@@ -143,6 +143,7 @@ export function FileSelection({
                     setLlmResponse,
                     setQuestionsData,
                     setTpResponsesData,
+                    tpResponsesFile,
                 });
                 break;
             case 'llm':

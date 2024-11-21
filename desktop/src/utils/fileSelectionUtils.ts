@@ -133,17 +133,28 @@ interface handleSampleDataProps {
     setLlmResponse: Dispatch<SetStateAction<any>>;
     setQuestionsData: Dispatch<SetStateAction<string[]>>;
     setTpResponsesData: Dispatch<SetStateAction<any[][]>>;
+    tpResponsesFile: File | null;
 }
 export function handleSampleData({
     setLlmResponse,
     setQuestionsData,
     setTpResponsesData,
+    tpResponsesFile,
 }: handleSampleDataProps) {
     const analyses = Object.values(sampleData.analyses);
     const questionsArray = analyses.map((analysis) => analysis.question || '');
     let tpResponsesArray: any[][] = [['', '', 'Response', '']];
     for (let i = 0; i < analyses.length; i++) {
-        tpResponsesArray.push(['', '', analyses[i].tp_response || '', '']);
+        if (tpResponsesFile) {
+            tpResponsesArray.push(['', '', analyses[i].tp_response || '', '']);
+        } else {
+            tpResponsesArray.push([
+                '',
+                '',
+                'No Third Party Responses selected',
+                '',
+            ]);
+        }
     }
     // Setting questions and TP Responses from sample data and not from questions selected
     setQuestionsData(questionsArray);
