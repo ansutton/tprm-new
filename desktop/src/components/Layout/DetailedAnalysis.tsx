@@ -230,10 +230,7 @@ export function DetailedAnalysis({
             questionsData.map((question, index) => ({
                 questionNumber: index + 1,
                 question: question,
-                tpResponsePreview:
-                    tpResponsesData.length === 0
-                        ? 'No Third Party Responses selected'
-                        : truncate(tpResponsesData[index + 1][2], 40),
+                tpResponsePreview: truncate(tpResponsesData[index + 1][2], 40),
                 aiAnalysisPreview: handleSpinner(
                     truncate(
                         llmResponse?.analyses[`analysis_${index}`]?.ai_analysis,
