@@ -1,7 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 import { sampleData } from '@/data';
-import { Accept, EvidenceFiles, LlmResponse } from '@/types';
+import {
+    Accept,
+    EvidenceFiles,
+    EvidenceType,
+    LlmResponse,
+    Mode,
+} from '@/types';
 import { poll } from '@/utils';
 
 /**
@@ -68,6 +74,25 @@ export async function handleSetQuestionsDataState(
 /**
  * Handling Evidence
  */
+export function initialEvidenceType(mode: Mode, index: number): EvidenceType {
+    if (mode === 'demo') {
+        switch (index) {
+            case 0:
+                return EvidenceType.AccessControlPolicy;
+                break;
+            case 1:
+                return EvidenceType.IncidentManagement;
+                break;
+            case 2:
+                return EvidenceType.PenetrationTest;
+                break;
+            default:
+                return EvidenceType.Unspecified;
+                break;
+        }
+    }
+    return EvidenceType.Unspecified;
+}
 
 /**
  * Handling TP Responses
@@ -158,3 +183,4 @@ export function handleSampleData({
 export function removeDot(accept: Accept) {
     return accept.slice(1, accept.length);
 }
+
