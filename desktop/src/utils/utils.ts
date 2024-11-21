@@ -87,15 +87,16 @@ export function countResponsesAlign(llmResponse: LlmResponse): {
     let noCount = 0;
     if (llmResponse?.analyses) {
         Object.values(llmResponse.analyses).forEach((analysis) => {
-            switch (analysis.answers_align) {
-                case 'true':
+            // Ensure analysis is valid and check answers_align
+            if (analysis && analysis.answers_align !== undefined) {
+                if (analysis.answers_align) {
                     yesCount += 1;
-                    break;
-                case 'false':
+                } else {
                     noCount += 1;
-                    break;
-                case undefined:
-                    break;
+                }
+            } else {
+                // If answers_align is missing or null, treat it as false by default
+                noCount += 1;
             }
         });
     }
