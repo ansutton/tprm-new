@@ -14,16 +14,16 @@ import {
 import { EvidenceFiles, LlmResponse } from '@/types';
 import { tw } from '@/utils';
 interface OverviewProps {
+    tpResponsesFile: File | null;
     evidenceFiles: EvidenceFiles;
-    tpResponsesData: any[][];
     isSidebarExpanded: boolean;
     llmResponse: LlmResponse;
     questionsData: string[];
 }
 
 export function Overview({
+    tpResponsesFile,
     evidenceFiles,
-    tpResponsesData,
     llmResponse,
     isSidebarExpanded,
     questionsData,
@@ -65,7 +65,7 @@ export function Overview({
             <ResponsesAlign
                 llmResponse={llmResponse}
                 questionsData={questionsData}
-                tpResponsesData={tpResponsesData}
+                tpResponsesFile={tpResponsesFile}
             />
 
             {/* <SecurityDomains

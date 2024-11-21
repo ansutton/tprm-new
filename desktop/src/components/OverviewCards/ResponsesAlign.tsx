@@ -8,14 +8,14 @@ interface ResponsesAlignProps {
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
-    tpResponsesData: any[][];
+    tpResponsesFile: File | null;
 }
 
 export function ResponsesAlign({
     llmResponse,
     questionsData,
     startIcon = null,
-    tpResponsesData,
+    tpResponsesFile,
 }: ResponsesAlignProps): JSX.Element {
     const numberOfQuestions = questionsData.length;
     const yesCount = countResponsesAlign(llmResponse).yesCount;
@@ -31,7 +31,7 @@ export function ResponsesAlign({
                     </span>
                 </span>
             </h4>
-            {tpResponsesData?.length > 0 ? (
+            {tpResponsesFile ? (
                 <div className='space-y-4 text-sm font-bold'>
                     <ResponsesAlignItem
                         llmResponse={llmResponse}
