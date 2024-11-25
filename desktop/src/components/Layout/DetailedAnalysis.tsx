@@ -191,6 +191,7 @@ function Asterisk(): JSX.Element {
     return <span className='text-indigo-500/85 dark:text-indigo-400'>*</span>;
 }
 interface DetailedAnalysisProps {
+    tpResponsesFile: File | null;
     tpResponsesData: any[][];
     llmResponse: LlmResponse;
     questionsData: string[];
@@ -198,6 +199,7 @@ interface DetailedAnalysisProps {
 }
 
 export function DetailedAnalysis({
+    tpResponsesFile,
     tpResponsesData,
     llmResponse,
     questionsData,
@@ -271,13 +273,15 @@ export function DetailedAnalysis({
                         )}
                     </>
                 ),
-                answersAlign: handleSpinner(
-                    handleAnswersAlign(
-                        tpResponsesData,
-                        llmResponse?.analyses[`analysis_${index}`]
-                            ?.answers_align,
-                    ),
-                ),
+                answersAlign: tpResponsesFile
+                    ? handleSpinner(
+                          handleAnswersAlign(
+                              tpResponsesData,
+                              llmResponse?.analyses[`analysis_${index}`]
+                                  ?.answers_align,
+                          ),
+                      )
+                    : 'N/A',
                 // similarityScore: handleSpinner(
                 //     displayScore(
                 //         llmResponse?.analyses[`analysis_${index}`]

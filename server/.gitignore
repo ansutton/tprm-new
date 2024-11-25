@@ -8,7 +8,6 @@ __pycache__
 *.pyc
 .python-version
 
-
 # Ignore mypy cached files.
 .mypy_cache/
 

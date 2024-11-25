@@ -8,12 +8,14 @@ interface ResponsesAlignProps {
     llmResponse: LlmResponse;
     questionsData: string[];
     startIcon?: ReactNode;
+    tpResponsesFile: File | null;
 }
 
 export function ResponsesAlign({
     llmResponse,
     questionsData,
     startIcon = null,
+    tpResponsesFile,
 }: ResponsesAlignProps): JSX.Element {
     const numberOfQuestions = questionsData.length;
     const yesCount = countResponsesAlign(llmResponse).yesCount;
@@ -29,22 +31,28 @@ export function ResponsesAlign({
                     </span>
                 </span>
             </h4>
-            <div className='space-y-4 text-sm font-bold'>
-                <ResponsesAlignItem
-                    llmResponse={llmResponse}
-                    numberOfQuestions={numberOfQuestions}
-                    resultCount={yesCount}
-                    title='Yes'
-                    twBgColor='bg-emerald-400'
-                />
-                <ResponsesAlignItem
-                    llmResponse={llmResponse}
-                    numberOfQuestions={numberOfQuestions}
-                    resultCount={noCount}
-                    title='No'
-                    twBgColor='bg-cyan-400'
-                />
-            </div>
+            {tpResponsesFile ? (
+                <div className='space-y-4 text-sm font-bold'>
+                    <ResponsesAlignItem
+                        llmResponse={llmResponse}
+                        numberOfQuestions={numberOfQuestions}
+                        resultCount={yesCount}
+                        title='Yes'
+                        twBgColor='bg-emerald-400'
+                    />
+                    <ResponsesAlignItem
+                        llmResponse={llmResponse}
+                        numberOfQuestions={numberOfQuestions}
+                        resultCount={noCount}
+                        title='No'
+                        twBgColor='bg-cyan-400'
+                    />
+                </div>
+            ) : (
+                <p className='opacity-80'>
+                    N/A (No Third Party Responses selected)
+                </p>
+            )}
         </Card>
     );
 }
@@ -104,3 +112,4 @@ function ResponsesAlignItem({
         </div>
     );
 }
+

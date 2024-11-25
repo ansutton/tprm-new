@@ -49,6 +49,8 @@ import {
 } from '@/utils';
 
 interface FileSelectionProps {
+    tpResponsesFile: File | null;
+    setTpResponsesFile: Dispatch<SetStateAction<File | null>>;
     evidenceFiles: EvidenceFiles;
     setEvidenceFiles: Dispatch<SetStateAction<EvidenceFiles>>;
     setIsSidebarExpanded: Dispatch<SetStateAction<boolean>>;
@@ -61,6 +63,8 @@ interface FileSelectionProps {
 }
 
 export function FileSelection({
+    tpResponsesFile,
+    setTpResponsesFile,
     evidenceFiles,
     setEvidenceFiles,
     setIsSidebarExpanded,
@@ -75,7 +79,6 @@ export function FileSelection({
      * State Hooks
      */
     const [questionsFile, setQuestionsFile] = useState<File | null>(null);
-    const [tpResponsesFile, setTpResponsesFile] = useState<File | null>(null);
 
     /**
      * Constants - Questions Validation
@@ -140,6 +143,7 @@ export function FileSelection({
                     setLlmResponse,
                     setQuestionsData,
                     setTpResponsesData,
+                    tpResponsesFile,
                 });
                 break;
             case 'llm':
