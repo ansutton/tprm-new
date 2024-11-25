@@ -130,6 +130,7 @@ export default function Home(): JSX.Element {
                                             {tableFootnoteText}
                                         </p>
                                         <DetailedAnalysis
+                                            tpResponsesFile={tpResponsesFile}
                                             tpResponsesData={tpResponsesData}
                                             llmResponse={llmResponse}
                                             questionsData={questionsData}
