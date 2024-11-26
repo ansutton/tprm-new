@@ -376,7 +376,6 @@ function SectionEvidence({
                 <FileInputEvidence
                     accept={accept}
                     buttonText={buttonText}
-                    fileInputState={fileInputState}
                     setFileInputState={setFileInputState}
                     mode={mode}
                 />

@@ -6,7 +6,6 @@ import { initialEvidenceType } from '@/utils';
 interface FileInputEvidenceProps {
     accept?: Accept;
     buttonText: string;
-    fileInputState: EvidenceFiles;
     setFileInputState: React.Dispatch<React.SetStateAction<EvidenceFiles>>;
     mode: Mode;
 }
@@ -14,37 +13,38 @@ interface FileInputEvidenceProps {
 export function FileInputEvidence({
     accept = '',
     buttonText = 'Select File',
-    fileInputState,
     setFileInputState,
     mode,
 }: FileInputEvidenceProps): JSX.Element {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const evidenceFileIndex = fileInputState ? fileInputState?.length : 0;
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
-        if (files && files.length > 0) {
-            const newFiles: EvidenceFiles = Array.from(files).map(
-                (file, index) => ({
-                    file,
-                    // evidenceType: EvidenceType.Unspecified,
-                    evidenceType: initialEvidenceType(mode, evidenceFileIndex),
-                }),
-            );
 
+        if (files && files.length > 0) {
             setFileInputState((prevState) => {
                 const updatedState = Array.isArray(prevState)
                     ? [...prevState]
                     : [];
-                newFiles.forEach((newFile) => {
+                const existingFilesCount = updatedState.length;
+
+                Array.from(files).forEach((file, batchIndex) => {
+                    const newFile: EvidenceFile = {
+                        file,
+                        evidenceType: initialEvidenceType(
+                            mode,
+                            existingFilesCount + batchIndex,
+                        ),
+                    };
+
                     const isDuplicate = updatedState.some(
                         (evidenceFile) =>
-                            evidenceFile?.file.name === newFile?.file.name,
+                            evidenceFile?.file.name === newFile.file.name,
                     );
 
                     if (isDuplicate) {
                         confirm(
-                            `A file with the name "${newFile?.file.name}" has already been included. Please choose a file with a different name.`,
+                            `A file with the name "${newFile.file.name}" has already been included. Please choose a file with a different name.`,
                         );
                     } else {
                         updatedState.push(newFile);

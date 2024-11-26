@@ -76,20 +76,14 @@ export async function handleSetQuestionsDataState(
  */
 export function initialEvidenceType(mode: Mode, index: number): EvidenceType {
     if (mode === 'demo') {
-        switch (index) {
-            case 0:
-                return EvidenceType.AccessControlPolicy;
-                break;
-            case 1:
-                return EvidenceType.IncidentManagement;
-                break;
-            case 2:
-                return EvidenceType.PenetrationTest;
-                break;
-            default:
-                return EvidenceType.Unspecified;
-                break;
-        }
+        // Map index to specific EvidenceType
+        const evidenceTypeMap: EvidenceType[] = [
+            EvidenceType.AccessControlPolicy,
+            EvidenceType.IncidentManagement,
+            EvidenceType.PenetrationTest,
+        ];
+
+        return evidenceTypeMap[index] ?? EvidenceType.Unspecified;
     }
     return EvidenceType.Unspecified;
 }
