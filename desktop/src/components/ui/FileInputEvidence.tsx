@@ -23,28 +23,35 @@ export function FileInputEvidence({
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
-        if (files && files[0]) {
-            const newFile: EvidenceFile = {
-                file: files[0],
-                // evidenceType: EvidenceType.Unspecified,
-                evidenceType: initialEvidenceType(mode, evidenceFileIndex),
-            };
-            setFileInputState((prevState) => {
-                const isDuplicate = prevState?.some(
-                    (evidenceFile) =>
-                        evidenceFile?.file.name === newFile?.file.name,
-                );
+        if (files && files.length > 0) {
+            const newFiles: EvidenceFiles = Array.from(files).map(
+                (file, index) => ({
+                    file,
+                    // evidenceType: EvidenceType.Unspecified,
+                    evidenceType: initialEvidenceType(mode, evidenceFileIndex),
+                }),
+            );
 
-                if (isDuplicate) {
-                    confirm(
-                        'A file with this name has already been included. Please choose a file with a different name.',
+            setFileInputState((prevState) => {
+                const updatedState = Array.isArray(prevState)
+                    ? [...prevState]
+                    : [];
+                newFiles.forEach((newFile) => {
+                    const isDuplicate = updatedState.some(
+                        (evidenceFile) =>
+                            evidenceFile?.file.name === newFile?.file.name,
                     );
-                    return prevState;
-                } else {
-                    return Array.isArray(prevState)
-                        ? [...prevState, newFile]
-                        : [newFile];
-                }
+
+                    if (isDuplicate) {
+                        confirm(
+                            `A file with the name "${newFile?.file.name}" has already been included. Please choose a file with a different name.`,
+                        );
+                    } else {
+                        updatedState.push(newFile);
+                    }
+                });
+
+                return updatedState;
             });
 
             e.target.value = '';
@@ -55,6 +62,7 @@ export function FileInputEvidence({
         <div className='relative'>
             <input
                 type='file'
+                multiple
                 accept={accept}
                 className='absolute h-0 w-0 opacity-0'
                 ref={fileInputRef}
